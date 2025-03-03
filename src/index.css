@@ -1,0 +1,26 @@
+* {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+ 
+}
+:root{
+  --navbackcolor : rgb(255, 255, 255);
+  --blacktextcolor : #000;
+  --textcolor: black;
+  --buttoncolor: rgb(0, 122, 255);
+  --buttonhovercolor : rgba(30, 161, 209, 0.251);
+  --backwhitecolor : '#ffffff';
+  --navboxshodow : ' 0 4px 10px rgba(0, 0, 0, 0.1);'
+}
+.dark {
+  --navbackcolor: rgb(30, 30, 30);
+  --blacktextcolor : #ffffff;
+  --textcolor: white;
+  --buttoncolor: rgb(255, 100, 100);
+  --buttonhovercolor : rgb(234, 232, 232);
+  --backwhitecolor : '#000';
+
+}
+
+

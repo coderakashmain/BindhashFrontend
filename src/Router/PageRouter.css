@@ -1,0 +1,7 @@
+#page-router{
+    width: 100%;
+    overflow-y: scroll;
+}
+#page-router::-webkit-scrollbar{
+    display: none;
+}

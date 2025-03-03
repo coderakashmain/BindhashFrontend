@@ -1,0 +1,5 @@
+.chat-container{
+    overflow-y: scroll;
+    padding: 2rem 1rem;
+    margin-bottom: 3rem;
+}

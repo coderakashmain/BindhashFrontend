@@ -1,0 +1,94 @@
+.navbar {
+    background: var(--navbackcolor) ;
+    
+    color: var(--blacktextcolor);
+    /* padding: 1rem; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    /* box-shadow: var(--navboxshodow);; */
+
+  }
+
+
+  
+  /* Left - Logo */
+  .nav-left .logo {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--blacktextcolor);
+  }
+  
+  /* Middle - Navigation Links */
+  .nav-center {
+    display: flex;
+    gap: 1.3rem;
+  }
+  
+  .nav-link {
+    display: flex;
+    align-items: center;
+    /* gap: 0.5rem; */
+    text-decoration: none;
+    font-size: 1rem;
+    color: var(--textcolor);
+    padding: 0.6rem;
+    border-radius: 50%;
+  
+    transition: all 0.2s ease-in-out;
+    color: var(--buttoncolor);
+
+
+  }
+  
+  .nav-link:hover {
+    color: var(--buttoncolor);
+    background-color: var(--buttonhovercolor);
+  }
+  
+  /* Right - Icons */
+  .nav-right {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.2s ease-in-out;
+    color: var(--buttoncolor);
+  }
+  
+  .icon-button:hover {
+    background: var(--buttonhovercolor);
+  }
+  
+  /* Dark Mode Support */
+  .dark .navbar {
+    background-color: rgb(30, 30, 30);
+  }
+  
+  .dark .nav-link {
+    color: white;
+  }
+  
+  .dark .nav-link:hover {
+    color: var(--buttoncolor);
+  }
+  
+  .dark .icon-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .nav-center {
+      display: none;
+    }
+  }
+  
