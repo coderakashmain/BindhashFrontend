@@ -19,14 +19,14 @@ const Home = () => {
   const navigate = useNavigate();
 
 
-  // useEffect(()=>{
-  //   if (usertoken === null) { 
-  //     navigate("/login");
-  //   }
-  // },[usertoken])
-  // if (usertoken === null) {
-  //   return null; 
-  // }
+  useEffect(()=>{
+    if (usertoken === null) { 
+      navigate("/login");
+    }
+  },[usertoken])
+  if (usertoken === null) {
+    return null; 
+  }
 
 
   const handleLike = async (postId) => {
