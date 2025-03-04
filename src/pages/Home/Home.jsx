@@ -4,7 +4,7 @@ import './Home.css'
 import { AllPostContextData } from "../../Context/AllPostContext";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import { useNavigate } from "react-router-dom";
-import { Heart } from 'lucide-react'
+import { Heart, MessageCircle } from 'lucide-react'
 import ProfileStats from "../../components/ProfileStats/ProfileStats";
 import Followbtn from "../../components/ProfileStats/Followbtn";
 import ProfileUpload from "../../components/ProfileUpload/ProfileUpload";
@@ -108,36 +108,36 @@ const Home = () => {
 
   return (
     <section className="container">
-       <div className="home-profile-out-box">
-      <div className="home-profile">
-        <div className="profile-header">
-          <div className="profile-pic-container">
-            <img
-              src={usertoken.user.profile_pic ? `http://localhost:3000${usertoken.user.profile_pic}` : "/default-profile.png"}
-              alt="Profile"
-              className="profile-pic-large"
-            />
-            <ProfileUpload /> {/* Upload Icon & Functionality */}
+      <div className="home-profile-out-box">
+        <div className="home-profile">
+          <div className="profile-header">
+            <div className="profile-pic-container">
+              <img
+                src={usertoken.user.profile_pic ? `http://localhost:3000${usertoken.user.profile_pic}` : "/default-profile.png"}
+                alt="Profile"
+                className="profile-pic-large"
+              />
+              <ProfileUpload /> {/* Upload Icon & Functionality */}
+            </div>
+            <h2>{usertoken.user.username}</h2>
+            <p className="profile-bio">{usertoken.user.bio || "No bio available."}</p>
           </div>
-          <h2>{usertoken.user.username}</h2>
-          <p className="profile-bio">{usertoken.user.bio || "No bio available."}</p>
+
+          <div className="profile-stats">
+            <div>
+              <strong>{allpost.length > 0 ? allpost.find(post => post.post_user_id === usertoken.user.id)?.post_count || 0 : 0}</strong> <span>Posts</span>
+
+
+            </div>
+            <div>
+              <ProfileStats />
+            </div>
+
+          </div>
+
+          <button className="edit-profile-btn">Edit Profile</button>
         </div>
-
-        <div className="profile-stats">
-          <div>
-            <strong>{allpost.length > 0 ? allpost.find(post => post.post_user_id === usertoken.user.id)?.post_count || 0 : 0}</strong> <span>Posts</span>
-
-
-          </div>
-          <div>
-            <ProfileStats />
-          </div>
-
-        </div>
-
-        <button className="edit-profile-btn">Edit Profile</button>
       </div>
-     </div>
       <div className="container-box">
         <h2>Posts</h2>
         {allpost.map((allpost) => (
@@ -166,6 +166,11 @@ const Home = () => {
               >
                 <Heart size={20} fill={isLiked[allpost.post_id] ? "red" : "white"} color={isLiked[allpost.post_id] ? "red" : "black"} /> {allpost.like_count}
               </button>
+              <button>
+                <MessageCircle size={20} />
+                {allpost.comments.filter(comment => comment.comment_id && comment.comment_text).length}
+              </button>
+
             </div>
 
             <div className="comments-section">
@@ -183,14 +188,20 @@ const Home = () => {
 
 
               {allpost.comments.length > 0 ? (
-                allpost.comments.map((comment) => (
-                  <div key={comment.comment_id} className="comment">
-                    <img src={comment.commenter_pic ? `http://localhost:3000${comment.commenter_pic}` : "/default-profile.png"} alt="User" className="comment-pic" />
-                    <p>
-                      <strong>{comment.commenter_username}:</strong> {comment.comment_text}
-                    </p>
-                  </div>
-                ))
+                allpost.comments
+                  .filter(comment => comment.comment_id && comment.comment_text) // Only render valid comments
+                  .map((comment) => (
+                    <div key={comment.comment_id} className="comment">
+                      <img
+                        src={comment.commenter_pic ? `http://localhost:3000${comment.commenter_pic}` : "/default-profile.png"}
+                        alt="User"
+                        className="comment-pic"
+                      />
+                      <p>
+                        <strong>{comment.commenter_username}:</strong> {comment.comment_text}
+                      </p>
+                    </div>
+                  ))
               ) : (
                 <p>No comments yet.</p>
               )}

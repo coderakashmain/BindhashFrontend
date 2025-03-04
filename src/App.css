@@ -1,0 +1,8 @@
+.active{
+    transform: scale(1);
+    transition: all 0.2s ease-in-out;
+}
+.active:active{
+    transform: scale(0.98);
+   
+}

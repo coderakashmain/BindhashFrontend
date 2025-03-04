@@ -12,7 +12,8 @@ import Profile from './pages/Profile/Profile';
 import AllPostContext from './Context/AllPostContext';
 import UserAuthCheck from './Context/UserAuthCheck';
 import Chat from './pages/Chat/Chat';
-import UserList from './Context/UserList';
+import FullchatPage from './pages/Chat/FullchatPage';
+import DefaultChatPage from './pages/Chat/DefaultChatPage';
 
 const App = () => {
 
@@ -38,13 +39,22 @@ const App = () => {
             }
             ,
             {
-              path: 'chat',
-              element: <><ErrorBoundary><UserList /></ErrorBoundary></>
+
+              path :'chat',
+              element : <><ErrorBoundary><FullchatPage/></ErrorBoundary></>,
+              children : [
+                {
+                  path: "",
+                  element: <><ErrorBoundary><DefaultChatPage/></ErrorBoundary></>
+                },
+                {
+                  path: ":receiverId",
+                  element: <><ErrorBoundary><Chat/></ErrorBoundary></>
+                }
+              ]
             },
-            {
-              path: "chat/:receiverId",
-              element: <><ErrorBoundary><Chat /></ErrorBoundary></>
-            }
+            
+
           ]
         },
         {

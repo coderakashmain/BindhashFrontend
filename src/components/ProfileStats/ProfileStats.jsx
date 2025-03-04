@@ -18,7 +18,7 @@ const ProfileStats = () => {
   }, [usertoken]);
 
   return (
-    <div className="profile-follow-data" style={{display : 'flex', flexDirection : 'row',gap : '2rem'}}>
+    <div className="profile-follow-data" style={{display : 'flex', flexDirection : 'row',gap : '2vw'}}>
       <div>
         <strong>{stats.followers_count}</strong> <span>Followers</span>
       </div>
