@@ -14,7 +14,7 @@ const AllpageRouter = () => {
     <Navbar/>
       <div id='Entire-section-box'>
       <PageRouter/>
-      <Slidebar />
+      {/* <Slidebar /> */}
       </div>
     </section>
   )

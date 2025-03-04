@@ -1,0 +1,15 @@
+.full-chat-page{
+    width: 100%;
+    display: flex;
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    
+    
+}
+.chat-data{
+    flex-grow: 1;
+    height: 100%;
+    /* padding-top: 5rem ; */
+    width: 100%;
+}

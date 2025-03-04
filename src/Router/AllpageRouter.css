@@ -1,17 +1,11 @@
 #Entire-section{
     width: 100%;
-    position: fixed;
-
-   left: 0%;
-   top: 0%;
-   height: 100%;
-
-  
 
 }
 #Entire-section-box{
   display: flex;
   flex-direction: row;
   height: 100%;
+
 
 }

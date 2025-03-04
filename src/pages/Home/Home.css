@@ -111,9 +111,10 @@
 
 .profile-stats {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin-top: 10px;
   font-size: 14px;
+  gap: 2vw;
 }
 
 .profile-stats div {
@@ -262,6 +263,7 @@
   
   .post-actions {
     margin-top: 10px;
+    display: flex;
   }
   
   .post-actions button {
@@ -269,6 +271,7 @@
     border: none;
     cursor: pointer;
     font-size: 16px;
+    padding: 0rem 0.5rem;
   }
   
   .post-actions button {
