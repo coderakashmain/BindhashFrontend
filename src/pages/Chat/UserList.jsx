@@ -41,7 +41,7 @@ const UserList = () => {
       {users?.length > 0 &&
   users.map((u) => (
     <div key={u.id} className="user-item active" onClick={() => navigate(`/chat/${u.id}`)}>
-      <div><img src={u?.profile_pic ? `http://localhost:3000${u.profile_pic}` : profilelogo} loading="lazy" alt="profile_pic" /></div>
+      <div><img src={u?.profile_pic ? u.profile_pic : profilelogo} loading="lazy" alt="profile_pic" /></div>
       
       <strong>{u.username}</strong>
     </div>

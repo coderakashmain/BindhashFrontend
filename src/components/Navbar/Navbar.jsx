@@ -2,6 +2,8 @@ import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Bell, Mail, User, Home, LogIn, UserPlus ,MessageCircle} from "lucide-react";
 import "./Navbar.css";
+import weblogo from '../../Photo/weblogo.svg'
+import Bangbox from "../Bangbox/Bangbox";
 
 const Navbar = () => {
   const location = useLocation();
@@ -9,7 +11,7 @@ const Navbar = () => {
     <nav className="navbar">
       {/* Left Side - Logo */}
       <div className="nav-left">
-        <h2 className="logo">College Social</h2>
+        <Bangbox  click={true}/>
       </div>
 
       {/* Middle - Navigation Links */}

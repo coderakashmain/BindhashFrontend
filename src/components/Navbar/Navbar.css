@@ -18,10 +18,18 @@
 
   
   /* Left - Logo */
-  .nav-left .logo {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: var(--blacktextcolor);
+  .nav-left{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-10%);
+  
+  }
+  .nav-left .logo{
+    display: inline-block;
+  width: auto;
+  height: auto;
+  
   }
   
   /* Middle - Navigation Links */

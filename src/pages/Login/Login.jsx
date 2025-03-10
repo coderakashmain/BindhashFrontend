@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import './Login.css'
+import loginlogo from '../../Photo/blob.svg'
+import Bangbox from "../../components/Bangbox/Bangbox";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -41,7 +43,8 @@ const Login = () => {
         </div>
       </div>
       <div className="login-container-box2">
-        <h1>College Social</h1>
+        <img src={loginlogo} alt="loginlogo" />
+        <Bangbox size="10rem" click={false}/>
       </div>
     </div>
   );

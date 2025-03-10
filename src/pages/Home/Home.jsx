@@ -1,13 +1,22 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import './Home.css'
 import { AllPostContextData } from "../../Context/AllPostContext";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import { useNavigate } from "react-router-dom";
-import { Heart, MessageCircle } from 'lucide-react'
+import { Heart, MessageCircle, Search, ThumbsUp,Send } from 'lucide-react'
 import ProfileStats from "../../components/ProfileStats/ProfileStats";
 import Followbtn from "../../components/ProfileStats/Followbtn";
 import ProfileUpload from "../../components/ProfileUpload/ProfileUpload";
+import defaultprofilephoto from '../../Photo/defaultprofilepic.png'
+import UserSearch from "../../components/UserSearch/UserSearch";
+import SuggestedUsers from "../../components/SuggestedUsers/SuggestedUsers";
+import Leaderboard from "../../components/Leaderboard/Leaderboard";
+import TrendingPosts from "../../components/TrendingPosts/TrendingPosts";
+import PostModel from "../../components/Post/PostModel";
+import ShareProfile from "../../components/ShareProfile/ShareProfile";
+
+
 
 
 const Home = () => {
@@ -15,18 +24,51 @@ const Home = () => {
   const { usertoken } = useContext(UserAuthCheckContext);
 
   const [newComment, setNewComment] = useState("");
-  const [likedPosts, setLikedPosts] = useState({});
+  const [selectedPostId, setSelectedPostId] = useState(null);
   const navigate = useNavigate();
+  const [profilepicloading, setProfilepicloading] = useState(false);
+  const homeporfileRef = useRef();
+  const homeusggestionRef = useRef();
+  const [resizedisplay,setResizeddisplay] = useState(true);
+
+
+  useEffect(() => {
+    if (usertoken === null) {
+      navigate("/login");
+    }
+  }, [usertoken])
+  if (usertoken === null) {
+    return null;
+  }
 
 
   useEffect(()=>{
-    if (usertoken === null) { 
-      navigate("/login");
-    }
-  },[usertoken])
-  if (usertoken === null) {
-    return null; 
-  }
+    const handleresize = () => {
+      if (window.innerWidth > 1366) {
+        homeporfileRef.current.style.display = 'block';
+        setResizeddisplay(false)
+      } else {
+        homeporfileRef.current.style.display = 'none';
+        setResizeddisplay(true);
+      }
+
+      if (window.innerWidth > 698) {
+        homeusggestionRef.current.style.display = 'block';
+      
+      } else {
+        homeusggestionRef.current.style.display = 'none';
+        
+      }
+    };
+    handleresize();
+
+    // Add event listener for resize
+    window.addEventListener('resize', handleresize);
+
+
+    return ()=> window.removeEventListener('resize',handleresize)
+},[window.innerWidth])
+
 
 
   const handleLike = async (postId) => {
@@ -105,22 +147,32 @@ const Home = () => {
   };
 
 
-
+  
   return (
     <section className="container">
-      <div className="home-profile-out-box">
+      <div ref={homeporfileRef} className="home-profile-out-box scrollbar">
         <div className="home-profile">
-          <div className="profile-header">
-            <div className="profile-pic-container">
+          <div className="home-profile-header">
+            <div className="home-profle-header-box">
+            <div className="home-profile-pic-container">
               <img
-                src={usertoken.user.profile_pic ? `http://localhost:3000${usertoken.user.profile_pic}` : "/default-profile.png"}
+                src={usertoken.user.profile_pic ? usertoken.user.profile_pic : defaultprofilephoto}
                 alt="Profile"
                 className="profile-pic-large"
               />
-              <ProfileUpload /> {/* Upload Icon & Functionality */}
+              {profilepicloading && <div className="profile-pic-loading">
+                <div className="profile-pic-anime-loader"></div>
+                </div>}
+              <ProfileUpload setProfilepicloading={setProfilepicloading} />
             </div>
-            <h2>{usertoken.user.username}</h2>
-            <p className="profile-bio">{usertoken.user.bio || "No bio available."}</p>
+            <div className="home-profile-name-box">
+              <h2>{usertoken.user.username} <span style={{ fontSize : '0.7rem' ,color : 'var(--lighttextcolor)'}}>M</span></h2>
+              <p>{usertoken.user.fullname ? usertoken.user.fullname : "Fullname not set"}</p>
+            </div>
+            </div>
+            {/* <button className="iconbtn home-pro-share active"><Send  size={18} /></button> */}
+            <ShareProfile fontsize ={20} profileurllink={`/profile/${usertoken.user.username}`}/>
+
           </div>
 
           <div className="profile-stats">
@@ -134,11 +186,26 @@ const Home = () => {
             </div>
 
           </div>
+          <p className="profile-bio">{usertoken.user.bio || "No bio available."}</p>
+          <div className="home-profile-overviev">
 
-          <button className="edit-profile-btn">Edit Profile</button>
+          <h4 >Profile Overview</h4>
+
+          </div>
+
+          <div className="home-profile-buttons">
+            <button className="view-profile-btn">View Profile</button>
+            <button className="edit-profile-btn">Edit Profile</button>
+            <button className="settings-btn">⚙️</button>
+          </div>
         </div>
+        <Leaderboard />
+
       </div>
-      <div className="container-box">
+      <div className="container-box scrollbar">
+        <div className="home-post-box">
+
+        </div>
         <h2>Posts</h2>
         {allpost.map((allpost) => (
           <div key={allpost.post_id} className="post">
@@ -146,9 +213,10 @@ const Home = () => {
             <div className="post-header">
 
               <img
-                src={allpost.post_user_pic ? `http://localhost:3000${allpost.post_user_pic}` : "/default-profile.png"}
+                src={allpost.post_user_pic ? allpost.post_user_pic : defaultprofilephoto}
                 alt="Profile"
                 className="profile-pic"
+
               />
 
               <h3>{allpost.post_username}</h3>
@@ -156,7 +224,7 @@ const Home = () => {
             {<p>{new Date(allpost.created_at).toLocaleString()}</p>}
 
             {/* Post content */}
-            {allpost.image && <div className="post-head-img-box"> <img src={`http://localhost:3000${allpost.image}`} loading="lazy" alt="Post" className="post-image" /></div>}
+            {allpost.image && <div className="post-head-img-box"> <img src={allpost.image} loading="lazy" alt="Post" className="post-image" onClick={() => setSelectedPostId(allpost.post_id)} /></div>}
             <p>{allpost.content}</p>
 
             <div className="post-actions">
@@ -164,7 +232,7 @@ const Home = () => {
                 onClick={() => handleLike(allpost.post_id)}
                 className={isLiked[allpost.post_id] ? "liked" : ""}
               >
-                <Heart size={20} fill={isLiked[allpost.post_id] ? "red" : "white"} color={isLiked[allpost.post_id] ? "red" : "black"} /> {allpost.like_count}
+                <ThumbsUp size={20} fill={isLiked[allpost.post_id] ? "white" : "white"} color={isLiked[allpost.post_id] ? "#007BFF" : "black"} /> {allpost.like_count}
               </button>
               <button>
                 <MessageCircle size={20} />
@@ -193,7 +261,7 @@ const Home = () => {
                   .map((comment) => (
                     <div key={comment.comment_id} className="comment">
                       <img
-                        src={comment.commenter_pic ? `http://localhost:3000${comment.commenter_pic}` : "/default-profile.png"}
+                        src={comment.commenter_pic ? comment.commenter_pic : defaultprofilephoto}
                         alt="User"
                         className="comment-pic"
                       />
@@ -211,7 +279,16 @@ const Home = () => {
 
           </div>
         ))}
+
       </div>
+      <div ref={homeusggestionRef} className="user-suggestion scrollbar">
+        <UserSearch />
+  { resizedisplay &&     <Leaderboard />}
+        <SuggestedUsers />
+        <TrendingPosts />
+
+      </div>
+      {selectedPostId && <PostModel postId={selectedPostId} onClose={() => setSelectedPostId(null)} />}
     </section>
   );
 };

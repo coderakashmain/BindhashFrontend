@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import './Register.css'
+import Bangbox from "../../components/Bangbox/Bangbox";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -50,7 +51,8 @@ const Register = () => {
         </div>
       </div>
       <div className="register-container-box2">
-        <h1>College Social</h1>
+        <Bangbox size={"10rem"}/>
+        {/* <h1>College Social</h1> */}
       </div>
     </div>
   );

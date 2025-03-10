@@ -5,7 +5,7 @@ import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import {UserRoundPen} from "lucide-react"
 import { getCroppedImg } from "./cropUtils"; // Utility to get cropped image
 
-const ProfileUpload = () => {
+const ProfileUpload = ({setProfilepicloading}) => {
   const { usertoken, setUsertoken } = useContext(UserAuthCheckContext);
   const [image, setImage] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
@@ -25,12 +25,12 @@ const ProfileUpload = () => {
   const handleCropComplete = async (_, croppedAreaPixels) => {
     const cropped = await getCroppedImg(image, croppedAreaPixels);
     setCroppedImage(cropped);
-    console.log(cropped)
+   
   };
 
   const handleUpload = async () => {
     if (!croppedImage) return;
-
+    setProfilepicloading(true);
     const originalFormat = "image/jpeg"; // Adjust format if necessary
     const file = new File([croppedImage], `profile_pic_${Date.now()}.jpg`, { type: originalFormat });
 
@@ -42,6 +42,7 @@ const ProfileUpload = () => {
 
     
     
+    setShowCropModal(false);
     try {
       const response = await axios.post("/api/users/upload-profile", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -51,9 +52,10 @@ const ProfileUpload = () => {
         ...prev,
         user: { ...prev.user, profile_pic: response.data.profile_pic },
       }));
+      setProfilepicloading(false);
 
-      setShowCropModal(false);
     } catch (error) {
+      setProfilepicloading(false);
       console.error("Error uploading image:", error);
     }
   };

@@ -1,0 +1,124 @@
+.leaderboard {
+    width: 100%;
+    /* max-width: 400px; */
+    margin: 1.3rem auto;
+    padding: 0.89rem;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+  }
+
+  .info-icon {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    /* color: #ff5722; */
+  }
+  
+  .tooltip {
+    position: absolute;
+    top: 130%;
+    left: -100%;
+    transform: translateX(-90%);
+    width: 20rem;
+    background: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding: 0.6rem;
+    font-size: 00.9rem;
+    border-radius: 0.3rem;
+    text-align: left;
+    line-height: 2rem;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+  
+  .tooltip::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent rgba(0, 0, 0, 0.85) transparent;
+  }
+  
+  
+  .leaderboard h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+  .leaderboard h2 p {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    align-items: center;
+
+  }
+  
+  .leaderboard ul {
+    list-style: none;
+    padding: 0;
+  
+  }
+  
+  .leaderboard li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .rank {
+    font-weight: bold;
+    color: #2259ff;
+  }
+  
+  .profile-pic {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .username {
+    flex: 1;
+    text-align: left;
+ 
+    font-weight: bold;
+  }
+  
+  .score {
+    font-size: 0.9rem;
+    color: #555;
+    margin-left: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+  .leader-own-user{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 0.6rem;
+    justify-content: flex-start;
+    align-items: start;
+  }
+  .leader-own-user p{
+   font-size: 0.9rem;
+  }
+  .leader-board-img{
+   display: flex;
+   flex-direction: row;
+  }
+  .leadboard-rank-box{
+    display: flex;
+    flex-direction: row;
+  }

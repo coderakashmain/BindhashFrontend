@@ -1,0 +1,96 @@
+.commentsectoin-modal-right {
+height: 75%;
+}
+.commentsectoin-modal-right h3 {
+    padding-top: 1rem;
+    font-size: 1.4rem;
+    text-align: start;
+}
+
+.commentsectoin-modal-right ul {
+    list-style: none;
+    padding: 0;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.comment-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+}
+
+.comment-item.pinned {
+    background: #f5f6f7;
+    border-radius: 0.2rem;
+}
+
+.comment-profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-content {
+    flex: 1;
+}
+.comment-header{
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: rgb(55, 55, 55);
+}
+.comment-header strong span{
+   font-size: 0.7rem;
+   margin-left: 0.3rem;
+   font-weight: 700 ;
+}
+
+.comment-header .comment-date{
+  
+    font-size: 0.8rem;
+    color: gray;
+}
+
+.comment-sec-text{
+    text-align: start;
+    margin-top: 0.8rem;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+    align-items: center;
+}
+
+.comment-actions svg {
+    cursor: pointer;
+}
+
+.comment-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.comment-input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.comment-input button {
+    background: #007bff;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}

@@ -6,10 +6,12 @@ import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import axios from "axios";
 import { SendHorizontal, SmilePlus, UserRound } from 'lucide-react';
 import profilelogo from '../../Photo/defaultprofile2.png'
+import { useSocket } from "../../Context/SocketContext";
 
-const socket = io("http://localhost:3000");
+
 
 const Chat = () => {
+  const socket = useSocket();
   const { usertoken } = useContext(UserAuthCheckContext);
   const { receiverId } = useParams();
   const [receiver, setReceiver] = useState('');
@@ -25,7 +27,7 @@ const Chat = () => {
 
     console.log("Fetching user and messages...");
 
-    prevReceiverId.current = receiverId;
+
 
     // Fetch receiver details
     axios.get(`/api/users/chat?userId=${receiverId}`)
@@ -42,6 +44,14 @@ const Chat = () => {
   }, [usertoken, receiverId]);
 
 
+  useEffect(() => {
+    if (!socket || !receiverId) return;
+
+    socket.emit("markAsRead", { sender_id: receiverId, receiver_id: usertoken.user.id });
+}, [socket, receiverId]);
+
+
+
 
   useEffect(() => {
     const handlePrivateMessage = (msg) => {
@@ -54,13 +64,15 @@ const Chat = () => {
       }
     };
 
-    socket.off("privateMessage"); // Ensure no duplicate listeners
+  
+
+
     socket.on("privateMessage", handlePrivateMessage);
 
     return () => {
       socket.off("privateMessage", handlePrivateMessage); // Cleanup on unmount
     };
-  }, [receiverId]);
+  }, [receiverId,socket]);
 
   const sendMessage = () => {
     if (message.trim() === "") return;
@@ -68,14 +80,20 @@ const Chat = () => {
     const msgData = {
       sender_id: usertoken.user.id,
       receiver_id: receiverId,
+      
       message,
     };
 
     // Save to database
     axios.post("/api/messages", msgData)
-      .then(() => {
-        socket.emit("sendMessage", msgData);
-        setMessages((prev) => [...prev, msgData]);
+      .then((res) => {
+        const savedMessage = { ...msgData, message_id: res.data.message_id,   created_at: res.data.created_at || new Date().toISOString(),   status: "sent" };
+
+        // Notify receiver via WebSocket
+        socket.emit("sendMessage", savedMessage);
+
+        // Update UI
+        setMessages((prev) => [...prev, savedMessage]);
         setMessage("");
       })
       .catch((err) => console.error(err));
@@ -111,7 +129,7 @@ const Chat = () => {
         <div className="receiver-data">
           <div className="receiver-pic" style={{ border: receiver.profile_pic ? 'none' : '3px solid black' }}>
             <img
-              src={receiver.profile_pic ? `http://localhost:3000${receiver.profile_pic}` : profilelogo} loading="lazy" alt="receiverphtot"
+              src={receiver.profile_pic ? receiver.profile_pic : profilelogo} loading="lazy" alt="receiverphtot"
               style={{ height: receiver.profile_pic ? '5rem' : '4rem' }}
             />
 
@@ -124,13 +142,15 @@ const Chat = () => {
 
 
         <div className="chat-messages">
-          {messages.map((msg, index) => (
-            <div className={`chat-messaged-each ${msg.sender_id === usertoken.user.id ? "own-message" : "other-message"}`}>
-            <p className="message-text">{msg.message}</p>
-            <span className="message-time" style={{ color : msg.sender_id !== usertoken.user.id  ?  '#3d3b3b': '', gap : msg.sender_id !== usertoken.user.id ? '0rem' : '0.4rem'}}>{formatTime(msg.created_at)}  <span>{msg.sender_id === usertoken.user.id ? "✔✔" : ''}</span>  </span>
-          </div>
-          ))}
-        </div>
+        {messages.map((msg, index) => (
+            <div className={`chat-messaged-each ${msg.sender_id === usertoken.user.id ? "own-message" : "other-message"}`} key={index}>
+                <p className="message-text">{msg.message}</p>
+                <p className="message-status">
+                {msg.created_at ? formatTime(msg.created_at) : "Time N/A"}  {msg.status === "read" ? "✓✓ Read" : msg.status === "delivered" ? "✓ Delivered" : "✓ Sent"}
+                </p>
+            </div>
+        ))}
+    </div>
       </div>
           
       <div className="chat-input">

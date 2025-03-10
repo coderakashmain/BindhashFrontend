@@ -1,0 +1,17 @@
+.bangbox{
+    font-family: 'MyFont';
+    text-wrap: nowrap;
+    color: black;
+    text-decoration: none;
+    user-select: none;
+
+}
+.bangbox span{
+    color: rgb(0, 0, 0);
+    font-family: 'MyFont';
+}
+.bangbox span:first-child{
+
+    color: #2890e1 !important;
+}
+
