@@ -87,7 +87,7 @@ const Profile = () => {
     <div className="profile-container">
 
 
-      {/* <h2>Welcome, {usertoken.user.username}!</h2>
+      <h2>Welcome, {usertoken.user.username}!</h2>
           <button onClick={logout}>Logout</button>
 
           <form onSubmit={handlePostSubmit} className="Profile-post-form">
@@ -99,7 +99,7 @@ const Profile = () => {
             />
             <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
             <button type="submit">Post</button>
-          </form> */}
+          </form>
 
 
       <div className="profile-left-box">

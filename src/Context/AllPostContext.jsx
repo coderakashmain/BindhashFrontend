@@ -9,9 +9,14 @@ const AllPostContext = ({children}) => {
     const {usertoken} = useContext(UserAuthCheckContext);
     const [isLiked, setIsLiked] = useState({});
 
-
+  
 
     useEffect(() => {
+
+        if(!usertoken){
+            return 
+        }
+
         const fetchPosts = async () => {
           try {
             const response = await axios.get(`/api/posts?userId=${usertoken.user.id}`);

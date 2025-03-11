@@ -4,7 +4,7 @@ import './Home.css'
 import { AllPostContextData } from "../../Context/AllPostContext";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import { useNavigate } from "react-router-dom";
-import { Heart, MessageCircle, Search, ThumbsUp,Send } from 'lucide-react'
+import { Heart, MessageCircle, Search, ThumbsUp, Send } from 'lucide-react'
 import ProfileStats from "../../components/ProfileStats/ProfileStats";
 import Followbtn from "../../components/ProfileStats/Followbtn";
 import ProfileUpload from "../../components/ProfileUpload/ProfileUpload";
@@ -29,7 +29,7 @@ const Home = () => {
   const [profilepicloading, setProfilepicloading] = useState(false);
   const homeporfileRef = useRef();
   const homeusggestionRef = useRef();
-  const [resizedisplay,setResizeddisplay] = useState(true);
+  const [resizedisplay, setResizeddisplay] = useState(true);
 
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const Home = () => {
   }
 
 
-  useEffect(()=>{
+  useEffect(() => {
     const handleresize = () => {
       if (window.innerWidth > 1366) {
         homeporfileRef.current.style.display = 'block';
@@ -54,10 +54,10 @@ const Home = () => {
 
       if (window.innerWidth > 698) {
         homeusggestionRef.current.style.display = 'block';
-      
+
       } else {
         homeusggestionRef.current.style.display = 'none';
-        
+
       }
     };
     handleresize();
@@ -66,8 +66,8 @@ const Home = () => {
     window.addEventListener('resize', handleresize);
 
 
-    return ()=> window.removeEventListener('resize',handleresize)
-},[window.innerWidth])
+    return () => window.removeEventListener('resize', handleresize)
+  }, [window.innerWidth])
 
 
 
@@ -146,32 +146,65 @@ const Home = () => {
 
   };
 
+  const stories = [
+    {
+      id: 1,
+      image: "https://picsum.photos/200",
+      username: "Akash",
+    },
+    {
+      id: 2,
+      image: "https://picsum.photos/200",
+      username: "Akash",
+    },
+    {
+      id: 3,
+      image: "https://picsum.photos/200",
+      username: "Akash",
+    },
+    {
+      id: 4,
+      image: "https://picsum.photos/200",
+      username: "Akash",
+    },
+    {
+      id: 5,
+      image: "https://picsum.photos/200",
+      username: "Akash",
+    },
+    {
+      id: 6,
+      image: "https://via.placeholder.com/150",
+      username: "Ravi",
+    },
+  ];
 
-  
+
+
   return (
     <section className="container">
       <div ref={homeporfileRef} className="home-profile-out-box scrollbar">
         <div className="home-profile">
           <div className="home-profile-header">
             <div className="home-profle-header-box">
-            <div className="home-profile-pic-container">
-              <img
-                src={usertoken.user.profile_pic ? usertoken.user.profile_pic : defaultprofilephoto}
-                alt="Profile"
-                className="profile-pic-large"
-              />
-              {profilepicloading && <div className="profile-pic-loading">
-                <div className="profile-pic-anime-loader"></div>
+              <div className="home-profile-pic-container">
+                <img
+                  src={usertoken.user.profile_pic ? usertoken.user.profile_pic : defaultprofilephoto}
+                  alt="Profile"
+                  className="profile-pic-large"
+                />
+                {profilepicloading && <div className="profile-pic-loading">
+                  <div className="profile-pic-anime-loader"></div>
                 </div>}
-              <ProfileUpload setProfilepicloading={setProfilepicloading} />
-            </div>
-            <div className="home-profile-name-box">
-              <h2>{usertoken.user.username} <span style={{ fontSize : '0.7rem' ,color : 'var(--lighttextcolor)'}}>M</span></h2>
-              <p>{usertoken.user.fullname ? usertoken.user.fullname : "Fullname not set"}</p>
-            </div>
+                <ProfileUpload setProfilepicloading={setProfilepicloading} />
+              </div>
+              <div className="home-profile-name-box">
+                <h2>{usertoken.user.username} <span style={{ fontSize: '0.7rem', color: 'var(--lighttextcolor)' }}>M</span></h2>
+                <p>{usertoken.user.fullname ? usertoken.user.fullname : "Fullname not set"}</p>
+              </div>
             </div>
             {/* <button className="iconbtn home-pro-share active"><Send  size={18} /></button> */}
-            <ShareProfile fontsize ={20} profileurllink={`/profile/${usertoken.user.username}`}/>
+            <ShareProfile fontsize={20} profileurllink={`/profile/${usertoken.user.username}`} />
 
           </div>
 
@@ -189,7 +222,7 @@ const Home = () => {
           <p className="profile-bio">{usertoken.user.bio || "No bio available."}</p>
           <div className="home-profile-overviev">
 
-          <h4 >Profile Overview</h4>
+            <h4 >Profile Overview</h4>
 
           </div>
 
@@ -204,6 +237,31 @@ const Home = () => {
       </div>
       <div className="container-box scrollbar">
         <div className="home-post-box">
+          <div className="home-post-box-story scrollbar">
+            <ul className="home-story-box">
+            {stories.map((story) => (
+        <li key={story.id}  > 
+            <img src={story.image} alt={story.username} />
+         </li>
+      ))}
+              {/* <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li> */}
+            </ul>
+          </div>
+            <div className="home-post-box-upload">
+              <div className="home-post-type-box ">
+                <input type="text" name="post"  />
+                <button className="button">Post</button>
+              </div>
+              <div className="home-post-button-box"></div>
+
+            </div>
+
 
         </div>
         <h2>Posts</h2>
@@ -283,7 +341,7 @@ const Home = () => {
       </div>
       <div ref={homeusggestionRef} className="user-suggestion scrollbar">
         <UserSearch />
-  { resizedisplay &&     <Leaderboard />}
+        {resizedisplay && <Leaderboard />}
         <SuggestedUsers />
         <TrendingPosts />
 

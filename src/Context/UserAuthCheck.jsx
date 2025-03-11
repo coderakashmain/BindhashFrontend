@@ -17,6 +17,8 @@ const UserAuthCheck = ({children}) => {
     
     useEffect(() => {
     
+
+    
         const checkAuth = async () => {
             try {
              const response =  await axios.get("/api/auth-check/check", { withCredentials: true });
@@ -34,7 +36,7 @@ const UserAuthCheck = ({children}) => {
  
   
     
-    }, [loginkchecktoken]); 
+    }, []); 
 
     if (loading) {
       return <div>Loading...</div>; // Prevent flashing by showing loading state

@@ -21,6 +21,7 @@ const SuggestedUsers = () => {
 
     fetchSuggestedUsers();
   }, [usertoken.user.id]);
+  // console.log(suggestedUsers)
 
   return (
     <div className="suggested-users-container">
