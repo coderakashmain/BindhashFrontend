@@ -31,7 +31,7 @@ const Post = ({ post, user }) => {
   return (
     <div className="post">
       <p>{post.content}</p>
-      {post.image && <img src={`http://localhost:3000${post.image}`} alt="Post" loading="lazy" className="post-image" />}
+      {post.image && <img src={post.image} alt="Post" loading="lazy" className="post-image" />}
       <div className="post-actions">
         <button onClick={handleLike} className={liked ? "liked" : ""}>
           👍 {likes} Likes

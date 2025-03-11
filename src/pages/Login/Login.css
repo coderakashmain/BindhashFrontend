@@ -112,10 +112,20 @@
     height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
+    position: relative;
+   
+}
+.login-container-box2 img {
+   position: absolute;
+   bottom: -10%;
+   right: 20%;
+   transform: scale(0.9);
 }
 .login-container-box2 h1 {
     font-size: 5rem;
+    z-index: 2;
+
 }
 
 @media (max-width : 700px) {

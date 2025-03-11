@@ -1,0 +1,82 @@
+.trendingcom-trending-posts {
+    width: 100%;
+    margin: 1.2rem auto;
+    padding: 0.9rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.trendingcom-1);
+    text-align: center;
+  }
+  
+  .trendingcom-trending-posts h2 {
+    font-size: 1.trendingcom-5rem;
+    margin-bottom: 1rem;
+    text-align: start;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  
+  .trendingcom-trending-posts ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .trendingcom-trending-post {
+    padding: .6rem;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+  }
+  
+  .trendingcom-user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  
+  .trendingcom-profile-pic {
+    width: 2.18rem;
+    height: 2.18rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .trendingcom-username {
+    font-weight: bold;
+  }
+  
+  .trendingcom-post-content {
+    margin: 0.3rem 0;
+    font-size: 0.trendingcom-9rem;
+}
+
+.trendingcom-post-image {
+      background-color: rgb(241, 243, 244);
+    width: 100%;
+    max-height: 12.5rem;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-top: 0.3rem;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+  }
+  
+  .trendingcom-post-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.trendingcom-8rem;
+    color: #555;
+    margin-top: 0.3rem;
+  }
+  
+  .trendingcom-likes {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #007BFF;
+  }
+  
+  .trendingcom-time {
+    font-style: italic;
+  }
+  

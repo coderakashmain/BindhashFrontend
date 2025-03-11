@@ -11,7 +11,8 @@
   --buttoncolor: rgb(0, 122, 255);
   --buttonhovercolor : rgba(30, 161, 209, 0.251);
   --backwhitecolor : '#ffffff';
-  --navboxshodow : ' 0 4px 10px rgba(0, 0, 0, 0.1);'
+  --navboxshodow : ' 0 4px 10px rgba(0, 0, 0, 0.1)';
+  --lighttextcolor :#777;
 }
 .dark {
   --navbackcolor: rgb(30, 30, 30);
@@ -20,6 +21,7 @@
   --buttoncolor: rgb(255, 100, 100);
   --buttonhovercolor : rgb(234, 232, 232);
   --backwhitecolor : '#000';
+  --lighttextcolor :#e1e1e1;
 
 }
 

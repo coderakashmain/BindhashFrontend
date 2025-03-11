@@ -1,0 +1,97 @@
+.user-searchbox-box{
+    width: 100%;
+    padding: 0 1rem 0.3rem;
+    position: relative;
+
+    
+  }
+  
+  .user-suggesion-input-box{
+    display: flex;
+    border-radius: 0.4rem;
+    border: 1px solid rgb(201, 201, 201);
+    
+    position: relative;
+    
+   
+  }
+  .user-suggesion-input-box button{
+    padding: 0rem 1rem;
+    background-color: transparent;
+    border: none;
+
+    cursor: pointer;
+  }
+  .user-suggestion   input{
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    outline: none;
+    font-size: 0.9rem;
+    border-radius: 0.4rem;
+    
+  }
+  
+  .searchbox-list-search{
+    position: fixed;
+    right:  30%;
+    width: 0;
+    min-height: 10vh;
+    border-radius: 0.4rem;
+    transition: all 0.2s ease-in-out;
+    background-color: #F9F9F9;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    max-height: 85vh;
+    overflow-y: scroll;
+    z-index: 100;
+   
+    
+ 
+  }
+  .searchbox-list-search ul{
+  
+   transition: all 0.2s ease-in-out;
+  
+
+  }
+  .searchbox-list-search li{
+   padding: 1rem;
+   transition: all 0.2s ease-in-out;
+  list-style: none;
+  position: relative;
+
+  }
+  .search-close-btn{
+      position: absolute;
+      top: 5%;
+      right :4%;
+      cursor: pointer;
+  }
+  .searchbox-list-search .search-result-text{
+    padding: 1rem 1rem;
+    font-size: 1.05rem;
+  }
+  .user-search-list-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .user-search-list-item img{
+border-radius: 50%;
+width: 3rem;
+height: 3rem;
+  }
+  .user-search-user-name-box{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .user-search-list-item-box{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .user-search-list-item-box p:last-child{
+   font-size: 0.8rem;
+  }

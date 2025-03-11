@@ -1,8 +1,82 @@
 .active{
-    transform: scale(1);
+    
     transition: all 0.2s ease-in-out;
 }
 .active:active{
-    transform: scale(0.98);
+    transform: scale(0.95);
    
 }
+.iconbtn{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 0.3rem;
+    right: 0px;
+    transition: all 0.2s ease-in-out;
+   
+  }
+  
+ 
+  .scrollbar::-webkit-scrollbar-track {
+   background-color: #55555500;
+  }
+   
+  
+  .scrollbar::-webkit-scrollbar-thumb {
+    background:rgb(236, 236, 236);
+    border-radius: 1.8rem;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #cdcdcded; 
+  }
+
+  .button{
+    outline: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.8rem 1.1rem;
+    font-size: 0.95rem;
+    /* background-color: black; */
+    background-color: transparent;
+    border: 1px solid #cecaca;
+    border-radius: 0.3rem;
+    color: #000;
+    font-weight: 500;
+    user-select: none;
+  }
+
+  @media (max-width: 1414px) {
+    html {
+      font-size:90%; /* 1rem = 10px (if root font size is 16px) */
+    }
+  }
+  @media (max-width: 1111px) {
+    html {
+      font-size:80%; /* 1rem = 10px (if root font size is 16px) */
+    }
+  }
+  @media (max-width: 698px) {
+    html {
+      font-size:85%; /* 1rem = 10px (if root font size is 16px) */
+    }
+  }
+  @media (max-width: 402px) {
+    html {
+      font-size:80%; /* 1rem = 10px (if root font size is 16px) */
+    }
+  }
+  @media (max-width: 350px) {
+    html {
+      font-size:70%; /* 1rem = 10px (if root font size is 16px) */
+    }
+  }
+  @media (max-width: 300px) {
+    html {
+      font-size:3vw; /* 1rem = 10px (if root font size is 16px) */
+    }
+  }

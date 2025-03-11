@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import Home from './pages/Home/Home'
 import Register from './pages/Register/Register'
@@ -14,8 +14,32 @@ import UserAuthCheck from './Context/UserAuthCheck';
 import Chat from './pages/Chat/Chat';
 import FullchatPage from './pages/Chat/FullchatPage';
 import DefaultChatPage from './pages/Chat/DefaultChatPage';
+import AllUserList from './Context/AllUserList';
+import { SocketProvider } from './Context/SocketContext';
+
 
 const App = () => {
+  const VITE_VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY;
+
+
+
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator && "PushManager" in window) {
+      navigator.serviceWorker.register("/sw.js").then(registration => {
+        return registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: VITE_VAPID_PUBLIC_KEY
+        });
+      }).then(subscription => {
+        fetch("http://localhost:3000/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId: "123", subscription })
+        });
+      });
+    }
+  }, []);
 
   const router = createBrowserRouter([
     {
@@ -24,7 +48,7 @@ const App = () => {
     },
     {
       path: '/',
-      element: <><ErrorBoundary><UserAuthCheck><AllPostContext><AllpageRouter /></AllPostContext></UserAuthCheck></ErrorBoundary></>,
+      element: <><ErrorBoundary><SocketProvider><UserAuthCheck><AllPostContext><AllUserList><AllpageRouter /></AllUserList></AllPostContext></UserAuthCheck></SocketProvider></ErrorBoundary></>,
       children: [
         {
           path: '',

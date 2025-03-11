@@ -1,0 +1,87 @@
+.suggested-users-container {
+    margin: 2rem 0 0 0;
+    background: #fff;
+    padding: 0.91rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    /* max-width: 350px; */
+  }
+  
+  .suggested-users-container h2 {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .suggestion-profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: #f9f9f9;
+    transition: background 0.3s ease;
+  }
+  
+  .suggestion-profile:hover {
+    background: #eaeaea;
+  }
+  
+  .suggestion-profile-pic img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+  }
+  
+  .suggestion-profile-info {
+    flex-grow: 1;
+    margin-left: 10px;
+  }
+  
+  .suggestion-profile-info h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #222;
+    margin: 0;
+  }
+  
+  .suggestion-profile-info p {
+    font-size: 0.8rem;
+    color: #777;
+    margin: 2px 0 0;
+  }
+  
+  .suggestion-profile-info strong {
+    color: #333;
+  }
+  
+  .suggestion-profile button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .suggestion-profile button:hover {
+    background: #0056b3;
+  }
+  
+  .suggestion-profile button.liked {
+    background: red;
+  }
+  
+  .suggestion-profile button.liked:hover {
+    background: darkred;
+  }
+  
