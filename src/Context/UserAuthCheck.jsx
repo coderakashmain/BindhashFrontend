@@ -22,11 +22,13 @@ const UserAuthCheck = ({children}) => {
         const checkAuth = async () => {
             try {
              const response =  await axios.get("/api/auth-check/check", { withCredentials: true });
+         
              setUsertoken(response.data)
             } catch (error) {
-              console.error("Auth check failed:", error);
+              console.error("Auth check failed:", error.response ? error.response.data : error.message);
               setUsertoken(null);
-              // navigate("/login");
+ 
+        
             }finally {
               setLoading(false); 
             }
@@ -36,7 +38,12 @@ const UserAuthCheck = ({children}) => {
  
   
     
-    }, []); 
+    }, [loginkchecktoken]); 
+
+  
+
+
+    
 
     if (loading) {
       return <div>Loading...</div>; // Prevent flashing by showing loading state

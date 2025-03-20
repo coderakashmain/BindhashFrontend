@@ -17,9 +17,10 @@ const Followbtn = ({ targetUserId }) => {
         console.error("Error checking follow status:", error);
       }
     };
-
+    
     checkFollowingStatus();
   }, [targetUserId, usertoken.user.id]);
+
 
   
 
@@ -49,7 +50,7 @@ const Followbtn = ({ targetUserId }) => {
   return (
     <button       onClick={handleFollowToggle}
     
-    style={{ padding: '0.8rem 0.6rem', borderRadius: '5px', backgroundColor: isFollowing ? '#ebebeb' : 'black', cursor: 'pointer',display :'flex',alignItems :'center', gap: '0.3rem',fontSize :'0.8rem',outline : 'none', border : 'none',color: isFollowing ? 'black' : 'white' }} className='active follow-fuction'>
+    style={{ padding: '0.8rem 0.6rem', borderRadius: '5px', background: isFollowing ? '#ebebeb' : 'var(--linearcolor)', cursor: 'pointer',display :'flex',alignItems :'center', gap: '0.3rem',fontSize :'0.8rem',outline : 'none', border : 'none',color: isFollowing ? 'black' : 'white' }} className='active follow-fuction'>
       {isFollowing ? "Unfollow" : (
         <>
           Follow <UserPlus size={15} />

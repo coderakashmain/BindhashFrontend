@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import './Userlist.css'
 import {ArrowRightLeft} from 'lucide-react'
-import profilelogo from '../../Photo/defaultprofile2.png'
+import profilelogo from '../../Photo/defaultprofilepic.png'
 import '../../App.css'
 const UserList = () => {
   const { usertoken } = useContext(UserAuthCheckContext);
@@ -41,7 +41,7 @@ const UserList = () => {
       {users?.length > 0 &&
   users.map((u) => (
     <div key={u.id} className="user-item active" onClick={() => navigate(`/chat/${u.id}`)}>
-      <div><img src={u?.profile_pic ? u.profile_pic : profilelogo} loading="lazy" alt="profile_pic" /></div>
+      <div className="user-item-image-box"><img src={u?.profile_pic ? u.profile_pic : profilelogo} loading="lazy" alt="profile_pic" /></div>
       
       <strong>{u.username}</strong>
     </div>

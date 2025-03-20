@@ -13,25 +13,62 @@ import CommentSection from "./CommentSection";
 const PostModel = ({ postId, onClose }) => {
 
     const [comments, setComments] = useState([]);
-    const [newComment, setNewComment] = useState("");
+    const [mobileview, setMobileview] = useState(false);
     const { allpost, setAllpost, isLiked, setIsLiked } = useContext(AllPostContextData);
     const { usertoken } = useContext(UserAuthCheckContext);
     const modalRef = useRef(null);
 
+    useEffect(() => {
+        const resize = () => {
+            if (window.innerWidth < 644) {
+                setMobileview(false);
+            } else {
+                setMobileview(true);
+            }
+        };
+    
+
+        resize();
+    
+        window.addEventListener('resize', resize);
+    
+        return () => {
+            window.removeEventListener('resize', resize);
+        };
+    }, []); 
+ 
+
 
     useEffect(() => {
-        if (postId) {
-            let tl = gsap.timeline();
-
-            tl.to(modalRef.current, { scale: 1, duration: 0.5, ease: "power2.out" });
-
-            tl.to(modalRef.current, { backgroundColor: 'rgba(0, 0, 0, 0.7)', duration: 0.5, ease: "power2.out" })
+        if (!postId || !modalRef.current) return; 
+        let tl = gsap.timeline();
+        if(mobileview){
+          
+    
+                tl.to(modalRef.current, { scale: 1, duration: 0.5, ease: "power2.out" })
+    
+                .to(modalRef.current, { backgroundColor: 'rgba(0, 0, 0, 0.7)', duration: 0.5, ease: "power2.out" })
+                document.body.style.overflowY = 'hidden'
+           
+        }else{
+               document.body.style.overflowY = 'hidden'
+            tl.fromTo(
+                modalRef.current,
+                { y : '100%' }, // Start from scale 0
+                { y: "0%", duration: 0.5, ease: "power2.out" }
+              )
+    
+              .fromTo(modalRef.current,  
+                { backgroundColor: 'rgba(0, 0, 0, 0)' }, // Start from transparent
+                { backgroundColor: 'rgba(0, 0, 0, 0.7)', duration: 0.5, ease: "power2.out" })
         }
-    }, [postId]);
+      
+    }, [postId,mobileview]);
 
     // ✅ Close animation (100% → 0%)
     const handleClose = () => {
         gsap.to(modalRef.current, { opacity: 0, y: "100%", duration: 0.3, ease: "power2.in", onComplete: onClose });
+           document.body.style.overflowY = 'scroll'
     };
 
 

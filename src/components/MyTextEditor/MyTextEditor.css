@@ -1,0 +1,61 @@
+/* Container */
+.editor-container {
+    border: 1px solid #ddd;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #fff;
+width: 100%;
+    margin: auto;
+}
+
+/* Toolbar */
+.editor-toolbar {
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+/* Buttons */
+.editor-btn, .filter-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.editor-btn:hover, .filter-btn:hover {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+}
+
+/* Active button */
+.editor-btn.active, .filter-btn.active {
+    background-color: #2890E1;
+    color: white;
+    border-color: #1a73e8;
+}
+
+/* Editor Content */
+.editor-content {
+    min-height: 150px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fafafa;
+}
+
+/* Output Section */
+.editor-output {
+    margin-top: 12px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}

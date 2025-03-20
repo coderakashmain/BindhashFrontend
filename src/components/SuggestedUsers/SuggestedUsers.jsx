@@ -4,6 +4,8 @@ import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import Followbtn from "../ProfileStats/Followbtn";
 import defaultprofilepic from '../../Photo/defaultprofilepic.png'
 import "./SuggestedUsers.css";
+import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 
 const SuggestedUsers = () => {
   const { usertoken } = useContext(UserAuthCheckContext);
@@ -21,10 +23,12 @@ const SuggestedUsers = () => {
 
     fetchSuggestedUsers();
   }, [usertoken.user.id]);
-  // console.log(suggestedUsers)
+
+
 
   return (
     <div className="suggested-users-container">
+     {suggestedUsers.length > 0 ? ( <>
       <h2>Suggested Users</h2>
       {suggestedUsers.map((user) => (
         <div key={user.id} className="suggestion-profile">
@@ -43,6 +47,18 @@ const SuggestedUsers = () => {
           <Followbtn targetUserId={user.id} />
         </div>
       ))}
+      </>) : (
+         <Box sx={{ width: "100%" }} >
+         <Skeleton  height={50} />
+         <Skeleton animation="wave" height={50} />
+         <Skeleton  height={50} />
+         <Skeleton animation="wave"   height={50}/>
+         <Skeleton   height={50}/>
+         <Skeleton animation="wave" />
+         <Skeleton animation="wave" />
+         <Skeleton animation={false} />
+       </Box>
+      )}
     </div>
   );
 };

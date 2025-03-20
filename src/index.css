@@ -1,28 +1,39 @@
+@import "tailwindcss";
 * {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
  box-sizing: border-box;
 }
+
 :root{
+  --webbackcolor : #f7f7f7;
+  --webbackshahow :  0px 4px 10px rgba(0, 0, 0, 0.1);
+  --backwhitecolor : white;
+
+  
   --navbackcolor : rgb(255, 255, 255);
+  --navboxshodow :  0 4px 10px rgba(0, 0, 0, 0.1);
   --blacktextcolor : #000;
   --textcolor: black;
+  --textwhitecolor: #ffffff;
+  --lighttextcolor :#777;
   --buttoncolor: rgb(0, 122, 255);
   --buttonhovercolor : rgba(30, 161, 209, 0.251);
-  --backwhitecolor : '#ffffff';
-  --navboxshodow : ' 0 4px 10px rgba(0, 0, 0, 0.1)';
-  --lighttextcolor :#777;
+  --popupbackcolor : rgba(0, 0, 0, 0.081);
+  --linearcolor : linear-gradient(135deg, black, #2890E1);
 }
 .dark {
+  --webbackcolor : rgb(213, 213, 213);
   --navbackcolor: rgb(30, 30, 30);
   --blacktextcolor : #ffffff;
   --textcolor: white;
+  --textwhitecolor: #000000;
   --buttoncolor: rgb(255, 100, 100);
   --buttonhovercolor : rgb(234, 232, 232);
   --backwhitecolor : '#000';
   --lighttextcolor :#e1e1e1;
-
+  --popupbackcolor : rgba(0, 0, 0, 0.081);
 }
 
 

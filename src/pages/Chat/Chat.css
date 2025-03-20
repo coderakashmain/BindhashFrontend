@@ -99,22 +99,27 @@
     flex-direction: column;
 }   
 .receiver-pic{
-    width: 5rem;
-    height: 5rem;
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 4px solid black;
+  border-radius: 50%;
+  border: 2px solid rgba(200, 200, 200, 0.46);
+  width: 5rem;
+  height: 5rem;
     margin-bottom: 1rem;
    
 }   
 .receiver-pic img{
-   height: 5rem;
-   object-fit: contain;
-   aspect-ratio: 1/1;
+  border-radius: 50%;
+  height: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
 }   
+.receiver-data button{
+margin: 1rem 0 !important;
+}  
+.receiver-new-chat{
+  background-color: red;
+  width: 60%;
+}
+
 .chat-messages {
    
     display: flex;

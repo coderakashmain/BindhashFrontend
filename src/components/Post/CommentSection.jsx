@@ -19,7 +19,7 @@ const CommentSection = ({ post}) => {
     const socket = useSocket();
 
     if (!usertoken) return null;
-
+   
 
     useEffect(()=>{
         if (post && post.comments) {
@@ -187,7 +187,7 @@ const CommentSection = ({ post}) => {
                                 <strong>{c.commenter_username} <span>{c.comment_pinned ? "Pinned" : ""}</span></strong>
                                 <span className="comment-date">{c.comment_created_at && formatTimeAgo(c.comment_created_at)}</span>
                             </div>
-                            <p className="comment-sec-text">{c.comment_text}</p>
+                            <p className="comment-sec-text ">{c.comment_text}</p>
                             <div className="comment-actions">
                                 <Heart size={16} color={c.comment_likes > 0 ? "red" : "gray"} onClick={() => handleLikeComment(c.comment_id)} />
                                 <span>{c.comment_likes || 0}</span>

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
+import React, { useContext, useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import './AllpageRouter.css'
 import Slidebar from '../components/Slidebar/Slidebar'
 import PageRouter from './PageRouter'
@@ -8,21 +8,24 @@ import PollCreate from '../components/Poll/PollCreate'
 import PollView from '../components/Poll/PollView'
 import Feedback from '../pages/Feedback/Feedback'
 
+import PollList from '../components/Poll/PollList'
+
 
 const AllpageRouter = () => {
 
 
 
+
+
+
   return (
     <section id='Entire-section'>
-      {/* <PollCreate /> */}
-      {/* <PollView /> */}
-      {/*<Feedback/>*/}
+      
       <Navbar />
       <div id='Entire-section-box'>
         <PageRouter />
-        {/* <Slidebar /> */}
       </div>
+
     </section>
   )
 }

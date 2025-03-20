@@ -72,7 +72,7 @@
     outline: none;
     transition: all 0.15s ease-in;
     transform: scale(1.02);
-    box-shadow: 0.2rem 0.2rem 0.2rem rgb(74, 73, 73);;
+    box-shadow: 0.2rem 0.2rem 0.2rem rgb(74, 73, 73);
 }
 .register-container-box1-inside form button {
     background-color:var(--buttoncolor);

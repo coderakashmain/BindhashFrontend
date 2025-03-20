@@ -7,6 +7,7 @@ import axios from "axios";
 import { SendHorizontal, SmilePlus, UserRound } from 'lucide-react';
 import profilelogo from '../../Photo/defaultprofile2.png'
 import { useSocket } from "../../Context/SocketContext";
+import defaultprofilepic from '../../Photo/defaultprofilepic.png'
 
 
 
@@ -48,7 +49,7 @@ const Chat = () => {
     if (!socket || !receiverId) return;
 
     socket.emit("markAsRead", { sender_id: receiverId, receiver_id: usertoken.user.id });
-}, [socket, receiverId]);
+  }, [socket, receiverId]);
 
 
 
@@ -64,7 +65,7 @@ const Chat = () => {
       }
     };
 
-  
+
 
 
     socket.on("privateMessage", handlePrivateMessage);
@@ -72,7 +73,7 @@ const Chat = () => {
     return () => {
       socket.off("privateMessage", handlePrivateMessage); // Cleanup on unmount
     };
-  }, [receiverId,socket]);
+  }, [receiverId, socket]);
 
   const sendMessage = () => {
     if (message.trim() === "") return;
@@ -80,14 +81,14 @@ const Chat = () => {
     const msgData = {
       sender_id: usertoken.user.id,
       receiver_id: receiverId,
-      
+
       message,
     };
 
     // Save to database
     axios.post("/api/messages", msgData)
       .then((res) => {
-        const savedMessage = { ...msgData, message_id: res.data.message_id,   created_at: res.data.created_at || new Date().toISOString(),   status: "sent" };
+        const savedMessage = { ...msgData, message_id: res.data.message_id, created_at: res.data.created_at || new Date().toISOString(), status: "sent" };
 
         // Notify receiver via WebSocket
         socket.emit("sendMessage", savedMessage);
@@ -115,10 +116,10 @@ const Chat = () => {
     let hours = date.getHours();
     const minutes = date.getMinutes().toString().padStart(2, "0");
     const ampm = hours >= 12 ? "PM" : "AM";
-  
+
     // Convert 24-hour format to 12-hour format
     hours = hours % 12 || 12; // Converts 0 to 12 for midnight
-  
+
     return `${hours}:${minutes} ${ampm}`;
   };
 
@@ -127,32 +128,33 @@ const Chat = () => {
     <div className="chat-container">
       <div className="chat-scrollbox" ref={chatContainerRef}>
         <div className="receiver-data">
-          <div className="receiver-pic" style={{ border: receiver.profile_pic ? 'none' : '3px solid black' }}>
+          <div className="receiver-pic">
             <img
-              src={receiver.profile_pic ? receiver.profile_pic : profilelogo} loading="lazy" alt="receiverphtot"
-              style={{ height: receiver.profile_pic ? '5rem' : '4rem' }}
+              src={receiver.profile_pic ? receiver.profile_pic : defaultprofilepic} loading="lazy" alt="receiverphtot"
+              
             />
-
-
-
           </div>
-          <h3>{receiver?.username} 
+          <h3>{receiver?.username}
           </h3>
+          <button className=" button">View Profile</button>
+          <div className="receiver-new-chat">
+              hsdfsdk
+          </div>
         </div>
 
 
         <div className="chat-messages">
-        {messages.map((msg, index) => (
+          {messages.map((msg, index) => (
             <div className={`chat-messaged-each ${msg.sender_id === usertoken.user.id ? "own-message" : "other-message"}`} key={index}>
-                <p className="message-text">{msg.message}</p>
-                <p className="message-status">
+              <p className="message-text">{msg.message}</p>
+              <p className="message-status">
                 {msg.created_at ? formatTime(msg.created_at) : "Time N/A"}  {msg.status === "read" ? "✓✓ Read" : msg.status === "delivered" ? "✓ Delivered" : "✓ Sent"}
-                </p>
+              </p>
             </div>
-        ))}
-    </div>
+          ))}
+        </div>
       </div>
-          
+
       <div className="chat-input">
         <div className="chat-input-left">
           <button>

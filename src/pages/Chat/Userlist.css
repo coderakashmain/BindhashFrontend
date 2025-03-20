@@ -65,14 +65,18 @@
 
   
 }
-.user-item div{
+.user-item .user-item-image-box{
 border-radius: 50%;
+border: 2px solid rgba(200, 200, 200, 0.46);
+width: 3rem;
+height: 3rem;
 }
 .user-item img{
-    width: 3rem;
-    height: 3rem;
+   
     border-radius: 50%;
-    border: 2px solid black;
+ height: 100%;
+ aspect-ratio: 1/1;
+ object-fit: cover;
    
 }
 .user-item strong{

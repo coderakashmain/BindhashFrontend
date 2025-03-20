@@ -1,71 +1,409 @@
-import react from 'react'
-import './PollView.css'
-import { EllipsisVertical } from 'lucide-react'
-import { ThumbsUp } from 'lucide-react'
-import { MessageCircle } from 'lucide-react'
-import { Eye } from 'lucide-react'
+import React, { useContext, useEffect, useState } from "react";
+import { usePolls } from "../../Context/PollProvider";
+import "./PollView.css";
+import { EllipsisVertical, ThumbsUp, MessageCircle, ScanEye, AlignEndHorizontal } from "lucide-react";
+import Followbtn from "../ProfileStats/Followbtn";
+import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
+import Time from "../Time/Time";
+import { io } from "socket.io-client";
+import axios from "axios";
+import { useSocket } from "../../Context/SocketContext";
+import { LinearProgress, Box, Typography } from "@mui/material";
+import PostOptions from '../PostOptions/PostOptions'
 
-const PollView = () => {
+
+const PollView = ({ pollId }) => {
+    const { polls,setPolls } = usePolls(); // Get polls from context
+    const [selectedPoll, setSelectedPoll] = useState(null);
+    const [selectedOption, setSelectedOption] = useState(null);
+    const { usertoken } = useContext(UserAuthCheckContext)
+    const socket = useSocket();
+
+
+  
+        // console.log(selectedPoll)
+
+   
+
+  
+    const handleViewPoll = async (pollId, userId) => {
+        try {
+            await axios.post(`/api/polls/view/${pollId}`, { user_id: userId });
+        } catch (error) {
+            console.error("Error updating views:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (pollId && usertoken?.user?.id) {
+            handleViewPoll(pollId, usertoken.user.id);
+    
+        }
+    }, [pollId, usertoken]);
+
+    useEffect(() => {
+        if (polls.length > 0) {
+            const pollData = polls.find((poll) => poll.poll_id === pollId);
+            setSelectedPoll(pollData);
+         
+        }
+    }, [polls, pollId]);
+
+
+
+useEffect(() => {
+    socket.on("poll_update", (data) => {
+        console.log("🔥 Received poll_update:", data);
+     
+
+        // setPolls((prevPolls) =>
+        //     prevPolls.map((poll) =>
+        //         poll.poll_id === data.poll_id
+        //             ? { ...poll, likes: poll.likes + (data.decrement ? -1 : 1) }
+        //             : poll
+        //     )
+        // );
+
+
+        setSelectedPoll((prev) => {
+            if (!prev || prev.poll_id !== data.poll_id) return prev;
+            if (data.user_id === usertoken?.user?.id) return prev;
+
+           
+          
+
+            let updatedOptions;
+            let newTotalVotes = prev.total_votes;
+
+            switch (data.type) {
+
+                case "like":
+                    return {
+                        ...prev,
+                        likes: prev.likes + (data.decrement ? -1 : 1)
+                    };
+
+                case "comment":
+                    return {
+                        ...prev,
+                        comments: prev.comments + 1
+                    };
+
+                case "view":
+                    return {
+                        ...prev,
+                        views: prev.views + 1
+                    };
+
+                    case "vote":
+                        newTotalVotes += data.decrement ? -1 : 1;
+    
+                        updatedOptions = prev.options.map((opt) => ({
+                            ...opt,
+                            votes: opt.option_id === data.poll_option_id
+                                ? opt.votes + (data.decrement ? -1 : 1)
+                                : opt.votes,
+                            user_voted: opt.option_id === data.poll_option_id && !data.decrement,
+                        }));
+    
+                        break;
+    
+                    case "vote_transfer":
+                        updatedOptions = prev.options.map((opt) => ({
+                            ...opt,
+                            votes: opt.option_id === data.poll_option_id
+                                ? opt.votes + 1 // New option gets a vote
+                                : opt.option_id === data.previousOptionId
+                                ? opt.votes - 1 // Previous option loses a vote
+                                : opt.votes,
+                            user_voted: opt.option_id === data.poll_option_id,
+                        }));
+    
+                        break;
+    
+                    default:
+                        return prev;
+                }
+    
+                // **Recalculate Percentage** after updating votes
+                const updatedOptionsWithPercentage = updatedOptions.map((opt) => ({
+                    ...opt,
+                    percentage: newTotalVotes > 0 ? ((opt.votes / newTotalVotes) * 100).toFixed(2) : 0,
+                }));
+    
+                return {
+                    ...prev,
+                    options: updatedOptionsWithPercentage,
+                    total_votes: newTotalVotes,
+                };
+            });
+        });
+    
+        return () => socket.off("poll_update");
+    }, [pollId, socket, usertoken]);
+
+
+    
+    
+
+    if (!selectedPoll) return <p>Loading poll...</p>;
+
+    const handleLike = async () => {
+        if (!selectedPoll) return;
+    
+        const alreadyLiked = selectedPoll.user_has_liked;
+        
+     
+        setSelectedPoll((prevPoll) => {
+            if (!prevPoll) return prevPoll;
+    
+            return {
+                ...prevPoll,
+                likes: alreadyLiked ? prevPoll.likes - 1 : prevPoll.likes + 1,
+                user_has_liked: !alreadyLiked 
+            };
+        });
+    
+        try {
+            await axios.post(`/api/polls/like/${pollId}`, { 
+                user_id: usertoken.user.id 
+            });
+        } catch (error) {
+            console.error("Error liking poll:", error);
+    
+            // Rollback UI if request fails
+            setSelectedPoll((prevPoll) => {
+                if (!prevPoll) return prevPoll;
+                return {
+                    ...prevPoll,
+                    likes: alreadyLiked ? prevPoll.likes + 1 : prevPoll.likes - 1, // Revert like count
+                    user_has_liked: alreadyLiked, // Restore like state
+                };
+            });
+        }
+    };
+    
+   
+
+    const handleComment = async (commentText) => {
+        await axios.post(`/api/polls/comment/${pollId}`, { comment: commentText, user_id: usertoken.user.id });
+    };
+
+    const handleVote = async (option_id) => {
+
+    
+        if (!selectedPoll) return;
+    
+        setSelectedPoll((prevPoll) => {
+            if (!prevPoll) return prevPoll;
+    
+            const previousOptionId = prevPoll.user_voted_option;
+            let updatedOptions;
+            let newUserVotedOption;
+            let newVoterUserId;
+    
+            if (previousOptionId === option_id) {
+           
+                // User is unvoting
+                updatedOptions = prevPoll.options.map((option) =>
+                    option.option_id === option_id
+                        ? { ...option, votes: option.votes - 1, user_voted: false }
+                        : option
+                );
+                newUserVotedOption = null; 
+                newVoterUserId = null;// Reset user's vote
+            } else {
+                // User is voting/changing vote
+                updatedOptions = prevPoll.options.map((option) => ({
+                    ...option,
+                    votes:
+                        option.option_id === option_id
+                            ? option.votes + 1
+                            : option.option_id === previousOptionId
+                            ? option.votes - 1
+                            : option.votes,
+                    user_voted: option.option_id === option_id, // Set correct user_voted flag
+                }));
+                newUserVotedOption = option_id;
+                newVoterUserId = usertoken.user.id; 
+            }
+    
+            const totalVotes = updatedOptions.reduce((sum, option) => sum + option.votes, 0);
+    
+            const updatedOptionsWithPercentage = updatedOptions.map((option) => ({
+                ...option,
+                percentage: totalVotes > 0 ? ((option.votes / totalVotes) * 100).toFixed(2) : 0,
+            }));
+    
+            return {
+                ...prevPoll,
+                options: updatedOptionsWithPercentage,
+                total_votes: totalVotes,
+                user_voted_option: newUserVotedOption,
+                voter_user_id: newVoterUserId,
+            };
+        });
+    
+        
+        try {
+            await axios.post(`/api/polls/vote/${option_id}`, {
+                user_id: usertoken.user.id,
+                poll_id: pollId,
+            });
+        } catch (error) {
+            console.error("Error voting:", error);
+        }
+    };
+
+    
+    
+  
+console.log(selectedPoll)
+
+    const progressColors = [
+        "rgba(33, 150, 243, 0.1)",  // Light Blue
+        "rgba(76, 175, 80, 0.1)",   // Light Green
+        "rgba(255, 152, 0, 0.1)",   // Light Orange
+        "rgba(244, 67, 54, 0.1)",   // Light Red
+        "rgba(156, 39, 176, 0.1)",  // Light Purple
+      ];
     return (
-        <section className='poll-view-section'>
-            <div className='poll-view-container'>
+        <section className="poll-view-section">
+            <div className="poll-view-container">
                 <div className="poll-view-container-inside">
-
+                    {/* Profile Section */}
                     <div className="poll-view-container-inside-profile-details">
                         <div className="poll-view-container-inside-profile-details-user-details">
-                            <div className="poll-view-container-inside-profile-details-profile-pic"></div>
+                            <img
+                                src={selectedPoll.posted_by.profile_pic || "/default-profile.png"}
+                                alt="Profile"
+                                className="poll-view-container-inside-profile-details-profile-pic"
+                            />
                             <div className="poll-view-container-inside-profile-details-username-deatils">
-                                <h2>UserName</h2>
-                                <p>Time</p>
+                                <h3>{selectedPoll.posted_by.username}</h3>
+                                <p><Time posttime={selectedPoll.created_at} /></p>
+
                             </div>
                         </div>
                         <div className="profile-details-right">
-                            <button className='follow-btn'>Follow</button>
-                            <span className="more-btn"><EllipsisVertical /></span>
+                            {!(usertoken.user.id === selectedPoll.posted_by.user_id)  && <Followbtn />}
+
+                            <span className="more-btn">
+                                 <PostOptions
+                                                    onEdit={() => console.log("Edit clicked")}
+                                                    onDelete={() => console.log("Delete clicked")}
+                                                    onShare={() => console.log("Share clicked")}
+                                                    onSave={() => console.log("Post saved")}
+                                                    onReport={() => console.log("Post reported")}
+                                                    onCopyLink={() => {
+                                                      navigator.clipboard.writeText("https://yourwebsite.com/post/123");
+                                                      console.log("Link copied!");
+                                                    }}
+                                                    onHide={() => console.log("Post hidden")}
+                                                  />
+                            </span>
                         </div>
                     </div>
 
-                    <p className="poll-view-container-inside-question-msg">Question</p>
+                    {/* Poll Question */}
                     <div className="poll-view-container-inside-question">
-                        <p>Given Question</p>
+                        <p>~ {selectedPoll.question}</p>
                     </div>
 
-                    <p className="poll-view-container-inside-options-msg">Select one</p>
+                    {/* Poll Options */}
                     <div className="poll-view-container-inside-option">
+                        {selectedPoll.options.map((option,index) => (
+                            <label key={option.option_id} className="option-child"style={{
+                                border:  option.option_id === selectedPoll.user_voted_option &&
+                                selectedPoll.voter_user_id === usertoken.user.id?  progressColors[index % progressColors.length].replace(/0\.1\)$/, "0.4)")  : `1px solid ${progressColors[index % progressColors.length]}`
+                              ,  backgroundColor:  option.option_id === selectedPoll.user_voted_option &&
+                              selectedPoll.voter_user_id === usertoken.user.id ? progressColors[index % progressColors.length].replace(/0\.1\)$/, "0.4)")  : ""}}>
+                                <input type="radio" name="poll-option" onClick={() => handleVote(option.option_id)} />
 
-                        <label htmlFor="1" className='first-child'>
-                            <input type="radio" id='1' name='a' value='' />Option 1
-                        </label>
-                        <label htmlFor="2" className='second-child'>
-                            <input type="radio" id='2' name='a' value='' />Option 2
-                        </label>
-                        <label htmlFor="3" className='third-child'>
-                            <input type="radio" id='3' name='a' value='' />Option 3
-                        </label>
-                        <label htmlFor="4" className='forth-child'>
-                            <input type="radio" id='4' name='a' value='' />Option 4
-                        </label>
+                                {option.image && <div className="poll-view-img-box"><img src={option.image} alt="Option" className="option-image" />    </div>}
+
+                                <Box sx={{
+                                    width: "100%",
+                                    height : "100%",
+                                    position: "relative",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-between", // Text on left & percentage on right
+                                }}>
+                                  
+                                    <LinearProgress
+                                        variant="determinate"
+                                        value={option.percentage}
+                                        sx={{
+                                            width: "100%",
+                                            height: "100%", 
+                                            backgroundColor: "#5d5d5d14",
+                                            "& .MuiLinearProgress-bar": {
+                                                backgroundColor: progressColors[index % progressColors.length], 
+                                            },
+                                            position: "absolute", 
+                                            top: 0,
+                                            left: 0,
+                                        }}
+                                    />
+
+                             
+                                    <Typography
+                                        variant="body1"
+                                        sx={{ fontWeight: "bold", zIndex: 2, paddingLeft: "10px", color: "#333" }}
+                                    >
+                                        {option.text}
+                                    </Typography>
+
+                           
+                                    <Typography
+                                        variant="body2"
+                                        sx={{ fontWeight: "bold", zIndex: 2, paddingRight: "10px", color: "#333" }}
+                                    >
+                                        {`${option.percentage}%`}
+                                    </Typography>
+                                </Box>
+                            </label>
+                        ))}
                     </div>
-                    <div className="poll-reaction">
-                        <div className="poll-reaction-item">
-                            <span><ThumbsUp /></span>
-                            <p>Like</p>
-                        </div>
-                        <div className="poll-reaction-item">
-                            <span><MessageCircle /></span>
-                            <p>comment</p>
-                        </div>
-                        <div className="poll-reaction-item">
-                            <span><Eye /></span>
-                            <p>Total view</p>
-                        </div>
 
-                        
+                    {/* Reactions */}
+                    <div className="poll-reaction">
+                        <div className="poll-reaction-left">
+                        <div onClick={handleLike} className="poll-reaction-item" style={{ color : selectedPoll.user_has_liked ? 'rgb(0, 123, 255)' : '',gap :'0.3rem'}}>
+                            <span>
+                                <ThumbsUp size={18} />
+                            </span>
+                            <p>{selectedPoll.likes}</p>
+                        </div>
+                        <div className="poll-reaction-item" style={{gap : '0.3rem'}}>
+                            <span>
+                                <MessageCircle size={18}/>
+                            </span>
+                            <p>{selectedPoll.comments}</p>
+                        </div>
+                        </div>
+                        <div className="poll-reaction-right">
+                        <div className="poll-reaction-item " style={{gap : '0.3rem'}}>
+                            <p>{selectedPoll.views}</p>
+                            <span>
+                                <ScanEye size={18}/>
+                            </span>
+                        </div>
+                        <div className="poll-reaction-item" style={{gap : '0.3rem'}}>
+                            <p>{selectedPoll.total_votes}</p>
+                            <span>
+                                <AlignEndHorizontal size={18}/>
+                            </span>
+                        </div>
+                        </div>
+                       
+                      
                     </div>
                 </div>
             </div>
         </section>
-    )
-}
+    );
+};
 
-export default PollView 
+export default PollView;

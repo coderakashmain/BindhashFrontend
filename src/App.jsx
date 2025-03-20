@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import Home from './pages/Home/Home'
 import Register from './pages/Register/Register'
@@ -15,11 +15,15 @@ import Chat from './pages/Chat/Chat';
 import FullchatPage from './pages/Chat/FullchatPage';
 import DefaultChatPage from './pages/Chat/DefaultChatPage';
 import AllUserList from './Context/AllUserList';
+
 import { SocketProvider } from './Context/SocketContext';
+import { PollProvider } from './Context/PollProvider';
+
 
 
 const App = () => {
   const VITE_VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY;
+
 
 
 
@@ -48,7 +52,7 @@ const App = () => {
     },
     {
       path: '/',
-      element: <><ErrorBoundary><SocketProvider><UserAuthCheck><AllPostContext><AllUserList><AllpageRouter /></AllUserList></AllPostContext></UserAuthCheck></SocketProvider></ErrorBoundary></>,
+      element: <><ErrorBoundary><SocketProvider><UserAuthCheck><AllPostContext><AllUserList><PollProvider><AllpageRouter /></PollProvider></AllUserList></AllPostContext></UserAuthCheck></SocketProvider></ErrorBoundary></>,
       children: [
         {
           path: '',
@@ -56,7 +60,7 @@ const App = () => {
           children: [
             {
               path: '',
-              element: <><ErrorBoundary><Home /></ErrorBoundary></>
+              element: <><ErrorBoundary><Home /></ErrorBoundary></>,
             }, {
               path: 'profile',
               element: <><ErrorBoundary><Profile /></ErrorBoundary></>
