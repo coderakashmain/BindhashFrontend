@@ -258,7 +258,7 @@ useEffect(() => {
     
     
   
-console.log(selectedPoll)
+
 
     const progressColors = [
         "rgba(33, 150, 243, 0.1)",  // Light Blue
@@ -333,7 +333,7 @@ console.log(selectedPoll)
                                   
                                     <LinearProgress
                                         variant="determinate"
-                                        value={option.percentage}
+                                        value={parseInt(option.percentage)}
                                         sx={{
                                             width: "100%",
                                             height: "100%", 

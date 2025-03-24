@@ -41,7 +41,7 @@ const Home = () => {
   const [content, setContent] = useState("");
   const [pollcreation, setPollcreation] = useState(false);
   const [feed, setFeed] = useState([]);
-
+  const [storymodeltrue,setstorymodeltrue] = useState(false)
 
 
   useEffect(() => {
@@ -222,6 +222,10 @@ const Home = () => {
   }
 
 
+ const hanldestorymodel = ()=>{
+  setstorymodeltrue(true)
+ }
+
 
 
   return (
@@ -281,7 +285,7 @@ const Home = () => {
       </div>
       <div className="container-box scrollbar">
         <div className="home-post-box">
-          <StorySection />
+          <StorySection  storymodeltrue={storymodeltrue} setstorymodeltrue={setstorymodeltrue}/>
           <div className="home-post-box-upload">
 
             <form onSubmit={handlePostSubmit} className="home-post-type-box">
@@ -292,7 +296,7 @@ const Home = () => {
             <div className="home-post-button-box">
               <button className="home-post-button-box-image"><ImagePlus size={18} className="home-upload-icon" />Image</button>
               <button className="home-post-button-box-video"><Video size={18} className="home-upload-icon" />Video</button>
-              <button className="home-post-button-box-story"><CircleFadingPlus size={18} className="home-upload-icon" />Story</button>
+              <button onClick={hanldestorymodel} className="home-post-button-box-story"><CircleFadingPlus size={18} className="home-upload-icon" />Story</button>
               <button className="home-post-button-box-story" onClick={() => setPollcreation(true)}><DiamondPlus size={18} className="home-upload-icon" />Poll</button>
               {pollcreation && <PollCreate pollcreation={pollcreation} onClose={() => setPollcreation(false)} />}
             </div>

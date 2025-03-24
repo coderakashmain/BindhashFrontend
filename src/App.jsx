@@ -18,6 +18,8 @@ import AllUserList from './Context/AllUserList';
 
 import { SocketProvider } from './Context/SocketContext';
 import { PollProvider } from './Context/PollProvider';
+import StoryView from './components/Story/StoryView';
+import HomeRouter from './Context/HomeRouter';
 
 
 
@@ -60,8 +62,21 @@ const App = () => {
           children: [
             {
               path: '',
-              element: <><ErrorBoundary><Home /></ErrorBoundary></>,
-            }, {
+              element: <><ErrorBoundary><HomeRouter /></ErrorBoundary></>,
+              children : [
+               { path: '',
+                element: <><ErrorBoundary><Home /></ErrorBoundary></>
+              },
+              {
+                path: '/story-view/:id',
+                element: <><ErrorBoundary><StoryView /></ErrorBoundary></>
+              },
+
+              ]
+              
+            }, 
+           
+            {
               path: 'profile',
               element: <><ErrorBoundary><Profile /></ErrorBoundary></>
             }

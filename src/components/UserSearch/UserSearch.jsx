@@ -13,6 +13,7 @@ const UserSearch = () => {
     const {alluser} = useContext(AllUserListContext);
     const suggestionBoxRef = useRef(null);
     const [showsearch,setShowsearch]= useState(false);
+    const userdearchoxRef = useRef(null);
  
 
     
@@ -36,24 +37,32 @@ const UserSearch = () => {
       };
 
       useEffect(() => {
-        
-        if ( showsearch && query.length > 1) {
-          gsap.fromTo(
-            suggestionBoxRef.current,
-            { y: "100%", opacity: 0 ,width : '0vw'},
-            
-            { y: "0%",minWidth : '35vw', opacity: 1, duration: 0.2, ease: "ease-in" }
-          );
-        } else {
-          gsap.to(suggestionBoxRef.current, {
-            y: "100%",
-            opacity: 0,
-            duration: 0.2,
-            ease: "power2.in",
-            width : '0',
-          });
-        
+        if (!suggestionBoxRef.current) {
+          console.error("suggestionBoxRef not present")
         }
+
+
+        if(userdearchoxRef.current){
+          if ( showsearch && query.length > 1) {
+            gsap.fromTo(
+              suggestionBoxRef.current,
+              { y: "100%", opacity: 0 ,width : '0vw'},
+              
+              { y: "0%",minWidth : '35vw', opacity: 1, duration: 0.2, ease: "ease-in" }
+            );
+          } else {
+            gsap.to(suggestionBoxRef.current, {
+              y: "100%",
+              opacity: 0,
+              duration: 0.2,
+              ease: "power2.in",
+              width : '0',
+            });
+          
+          }
+        }
+        
+        
       }, [results,showsearch]);
     
       const handleclose = ()=>{
@@ -65,7 +74,7 @@ const UserSearch = () => {
 
 
 
-            <div className="user-searchbox-box">
+            <div className="user-searchbox-box" ref={userdearchoxRef}>
 
                 <div className="user-suggesion-input-box">
                     <input type="text" placeholder="Enter Username..." value={query} onChange={handleSearch} />

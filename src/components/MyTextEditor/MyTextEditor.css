@@ -1,61 +1,172 @@
-/* Container */
+/* 🌟 Minimalist Editor Container */
 .editor-container {
-    border: 1px solid #ddd;
-    padding: 12px;
-    border-radius: 8px;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 0.75rem;
     background-color: #fff;
-width: 100%;
+    width: 100%;
+    max-width: 37.5rem;
     margin: auto;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    outline: none !important;  /* Force removes outline */
+    border: none !important;  /* Force removes border */
+    box-shadow: none !important;
+
+}
+.editor-content:focus {
+    border: none;  
+    outline: none;  
+    box-shadow: none;
+}
+.tiptap {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.ProseMirror {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
-/* Toolbar */
+/* Hide toolbar initially */
 .editor-toolbar {
-    display: flex;
-    gap: 8px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 8px;
-    margin-bottom: 12px;
-}
-
-/* Buttons */
-.editor-btn, .filter-btn {
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background-color: #f5f5f5;
-    color: #333;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
+    display: none;
+    gap: 0.625rem;
+    border-bottom: 0.0625rem solid #eee;
+    padding-bottom: 0.625rem;
+    margin-bottom: 0.75rem;
+    justify-content: space-between;
     transition: all 0.3s ease-in-out;
 }
 
-.editor-btn:hover, .filter-btn:hover {
-    background-color: #e0e0e0;
-    border-color: #bbb;
+/* Show toolbar when editor is focused */
+.editor-container:focus-within .editor-toolbar {
+    display: flex;
+    transition: all 0.3s ease-in-out;
 }
 
-/* Active button */
+/* 🎨 Modern Buttons */
+.editor-btn, .filter-btn {
+    padding: 0.5rem 0.875rem;
+    border-radius: 3.125rem;
+    border: 0.0625rem solid #ddd;
+    background-color: #f7f9fc;
+    color: #333;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.editor-btn:hover, .filter-btn:hover {
+    background-color: #e4e6eb;
+    border-color: #ccc;
+}
+
 .editor-btn.active, .filter-btn.active {
     background-color: #2890E1;
     color: white;
     border-color: #1a73e8;
 }
 
-/* Editor Content */
+/* 📃 Rich Text Editor */
 .editor-content {
-    min-height: 150px;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    min-height: 3rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
     background-color: #fafafa;
+    font-size: 1rem;
+    font-weight: 400;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+    border: 0.0625rem solid #ddd;
+    max-height: 8rem;
+    overflow-y: scroll;
 }
 
-/* Output Section */
-.editor-output {
-    margin-top: 12px;
-    padding: 10px;
-    border: 1px solid #ddd;
+/* 💡 Focus Effect */
+.editor-content:focus {
+    border: 0.125rem solid #2890E1;
+    background-color: #fff;
+}
+
+/* 🔥 Mention Dropdown */
+.mention-dropdown {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
+    padding: 0.5rem;
+    position: absolute;
+    z-index: 1000;
+    width: 13.75rem;
+}
+
+.mention-item {
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: #333;
+    border-radius: 0.375rem;
+}
+
+.mention-item:hover {
+    background: #f0f2f5;
+}
+
+.editor-content a {
+    color: #2890E1;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+
+.link-button {
+    position: absolute;
+    background: #2890E1;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.link-toolbar {
+    position: absolute;
+    background: white;
+    padding: 8px;
     border-radius: 6px;
-    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.link-toolbar input {
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.link-toolbar button {
+    background: #2890E1;
+    color: white;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.ProseMirror p.is-empty::before {
+    content: attr(data-placeholder);
+    color: gray;
+    font-style: italic;
+    pointer-events: none;
+    height: 0;
 }

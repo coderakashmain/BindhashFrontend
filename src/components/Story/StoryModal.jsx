@@ -4,6 +4,9 @@ import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import MyTextEditor from "../MyTextEditor/MyTextEditor";
 import PhotoFilter from "../PhotoFilter/PhotoFilter";
 import { CircleFadingPlus, Plus } from 'lucide-react'
+import StoryDuration from "./StoryDuration";
+import { Button } from "@mui/material";
+import SpotifyMusic from "./SpotifyMusic";
 
 
 const StoryModal = ({
@@ -23,7 +26,8 @@ const StoryModal = ({
     setViewPrivacy,
     allowedUsers,
     setAllowedUsers,
-    uploading
+    uploading,
+    setstorymodeltrue
 }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
     const [closing, setClosing] = useState(false);
@@ -31,7 +35,8 @@ const StoryModal = ({
     const progressRef = useRef(null);
     const { usertoken } = useContext(UserAuthCheckContext)
     const [filteredMedia, setFilteredMedia] = useState(null);
-    
+    const [selectedMusic, setSelectedMusic] = useState(null);
+
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 640);
@@ -63,6 +68,7 @@ const StoryModal = ({
     };
     const handleClose = () => {
         setClosing(true);
+        setstorymodeltrue(false);
 
 
     };
@@ -87,11 +93,12 @@ const StoryModal = ({
                         exit={isMobile ? { y: "100%" } : { scale: 0.8, opacity: 0 }}
                         transition={transitionSettings}
                         onClick={(e) => e.stopPropagation()}
+                        style={{ width: !filePreview && !isMobile ? '40rem' : '' }}
                     >
-                      { (!filePreview || isMobile )&& (  <div className="story-user-info">
+                        {(!filePreview || isMobile) && (<div className="story-user-info" style={{ position: filePreview ? 'fixed' : 'block' }}>
                             <div className="story-user-info-inside">
                                 <img src={usertoken.user.profile_pic} alt="Profile" className="profile-pic" />
-                                <span>{usertoken.user.username}</span>
+                                {!filePreview && (<span>{usertoken.user.username}</span>)}
                             </div>
                             <button className="story-close-btn" onClick={handleClose}>
                                 Close
@@ -102,13 +109,6 @@ const StoryModal = ({
 
 
 
-                            {/* {filePreview && (
-                                <div className="media-preview">
-                                    {filePreview.type === "image" && <img src={filePreview.url} alt="Preview" />}
-                                    {filePreview.type === "video" && <video src={filePreview.url} controls />}
-                                    {filePreview.type === "audio" && <audio src={filePreview.url} controls />}
-                                </div>
-                            )} */}
                             <div className="story-upload-file-edit-left">
 
                                 {filePreview && (
@@ -116,62 +116,80 @@ const StoryModal = ({
                                 )}
                             </div>
 
-                            <div className="story-upload-file-edit-left">
-                                {!isMobile  &&   <div className="story-user-info">
-                            <div className="story-user-info-inside">
-                                <img src={usertoken.user.profile_pic} alt="Profile" className="profile-pic" />
-                                <span>{usertoken.user.username}</span>
-                            </div>
-                            <button className="story-close-btn" onClick={handleClose}>
-                                Close
-                            </button>
-                        </div>}
-                            <MyTextEditor textContent={textContent} setTextContent={setTextContent} />
-
-
-                                <label>
-                                    Anonymous?
-                                    <input type="checkbox" checked={isAnonymous} onChange={() => setIsAnonymous(!isAnonymous)} />
-                                </label>
-
-                                <input
-                                    type="text"
-                                    placeholder="Hidden Message"
-                                    value={hiddenMessage}
-                                    onChange={(e) => setHiddenMessage(e.target.value)}
-                                />
-
-                                <div className="story-duration">
-                                    <label>Story Duration:</label>
-                                    <select value={maxDuration} onChange={(e) => setMaxDuration(e.target.value)}>
-                                        <option value={6}>6 hours</option>
-                                        <option value={12}>12 hours</option>
-                                        <option value={24}>24 hours</option>
-                                    </select>
-                                    <div className="progress-bar">
-                                        <div ref={progressRef} className="progress"></div>
+                            <div className="story-upload-file-edit-right">
+                                {!isMobile && <div className="story-user-info">
+                                    <div className="story-user-info-inside">
+                                        <img src={usertoken.user.profile_pic} alt="Profile" className="profile-pic" />
+                                        <span>{usertoken.user.username}</span>
                                     </div>
-                                </div>
+                                    <button className="story-close-btn" onClick={handleClose}>
+                                        Close
+                                    </button>
+                                </div>}
 
+                                <MyTextEditor textContent={textContent} setTextContent={setTextContent} />
 
+                                <button onClick={() => setSelectedMusic(null)}>Select Music</button>
 
-                                <select value={viewPrivacy} onChange={(e) => setViewPrivacy(e.target.value)}>
-                                    <option value="public">Public</option>
-                                    <option value="friends">Friends</option>
-                                    <option value="custom">Custom</option>
-                                </select>
-
-                                {viewPrivacy === "custom" && (
-                                    <input
-                                        type="text"
-                                        placeholder="Allowed Users (comma-separated IDs)"
-                                        onChange={(e) => setAllowedUsers(e.target.value.split(","))}
-                                    />
+                                {selectedMusic && (
+                                    <div>
+                                        <p>Playing: {selectedMusic.name} - {selectedMusic.artist}</p>
+                                        <audio controls autoPlay>
+                                            <source src={selectedMusic.url} type="audio/mpeg" />
+                                        </audio>
+                                    </div>
                                 )}
 
-                                <button className="story-submit-btn" onClick={handleStorySubmit} disabled={uploading}>
-                                    {uploading ? "Uploading..." : "Add Story"}
-                                </button>
+                                {/* {!selectedMusic && <SpotifyMusic setMusic={setSelectedMusic} />} */}
+
+                                <div className="story-option-custume">
+                                    <StoryDuration maxDuration={maxDuration} setMaxDuration={setMaxDuration} />
+                                    <Button
+                                        variant="contained"
+                                        onClick={() => setIsAnonymous(!isAnonymous)}
+                                        sx={{
+                                            backgroundColor: isAnonymous ? "#1976D2" : "#E0E0E0",
+                                            color: isAnonymous ? "white" : "black",
+                                            "&:hover": {
+                                                backgroundColor: isAnonymous ? "#1565C0" : "#BDBDBD",
+                                            },
+                                            padding: "8px 16px",
+                                            borderRadius: "20px",
+                                            textTransform: "none",
+                                            margin: 'auto'
+                                        }}
+                                    >
+                                        {isAnonymous ? "Posting Anonymously" : "Post with Name"}
+                                    </Button>
+
+                                    <input
+                                        type="text"
+                                        placeholder="Hidden Message"
+                                        value={hiddenMessage}
+                                        onChange={(e) => setHiddenMessage(e.target.value)}
+                                    />
+
+
+
+
+                                    <select value={viewPrivacy} onChange={(e) => setViewPrivacy(e.target.value)}>
+                                        <option value="public">Public</option>
+                                        <option value="friends">Friends</option>
+                                        <option value="custom">Custom</option>
+                                    </select>
+
+                                    {viewPrivacy === "custom" && (
+                                        <input
+                                            type="text"
+                                            placeholder="Allowed Users (comma-separated IDs)"
+                                            onChange={(e) => setAllowedUsers(e.target.value.split(","))}
+                                        />
+                                    )}
+
+                                    <button className="story-submit-btn" onClick={handleStorySubmit} disabled={uploading}>
+                                        {uploading ? "Uploading..." : "Add Story"}
+                                    </button>
+                                </div>
                             </div>
                         </div>) : (
                             <>

@@ -40,7 +40,10 @@ const PostModel = ({ postId, onClose }) => {
 
 
     useEffect(() => {
-        if (!postId || !modalRef.current) return; 
+        if (!postId || !modalRef.current) {
+            console.warn("GSAP Error: modalRef is missing.");
+            return;
+        }
         let tl = gsap.timeline();
         if(mobileview){
           
@@ -62,13 +65,27 @@ const PostModel = ({ postId, onClose }) => {
                 { backgroundColor: 'rgba(0, 0, 0, 0)' }, // Start from transparent
                 { backgroundColor: 'rgba(0, 0, 0, 0.7)', duration: 0.5, ease: "power2.out" })
         }
+
+        return () => {
+            if (tl) tl.kill(); // Stop animation if component unmounts
+            document.body.style.overflowY = 'scroll';
+        };
       
     }, [postId,mobileview]);
 
     // ✅ Close animation (100% → 0%)
     const handleClose = () => {
-        gsap.to(modalRef.current, { opacity: 0, y: "100%", duration: 0.3, ease: "power2.in", onComplete: onClose });
-           document.body.style.overflowY = 'scroll'
+        if (modalRef.current) {
+            gsap.to(modalRef.current, { opacity: 0, y: "100%", duration: 0.3, ease: "power2.in", 
+                onComplete: () => {
+                    document.body.style.overflowY = 'scroll';
+                    onClose(); // Close modal after animation completes
+                } 
+            });
+        } else {
+            console.warn("GSAP Warning: modalRef is null on close.");
+            onClose(); // Ensure modal closes even if GSAP fails
+        }
     };
 
 
