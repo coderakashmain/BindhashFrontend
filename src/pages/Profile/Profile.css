@@ -91,23 +91,17 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  background: linear-gradient(45deg,rgba(255, 255, 255, 0.348),rgba(0, 0, 0, 0.348));
 
 }
 
 .profile-back-img-edit{
+
   position: absolute;
-  bottom: 0%;
+  bottom: -4.3%;
   right: 0%;
 
-  /* border-radius: 50%; */
-  opacity: 0.9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  padding: 0.6rem;
   background-color: white;
-  border: 3px solid black;
 }
 
 .profile-back-img-box img{
@@ -137,19 +131,13 @@ border-radius: 50%;
 }
 
 
+
+
 .profile-main-img-edit{
   position: absolute;
-  bottom: 15%;
-  right: 2%;
+  bottom: 2%;
+  right: 5%;
 
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  padding: 0.6rem;
-  background-color: white;
-  border: 3px solid black;
 }
 
 
@@ -192,7 +180,7 @@ border-radius: 50%;
   display: flex;
   align-items: center;
   color: #fff;
-  gap: 0.3rem;
+ 
   background-color: #509dac !important;
 }
 

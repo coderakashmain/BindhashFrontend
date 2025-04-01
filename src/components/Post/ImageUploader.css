@@ -1,0 +1,78 @@
+.post-p-u-edit {
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    background-color: var(--popupbackcolor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+    width: 100%;
+    height: 100%;
+    z-index: 100 !important;
+}
+
+.post-p-u-edit-i {
+    width: 60rem; 
+    height: 80vh; /* Make it a big centered popup */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* To contain the cropper properly */
+    overflow: hidden;
+    background-color: white;
+    
+}
+
+.cropper-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #f4f4f4;
+}
+
+.cropper-container  img{
+    object-fit: contain;
+}
+.port-p-u-btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+}
+
+.post-p-u-edit button {
+    background: var(--linearcolor); /* Your branding color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+
+}
+
+.post-p-u-edit button:hover {
+    background-color: #1871B7;
+}
+
+
+@media (max-width : 640px) {
+    .post-p-u-edit-i {
+        width: 100%;
+        height: 100%;
+        padding: 5px;
+        border-radius: 0rem;
+
+    }
+}   

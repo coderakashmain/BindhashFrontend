@@ -1,0 +1,65 @@
+.upload-icon {
+    position: absolute;
+    bottom: -5%;
+    right: -5%;
+    background-color: rgb(255, 255, 255);
+    padding: 0.3rem;
+    border: none;
+    border: 1px solid rgba(0, 0, 0, 0.421);
+    cursor: pointer;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+  }
+  
+.crop-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000 !important;
+  height: 40rem;
+  width: 50rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.crop-model-edit-box img {
+  height: 100% !important;
+  outline: none;
+  object-fit: contain !important;
+  border-radius: 0% !important;
+
+}
+.crop-btn-submit {
+  z-index: 2000;
+  display: flex;
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  gap: 1rem;
+}
+.crop-btn-submit button {
+  padding: 0.9rem 1.5rem;
+  border-radius: 0.3rem;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+
+  border-radius: 0.3rem;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid white;
+}
+.crop-btn-submit button:first-child:hover {
+ background: var(--linearcolor);
+ border: none;
+}

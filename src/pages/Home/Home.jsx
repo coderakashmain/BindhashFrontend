@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import './Home.css'
+import { motion, transform, AnimatePresence } from "framer-motion";
 import { AllPostContextData } from "../../Context/AllPostContext";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
-import { useNavigate } from "react-router-dom";
-import { Heart, MessageCircle, ScanEye, DiamondPlus, Search, ThumbsUp, Send, ImagePlus, Video, SquareStack, SmilePlus, EllipsisVertical, CircleFadingPlus, Share2, Album } from 'lucide-react'
+import { useLocation, useNavigate } from "react-router-dom";
+import { Heart, MessageCircle, ScanEye, Plus, DiamondPlus, Search, ThumbsUp, Send, ImagePlus, Video, SquareStack, SmilePlus, EllipsisVertical, CircleFadingPlus, Share2, Album } from 'lucide-react'
 import ProfileStats from "../../components/ProfileStats/ProfileStats";
 import Followbtn from "../../components/ProfileStats/Followbtn";
 import ProfileUpload from "../../components/ProfileUpload/ProfileUpload";
@@ -24,6 +25,12 @@ import Box from '@mui/material/Box';
 import { colors } from "@mui/material";
 import PollView from "../../components/Poll/PollView";
 import PostOptions from "../../components/PostOptions/PostOptions";
+import { MobileViewContext } from "../../Context/MobileResizeProvider";
+import ImageUploader from "../../components/Post/ImageUploader";
+import PostEditView from "../../components/Post/PostEditView";
+import VideoPost from "./VideoPost";
+import PostFunctionComponent from "../../components/PostFuctionComponent/PostFunctionComponent";
+
 
 
 const Home = () => {
@@ -41,7 +48,20 @@ const Home = () => {
   const [content, setContent] = useState("");
   const [pollcreation, setPollcreation] = useState(false);
   const [feed, setFeed] = useState([]);
-  const [storymodeltrue,setstorymodeltrue] = useState(false)
+  const [storymodeltrue, setstorymodeltrue] = useState(false)
+  const storyuplodRef = useRef(null)
+  const [expanded, setExpanded] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  const scrollContainerRef = useRef(null);
+  const location = useLocation();
+  const { isMobile } = useContext(MobileViewContext)
+  const [mpostbtn, setMpostbtn] = useState(false);
+  const [videopost, setVideopost] = useState(null);
+  const videouploadRef = useRef();
+  const [videotype, setVideoType] = useState(null);
+
+
 
 
   useEffect(() => {
@@ -51,6 +71,7 @@ const Home = () => {
 
     }
   }, [usertoken])
+
 
 
 
@@ -198,6 +219,7 @@ const Home = () => {
   const handlePostSubmit = async (e) => {
     e.preventDefault();
     if (!content.trim()) return;
+    setMpostbtn(false)
 
     const formData = new FormData();
     formData.append("user_id", usertoken.user.id);
@@ -222,14 +244,82 @@ const Home = () => {
   }
 
 
- const hanldestorymodel = ()=>{
-  setstorymodeltrue(true)
- }
+  const hanldestorymodel = () => {
+    setMpostbtn(false)
+    setstorymodeltrue(true)
+  }
+
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (storyuplodRef.current && !storyuplodRef.current.contains(event.target)) {
+        setExpanded(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+
+  useEffect(() => {
+    // Select the scrolling container
+    scrollContainerRef.current = document.querySelector(".container-box");
+
+    if (!scrollContainerRef.current) return;
+
+    const handleScroll = () => {
+      const currentScrollY = scrollContainerRef.current.scrollTop;
+
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
+        setVisible(false); // Hide navbar when scrolling down
+      } else {
+        setVisible(true); // Show navbar when scrolling up
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    scrollContainerRef.current.addEventListener("scroll", handleScroll);
+    return () => scrollContainerRef.current?.removeEventListener("scroll", handleScroll);
+  }, [location.pathname]);
+
+
+
+  const videobtnclick = () => {
+
+    if (videouploadRef.current) {
+      
+      videouploadRef.current.click();
+    }
+
+  };
+
+  const [videoselect, setVideoselect] = useState(false);
+  const handlevideoChange = (event) => {
+    const file = event.target.files[0];
+
+    setVideopost(file);
+    setVideoType(file.type);
+    setVideoselect(true)
+
+
+    setMpostbtn(false)
+
+
+  }
+
+
+
+
+
 
 
 
   return (
     <section className="container">
+      {videoselect && <PostEditView setVideoselect={setVideoselect} setVideopost={setVideopost} setVideoType={setVideoType} postdata={videopost} type={videotype} />}
       <div ref={homeporfileRef} className="home-profile-out-box scrollbar">
         <div className="home-profile">
           <div className="home-profile-header">
@@ -244,7 +334,7 @@ const Home = () => {
                 {profilepicloading && <div className="profile-pic-loading">
                   <div className="profile-pic-anime-loader"></div>
                 </div>}
-                <ProfileUpload setProfilepicloading={setProfilepicloading} />
+                <ProfileUpload mainphoto={true} setProfilepicloading={setProfilepicloading} />
               </div>
               <div className="home-profile-name-box">
                 <h2>{usertoken.user.username} <span style={{ fontSize: '0.7rem', color: 'var(--lighttextcolor)' }}>M</span></h2>
@@ -285,7 +375,7 @@ const Home = () => {
       </div>
       <div className="container-box scrollbar">
         <div className="home-post-box">
-          <StorySection  storymodeltrue={storymodeltrue} setstorymodeltrue={setstorymodeltrue}/>
+          <StorySection storymodeltrue={storymodeltrue} setstorymodeltrue={setstorymodeltrue} />
           <div className="home-post-box-upload">
 
             <form onSubmit={handlePostSubmit} className="home-post-type-box">
@@ -294,8 +384,15 @@ const Home = () => {
             </form>
 
             <div className="home-post-button-box">
-              <button className="home-post-button-box-image"><ImagePlus size={18} className="home-upload-icon" />Image</button>
-              <button className="home-post-button-box-video"><Video size={18} className="home-upload-icon" />Video</button>
+              <ImageUploader />
+              <input type="file"
+                ref={videouploadRef}
+                onChange={handlevideoChange}
+                accept="video/*"
+                style={{ display: "none" }}
+                className=" home-vidoe-post-input"
+              />
+              <button onClick={videobtnclick} className="home-post-button-box-video"><Video size={18} className="home-upload-icon" />Video</button>
               <button onClick={hanldestorymodel} className="home-post-button-box-story"><CircleFadingPlus size={18} className="home-upload-icon" />Story</button>
               <button className="home-post-button-box-story" onClick={() => setPollcreation(true)}><DiamondPlus size={18} className="home-upload-icon" />Poll</button>
               {pollcreation && <PollCreate pollcreation={pollcreation} onClose={() => setPollcreation(false)} />}
@@ -329,37 +426,49 @@ const Home = () => {
 
                   {usertoken.user.id !== allpost.post_user_id && (<Followbtn targetUserId={allpost.post_user_id} />)}
                   {/* <EllipsisVertical size={20} /> */}
-                  <PostOptions/>
+                  <PostOptions />
                 </div>
 
               </div>
 
               {allpost.image &&
-                <div className="post-head-img-box">
+                <>
+                  <div className="post-head-img-box">
+
+                    {allpost.media_type === 'image' ? (<>
+                      <img
+                        src={placeholderimg(allpost.image)}
+
+                        alt="Post"
+                        className={`post-image ${imgloaded ? "hidden" : "visible"}`}
+                      />
 
 
-                  <img
-                    src={placeholderimg(allpost.image)}
+                      <img
+                        src={allpost.image}
 
-                    alt="Post"
-                    className={`post-image ${imgloaded ? "hidden" : "visible"}`}
-                  />
+                        loading="lazy"
+                        alt="Post"
+                        className={`post-image ${imgloaded ? "visible" : "blurred"}`}
+                        onLoad={() => setImgLoaded(true)}
+
+                      />
+
+                    </>) : (
+                      <VideoPost videoSrc={allpost.image} />
+                    )}
+                  </div>
 
 
-                  <img
-                    src={allpost.image}
-
-                    loading="lazy"
-                    alt="Post"
-                    className={`post-image ${imgloaded ? "visible" : "blurred"}`}
-                    onLoad={() => setImgLoaded(true)}
-
-                  />
-                </div>
+                </>
               }
+              <div className={`home-post-contnt-box-out ${allpost.image ? 'post-head-content-box-true' : 'post-head-content-box-false'}`}>
+                {allpost.content && (<p className="home-post-contnt">{allpost.content}</p>)}
+
+              </div>
 
 
-              <p className="home-post-contnt">{allpost.content}</p>
+
 
               <div className="post-actions">
                 <div className="post-action-left">
@@ -391,7 +500,7 @@ const Home = () => {
 
             </div>
           ) : (
-            <PollView key={`poll-${allpost.poll_id}`} pollId={allpost.poll_id}  />
+            <PollView key={`poll-${allpost.poll_id}`} pollId={allpost.poll_id} />
           )
         ))}
         <div ref={loaderRef} className="loader" style={{ marginBottom: '4rem' }}>
@@ -411,6 +520,63 @@ const Home = () => {
 
       </div>
       {selectedPostId && <PostModel postId={selectedPostId} onClose={() => setSelectedPostId(null)} />}
+
+      {/* <motion.div
+        initial={{ width: "0rem", background: 'transparent' }}
+        animate={{ width: expanded ? "90vw" : "5rem", background: expanded ? 'rgba(82, 82, 82, 0.084)' : 'rgba(0, 0, 0, 0)', backdropFilter: expanded ? 'blur(5px)' : 'blur(0px)' }}
+
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        onClick={(e) => e.stopPropagation()}
+
+        ref={storyuplodRef} className="home-story-box-post" >
+        <div className="home-story-box-post-inside" onClick={() => setExpanded(true)}>
+          <img src={usertoken.user.profile_pic ? usertoken.user.profile_pic : defaultprofilephoto} alt="" />
+          {!expanded && (
+              <motion.span
+                initial={{ scale: 1 }}
+                animate={{ scale: [1, 1.05, 1] }} // Bouncing animation
+                transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                className="home-story-box-post-plus-icon">
+                <CircleFadingPlus size="1.3rem" strokeWidth={2} />
+              </motion.span>
+          )}
+        </div>
+
+        {expanded && (
+          <motion.div
+            className="story-list-container"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          >
+            <StorySection storymodeltrue={storymodeltrue} setstorymodeltrue={setstorymodeltrue} />
+          </motion.div>
+          </motion.div>
+        )}
+
+      </motion.div> */}
+
+      <motion.div
+        className="home-float-u-btn"
+        initial={{ width: 0, height: 0, opacity: 0 }}
+        animate={{ width: "4rem", height: "4rem", opacity: 1, scale: visible ? 1 : 0 }}
+        whileHover={{
+          scale: 1.15,
+          boxShadow: "0px 0px 15px rgba(0, 136, 255, 0.6)",
+        }} // Glowing effect on hover
+        whileTap={{ scale: 0.9 }} // Shrinks when tapped
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        onClick={() => setMpostbtn(true)}
+      >
+        <Plus size="2rem" />
+      </motion.div>
+
+
+      <AnimatePresence>
+        {mpostbtn && (
+          <PostFunctionComponent mpostbtn={mpostbtn} setMpostbtn={setMpostbtn} />
+        )}
+      </AnimatePresence>
     </section>
   );
 };

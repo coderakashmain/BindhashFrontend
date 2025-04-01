@@ -1,11 +1,9 @@
-#Entire-section{
-    width: 100%;
-
+#page-router{
+  width: 100%;
+  /* overflow-y: scroll; */
+  height: 100vh;
+  
 }
-#Entire-section-box{
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-
-
+#page-router::-webkit-scrollbar{
+  display: none;
 }

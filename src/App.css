@@ -1,4 +1,6 @@
 
+
+
 .active{
     
     transition: all 0.2s ease-in-out;
@@ -49,6 +51,33 @@
     color: #000;
     font-weight: 500;
     user-select: none;
+  }
+  .profile-pic-loading {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    background-color: #00000085;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .profile-pic-anime-loader {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #e3e6e7;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   

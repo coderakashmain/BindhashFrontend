@@ -1,9 +1,9 @@
 .trendingcom-trending-posts {
     width: 100%;
-    margin: 1.2rem auto;
+    margin: 0.5rem auto;
     padding: 0.9rem;
     background-color: var(--backwhitecolor);
-    box-shadow: var(--webbackshahow);
+    /* box-shadow: var(--webbackshahow); */
     border-radius: 10px;
     text-align: center;
   }

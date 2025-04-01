@@ -33,6 +33,7 @@
     "@tiptap/react": "^2.11.5",
     "@tiptap/starter-kit": "^2.11.5",
     "axios": "^1.8.1",
+    "cropperjs": "^2.0.0",
     "date-fns": "^4.1.0",
     "fabric": "^6.6.1",
     "face-api.js": "^0.20.0",

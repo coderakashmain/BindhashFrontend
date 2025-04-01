@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import Navbar from './components/Navbar/Navbar'
+
 import Home from './pages/Home/Home'
 import Register from './pages/Register/Register'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -20,6 +21,11 @@ import { SocketProvider } from './Context/SocketContext';
 import { PollProvider } from './Context/PollProvider';
 import StoryView from './components/Story/StoryView';
 import HomeRouter from './Context/HomeRouter';
+import BigRouter from './Router/BigRouter';
+import MobileResizeProvider from './Context/MobileResizeProvider';
+import UserSearch from './components/UserSearch/UserSearch';
+import TrendingPosts from './components/TrendingPosts/TrendingPosts';
+import Leaderboard from './components/Leaderboard/Leaderboard';
 
 
 
@@ -54,8 +60,9 @@ const App = () => {
     },
     {
       path: '/',
-      element: <><ErrorBoundary><SocketProvider><UserAuthCheck><AllPostContext><AllUserList><PollProvider><AllpageRouter /></PollProvider></AllUserList></AllPostContext></UserAuthCheck></SocketProvider></ErrorBoundary></>,
+      element: <><ErrorBoundary><SocketProvider><UserAuthCheck><PollProvider><AllPostContext><MobileResizeProvider><AllUserList><AllpageRouter /></AllUserList></MobileResizeProvider></AllPostContext></PollProvider></UserAuthCheck></SocketProvider></ErrorBoundary></>,
       children: [
+
         {
           path: '',
           element: <><ErrorBoundary><PageRouter /></ErrorBoundary></>,
@@ -63,53 +70,72 @@ const App = () => {
             {
               path: '',
               element: <><ErrorBoundary><HomeRouter /></ErrorBoundary></>,
-              children : [
-               { path: '',
-                element: <><ErrorBoundary><Home /></ErrorBoundary></>
-              },
-              {
-                path: '/story-view/:id',
-                element: <><ErrorBoundary><StoryView /></ErrorBoundary></>
-              },
-
-              ]
-              
-            }, 
-           
-            {
-              path: 'profile',
-              element: <><ErrorBoundary><Profile /></ErrorBoundary></>
-            }
-            ,
-            {
-
-              path :'chat',
-              element : <><ErrorBoundary><FullchatPage/></ErrorBoundary></>,
-              children : [
+              children: [
                 {
-                  path: "",
-                  element: <><ErrorBoundary><DefaultChatPage/></ErrorBoundary></>
+                  path: '',
+                  element: <><ErrorBoundary><Home /></ErrorBoundary></>
                 },
                 {
-                  path: ":receiverId",
-                  element: <><ErrorBoundary><Chat/></ErrorBoundary></>
-                }
-              ]
-            },
-            
+                  path: '/story-view/:id',
+                  element: <><ErrorBoundary><StoryView /></ErrorBoundary></>
+                },
 
+                {
+                  path: 'profile',
+                  element: <><ErrorBoundary><Profile /></ErrorBoundary></>
+                },
+                {
+                  path: 'trending-post',
+                  element: <><ErrorBoundary><TrendingPosts /></ErrorBoundary></>
+                },
+                {
+                  path: 'search',
+                  element: <><ErrorBoundary><UserSearch /></ErrorBoundary></>
+                },
+                {
+                  path: 'leaderboard',
+                  element: <><ErrorBoundary><Leaderboard /></ErrorBoundary></>
+                },
+                ,
+                {
+
+                  path: 'chat',
+                  element: <><ErrorBoundary><FullchatPage /></ErrorBoundary></>,
+                  children: [
+                    {
+                      path: "",
+                      element: <><ErrorBoundary><DefaultChatPage /></ErrorBoundary></>
+                    },
+                    {
+                      path: ":receiverId",
+                      element: <><ErrorBoundary><Chat /></ErrorBoundary></>
+                    }
+                  ]
+                },
+
+
+              ]
+            }
           ]
+
         },
         {
           path: 'login',
           element: <><ErrorBoundary><Login /></ErrorBoundary></>
         },
+       
         {
           path: 'register',
           element: <><ErrorBoundary><Register /></ErrorBoundary></>
         }
+
+
+
+
+        
       ]
-    }
+    },
+
   ])
   return (
     <>

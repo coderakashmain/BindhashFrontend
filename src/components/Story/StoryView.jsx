@@ -4,7 +4,7 @@ import { Heart, MessageCircle, Reply, X } from "lucide-react";
 import './StoryView.css'
 import Time from "../Time/Time";
 import { useEffect, useRef, useState } from "react";
-import { duration } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import defaultprofilpic from '../../Photo/defaultprofilepic.png'
 
 const StoryView = ({ selectedStory, setSelectedStory }) => {
@@ -15,11 +15,12 @@ const StoryView = ({ selectedStory, setSelectedStory }) => {
     const [touchStartX, setTouchStartX] = useState(null);
     const [progress, setProgress] = useState(0);
     const videoRef = useRef(null);
+    const [loading, setLoading] = useState(true);
 
 
-    
+
     useEffect(() => {
-        
+
         if (!selectedStory || selectedStory.length === 0 || !selectedStory[currentIndex]) return
         let interval;
 
@@ -51,7 +52,7 @@ const StoryView = ({ selectedStory, setSelectedStory }) => {
             setCurrentIndex(currentIndex + 1);
             setProgress(0); // Reset progress
         } else {
-          setIsSmallScreen(null)
+            setIsSmallScreen(null)
         }
     };
 
@@ -135,7 +136,7 @@ const StoryView = ({ selectedStory, setSelectedStory }) => {
                         {/* User Info at the Top */}
                         <div className="story-view-story-header">
                             <div className="story-view-story-header-left">
-                               <img src={ selectedStory[currentIndex].profile_pic ? selectedStory[currentIndex].profile_pic : defaultprofilpic} alt="User" className="story-view-profile-pic" />
+                                <img src={selectedStory[currentIndex].profile_pic ? selectedStory[currentIndex].profile_pic : defaultprofilpic} alt="User" className="story-view-profile-pic" />
                                 <p className="username">
                                     <span>{selectedStory[currentIndex].username}</span>
                                     <Time posttime={selectedStory[currentIndex].created_at} />
@@ -152,16 +153,39 @@ const StoryView = ({ selectedStory, setSelectedStory }) => {
 
                         {/* Media Display */}
                         <div className="media-container" onClick={(e) => e.stopPropagation()}>
+                            {loading && (
+                                <div style={{
+                                    position: "absolute",
+                                    top: "50%",
+                                    left: "50%",
+                                    transform: "translate(-50%, -50%)",
+                                    zIndex : 2
+                                }}>
+                                    <CircularProgress color="primary" />
+                                </div>
+                            )}
+
+
                             {selectedStory[currentIndex].media_type === "image" && (
-                                <img src={selectedStory[currentIndex].media_url} alt="Story" />
+                                <img src={selectedStory[currentIndex].media_url} alt="Story"
+
+                                    onLoad={() => setLoading(false)}  // Hide Loader when Image Loads
+                                    onError={() => setLoading(false)} // Hide Loader even if Image Fails
+                                    style={{ display: loading ? "none" : "block" }}
+                                />
                             )}
                             {selectedStory[currentIndex].media_type === "video" && (
                                 <video ref={videoRef} src={selectedStory[currentIndex].media_url} autoPlay onEnded={handleNext}
+                                onLoadedData={() => setLoading(false)} 
+                                    onError={() => setLoading(false)} 
                                     onTimeUpdate={(e) => {
                                         const currentTime = e.target.currentTime;
                                         const duration = e.target.duration;
                                         if (duration) setProgress((currentTime / duration) * 100);
                                     }}
+                                    
+
+                                    style={{ display: loading ? "none" : "block" }}
                                 />
                             )}
                         </div>

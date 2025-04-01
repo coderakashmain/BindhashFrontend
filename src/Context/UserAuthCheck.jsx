@@ -40,7 +40,12 @@ const UserAuthCheck = ({children}) => {
     
     }, [loginkchecktoken]); 
 
-  
+   useEffect(() => {
+        // If usertoken is null (or falsy), navigate to login
+        if (!loading && !usertoken) {
+            navigate('/login');
+        }
+    }, [usertoken, loading, navigate]);
 
 
     

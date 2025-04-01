@@ -47,6 +47,7 @@ const StoryModal = ({
     const onFileChange = (e) => {
         handleFileChange(e);
         const file = e.target.files[0];
+      
         if (file) {
             const fileURL = URL.createObjectURL(file);
             setFilePreview({ url: fileURL, type: file.type.split("/")[0] });

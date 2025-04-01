@@ -8,6 +8,7 @@ import defaultprofilephoto from '../../Photo/defaultprofilepic.png'
 import { formatDistanceToNow, isToday, parseISO } from "date-fns";
 import { useSocket } from "../../Context/SocketContext";
 
+
 const CommentSection = ({ post}) => {
     const { usertoken } = useContext(UserAuthCheckContext);
     const {setAllpost,allpost} = useContext(AllPostContextData);
@@ -172,6 +173,7 @@ const CommentSection = ({ post}) => {
             return formatDistanceToNow(date, { addSuffix: true, includeSeconds: false });
         }
     };
+    console.log(comments)
 
 
     return  (

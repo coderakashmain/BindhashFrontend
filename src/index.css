@@ -5,6 +5,9 @@
   padding: 0;
  box-sizing: border-box;
 }
+body{
+  background-color: var(--webbackcolor);
+}
 
 :root{
   --webbackcolor : #f5f5f5;
@@ -21,7 +24,8 @@
   --buttoncolor: rgb(0, 122, 255);
   --buttonhovercolor : rgba(30, 161, 209, 0.251);
   --popupbackcolor : rgba(0, 0, 0, 0.081);
-  --linearcolor : linear-gradient(135deg, black, #2890E1);
+  /* --linearcolor : linear-gradient(135deg, black, #2890E1); */
+  --linearcolor :linear-gradient(135deg, #00d4ff, #0088ff);
 }
 .dark {
   --webbackcolor : rgb(213, 213, 213);
@@ -34,6 +38,14 @@
   --backwhitecolor : '#000';
   --lighttextcolor :#e1e1e1;
   --popupbackcolor : rgba(0, 0, 0, 0.081);
+  --mobil-nav-back-color : rgb(0 0 0 / 86%);
 }
 
+
+@media (max-width : 640px) {
+body{
+  background-color: var(--backwhitecolor);
+
+}
+}
 

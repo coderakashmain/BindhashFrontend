@@ -8,62 +8,43 @@ import './PostModel.css'
 import defaultprofilepic from '../../Photo/defaultprofilepic.png'
 import { formatDistanceToNow, isToday, parseISO } from "date-fns";
 import CommentSection from "./CommentSection";
+import { MobileViewContext } from "../../Context/MobileResizeProvider";
 
 
 const PostModel = ({ postId, onClose }) => {
 
     const [comments, setComments] = useState([]);
-    const [mobileview, setMobileview] = useState(false);
     const { allpost, setAllpost, isLiked, setIsLiked } = useContext(AllPostContextData);
     const { usertoken } = useContext(UserAuthCheckContext);
     const modalRef = useRef(null);
+    const modelboxRef = useRef(null);
+    const {isMobile} = useContext(MobileViewContext)
 
-    useEffect(() => {
-        const resize = () => {
-            if (window.innerWidth < 644) {
-                setMobileview(false);
-            } else {
-                setMobileview(true);
-            }
-        };
-    
-
-        resize();
-    
-        window.addEventListener('resize', resize);
-    
-        return () => {
-            window.removeEventListener('resize', resize);
-        };
-    }, []); 
+   
  
 
 
     useEffect(() => {
         if (!postId || !modalRef.current) {
-            console.warn("GSAP Error: modalRef is missing.");
             return;
         }
+
+     
         let tl = gsap.timeline();
-        if(mobileview){
+        if(!isMobile){
+                  document.body.style.overflowY = 'hidden'
+
+                tl.fromTo(modalRef.current, { opacity: 0 },{ opacity: 1, duration: 0.5, ease: "power2.out" })
+    
+                gsap.fromTo(modelboxRef.current, { scale: 0.8},{ scale: 1, duration: 0.5, ease: "power2.out" })
           
-    
-                tl.to(modalRef.current, { scale: 1, duration: 0.5, ease: "power2.out" })
-    
-                .to(modalRef.current, { backgroundColor: 'rgba(0, 0, 0, 0.7)', duration: 0.5, ease: "power2.out" })
-                document.body.style.overflowY = 'hidden'
            
         }else{
                document.body.style.overflowY = 'hidden'
-            tl.fromTo(
-                modalRef.current,
-                { y : '100%' }, // Start from scale 0
-                { y: "0%", duration: 0.5, ease: "power2.out" }
-              )
+       
+               tl.fromTo(modalRef.current, { background:" rgba(0, 0, 0, 0.0)"},{background:" rgba(0, 0, 0, 0.7)", duration: 0.5, ease: "power2.out" })
     
-              .fromTo(modalRef.current,  
-                { backgroundColor: 'rgba(0, 0, 0, 0)' }, // Start from transparent
-                { backgroundColor: 'rgba(0, 0, 0, 0.7)', duration: 0.5, ease: "power2.out" })
+               gsap.fromTo(modelboxRef.current, { y: "100%"},{ y: '0%', duration: 0.5, ease: "power2.out" })
         }
 
         return () => {
@@ -71,22 +52,38 @@ const PostModel = ({ postId, onClose }) => {
             document.body.style.overflowY = 'scroll';
         };
       
-    }, [postId,mobileview]);
+    }, [postId,isMobile]);
 
     // ✅ Close animation (100% → 0%)
     const handleClose = () => {
         if (modalRef.current) {
-            gsap.to(modalRef.current, { opacity: 0, y: "100%", duration: 0.3, ease: "power2.in", 
+            if(!isMobile){
+                gsap.to(modelboxRef.current, { opacity: 0},{ scale: 1, duration: 0.3, ease: "power2.out" ,})
+                gsap.to(modalRef.current, { opacity: 0, duration: 0.2, ease: "power2.in", 
+                    onComplete: () => {
+                        document.body.style.overflowY = 'scroll';
+                    onClose();
+                }
+            })
+        }else{
+     
+           
+            gsap.to(modalRef.current, { background: "rgba(0, 0, 0, 0.0)", duration: 0.3, ease: "power2.in", 
                 onComplete: () => {
                     document.body.style.overflowY = 'scroll';
-                    onClose(); // Close modal after animation completes
-                } 
-            });
+                    onClose();
+                }
+            })
+            gsap.to(modelboxRef.current, {  y: "100%", duration: 0.5, ease: "power2.out" })
+        }
+            
         } else {
             console.warn("GSAP Warning: modalRef is null on close.");
-            onClose(); // Ensure modal closes even if GSAP fails
+            onClose();
         }
     };
+
+
 
 
 
@@ -144,7 +141,7 @@ const PostModel = ({ postId, onClose }) => {
 
     return (
         <div className="modal-overlay" ref={modalRef}>
-            <div className="modal-content">
+            <div className="modal-content" ref={modelboxRef}>
                 <button className="close-btn" onClick={handleClose}><X size={24} /></button>
 
 

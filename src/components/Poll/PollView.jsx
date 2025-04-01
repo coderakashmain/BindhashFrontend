@@ -41,6 +41,8 @@ const PollView = ({ pollId }) => {
         }
     }, [pollId, usertoken]);
 
+    
+
     useEffect(() => {
         if (polls.length > 0) {
             const pollData = polls.find((poll) => poll.poll_id === pollId);
@@ -261,11 +263,7 @@ useEffect(() => {
 
 
     const progressColors = [
-        "rgba(33, 150, 243, 0.1)",  // Light Blue
-        "rgba(76, 175, 80, 0.1)",   // Light Green
-        "rgba(255, 152, 0, 0.1)",   // Light Orange
-        "rgba(244, 67, 54, 0.1)",   // Light Red
-        "rgba(156, 39, 176, 0.1)",  // Light Purple
+        "rgba(165, 165, 165, 0.1)",  // Light Blue
       ];
     return (
         <section className="poll-view-section">
@@ -286,7 +284,7 @@ useEffect(() => {
                             </div>
                         </div>
                         <div className="profile-details-right">
-                            {!(usertoken.user.id === selectedPoll.posted_by.user_id)  && <Followbtn />}
+                            {!(usertoken.user.id === selectedPoll.posted_by.user_id)  && <Followbtn  targetUserId={selectedPoll.posted_by.user_id} />}
 
                             <span className="more-btn">
                                  <PostOptions
@@ -317,7 +315,7 @@ useEffect(() => {
                                 border:  option.option_id === selectedPoll.user_voted_option &&
                                 selectedPoll.voter_user_id === usertoken.user.id?  progressColors[index % progressColors.length].replace(/0\.1\)$/, "0.4)")  : `1px solid ${progressColors[index % progressColors.length]}`
                               ,  backgroundColor:  option.option_id === selectedPoll.user_voted_option &&
-                              selectedPoll.voter_user_id === usertoken.user.id ? progressColors[index % progressColors.length].replace(/0\.1\)$/, "0.4)")  : ""}}>
+                              selectedPoll.voter_user_id === usertoken.user.id ? progressColors[index % progressColors.length].replace(/0\.1\)$/, "0.3)")  : ""}}>
                                 <input type="radio" name="poll-option" onClick={() => handleVote(option.option_id)} />
 
                                 {option.image && <div className="poll-view-img-box"><img src={option.image} alt="Option" className="option-image" />    </div>}

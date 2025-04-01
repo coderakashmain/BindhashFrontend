@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import StoryView from "./StoryView";
 
-const StorySection = ({storymodeltrue,setstorymodeltrue}) => {
+const StorySection = ({ storymodeltrue, setstorymodeltrue }) => {
     const { usertoken } = useContext(UserAuthCheckContext);
     const [stories, setStories] = useState([]);
     const [textContent, setTextContent] = useState("");
@@ -50,7 +50,7 @@ const StorySection = ({storymodeltrue,setstorymodeltrue}) => {
             });
 
             const fetchedStories = response.data;
-            
+
             const seenStoryIds = new Set(fetchedStories.filter(story => story.is_seen).map(story => story.story_id));
             setStories(fetchedStories);
             setSeenStories(seenStoryIds);
@@ -58,11 +58,12 @@ const StorySection = ({storymodeltrue,setstorymodeltrue}) => {
             console.error("Error fetching stories:", error);
         }
     };
-    
+
 
     const handleFileChange = (event) => {
         setMediaFile(event.target.files[0]);
     };
+   
 
     const handleStorySubmit = async () => {
         if (!textContent && !mediaFile) {
@@ -81,7 +82,7 @@ const StorySection = ({storymodeltrue,setstorymodeltrue}) => {
             formData.append("allowed_users", JSON.stringify(allowedUsers.filter(user => user.trim() !== "")));
         }
         if (mediaFile) formData.append("media", mediaFile);
-        console.log(formData)
+        
 
         setUploading(true);
         try {
@@ -103,114 +104,139 @@ const StorySection = ({storymodeltrue,setstorymodeltrue}) => {
         setUploading(false);
     };
 
+
+
+
     useEffect(() => {
-        if (!storyuplodRef.current || !storyviewRef.current) return;
-    
-        const container = document.querySelector(".home-post-box-story-out-side");
-        if (!container) return;
-    
-        const observerOptions = { threshold: 0.1 };
-    
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const targetDiv = entry.target;
-    
-                    setTimeout(() => {
-                        container.scrollTo({ 
-                            top: targetDiv.offsetTop - container.offsetTop, // Adjust based on container's position
-                            behavior: "smooth"
-                        });
-                    }, 200); 
-                }
-            });
-        }, observerOptions);
-    
-        observer.observe(storyuplodRef.current);
-        observer.observe(storyviewRef.current);
-    
-        return () => observer.disconnect();
-    }, [storyuplodRef, storyviewRef]);
-
- 
-
-    useEffect(()=>{
-        if(storymodeltrue){
+        if (storymodeltrue) {
             setShowModal(true)
         }
-    },[storymodeltrue])
+    }, [storymodeltrue])
 
 
 
 
-       
 
-    const handleStoryClick = async (storyId,story) => {
-        console.log('hle');
-         const userStories = stories.filter(s => s.user_id === story.user_id);
-         setSelectedStory(userStories); 
-        try {
-            // Update state optimistically
-            setSeenStories((prev) => new Set(prev).add(storyId));
-
-            // Send API request to mark as seen
-            await axios.post("/api/stories/mark-seen", { userId : usertoken.user.id, storyId });
-        } catch (error) {
-            console.error("Error marking story as seen:", error);
+    const uniqueUsers = stories.reduce((acc, story) => {
+    
+  
+        if (!acc.some(item => item.user_id === story.user_id)) {
+            acc.push(story);
         }
-    };
+        return acc;
+    }, selectedStory ? [selectedStory[0]] : []);
 
+
+
+    const userStory = uniqueUsers.find(story => story.user_id === usertoken.user.id);
+    const filteredStories = uniqueUsers.filter(story => story.user_id !== usertoken.user.id);
+
+    // Add user's story or an "empty story slot" at the beginning
+    const finalStories = [
+        userStory || { user_id: usertoken.user.id, is_fake: true, profile_pic: usertoken.user.profile_pic, username: usertoken.user.username },
+        ...filteredStories
+    ];
+
+     
     return (
         <div className="home-post-box-story scrollbar">
-            <div className="home-post-box-story-out-side">
 
-                <motion.div
-                 initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 transition={{ duration: 0.5 }}
-                
-                ref={storyviewRef} className="home-story-box-story-inside">
-                    <ul ref={storyBoxRef} className="home-story-box">
-                    
 
-                        {stories.map((story) => (
-                            <motion.li key={story.story_id}
-                            className={`story-card ${seenStories.has(story.story_id) || story.is_seen ? "seen" : "unseen"}`}
-                            // style={{
-                            //     transform: `scale(${1 - index * 0.05}) translateX(${index * -10}px)`,
-                            //     zIndex: stories.length - index,
-                            //   }}
-                            
-                            onClick={() => handleStoryClick(story.story_id,story)}
-                            >
-                                
-                                {story.media_type === "image" && <img src={story.media_url} loading="lazy" alt="Story" />}
-                                {story.media_type === "video" && <video src={story.media_url} loading="lazy"  />}
-                                {story.media_type === "audio" && <audio src={story.media_url} loading="lazy"  />}
-                                {story.is_anonymous ? <p>Anonymous Story</p> : <p>{story.text_content}</p>}
-                                <div className="home-story-box-inside">
-                                    <div className="home-story-box-inside-box">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
 
-                                        <img src={story.profile_pic} alt="" />
-                                        <p>{story.username}</p>
-                                    </div>
-                                </div>
-                            </motion.li>
-                        ))}
-                    </ul>
-                </motion.div>
-                
-                {/* <div ref={storyuplodRef} className="home-story-box-post" onClick={() => setShowModal(true)}>
-                    <div className="home-story-box-post-inside">
-                        <img src={usertoken.user.profile_pic ? usertoken.user.profile_pic : defaultprofilepic} alt="" />
-                        <span className="home-story-box-post-plus-icon" >
+                ref={storyviewRef} className="home-story-scroll-box">
+                <ul ref={storyBoxRef} className="home-story-ul">
 
-                            <CircleFadingPlus size="1.3rem" strokeWidth={2} />
-                        </span>
-                    </div>
-                    <p>Add Story</p>
-                </div> */}
-            </div>
+
+                    {finalStories
+                        .sort((a, b) => (seenStories.has(a.story_id) || a.is_seen ? 1 : -1))
+                        .map((story, index) => {
+                            const isSeen = seenStories.has(story.story_id) || story.is_seen;
+
+                            return (
+                                <motion.li key={story.story_id || `user-${story.user_id}`}
+                                    className={`story-card`}
+                                    layout 
+
+                                    onClick={async () => {
+
+                                        
+
+
+                                        const userStories = stories.filter(s => s.user_id === story.user_id);
+                                        setSelectedStory(userStories);
+
+                                        // Mark story as seen dynamically
+                                        try {
+                                            await axios.post("/api/stories/mark-seen", { userId: usertoken.user.id, storyId: story.story_id });
+
+                                            // Update frontend state
+                                            setStories(prevStories =>
+                                                prevStories.map(s =>
+                                                    s.story_id === story.story_id ? { ...s, is_seen: 1 } : s
+                                                )
+                                            );
+                                        } catch (error) {
+                                            console.error("Error marking story as seen:", error);
+                                        }
+                                    }}
+                                >
+
+
+                                    <motion.div
+
+                                        className={`story-card-item ${isSeen ? "seen" : "unseen"}`}
+                                        style={{
+                                         outline :   ( story.user_id === usertoken.user.id) && story.is_fake ? 'none' : ''
+                                        }}
+                                    >
+
+                                        <img src={story.profile_pic ? story.profile_pic : defaultprofilepic} alt="" 
+                                        
+                                            onClick={ ()=> {    
+                                                if (story.user_id === usertoken.user.id) {
+                                                    if (story.is_fake) {  
+                                                        setShowModal(true);
+                                                    } else {
+                                                        console.log(story.is_fake)                  
+                                                        setSelectedStory(stories.filter(s => s.user_id === usertoken.user.id));
+                                                    }
+                                                    return;
+                                                }
+
+                                            }}
+                                        />
+                                        {usertoken.user.id === story.user_id ? ( <motion.span
+                                                      initial={{ scale: 1 }}
+                                                      animate={{ scale: [1, 1.05, 1] }} // Bouncing animation
+                                                      transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                                                      className="home-story-box-post-plus-icon" 
+                                                      onClick={(event) => {
+                                                        event.stopPropagation(); // Prevents triggering the <img> click event
+                                                        setShowModal(true);
+                                                    }}
+                                                      >
+                                                        
+                                                      <CircleFadingPlus size="1.3rem" strokeWidth={2} />
+                                                    </motion.span>) : ('')}
+                                    </motion.div>
+                                    <p>{story.username}</p>
+
+
+
+
+
+                                </motion.li>
+                            )
+                        })}
+                </ul>
+            </motion.div>
+
+
+
 
 
             {(showModal || storymodeltrue) && (
@@ -235,8 +261,8 @@ const StorySection = ({storymodeltrue,setstorymodeltrue}) => {
                     uploading={uploading}
                 />
             )}
-             <AnimatePresence>
-            {selectedStory && (<StoryView selectedStory ={selectedStory} setSelectedStory={setSelectedStory}/>)}
+            <AnimatePresence>
+                {selectedStory && (<StoryView selectedStory={selectedStory} setSelectedStory={setSelectedStory} />)}
             </AnimatePresence>
         </div>
     );

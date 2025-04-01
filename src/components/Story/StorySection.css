@@ -2,181 +2,97 @@
 
 .home-post-box-story {
     width: 100%;
-
     border-radius: 0.3rem;
-    background-color: var(--backwhitecolor);
-    margin-top: 1rem;
-    height: 14rem;
+    margin-top: 0.8rem;
 }
 
-.home-post-box-story-out-side{
-    width: 100%;
-    height: 100%;
-    overflow-y: scroll;
-    padding: 0rem 0rem 0rem 0rem;
-    transition: transform 0.5s ease-in-out;
-    
-}
-.home-post-box-story-out-side::-webkit-scrollbar{
-  display: none;
-}
-
-
-.home-story-box-post {
-    height: 100%;
-    background: #f1f1f1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    font-size: 0.9rem;
-    cursor: pointer;
-
-}
-.home-story-box-post-inside{
-    height: 6rem;
-    width: 6rem;
-    border-radius: 50%;
-    position: relative;
-    margin-bottom: 0.5rem;
-    z-index: 1;
-
-    }
-
-    .home-story-box-post-inside::before {
-        content: "";
-        position: absolute;
-        top: -4px; 
-        left: -4px;
-        right: -4px;
-        bottom: -4px;
-        background:var(--linearcolor);
-        border-radius: 50%;
-        z-index: -1;
-    }
-.home-story-box-post-inside img{
-    height: 100%;
-    width: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    aspect-ratio: 1/1;
-}
-.home-story-box-post p{
-    color: black;
-}
-.home-story-box-post-plus-icon{
-    position: absolute;
-    bottom: -5%;
-    right: 60%;
-    padding: 0.2rem;
-    border-radius: 50%;
-    background-color: rgb(0, 0, 0);
-
-    border: 3px solid rgb(255, 255, 255);
-}
-
-.home-story-box-story-inside{
+.home-story-scroll-box{
     overflow-x: scroll;
     scrollbar-width: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 14rem;
-    background: rgba(0, 0, 0, 0.05);
 }
 
 
-.home-story-box {
+
+.home-story-ul{
     display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   cursor: pointer;
-   
     height: 100%;
     width: max-content;
-    overflow-x: none !important;
     scroll-snap-type: x mandatory;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    padding: 0.2rem 0.2rem;
 }
 
-.home-story-box li {
-    position: relative;
-    height: 100%;
-    width: 8rem;
+.story-card {
     border-radius: 0.6rem;
     list-style: none;
-    overflow: hidden;
-    transform: rotateY(15deg);
-
-    transition: all 0.2s ease-in-out;
+    transition: transform 0.3s ease, opacity 0.3s ease;
     cursor: pointer;
-    border: 0.15rem solid transparent;
-
+    border: 3px solid transparent;
     position: relative;
-    flex-shrink: 0;
-}
-.home-story-box li:hover {
-      transform: rotateY(0deg) scale(1.1);
-}
-
-
-.home-story-box-inside{
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    backdrop-filter: blur(5px);
-    background: rgba(135, 135, 135, 0.496)
+    background: linear-gradient(to top, #ffffff, #5d7888);
+    /* background: white; */
+    border-radius: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); */
+
+
+}
+
+  .story-card-item{
+    border-radius: 50%;
+    height: 6rem;
+    width: 6rem;
+    position: relative;
     
-
-}
-.home-story-box-inside-box{
-    height: 5.8rem;
-    width: 5.8rem;
-    transform: translateY(-10%);
-
-}
-.home-story-box-inside img{
-   border-radius: 50%;
-   height: 100%;
-   width: 100%;
-   aspect-ratio: 1/1;
-   border: 2px solid rgb(255, 255, 255);
-   object-fit: cover;
-   
-   
-}
-.home-story-box-inside p{
-    text-align: center;
-    color: var(--textwhitecolor);
-   
-   
-}
-
-.home-story-box a {
+  }
+  .home-story-box-post-plus-icon{
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: rgb(200, 196, 196);
+    bottom: 5%;
+    right: 0%;
+    padding: 0.2rem;
+    border-radius: 50%;
+    background-color: rgb(0, 0, 0);
+    color: #fff;
+    z-index: 2;
+  }
+  
+  .story-card-item.unseen {
+    outline: 2px solid #00bbff;
+    outline-offset: 2px;
+}
+
+
+  .story-card-item.seen {
+    outline: 2px solid #ddd;
+    outline-offset: 2px;
+  }  
+
+
+  .story-card  p {
+    color: rgb(0, 0, 0);
     text-decoration: none;
-    opacity: 0.5;
-    font-size: 1.2rem;
+    /* opacity: 0.5; */
+    font-size: 1rem;
+    opacity: 1;
+    padding: 0.5rem 0.2rem;
+    
 }
 
 
 
-.home-story-box li img {
+.story-card img {
     height: 100%;
     width: 100%;
     aspect-ratio: 1/1;
     object-fit: cover;
+    border-radius: 50%;
 }
 
 

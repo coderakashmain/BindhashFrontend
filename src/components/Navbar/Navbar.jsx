@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import { Bell, Mail, User, Home, LogIn, UserPlus, MessageCircle ,Search} from "lucide-react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Bell, Mail, User, Home, LogIn, UserPlus, MessageCircle ,Search,Medal} from "lucide-react";
 import "./Navbar.css";
 import weblogo from '../../Photo/weblogo.svg'
 import Bangbox from "../Bangbox/Bangbox";
@@ -12,11 +12,12 @@ const Navbar = () => {
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   const { usertoken } = useContext(UserAuthCheckContext)
-  useEffect(()=>{
-    if(!usertoken.user.id || usertoken=== null){
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!usertoken) {
       return
     }
-  },[usertoken])
+  }, [usertoken, navigate]);
 
 
   useEffect(() => {
@@ -52,23 +53,23 @@ const Navbar = () => {
 
       {/* Right Side - Icons */}
       <div className="nav-right">
-        {!isMobile && (<NavLink to="/messages" className="icon-button">
-          <Mail size={22} />
+        {isMobile && (<NavLink to="/leaderboard" className="icon-button">
+          <Medal size={22} />
         </NavLink>)}
-        {!isMobile && (<NavLink to="/notifications" className="icon-button">
+         <NavLink to="/notifications" className="icon-button">
           <Bell size={22} />
-        </NavLink>)}
+        </NavLink>
         {!isMobile && (<NavLink to="/chat" className="icon-button">
           <MessageCircle size={22} />
         </NavLink>)}
-        <NavLink to="/profile" className="icon-button ">
+        {!isMobile && ( <NavLink to="/profile" className="icon-button ">
         
            <Search size = '1.7rem' strokeWidth={3} stroke="black"/>
          
-        </NavLink>
+        </NavLink>) }
         <NavLink to="/profile" className="icon-button nav-user-profile-icon">
         
-            <img src={usertoken.user.profile_pic ? usertoken.user.profile_pic : defaulprofilepic } alt="" />
+       {     <img src={usertoken.user.profile_pic ? usertoken.user.profile_pic : defaulprofilepic } alt="" />}
          
         </NavLink>
       </div>

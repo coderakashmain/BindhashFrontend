@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./PhotoFilter.css";
 import { Play, Pause } from "lucide-react";
 
@@ -17,13 +17,53 @@ const PhotoFilter = ({ media, type, setFilteredMedia }) => {
     const [isPlaying, setIsPlaying] = useState(true);
     const videoRef = useRef();
     const [showIcon, setShowIcon] = useState(true);
+    const [processedImage, setProcessedImage] = useState(media);
     
 
     // Apply selected filter
     const applyFilter = (filter) => {
-        setSelectedFilter(filter);
-        setFilteredMedia(filter);
+        setSelectedFilter(filter); 
+        if (type.startsWith("image")) {
+            // Create a canvas to apply the filter
+        
+            const img = new Image();
+            img.crossOrigin = "anonymous";  // Prevent CORS issues
+            img.src = media;
+    
+            img.onload = () => {
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+    
+                canvas.width = img.width;
+                canvas.height = img.height;
+    
+                ctx.filter = filters[filter];  // Apply selected filter
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    
+                // Convert canvas to Blob
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        const file = new File([blob], "filtered_image.jpg", { type: "image/jpeg" });
+
+                        const newImageUrl = URL.createObjectURL(blob);
+                        setProcessedImage(newImageUrl);
+
+
+                        setFilteredMedia(file); // Pass the processed file
+                    }
+                }, "image/jpeg");
+            };
+        } else {
+            // If it's a video, just apply the filter name
+            setFilteredMedia({ file: media, filter });
+        }
     };
+
+    useEffect(()=>{
+        setSelectedFilter("none");
+        setProcessedImage(media);
+        applyFilter("none")
+    },[media])
 
     // Play/Pause functionality
     const togglePlayPause = () => {
@@ -37,21 +77,27 @@ const PhotoFilter = ({ media, type, setFilteredMedia }) => {
         setShowIcon(true);
         setTimeout(() => setShowIcon(false), 2000);
     };
+    useEffect(()=>{
+        if(videoRef.current){
+
+            togglePlayPause();
+        }
+    },[])
 
     return (
         <div className="photo-filter-container">
             {/* Main Preview */}
             <div className="preview-container">
-                {type === "image" && (
+                {type.startsWith("image") && (
                     <img
-                        src={media}
+                        src={processedImage}
                         alt="Preview"
                         className="filtered-media"
-                        style={{ filter: filters[selectedFilter] }}
+                        style={{ filter: selectedFilter === "none" ? "" : filters[selectedFilter] }}
                     />
                 )}
 
-                {type === "video" && (
+                {type.startsWith("video") && (
                     <div className="story-video-play-box">
                         <video
                             ref={videoRef}
@@ -87,23 +133,25 @@ const PhotoFilter = ({ media, type, setFilteredMedia }) => {
             </div>
 
             {/* Filter Thumbnails */}
-            <div className="filter-thumbnails">
+            {!type.startsWith("video") && (    <div className="filter-thumbnails">
                 {Object.keys(filters).map((filter) => (
                     <div
                         key={filter}
                         className={`filter-thumb ${selectedFilter === filter ? "active" : ""}`}
-                        onClick={() => applyFilter(filter)}
+                        onClick={() => { 
+                    
+                            applyFilter(filter)}}
                     >
-                        {type === "image" && (
+                        {type.startsWith("image") && (
                             <img src={media} alt={filter} style={{ filter: filters[filter] }} />
                         )}
-                        {type === "video" && (
+                        {type.startsWith("video") && (
                             <video src={media} muted loop style={{ filter: filters[filter] }} />
                         )}
                         <span>{filter}</span>
                     </div>
                 ))}
-            </div>
+            </div>)}
         </div>
     );
 };

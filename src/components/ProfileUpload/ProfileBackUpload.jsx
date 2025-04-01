@@ -1,11 +1,13 @@
-import React, { useState, useRef, useContext, useEffect } from "react";
+
+
+import React, { useState, useRef, useContext } from "react";
 import Cropper from "react-easy-crop";
 import axios from "axios";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import {UserRoundPen ,SwitchCamera} from "lucide-react"
 import { getCroppedImg } from "./cropUtils"; // Utility to get cropped image
-import './ProfileUpload.css'
-const ProfileUpload = ({setProfilepicloading,paddingvalue,size,mainphoto,borderRadius}) => {
+
+const ProfileBackUpload = ({setProfilepicloading,paddingvalue,size,mainphoto}) => {
   const { usertoken, setUsertoken } = useContext(UserAuthCheckContext);
   const [image, setImage] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
@@ -13,8 +15,6 @@ const ProfileUpload = ({setProfilepicloading,paddingvalue,size,mainphoto,borderR
   const [zoom, setZoom] = useState(1);
   const [showCropModal, setShowCropModal] = useState(false);
   const fileInputRef = useRef(null);
-
-
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -25,7 +25,6 @@ const ProfileUpload = ({setProfilepicloading,paddingvalue,size,mainphoto,borderR
   };
 
   const handleCropComplete = async (_, croppedAreaPixels) => {
-    console.log('cropped is worked')
     const cropped = await getCroppedImg(image, croppedAreaPixels);
     setCroppedImage(cropped);
    
@@ -48,31 +47,14 @@ const ProfileUpload = ({setProfilepicloading,paddingvalue,size,mainphoto,borderR
     
     setShowCropModal(false);
     try {
-      const response = await axios.post("/api/users/upload-profile", formData, {
+      const response = await axios.post("/api/users/upload-back-profile", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      setUsertoken((prev) => {
-        if (response.data.profile_pic) {
-            return {
-                ...prev,
-                user: { 
-                    ...prev.user, 
-                    profile_pic: response.data.profile_pic 
-                },
-            };
-        }
-        if(response.data.profileback_pic){
-          return {
-            ...prev,
-            user: { 
-                ...prev.user, 
-                profileback_pic: response.data.profileback_pic 
-            },
-        };
-        }
-        return prev;
-    });
+      setUsertoken((prev) => ({
+        ...prev,
+        user: { ...prev.user, profile_pic: response.data.profile_pic },
+      }));
       setProfilepicloading(false);
 
     } catch (error) {
@@ -91,18 +73,18 @@ const ProfileUpload = ({setProfilepicloading,paddingvalue,size,mainphoto,borderR
         onChange={handleFileChange}
         hidden
       />
-      <button style={ {padding : paddingvalue ? paddingvalue : '', borderRadius : borderRadius ? borderRadius : ''}} onClick={() => fileInputRef.current.click()} className="upload-icon">
+      <button style={ {padding : paddingvalue ? paddingvalue : ''}} onClick={() => fileInputRef.current.click()} className="upload-icon">
       <SwitchCamera size={size ? size  : 18} color="black" />
       </button>
 
       {showCropModal && (
-        <div className="crop-modal" style={{poszIndex : '10'}}>
+        <div className="crop-modal">
             <div className="crop-model-edit-box">
           <Cropper
             image={image}
             crop={crop}
             zoom={zoom}
-            aspect={mainphoto ? 1 : 1.8}
+            aspect={1}
             onCropChange={setCrop}
             onZoomChange={setZoom}
             onCropComplete={handleCropComplete}
@@ -118,4 +100,5 @@ const ProfileUpload = ({setProfilepicloading,paddingvalue,size,mainphoto,borderR
   );
 };
 
-export default ProfileUpload;
+export default ProfileBackUpload;
+

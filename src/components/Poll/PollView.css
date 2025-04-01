@@ -3,13 +3,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #FAFAFA;
 }
+
+
 .poll-view-container {
     width: 100%;
-    background-color: #FFF;
+    /* background-color: #FFF; */
     border-radius: 0.5rem;
-    box-shadow: var(--webbackshahow);
+    /* box-shadow: var(--webbackshahow); */
     margin-top: 1rem;
 }
 .poll-view-container-inside {
@@ -108,10 +109,10 @@ font-size: 0.9rem;
     appearance: none;
     border: 1px solid #cecaca;
     /* padding: 1rem 0 1rem 1rem; */
-    height: 5rem;
+    height: 7rem;
     margin-bottom: 0.5rem;
     cursor: pointer;
-    border-radius: 0.7rem;
+    border-radius: 0.3rem;
     overflow: hidden;
     user-select: none;
     display: flex;
@@ -121,7 +122,8 @@ font-size: 0.9rem;
 }
 .poll-view-img-box{
     height: 100%;
-    width: 7rem;
+    width: 10rem;
+    background-color: white;
 }
 .poll-view-container-inside-option img {
   object-fit: cover;
