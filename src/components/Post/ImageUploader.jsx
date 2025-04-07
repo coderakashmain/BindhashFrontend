@@ -6,7 +6,7 @@ import "./ImageUploader.css";
 import PostEditView from "./PostEditView";
 import {motion,AnimatePresence} from 'framer-motion'
 
-function ImageUploader() {
+function ImageUploader({setMpostbtn}) {
     const [image, setImage] = useState(null);
     const fileInputRef = useRef(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -101,7 +101,7 @@ function ImageUploader() {
        
                 </div>
             )}
-                         {croppedImage && <PostEditView setImage={setImage} setImageType={setImageType} setCroppedImage={setCroppedImage} postdata={croppedImage} type={imageType}  setShowCropper={setShowCropper}/>}
+                         {croppedImage && <PostEditView setMpostbtn={setMpostbtn} setImage={setImage} setImageType={setImageType} setCroppedImage={setCroppedImage} postdata={croppedImage} type={imageType}  setShowCropper={setShowCropper}/>}
         </>
     );
 }

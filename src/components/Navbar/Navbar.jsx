@@ -31,7 +31,7 @@ const Navbar = () => {
     <nav className="navbar">
       {/* Left Side - Logo */}
       <div className="nav-left">
-        <Bangbox  size= {'1.5rem'} click={true} />
+        <Bangbox  size= {'1.7rem'} click={true} />
       </div>
 
       {/* Middle - Navigation Links */}
@@ -53,18 +53,18 @@ const Navbar = () => {
 
       {/* Right Side - Icons */}
       <div className="nav-right">
-        {isMobile && (<NavLink to="/leaderboard" className="icon-button">
+        {/* {isMobile && (<NavLink to="/leaderboard" className="icon-button">
           <Medal size={22} />
-        </NavLink>)}
+        </NavLink>)} */}
          <NavLink to="/notifications" className="icon-button">
-          <Bell size={22} />
+          <Bell  size={22} />
         </NavLink>
         {!isMobile && (<NavLink to="/chat" className="icon-button">
           <MessageCircle size={22} />
         </NavLink>)}
-        {!isMobile && ( <NavLink to="/profile" className="icon-button ">
+        {isMobile && ( <NavLink to="/search" className="icon-button ">
         
-           <Search size = '1.7rem' strokeWidth={3} stroke="black"/>
+           <Search size={22}  strokeWidth={2}/>
          
         </NavLink>) }
         <NavLink to="/profile" className="icon-button nav-user-profile-icon">

@@ -173,15 +173,17 @@ const CommentSection = ({ post}) => {
             return formatDistanceToNow(date, { addSuffix: true, includeSeconds: false });
         }
     };
-    console.log(comments)
+
 
 
     return  (
         <div className="commentsectoin-modal-right">
             <h3>Comments</h3>
-            <ul>
-                {comments.map((c) => (
-                    <li key={c.comment_id} className={`comment-item ${c.comment_pinned ? "📌 Pinned" : ""}`}>
+            <ul className="scrollbar">
+                {comments
+                .filter(c => c.commenter_username)
+                .map((c) => (
+                    <li key={c.comment_id} className={`comment-item ${c.comment_pinned ? "Pinned" : ""}`}>
                         <img src={c.commenter_pic ? c.commenter_pic : defaultprofilephoto} alt="Profile" className="comment-profile-pic" />
 
                         <div className="comment-content">

@@ -1,0 +1,35 @@
+.set-username-container {
+  
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30rem;
+    min-height: 30rem;
+
+
+  }
+.set-username-container h2{
+  
+margin : 1rem 0
+
+  }
+  
+  .set-username-container  .username-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .set-username-container button{
+  
+    background: var(--linearcolor);
+
+  }
+  
+  .set-username-container  .error {
+    color: red;
+    font-size: 14px;
+  }
+  
+.user-back-to-r{
+    margin: 4rem auto 0;
+}

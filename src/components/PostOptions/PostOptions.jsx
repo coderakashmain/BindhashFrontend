@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import axios from "axios";
 import {
     MoreVertical, Edit, Trash2, Share2, Bookmark,
     Flag, Link2, EyeOff
-} from "lucide-react"; 
+} from "lucide-react";
 import { Menu, MenuItem, IconButton, Divider, Snackbar, Alert } from "@mui/material"; // MUI Dropdown
+import  {UserAuthCheckContext} from '../../Context/UserAuthCheck'   
 
 const PostOptions = ({
-    postId, userId,pollId,onPostUpdate 
+    postId, userId, pollId, onPostUpdate
 }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [snackbar, setSnackbar] = useState({ open: false, message: "", type: "success" });
     const open = Boolean(anchorEl);
+    const {usertoken} = useContext(UserAuthCheckContext)
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -23,7 +26,7 @@ const PostOptions = ({
     const handleEdit = async () => {
         const newContent = prompt("Enter new content:");
         if (!newContent) return;
-        
+
         try {
             await axios.put(`/api/postfuntion/edit/${postId}`, { content: newContent });
             setSnackbar({ open: true, message: "Post updated successfully!", type: "success" });
@@ -93,35 +96,35 @@ const PostOptions = ({
 
     return (
         <>
-          
+
             <IconButton onClick={handleClick}>
                 <MoreVertical size={18} />
             </IconButton>
 
-            
-            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}  MenuListProps={{
-                sx: { padding: "0.5rem 0", minWidth: "10rem" } 
+
+            <Menu anchorEl={anchorEl} open={open} onClose={handleClose} MenuListProps={{
+                sx: { padding: "0.5rem 0", minWidth: "10rem" }
             }}
                 PaperProps={{
                     sx: {
-                        padding: "0.2rem", 
-                       
-                        minWidth: "12rem", 
-                        backgroundColor: "#fff", 
+                        padding: "0.2rem",
+
+                        minWidth: "12rem",
+                        backgroundColor: "#fff",
                         borderRadius: "8px",
                         boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
                     },
                 }}>
                 {/* Edit Post */}
-                <MenuItem onClick={handleEdit}>
+           {usertoken.user.id === userId && (     <MenuItem onClick={handleEdit}>
                     <Edit size={18} style={{ marginRight: 8 }} /> Edit Post
-                </MenuItem>
+                </MenuItem>)}
 
 
                 {/* Delete Post */}
-                <MenuItem onClick={handleDelete}>
+               { usertoken.user.id === userId &&  ( <MenuItem onClick={handleDelete}>
                     <Trash2 size={18} style={{ marginRight: 8, color: "red" }} /> Delete Post
-                </MenuItem>
+                </MenuItem>)}
 
 
                 <Divider />
@@ -151,13 +154,13 @@ const PostOptions = ({
 
 
                 {/* Hide Post */}
-     
+
                 <MenuItem onClick={handleHide}>
                     <EyeOff size={18} style={{ marginRight: 8 }} /> Hide Post
                 </MenuItem>
             </Menu>
-             {/* Snackbar for Notifications */}
-             <Snackbar open={snackbar.open} autoHideDuration={3000} onClose={() => setSnackbar({ open: false })}>
+            {/* Snackbar for Notifications */}
+            <Snackbar open={snackbar.open} autoHideDuration={3000} onClose={() => setSnackbar({ open: false })}>
                 <Alert severity={snackbar.type}>{snackbar.message}</Alert>
             </Snackbar>
         </>

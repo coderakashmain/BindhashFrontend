@@ -5,13 +5,22 @@ import './Profile.css'
 import Post from "../../components/Post/Post";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import defaultprofilepicture from '../../Photo/defaultprofilepic.png'
-import { Images, Ellipsis, Undo2, Pencil, SwitchCamera, MessageCircle, UserPlus, Send } from 'lucide-react'
+import { Images,Settings, Ellipsis, Undo2, Pencil, Compass, Gem, SwitchCamera, MessageCircle, UserPlus, Send } from 'lucide-react'
 import ProfileStats from "../../components/ProfileStats/ProfileStats";
 import SuggestedUsers from "../../components/SuggestedUsers/SuggestedUsers";
 import ProfileUpload from "../../components/ProfileUpload/ProfileUpload";
 import Followbtn from "../../components/ProfileStats/Followbtn";
 import PostFunctionComponent from "../../components/PostFuctionComponent/PostFunctionComponent";
-import {motion,AnimatePresence} from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import ShareProfile from "../../components/ShareProfile/ShareProfile";
+import { AllPostContextData } from "../../Context/AllPostContext";
+import TagSelector from "../../components/Usertags/TagSelector";
+import CircularProgress from '@mui/material/CircularProgress';
+import UserProfileBio from "../../components/Bio/UserProfileBio";
+import { MobileViewContext } from "../../Context/MobileResizeProvider";
+import ProfileEdit from "../../components/ProfileEdit/ProfileEdit";
+import PostSwiper from "../../components/PostSwiper/PostSwiper";
+
 
 const Profile = () => {
   const [content, setContent] = useState("");
@@ -22,7 +31,12 @@ const Profile = () => {
   const [profilepicloading, setProfilepicloading] = useState(false);
   const [profilebackpicloading, setProfilbackepicloading] = useState(false);
   const postopenRef = useRef(null)
-   const [mpostbtn, setMpostbtn] = useState(false);
+  const [mpostbtn, setMpostbtn] = useState(false);
+  const { totalUserPost,allpost } = useContext(AllPostContextData)
+  const [profileEditView, setProfileEditView] = useState(false);
+  const { isMobile } = useContext(MobileViewContext);
+
+
 
 
 
@@ -35,46 +49,15 @@ const Profile = () => {
 
 
 
+  
 
 
 
 
 
 
-  const handlePostSubmit = async (e) => {
-    e.preventDefault();
-    if (!content.trim() && !image) return;
 
-    const formData = new FormData();
-    formData.append("user_id", usertoken.user.id);
-    formData.append("content", content);
-    if (image) formData.append("image", image);
-
-    try {
-      await axios.post("/api/posts/create", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      setContent("");
-      setImage(null);
-
-      alert('sucess');
-    } catch (err) {
-      console.error("Error creating post:", err);
-      alert('error');
-    }
-  };
-
-  const logout = () => {
-    axios.post(`/api/auth/logout`).then((res) => {
-      alert("Logged out successfully");
-
-      sessionStorage.removeItem("logintoken");
-      setUsertoken(null);
-
-      window.location.reload();
-    }).catch((err) => console.error("Logout Error:", err));
-
-  }
+ 
 
   const [isFollowing, setIsFollowing] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -83,7 +66,7 @@ const Profile = () => {
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
 
- 
+
   const handlepostclick = () => {
     setMpostbtn(true)
   };
@@ -92,34 +75,24 @@ const Profile = () => {
     <div className="profile-container">
 
 
-      {/* <h2>Welcome, {usertoken.user.username}!</h2>
-          <button onClick={logout}>Logout</button>
 
-          <form onSubmit={handlePostSubmit} className="Profile-post-form">
-            <textarea
-              placeholder="Write something..."
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              required
-            />
-            <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
-            <button type="submit">Post</button>
-          </form> */}
 
 
       <div className="profile-left-box">
         <div className="profile-sub-nav">
           <div className="prifle-sub-nav-inside-box">
             <div className="profile-back">
-              <button><Undo2 /></button>
+              <button onClick= {()=> {
+                navigate(-1)
+              }} className="btnhover"><Undo2 /></button>
             </div>
             <div className="profile-username-box">
-              {usertoken.user.user_fullname ? (<strong>{usertoken.user.user_fullname}</strong>) : (<strong>Not set yet</strong>)}
+              {usertoken.user.fullname ? (<strong>{usertoken.user.fullname}</strong>) : (<strong>Not set yet</strong>)}
               <p>{usertoken.user.username}</p>
             </div>
           </div>
-          <div className="profile-userdataedit">
-            <Ellipsis />
+          <div onClick={()=> navigate('/setting')} className="profile-userdataedit btnhover">
+            <Settings  className="" />
           </div>
         </div>
         <div className="profile-page-profile-image-box">
@@ -150,39 +123,60 @@ const Profile = () => {
 
         <div className="profile-page-data-box">
 
-           <AnimatePresence>
-                  {mpostbtn && (
-                    <PostFunctionComponent mpostbtn={mpostbtn} setMpostbtn={setMpostbtn} />
-                  )}
-                </AnimatePresence>
+          <AnimatePresence>
+            {mpostbtn && (
+              <PostFunctionComponent widthsize='40rem' mpostbtn={mpostbtn} setMpostbtn={setMpostbtn} />
+            )}
+          </AnimatePresence>
 
           <div className="profile-page-left-data-box">
             <div className="profile-page-left-data-box-btn">
-              {/* 
-              <button className="button active"><Pencil size={18} /> Edit Profile</button> */}
+
               {usertoken.user.id ? (<button onClick={handlepostclick} className="button active"><Images size={18} />Upload/Post</button>) : (
                 <button className="follow-btn  active" onClick={toggleFollow}>
                   <Followbtn />
                 </button>
               )}
-              <button className="message-btn button active"><MessageCircle size={18} /> Message</button>
-              <button className="message-btn button active"><Send size={18} /> Share Profile</button>
+
+
+
+              {usertoken.user.id ? (<button
+                onClick={() => {
+                  if (isMobile) {
+                    navigate('/profile/edit')
+
+                  }
+                  else {
+                    setProfileEditView(true)
+                  }
+                }
+
+                }
+                className="button active"><Pencil size={18} /> Edit Profile</button>)
+
+
+                : (<button className="message-btn button active"><MessageCircle size={18} /> Message</button>)}
+              {profileEditView && (<ProfileEdit setProfileEditView={setProfileEditView} userId={usertoken.user.id} />)}
+
+              <div className="message-btn button active"> <ShareProfile backcolor='none' btnhover= {false} fontsize={20} content="Share Profile" profileurllink={`/profile/${usertoken.user.username}`} /></div>
 
             </div>
 
             <div className="profile-page-stats">
-              <div className="stat-box"><strong>125</strong><span>Posts</span></div>
-              <div className="stat-box"><strong>3.2K</strong><span>Followers</span></div>
-              <div className="stat-box"><strong>1.8K</strong><span>Following</span></div>
+              <div className="stat-box"><strong>{totalUserPost}</strong><span>Posts</span></div>
+              <ProfileStats gap='5rem' />
             </div>
 
-            <div className="story-highlights">
-              {[1, 2, 3].map((_, i) => (
-                <div className="story-circle" key={i}>
-                  <img src="https://picsum.photos/50" alt="Story" />
-                  <p>Highlight {i + 1}</p>
-                </div>
-              ))}
+            <div className="user-leadboard-point">
+              <h2><Compass size='1rem' />Leaderboard</h2>
+              <div className="user-leadboard-point-box" >
+                <span onClick={() => {
+                  if (isMobile) {
+                    navigate('/leaderboard')
+
+                  }
+                }}> Points 759<Gem size={14} color="blue" /></span>
+              </div>
             </div>
 
             <div className="mutual-friends">
@@ -195,36 +189,23 @@ const Profile = () => {
               ))}
             </div>
 
-            <div className="user-leader">
-              <h2>Leaderboard</h2>
-            </div>
+
 
 
 
           </div>
           <div className="profile-page-right-data-box">
-            <h1>Full Name </h1>
-            <p>Username</p>
+            <h1>              {usertoken.user.fullname ? usertoken.user.fullname : "Not set yet"}</h1>
+            <p>{usertoken.user.username}</p>
+            {usertoken.user?.bio?.philosophy && (<p>{usertoken.user.bio.philosophy}</p>)}
 
-            <div className="user-tags">
-              {["#Coder", "#Photography", "#Gaming", "#Travel"].map((tag, i) => (
-                <span key={i}>{tag}</span>
-              ))}
-            </div>
-            <div className="profile-page-right-bio-box">
-              <h2>Bio</h2>
-              <ul>
-                <li> Introvert😂 </li>
-                <li>º IT BackGround🖱️</li>
-                <li>º MPcian🎓</li>
-                <li>º Develeper of StudyVault</li>
-                <li>º Life.InnerHTML = ''Life is full of Pain"</li>
-                <li>º Music Lover🎵</li>
-                <li>º Radhe Radhe</li>
-              </ul>
-            </div>
+            <TagSelector userId={usertoken.user.id} />
+
+            <UserProfileBio setProfileEditView={setProfileEditView} />
           </div>
         </div>
+
+        <PostSwiper/>
 
       </div>
       <div className="profile-right-box">

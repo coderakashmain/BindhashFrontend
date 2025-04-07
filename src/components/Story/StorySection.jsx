@@ -11,6 +11,7 @@ import defaultprofilepic from '../../Photo/defaultprofilepic.png'
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import StoryView from "./StoryView";
+import { SnackbarContext } from "../../Context/SnackbarContext";
 
 const StorySection = ({ storymodeltrue, setstorymodeltrue }) => {
     const { usertoken } = useContext(UserAuthCheckContext);
@@ -32,6 +33,7 @@ const StorySection = ({ storymodeltrue, setstorymodeltrue }) => {
     const navigate = useNavigate();
     const [selectedStory, setSelectedStory] = useState(null);
     const [seenStories, setSeenStories] = useState(new Set());
+    const { setSnackbar } = useContext(SnackbarContext)
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 640);
@@ -63,11 +65,11 @@ const StorySection = ({ storymodeltrue, setstorymodeltrue }) => {
     const handleFileChange = (event) => {
         setMediaFile(event.target.files[0]);
     };
-   
+
 
     const handleStorySubmit = async () => {
         if (!textContent && !mediaFile) {
-            alert("Please add text or media to post a story.");
+            setSnackbar({ open: true, message: 'Please add a story content or media file', type: 'error' })
             return;
         }
 
@@ -82,7 +84,7 @@ const StorySection = ({ storymodeltrue, setstorymodeltrue }) => {
             formData.append("allowed_users", JSON.stringify(allowedUsers.filter(user => user.trim() !== "")));
         }
         if (mediaFile) formData.append("media", mediaFile);
-        
+
 
         setUploading(true);
         try {
@@ -100,6 +102,7 @@ const StorySection = ({ storymodeltrue, setstorymodeltrue }) => {
             setstorymodeltrue(false)
         } catch (error) {
             console.error("Error uploading story:", error);
+            setSnackbar({ open: true, message: 'Error uploading story:', type: 'error' })
         }
         setUploading(false);
     };
@@ -116,28 +119,40 @@ const StorySection = ({ storymodeltrue, setstorymodeltrue }) => {
 
 
 
-
     const uniqueUsers = stories.reduce((acc, story) => {
-    
-  
         if (!acc.some(item => item.user_id === story.user_id)) {
             acc.push(story);
         }
         return acc;
-    }, selectedStory ? [selectedStory[0]] : []);
+    }, []);
 
 
 
-    const userStory = uniqueUsers.find(story => story.user_id === usertoken.user.id);
+
+    const userStory = stories.find(story => story.user_id === usertoken.user.id);
     const filteredStories = uniqueUsers.filter(story => story.user_id !== usertoken.user.id);
 
-    // Add user's story or an "empty story slot" at the beginning
-    const finalStories = [
-        userStory || { user_id: usertoken.user.id, is_fake: true, profile_pic: usertoken.user.profile_pic, username: usertoken.user.username },
-        ...filteredStories
-    ];
+    let finalStories = [];
 
-     
+    if (userStory) {
+        // If you have story
+        finalStories = [userStory, ...filteredStories];
+    } else {
+        // If you don't have story
+        finalStories = [
+            {
+                id: "mystory", // random id
+                user_id: usertoken.user.id,
+                username: "You", 
+                profile: usertoken.user.profile || '', // your profile picture
+                is_fake: true,
+            
+            },
+            ...filteredStories,
+        ];
+    }
+
+
     return (
         <div className="home-post-box-story scrollbar">
 
@@ -152,21 +167,25 @@ const StorySection = ({ storymodeltrue, setstorymodeltrue }) => {
 
 
                     {finalStories
-                        .sort((a, b) => (seenStories.has(a.story_id) || a.is_seen ? 1 : -1))
+                        .sort((a, b) => {
+                            // Always keep the user's own story (fake or real) at the top
+                            if (a.user_id === usertoken.user.id) return -1;
+                            if (b.user_id === usertoken.user.id) return 1;
+
+                            // Then sort by seen/unseen
+                            return (seenStories.has(a.story_id) || a.is_seen ? 1 : -1);
+                        })
                         .map((story, index) => {
                             const isSeen = seenStories.has(story.story_id) || story.is_seen;
 
                             return (
-                                <motion.li key={story.story_id || `user-${story.user_id}`}
-                                    className={`story-card`}
-                                    layout 
-
+                                <motion.li
+                                    key={story.story_id || `user-${story.user_id}`}
+                                    className="story-card"
+                                    layout
+                                    style={{ width: finalStories.length === 0 ? '100%' : '' }}
                                     onClick={async () => {
-
-                                        
-
-
-                                        const userStories = stories.filter(s => s.user_id === story.user_id);
+                                        let userStories = stories.filter(s => s.user_id === story.user_id);
                                         setSelectedStory(userStories);
 
                                         // Mark story as seen dynamically
@@ -184,51 +203,42 @@ const StorySection = ({ storymodeltrue, setstorymodeltrue }) => {
                                         }
                                     }}
                                 >
-
-
                                     <motion.div
-
                                         className={`story-card-item ${isSeen ? "seen" : "unseen"}`}
                                         style={{
-                                         outline :   ( story.user_id === usertoken.user.id) && story.is_fake ? 'none' : ''
+                                            outline: (story.user_id === usertoken.user.id) && story.is_fake ? 'none' : ''
                                         }}
                                     >
-
-                                        <img src={story.profile_pic ? story.profile_pic : defaultprofilepic} alt="" 
-                                        
-                                            onClick={ ()=> {    
+                                        <img
+                                            src={story.profile_pic ? story.profile_pic : defaultprofilepic}
+                                            alt=""
+                                            onClick={() => {
                                                 if (story.user_id === usertoken.user.id) {
-                                                    if (story.is_fake) {  
+                                                    if (story.is_fake) {
                                                         setShowModal(true);
                                                     } else {
-                                                        console.log(story.is_fake)                  
                                                         setSelectedStory(stories.filter(s => s.user_id === usertoken.user.id));
                                                     }
                                                     return;
                                                 }
-
                                             }}
                                         />
-                                        {usertoken.user.id === story.user_id ? ( <motion.span
-                                                      initial={{ scale: 1 }}
-                                                      animate={{ scale: [1, 1.05, 1] }} // Bouncing animation
-                                                      transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
-                                                      className="home-story-box-post-plus-icon" 
-                                                      onClick={(event) => {
-                                                        event.stopPropagation(); // Prevents triggering the <img> click event
-                                                        setShowModal(true);
-                                                    }}
-                                                      >
-                                                        
-                                                      <CircleFadingPlus size="1.3rem" strokeWidth={2} />
-                                                    </motion.span>) : ('')}
+                                        {usertoken.user.id === story.user_id && (
+                                            <motion.span
+                                                initial={{ scale: 1 }}
+                                                animate={{ scale: [1, 1.05, 1] }}
+                                                transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                                                className="home-story-box-post-plus-icon"
+                                                onClick={(event) => {
+                                                    event.stopPropagation();
+                                                    setShowModal(true);
+                                                }}
+                                            >
+                                                <CircleFadingPlus size="1.3rem" strokeWidth={2} />
+                                            </motion.span>
+                                        )}
                                     </motion.div>
-                                    <p>{story.username}</p>
-
-
-
-
-
+                                    <p>{story.user_id === usertoken.user.id ? "You" : story.username}</p>
                                 </motion.li>
                             )
                         })}

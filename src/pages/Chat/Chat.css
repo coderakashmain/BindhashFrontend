@@ -6,9 +6,8 @@
     display: flex;
     justify-content:space-between;
     align-items: center;
-    height: 100vh;
     flex-direction: column;
-    padding:  7rem 0rem 0rem;
+    padding:  0.8rem 0rem 0rem;
     background-color: #f5f5f5;
   
 }
@@ -19,8 +18,9 @@
     align-items: center;
     padding: 1rem 0;
     border-top: 1px solid rgb(218, 218, 218);
-    background-color: rgb(249, 247, 247) ;
-
+    background: rgb(255 255 255 / 47%) ;
+    backdrop-filter: blur(5px);
+    /* height: ; */
 }
 
 .chat-scrollbox{
@@ -51,14 +51,15 @@
 
       
 .chat-input-right input{
-    padding: 1rem;
+    padding: 0.7rem 0.8rem;
     width: 100%;
     font-size: 1rem;
-    border : 1px solid rgb(188, 188, 188);
-    border-radius: 02rem;
+    /* border : 1px solid rgb(188, 188, 188); */
+    border-radius: 2rem;
     transition: all 0.3s linear;
     outline: none;
     flex-grow: 5;
+    background: #efefef;
 
 }
 .chat-input-left {
@@ -74,13 +75,16 @@
  padding: 0.9rem;
  cursor: pointer;
  border: none;
- background-color: black;
+
  border-radius: 50%;
  display: flex;
  justify-content: center;
  align-items: center;
  transition: all 0.2s ease-in-out;
 
+}
+.chat-input-right button{
+  background: var(--linearcolor);
 }
 .chat-input-right button:hover{
     background-color: rgb(26, 74, 163);
@@ -103,7 +107,7 @@
   border: 2px solid rgba(200, 200, 200, 0.46);
   width: 5rem;
   height: 5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.4rem;
    
 }   
 .receiver-pic img{
@@ -115,11 +119,13 @@
 .receiver-data button{
 margin: 1rem 0 !important;
 }  
-.receiver-new-chat{
-  background-color: red;
-  width: 60%;
+.message-text{
+  font-size: 1rem;
 }
 
+.message-status{
+  font-size:  0.65rem;
+}
 .chat-messages {
    
     display: flex;

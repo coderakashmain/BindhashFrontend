@@ -8,6 +8,9 @@ import { Crop } from 'lucide-react'
 import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios'
 import { MobileViewContext } from '../../Context/MobileResizeProvider'
+import {SnackbarContext} from '../../Context/SnackbarContext'
+import { useUpload } from '../../Context/UploadProvider'
+import { AllPostContextData } from '../../Context/AllPostContext'
 
 const PostEditView = ({ postdata,setVideoselect,setMpostbtn, type, setShowCropper, setCroppedImage, setImage, setImageType, setVideopost, setVideoType }) => {
     const { usertoken } = useContext(UserAuthCheckContext);
@@ -18,15 +21,19 @@ const PostEditView = ({ postdata,setVideoselect,setMpostbtn, type, setShowCroppe
     const [uploading, setUploading] = useState(false);
     const { isMobile } = useContext(MobileViewContext);
     const homevideoRef = useRef(null)
+    const {setSnackbar} = useContext(SnackbarContext)
+    const {setFile,setUploadProgress,setFakeUploading} = useUpload();
+    
 
 
-
-const handlevideoselect = ()=>{
-    homevideoRef.current=document.querySelector('.home-vidoe-post-input');
+    
+    const handlevideoselect = ()=>{
+        homevideoRef.current=document.querySelector('.home-vidoe-post-input');
 
     homevideoRef.current.click();
-
+    
     console.log(homevideoRef.current)
+   
 }
     useEffect(() => {
        
@@ -36,14 +43,19 @@ const handlevideoselect = ()=>{
 
 
             return () => URL.revokeObjectURL(objectURL);
-       
-    }, [postdata]);
-
-
+            
+        }, [postdata]);
+        
+        
+     
 
     const handlePostSubmit = async (e) => {
+       
         e.preventDefault();
         setUploading(true);
+        setFakeUploading(true);
+        setUploadProgress(1);
+
         const formData = new FormData();
         formData.append("user_id", usertoken.user.id);
         formData.append("content", content);
@@ -56,35 +68,82 @@ const handlevideoselect = ()=>{
                 const file = new File([blob], "filtered_image.jpg", { type: blob.type });
                 console.log(file)
                 formData.append("media", file);
+                setFile(file);
             } else {
                 formData.append("media", filterdmedia);
+                setFile(filterdmedia);
             }
         }
         if(filterdmedia && type.startsWith('video')){
             formData.append("media", postdata);
-            console.log(postdata)
+            setFile(postdata);
            
         }
+        setSnackbar({open : true, message : 'Posting...' ,type : 'info'})
+        
+        
+     
+        
+        
+        const fakeProgressInterval = setInterval(() => {
+            setUploadProgress(prev => {
+                if (prev < 90) return prev + 5; // slowly go till 90%
+                clearInterval(fakeProgressInterval); // stop fake increment
+                return prev;
+            });
+        }, 200); 
 
+        if(type.startsWith("image")) {
+            setCroppedImage(null)
+
+         }
+        if(type.startsWith("video")){
+
+            setVideoselect(false)
+        }
         setMpostbtn(false)
-
         try {
             await axios.post("/api/posts/create", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
+                onUploadProgress: (progressEvent) => {
+                    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    console.log("Real Progress: ", percentCompleted);
+    
+                    if (percentCompleted >= 90) {
+                        setUploadProgress(percentCompleted); // catch up real 90% to 100%
+                    }
+                },
             });
-            setContent("");
-            setCroppedImage(null)
+
+                 
+        setContent("");
+
+        if(type.startsWith("image")) {
             setImage(null)
             setImageType(null)
-            setUploading(false);
             setShowCropper(false)
-            alert('sucess');
+            
+        }
+        if(type.startsWith("video")){
+
+            setVideopost(null)
+        }
+        
+            setUploading(false);
+            setFile(null); 
+            setSnackbar({open : true, message : 'Post Successfully.' ,type : 'success'})
+       
         } catch (err) {
             setUploading(false);
             console.error("Error creating post:", err);
             alert('error');
+        } finally {
+            setFakeUploading(false);
+            setUploadProgress(100); // complete 100%
         }
     };
+
+
 
     return (
         <AnimatePresence>
@@ -97,6 +156,7 @@ const handlevideoselect = ()=>{
 
 
                 className='final-post-p'>
+                    
                 <div className="final-post-p-box">
                     <div className="final-post-p-divice-one">
 
@@ -127,8 +187,8 @@ const handlevideoselect = ()=>{
                                     }
                                     
                                 }} />
-                                <button onClick={handlePostSubmit} className='final-p-s-btn'>
-                                    {uploading ? <CircularProgress size="1.4rem" /> : ('Post')}
+                                <button disabled={uploading} onClick={handlePostSubmit} className='final-p-s-btn'>
+                                    {uploading ? <CircularProgress sx={{color : 'white'}} size="1.9rem" /> : ('Post')}
 
                                 </button>
                             </div>
@@ -164,8 +224,8 @@ const handlevideoselect = ()=>{
 
                                     }
                                 }} />
-                                <button onClick={handlePostSubmit} className='final-p-s-btn'>
-                                    {uploading ? <CircularProgress size="1.4rem" /> : ('Post')}
+                                <button disabled={uploading} onClick={handlePostSubmit} className='final-p-s-btn'>
+                                    {uploading ? <CircularProgress color='white' size="1.4rem" /> : ('Post')}
 
                                 </button>
                             </div>
@@ -202,8 +262,8 @@ const handlevideoselect = ()=>{
 
 
                             }}>Discard</button>
-                            <button className="post-later-btn">Post Later</button>
-                            <button className="schedule-btn">Schedule Post</button>
+                            <button onClick={()=> setSnackbar({open : true, message : 'Not availabel for now',type : 'info'})} className="post-later-btn">Post Later</button>
+                            <button  onClick={()=> setSnackbar({open : true, message : 'Not availabel for now',type : 'info'})} className="schedule-btn">Schedule Post</button>
                         </div>
 
 

@@ -26,6 +26,13 @@ body{
   --popupbackcolor : rgba(0, 0, 0, 0.081);
   /* --linearcolor : linear-gradient(135deg, black, #2890E1); */
   --linearcolor :linear-gradient(135deg, #00d4ff, #0088ff);
+  --texthovercolor : rgb(0, 122, 255);
+
+
+  --primary-color: #007bff;
+  --text-color: #333;
+  --background-color: #fff;
+  --border-color: #ddd;
 }
 .dark {
   --webbackcolor : rgb(213, 213, 213);

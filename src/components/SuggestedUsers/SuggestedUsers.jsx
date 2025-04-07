@@ -7,7 +7,7 @@ import "./SuggestedUsers.css";
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 
-const SuggestedUsers = () => {
+const SuggestedUsers = ({homeuser}) => {
   const { usertoken } = useContext(UserAuthCheckContext);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
 
@@ -27,7 +27,7 @@ const SuggestedUsers = () => {
 
 
   return (
-    <div className="suggested-users-container">
+    <div className="suggested-users-container" style={homeuser ? {padding : '0.91rem',borderRadius : '10px', boxShadow : 'var(--webbackshahow)'} : {}}>
      {suggestedUsers.length > 0 ? ( <>
       <h2>Suggested Users</h2>
       {suggestedUsers.map((user) => (

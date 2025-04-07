@@ -23,23 +23,42 @@ const Chat = () => {
 
 
 
+
+
+
+
+
   useEffect(() => {
     if (!usertoken || receiverId === prevReceiverId.current) return;
 
-    console.log("Fetching user and messages...");
+    console.log(receiver)
 
 
+    const fetchReceiver = async () => {
 
-    // Fetch receiver details
-    axios.get(`/api/users/chat?userId=${receiverId}`)
-      .then((res) => setReceiver(res.data[0]))
-      .catch((err) => console.error(err));
+      try {
+        const response = await axios.get(`/api/messages/chat/data?userId=${receiverId}`);
+        setReceiver(response.data[0])
 
+      } catch (err) {
+        console.error(err)
+      }
 
-    // Fetch chat history
-    axios.get(`/api/messages/${receiverId}?userId=${usertoken.user.id}`)
-      .then((res) => setMessages(res.data))
-      .catch((err) => console.error(err));
+    }
+    fetchReceiver();
+
+    const messagefetch = async () => {
+
+      try {
+        const response = await axios.get(`/api/messages/${receiverId}?userId=${usertoken.user.id}`);
+        setMessages(response.data);
+
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    messagefetch();
 
 
   }, [usertoken, receiverId]);
@@ -56,22 +75,35 @@ const Chat = () => {
 
   useEffect(() => {
     const handlePrivateMessage = (msg) => {
+      console.log("Received privateMessage:", msg);
+  
       if (msg.sender_id === receiverId || msg.receiver_id === receiverId) {
-        setMessages((prev) => {
-          // Check if the message already exists in state
-          if (prev.some(m => m.id === msg.id)) return prev;
-          return [...prev, msg];
-        });
+        setMessages((prev) => [...prev, msg]);
       }
     };
 
 
-
-
+    const handleMessageRead = ({ sender_id, receiver_id }) => {
+      console.log("Received messageRead:", sender_id, receiver_id);
+  
+      setMessages((prevMessages) =>
+        prevMessages.map((msg) => {
+          if (msg.sender_id === sender_id && msg.receiver_id === receiverId && msg.status !== "read") {
+            return { ...msg, status: "read" };
+          }
+          return msg;
+        })
+      );
+    };
+  
+  
     socket.on("privateMessage", handlePrivateMessage);
-
+    
+  socket.on("messageRead", handleMessageRead);
+  
     return () => {
-      socket.off("privateMessage", handlePrivateMessage); // Cleanup on unmount
+      socket.off("privateMessage", handlePrivateMessage);
+      socket.off("messageRead", handleMessageRead);
     };
   }, [receiverId, socket]);
 
@@ -91,7 +123,7 @@ const Chat = () => {
         const savedMessage = { ...msgData, message_id: res.data.message_id, created_at: res.data.created_at || new Date().toISOString(), status: "sent" };
 
         // Notify receiver via WebSocket
-        socket.emit("sendMessage", savedMessage);
+      
 
         // Update UI
         setMessages((prev) => [...prev, savedMessage]);
@@ -123,6 +155,8 @@ const Chat = () => {
     return `${hours}:${minutes} ${ampm}`;
   };
 
+
+
   return (
 
     <div className="chat-container">
@@ -130,15 +164,15 @@ const Chat = () => {
         <div className="receiver-data">
           <div className="receiver-pic">
             <img
-              src={receiver.profile_pic ? receiver.profile_pic : defaultprofilepic} loading="lazy" alt="receiverphtot"
-              
+              src={receiver?.profile_pic ? receiver.profile_pic : defaultprofilepic} loading="lazy" alt="receiverphtot"
+
             />
           </div>
-          <h3>{receiver?.username}
+          <h3>@ {receiver?.username}
           </h3>
-          <button className=" button">View Profile</button>
+          <button style={{ padding: '0.5rem 1rem' }} className=" button">View Profile</button>
           <div className="receiver-new-chat">
-              hsdfsdk
+            {receiver?.philosophy || ''}
           </div>
         </div>
 
@@ -148,7 +182,7 @@ const Chat = () => {
             <div className={`chat-messaged-each ${msg.sender_id === usertoken.user.id ? "own-message" : "other-message"}`} key={index}>
               <p className="message-text">{msg.message}</p>
               <p className="message-status">
-                {msg.created_at ? formatTime(msg.created_at) : "Time N/A"}  {msg.status === "read" ? "✓✓ Read" : msg.status === "delivered" ? "✓ Delivered" : "✓ Sent"}
+                {msg.created_at ? formatTime(msg.created_at) : "Time N/A"} {msg.sender_id === usertoken.user.id && (msg.status === "read" ? "✓✓ Read" : msg.status === "delivered" ? "✓ Delivered" : "✓ Sent")}
               </p>
             </div>
           ))}

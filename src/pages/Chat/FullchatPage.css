@@ -1,9 +1,10 @@
 .full-chat-page{
     width: 100%;
     display: flex;
-    position: fixed;
     left: 0%;
     top: 0%;
+    height: 92%;
+    overflow: hidden;
     
     
 }
@@ -13,3 +14,11 @@
     /* padding-top: 5rem ; */
     width: 100%;
 }
+
+@media (max-width: 640px) {
+    .chat-data{
+        width: 0%;
+        flex-grow: 0;
+    }
+}
+ 

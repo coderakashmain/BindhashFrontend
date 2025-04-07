@@ -12,16 +12,20 @@ const VideoPost = ({ videoSrc }) => {
     const [showvideocontrolar, setShowvideovideocontrolr] = useState(false);
 
     useEffect(() => {
+        // Check localStorage on mount
+        const mutedPreference = localStorage.getItem('video-muted');
+        if (mutedPreference !== null) {
+            setIsMuted(mutedPreference === 'true');
+        }
+    }, []);
+
+    useEffect(() => {
         if (!videoRef.current) return;
 
-        // Auto-play logic when in viewport
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    if (isMuted) {
-
-                        videoRef.current.muted = true;
-                    }
+                    videoRef.current.muted = isMuted;
                     videoRef.current.play().catch(() => setIsPlaying(false));
                     setIsPlaying(true);
                 } else {
@@ -36,9 +40,8 @@ const VideoPost = ({ videoSrc }) => {
         observer.observe(videoRef.current);
 
         return () => observer.disconnect();
-    }, []);
+    }, [isMuted]);  // Watch isMuted
 
-    // Handle Play/Pause
     const togglePlay = () => {
         setShowvideovideocontrolr(true);
         if (videoRef.current.paused) {
@@ -48,44 +51,43 @@ const VideoPost = ({ videoSrc }) => {
             videoRef.current.pause();
             setIsPlaying(false);
         }
-        const controlar = () => {
-            setTimeout(() => {
-                setShowvideovideocontrolr(false)
-            }, 3000);
-        }
-        controlar()
-
-        return () => clearTimeout(controlar);
+        setTimeout(() => {
+            setShowvideovideocontrolr(false);
+        }, 3000);
     };
 
-
-    // Handle Mute/Unmute
     const toggleMute = () => {
-        videoRef.current.muted = !videoRef.current.muted;
-        setIsMuted(videoRef.current.muted);
+        setShowvideovideocontrolr(true);
+        const newMutedState = !videoRef.current.muted;
+        videoRef.current.muted = newMutedState;
+        setIsMuted(newMutedState);
+
+        // Save preference to localStorage
+        localStorage.setItem('video-muted', newMutedState);
+
+        setTimeout(() => {
+            setShowvideovideocontrolr(false);
+        }, 3000);
     };
 
-    // Handle Progress Update
     const handleProgress = () => {
         const current = videoRef.current.currentTime;
         const total = videoRef.current.duration;
-
         setProgress((current / total) * 100);
         setCurrentTime(current);
         setDuration(total);
     };
-    const handleProgresschange = (event)=>{
+
+    const handleProgresschange = (event) => {
         const value = event.target.value;
         event.target.style.setProperty("--progress", `${value}%`);
-    }
+    };
 
-    // Seek Video
     const handleSeek = (e) => {
         const newTime = (e.target.value / 100) * duration;
         videoRef.current.currentTime = newTime;
         setProgress(e.target.value);
     };
-
 
     return (
         <div className="video-container">
@@ -97,14 +99,14 @@ const VideoPost = ({ videoSrc }) => {
                 playsInline
                 loop
                 muted={isMuted}
-                onClick={togglePlay}
+                onClick={toggleMute}
                 onChange={handleProgresschange}
                 onTimeUpdate={handleProgress}
                 onLoadedMetadata={() => setDuration(videoRef.current.duration)}
             />
 
             {/* Custom Controls */}
-            <div className="video-controls" style={{opacity : showvideocontrolar ? '1' : '0'}}>
+            <div className="video-controls" style={{opacity: showvideocontrolar ? '1' : '0'}}>
                 <button onClick={togglePlay} className="control-btn">
                     {isPlaying ? <Pause size={20} /> : <Play size={20} />}
                 </button>

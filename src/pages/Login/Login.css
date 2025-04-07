@@ -4,8 +4,8 @@
         height: 100vh;
         height: 100svh;
         display: flex;
-        /* justify-content: center;
-        align-items: center; */
+        background: var(--backwhitecolor);
+ 
 }
 .login-container-box1{
     width: 50%;
@@ -17,13 +17,9 @@
 }
 .login-container-box1-inside {
     height: 70%;
-    width: 45%;
+    width: 25rem;
     margin-bottom: 3.5rem;
-    /* background-color: yellow; */
     border-radius: 1.5rem;
-    /* box-shadow: inset 
-    0 0 0 2px white,
-    0.3em 0.3em 1em rgb(0 0 0 / 60%);; */
     
 }
 .login-container-box1-inside h2 {
@@ -38,47 +34,28 @@
     padding-left: 2rem;
 }
 .login-container-box1-inside input {
-    width: 100%;
-    margin-top: 1.7rem;
-    padding: 0.8rem;
-    border-radius: 0.3rem;
-    border: 1px solid #cecaca;
+
+    
+   
     outline: none;
+    transition: all 0.15s ease-in
 }
-.login-container-box1-inside input[placeholder] {
-    padding-left: 1rem;
-}
-.login-container-box1-inside input:hover {
-    box-shadow: 0.2rem 0.2rem 0.2rem rgb(74, 73, 73);
-    outline: none;
-    transition: all 0.15s ease-in;
-    transform: scale(1.02);
-}
-.login-container-box1-inside input:active {
-    box-shadow: 0.2rem 0.2rem 0.2rem rgb(74, 73, 73);
-    outline: none;
-    transition: all 0.15s ease-in;
-    transform: scale(1.02);
-}
+
+
 .login-container-box1-inside button {
     width: 100%;
     
     padding: 0.8rem 0.8rem;
     margin-top: 2.2rem;
     border-radius: 0.3rem;
-    border: 1px solid var(--buttoncolor);
     font-size: 1rem;
-    background-color: var(--buttoncolor);
+    background: var(--linearcolor);
     color: white;
     letter-spacing: 0.1rem;
+    cursor: pointer;
 }
 
-.login-container-box1-inside button:hover {
-    cursor: pointer;
-    box-shadow: 0.2rem 0.2rem 0.2rem rgb(74, 73, 73);
-    transition: all 0.15s ease-in;
-    transform: scale(1.02);
-}
+
 .login-container-box1-inside form>a {
     text-decoration: none;
     display: block;
@@ -86,45 +63,46 @@
     margin-top: 0.8rem;
     font-size: 0.8rem;
     letter-spacing: 0.05rem;
+    color: var(--texthovercolor);
 
 }
 .login-container-box1-inside form>a:hover {
-    color: blue;
+   text-decoration: underline;
 }
 .login-container-box1-inside p{
     color: black;
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     display: block;
     margin-top: 1.5rem;
     text-align: center;
     
 }
 .login-container-box1-inside p a {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-decoration: none;
     letter-spacing: 0.05rem;
+    color: var(--texthovercolor);
 }
 .login-container-box1-inside p a:hover {
-    color :blue;
+    text-decoration: underline;
 }
 .login-container-box2 {
     width: 50%;
     height: 100%;
     display: flex;
     justify-content: center;
-    /* align-items: center; */
+    align-items: center;
     position: relative;
    
 }
 .login-container-box2 img {
-   position: absolute;
-   bottom: -10%;
-   right: 20%;
-   transform: scale(0.9);
+
 }
 .login-container-box2 h1 {
     font-size: 5rem;
     z-index: 2;
+       
+   transform: translateY(-20%);
 
 }
 

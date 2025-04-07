@@ -1,0 +1,110 @@
+.list-container {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 1000;
+    transform: translate(-50%, -50%) !important;
+    background: #fff;
+    max-height: 30rem;
+    width: 25rem;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.list-container h4 {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.list-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.list-container li {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem;
+    border-bottom: 1px solid #ddd;
+    transition: background 0.2s ease-in-out;
+}
+
+.list-container li:hover {
+    background: #f5f5f5;
+}
+
+
+.list-container .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 0.8rem;
+    border: 2px solid #2890E1;
+}
+.followrslist-li{
+    display: flex !important;
+    justify-content: space-between !important;
+}
+
+.followrslist-li-div{
+    display: flex !important;
+}
+
+.followrs-user-details-left {
+    display: flex !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+}
+
+.list-container .user-details {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.list-container .user-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.list-container .user-username {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.list-container .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.list-container .close-btn:hover {
+    color: #333;
+}
+
+@media (max-width : 640px) {
+    .list-container {
+        position: fixed;
+        left: 0%;
+        top: 0%;
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        z-index: 1000;
+        transform: translate(0%, 0%) !important;
+    }
+}

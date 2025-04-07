@@ -84,10 +84,10 @@
     padding: 20px;
     border-left: 1px solid #ddd;
     /* overflow-y: auto; */
+    height: 100%;
   }
   .modal-right-content-function-box{
     height: 2rem;
-    border-bottom: 1px solid rgb(221, 221, 221);
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -99,6 +99,8 @@
    padding: 0.5rem 1rem;
    background-color: rgb(249 249 249);
    border-radius: 0.5rem;
+   display: flex;
+   gap: 0.3rem;
    
   }
   .modal-right-content-function-box .likes{

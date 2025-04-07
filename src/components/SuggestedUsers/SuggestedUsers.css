@@ -1,10 +1,10 @@
 .suggested-users-container {
-    margin: 2rem 0 0 0;
-    background-color: var(--backwhitecolor);
-    box-shadow: var(--webbackshahow);
-    padding: 0.91rem;
-    border-radius: 10px;
-    width: 100%;
+    margin: 2rem 0 0 0 !important;
+    background-color: var(--backwhitecolor)!important; ;
+    /* box-shadow: var(--webbackshahow); */
+    /* padding: 0.91rem;
+    border-radius: 10px; */
+    width: 100% !important;
     /* max-width: 350px; */
   }
   

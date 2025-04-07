@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, useEffect } from "react";
+  import React, { useState, useRef, useContext, useEffect } from "react";
 import Cropper from "react-easy-crop";
 import axios from "axios";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
@@ -38,7 +38,7 @@ const ProfileUpload = ({setProfilepicloading,paddingvalue,size,mainphoto,borderR
     const file = new File([croppedImage], `profile_pic_${Date.now()}.jpg`, { type: originalFormat });
 
 
-    console.log(file)
+ 
     const formData = new FormData();
     formData.append("profile_pic", file);
     formData.append("userid", usertoken.user.id);
@@ -102,7 +102,7 @@ const ProfileUpload = ({setProfilepicloading,paddingvalue,size,mainphoto,borderR
             image={image}
             crop={crop}
             zoom={zoom}
-            aspect={mainphoto ? 1 : 1.8}
+            aspect={mainphoto ? 1 : 1.8/0.8}
             onCropChange={setCrop}
             onZoomChange={setZoom}
             onCropComplete={handleCropComplete}
@@ -110,7 +110,9 @@ const ProfileUpload = ({setProfilepicloading,paddingvalue,size,mainphoto,borderR
           </div>
           <div className="crop-btn-submit">
           <button  onClick={handleUpload}>Save</button>
-          <button onClick={() => setShowCropModal(false)}>Cancel</button>
+          <button onClick={() =>{ 
+            setImage(null)
+            setShowCropModal(false)}}>Cancel</button>
           </div>
         </div>
       )}

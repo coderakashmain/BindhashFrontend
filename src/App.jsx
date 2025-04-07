@@ -26,6 +26,18 @@ import MobileResizeProvider from './Context/MobileResizeProvider';
 import UserSearch from './components/UserSearch/UserSearch';
 import TrendingPosts from './components/TrendingPosts/TrendingPosts';
 import Leaderboard from './components/Leaderboard/Leaderboard';
+import ProfileRouter from './Router/ProfileRouter';
+import ProfileEdit from './components/ProfileEdit/ProfileEdit';
+import SnackbarProvider from './Context/SnackbarContext';
+import Emailenter from './pages/Register/Emailenter';
+import OtpVerificaiton from './pages/Register/OtpVerificaiton';
+import SetPassword from './pages/Register/SetPassword';
+import SetUsername from './pages/Register/SetUsername';
+import SetGender from './pages/Register/SetGender';
+import Snackbar from './components/Snackbar/Snackbar';
+import SettingsPage from './pages/SettingsPage/SettingsPage';
+import FollowersFollowing from './Context/FollowersFollowing';
+import { UploadProvider } from './Context/UploadProvider';
 
 
 
@@ -60,7 +72,7 @@ const App = () => {
     },
     {
       path: '/',
-      element: <><ErrorBoundary><SocketProvider><UserAuthCheck><PollProvider><AllPostContext><MobileResizeProvider><AllUserList><AllpageRouter /></AllUserList></MobileResizeProvider></AllPostContext></PollProvider></UserAuthCheck></SocketProvider></ErrorBoundary></>,
+      element: <><ErrorBoundary><SocketProvider><UserAuthCheck><PollProvider><AllPostContext><MobileResizeProvider><FollowersFollowing><SnackbarProvider><AllUserList><><Snackbar/><UploadProvider><AllpageRouter /></UploadProvider></></AllUserList></SnackbarProvider></FollowersFollowing></MobileResizeProvider></AllPostContext></PollProvider></UserAuthCheck></SocketProvider></ErrorBoundary></>,
       children: [
 
         {
@@ -82,7 +94,17 @@ const App = () => {
 
                 {
                   path: 'profile',
-                  element: <><ErrorBoundary><Profile /></ErrorBoundary></>
+                  element: <><ErrorBoundary><ProfileRouter /></ErrorBoundary></>,
+                  children : [
+                    {
+                      path: '',
+                      element: <><ErrorBoundary><Profile /></ErrorBoundary></>,
+                    },
+                    {
+                      path: 'edit',
+                      element: <><ErrorBoundary><ProfileEdit /></ErrorBoundary></>,
+                    }
+                  ]
                 },
                 {
                   path: 'trending-post',
@@ -91,6 +113,10 @@ const App = () => {
                 {
                   path: 'search',
                   element: <><ErrorBoundary><UserSearch /></ErrorBoundary></>
+                },
+                {
+                  path: 'setting',
+                  element: <><ErrorBoundary><SettingsPage/></ErrorBoundary></>
                 },
                 {
                   path: 'leaderboard',
@@ -109,9 +135,14 @@ const App = () => {
                     {
                       path: ":receiverId",
                       element: <><ErrorBoundary><Chat /></ErrorBoundary></>
-                    }
+                    },
+                    
                   ]
                 },
+                {
+                  path: "/chat/mobilechat/:receiverId",
+                  element: <><ErrorBoundary><Chat /></ErrorBoundary></>
+                }
 
 
               ]
@@ -126,7 +157,29 @@ const App = () => {
        
         {
           path: 'register',
-          element: <><ErrorBoundary><Register /></ErrorBoundary></>
+          element: <><ErrorBoundary><Register /></ErrorBoundary></>,
+          children : [
+            {
+              path : '',
+              element : <><ErrorBoundary><Emailenter/></ErrorBoundary></>
+            },
+            {
+              path : 'varifyotp',
+              element : <><ErrorBoundary><OtpVerificaiton/></ErrorBoundary></>
+            },
+            {
+              path : 'setpassword',
+              element : <><ErrorBoundary><SetPassword/></ErrorBoundary></>
+            },
+            {
+              path : 'setusername',
+              element : <><ErrorBoundary><SetUsername/></ErrorBoundary></>
+            },
+            {
+              path : 'setgender',
+              element : <><ErrorBoundary><SetGender/></ErrorBoundary></>
+            }
+          ]
         }
 
 

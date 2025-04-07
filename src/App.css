@@ -22,6 +22,14 @@
     transition: all 0.2s ease-in-out;
    
   }
+  .btnhover{
+    padding: 0.7rem !important;
+    border-radius: 50% !important;
+    transition: all 0.2s ease-in-out !important;
+  }
+  .btnhover:hover{
+    background: rgba(210, 210, 210, 0.386) !important;
+  }
   
  
   .scrollbar::-webkit-scrollbar-track {
@@ -72,6 +80,11 @@
     width: 2rem;
     height: 2rem;
     animation: spin 1s linear infinite;
+  }
+  .error{
+    margin: 1rem 0;
+    color: red;
+    font-size: 14px;
   }
   
   @keyframes spin {

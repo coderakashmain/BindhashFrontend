@@ -122,3 +122,17 @@
     display: flex;
     flex-direction: row;
   }
+
+  .user-rank-item{
+    display: flex;
+    justify-content: space-between;
+  }
+  .leader-own-user{
+    display: flex;
+    flex-direction: row;
+  }
+  .leader-own-user-name{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }

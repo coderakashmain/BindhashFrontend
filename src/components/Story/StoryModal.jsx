@@ -3,10 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import MyTextEditor from "../MyTextEditor/MyTextEditor";
 import PhotoFilter from "../PhotoFilter/PhotoFilter";
-import { CircleFadingPlus, Plus } from 'lucide-react'
+import { CircleFadingPlus, Plus ,X} from 'lucide-react'
 import StoryDuration from "./StoryDuration";
 import { Button } from "@mui/material";
 import SpotifyMusic from "./SpotifyMusic";
+import defaultprofilepic from '../../Photo/defaultprofilepic.png'
+import { SnackbarContext } from "../../Context/SnackbarContext";
 
 
 const StoryModal = ({
@@ -36,6 +38,7 @@ const StoryModal = ({
     const { usertoken } = useContext(UserAuthCheckContext)
     const [filteredMedia, setFilteredMedia] = useState(null);
     const [selectedMusic, setSelectedMusic] = useState(null);
+const {setSnackbar}  = useContext(SnackbarContext)
 
 
     useEffect(() => {
@@ -77,14 +80,14 @@ const StoryModal = ({
     return (
         <AnimatePresence
             onExitComplete={() => {
+                setFilePreview(null);
                 setShowModal(false);
                 setClosing(false);
-                setFilePreview(null);
             }}>
             {showModal && !closing && (
-                <motion.div className="modal-overlay-box " initial={{ background: "rgba(0, 0, 0, 0.0)" }}
-                    animate={{ background: "rgba(0, 0, 0, 0.5)" }}
-                    exit={{ background: "rgba(0, 0, 0, 0.0)" }}
+                <motion.div className="modal-overlay-box " initial={{ background: "rgba(0, 0, 0, 0.0)", backdropFilter : 'blur(0px)' }}
+                    animate={{ background: "var(--popupbackcolor)", backdropFilter : 'blur(4px) '}}
+                    exit={{ background: "rgba(0, 0, 0, 0.0)", backdropFilter : 'blur(0px) '}}
                     onClick={handleClose}>
 
                     <motion.div
@@ -98,11 +101,11 @@ const StoryModal = ({
                     >
                         {(!filePreview || isMobile) && (<div className="story-user-info" style={{ position: filePreview ? 'fixed' : 'block' }}>
                             <div className="story-user-info-inside">
-                                <img src={usertoken.user.profile_pic} alt="Profile" className="profile-pic" />
+                                <img src={usertoken.user.profile_pic ? usertoken.user.profile_pic  : defaultprofilepic} alt="Profile" className="profile-pic" />
                                 {!filePreview && (<span>{usertoken.user.username}</span>)}
                             </div>
-                            <button className="story-close-btn" onClick={handleClose}>
-                                Close
+                            <button className="story-close-btn btnhover" onClick={handleClose}>
+                                <X/>
                             </button>
                         </div>)}
 
@@ -120,7 +123,7 @@ const StoryModal = ({
                             <div className="story-upload-file-edit-right">
                                 {!isMobile && <div className="story-user-info">
                                     <div className="story-user-info-inside">
-                                        <img src={usertoken.user.profile_pic} alt="Profile" className="profile-pic" />
+                                        <img src={usertoken.user.profile_pic ? usertoken.user.profile_pic  : defaultprofilepic}alt="Profile" className="profile-pic" />
                                         <span>{usertoken.user.username}</span>
                                     </div>
                                     <button className="story-close-btn" onClick={handleClose}>
@@ -201,7 +204,9 @@ const StoryModal = ({
                                         <span>Photo/Video</span>
                                     </label>
                                 </div>
-                                <button className="story-share-thoughts"><Plus />Share some thoughts</button>
+                                <button 
+                                onClick={()=> setSnackbar({open : true, message : 'Available soon.', type : 'info'})}
+                                className="story-share-thoughts"><Plus />Share some thoughts</button>
                             </>
 
 

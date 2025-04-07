@@ -30,6 +30,9 @@ import ImageUploader from "../../components/Post/ImageUploader";
 import PostEditView from "../../components/Post/PostEditView";
 import VideoPost from "./VideoPost";
 import PostFunctionComponent from "../../components/PostFuctionComponent/PostFunctionComponent";
+import PostContent from "../../components/Post/PostContent";
+import ProfileEdit from "../../components/ProfileEdit/ProfileEdit";
+import UploadPreviewWithProgress from "../../components/UploadPreviewWithProgress/UploadPreviewWithProgress";
 
 
 
@@ -60,6 +63,7 @@ const Home = () => {
   const [videopost, setVideopost] = useState(null);
   const videouploadRef = useRef();
   const [videotype, setVideoType] = useState(null);
+  const [profileEditView, setProfileEditView] = useState(false);
 
 
 
@@ -97,6 +101,7 @@ const Home = () => {
     setFeed(rankedFeed);
   }, [allpost])
 
+ 
 
 
   if (usertoken === null) {
@@ -133,36 +138,6 @@ const Home = () => {
 
 
 
-  const handleLike = async (postId) => {
-    if (!usertoken) {
-      navigate('/login')
-    } else {
-      try {
-        const response = await axios.post("/api/posts/like", {
-          user_id: usertoken.user.id,
-          post_id: postId,
-        });
-
-        setAllpost((prevPosts) =>
-          prevPosts.map((post) =>
-            post.post_id === postId
-              ? { ...post, like_count: post.like_count + response.data.change }
-              : post
-          )
-        );
-
-        // ✅ Store liked status for UI toggle
-        setIsLiked((prevLiked) => ({
-          ...prevLiked,
-          [postId]: response.data.liked, // Store liked status as true/false
-        }));
-
-      } catch (error) {
-        console.error("Error liking post:", error);
-      }
-    }
-
-  };
 
   const handleCommentChange = (postId, value) => {
     setNewComment((prev) => ({
@@ -221,16 +196,11 @@ const Home = () => {
     if (!content.trim()) return;
     setMpostbtn(false)
 
-    const formData = new FormData();
-    formData.append("user_id", usertoken.user.id);
-    formData.append("content", content);
-
     try {
-      await axios.post("/api/posts/create", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      setContent("");
+      const response = await axios.post("/api/posts/text/create", { user_id: usertoken.user.id, content });
 
+      console.log(response.data)
+      setContent('')
       alert('sucess');
     } catch (err) {
       console.error("Error creating post:", err);
@@ -290,7 +260,7 @@ const Home = () => {
   const videobtnclick = () => {
 
     if (videouploadRef.current) {
-      
+
       videouploadRef.current.click();
     }
 
@@ -337,18 +307,18 @@ const Home = () => {
                 <ProfileUpload mainphoto={true} setProfilepicloading={setProfilepicloading} />
               </div>
               <div className="home-profile-name-box">
-                <h2>{usertoken.user.username} <span style={{ fontSize: '0.7rem', color: 'var(--lighttextcolor)' }}>M</span></h2>
+                <h2>@ {usertoken.user.username} <span style={{ fontSize: '0.7rem', color: 'var(--lighttextcolor)' }}>  {usertoken?.user.gender ? usertoken.user.gender.trim().charAt(0).toUpperCase() : ''}</span></h2>
                 <p>{usertoken.user.fullname ? usertoken.user.fullname : "Fullname not set"}</p>
               </div>
             </div>
-            {/* <button className="iconbtn home-pro-share active"><Send  size={18} /></button> */}
-            <ShareProfile fontsize={20} profileurllink={`/profile/${usertoken.user.username}`} />
+            
+            <ShareProfile  fontsize={20} profileurllink={`/profile/${usertoken.user.username}`} />
 
           </div>
 
           <div className="profile-stats">
-            <div>
-              <strong>{allpost.length > 0 ? allpost.find(post => post.post_user_id === usertoken.user.id)?.post_count || 0 : 0}</strong> <span>Posts</span>
+            <div className="home-profile-stats-box-left">
+              <strong>{allpost.length > 0 ? allpost.find(post => post.post_user_id === usertoken.user.id)?.post_count || 0 : 0}</strong> <span style={{fontSize : '0.8rem' ,color : 'gray'}}>Posts</span>
 
 
             </div>
@@ -357,23 +327,25 @@ const Home = () => {
             </div>
 
           </div>
-          <p className="profile-bio">{usertoken.user.bio || "No bio available."}</p>
+          {/* <p className="profile-bio">{usertoken.user.bio || "No bio available."}</p> */}
           <div className="home-profile-overviev">
 
-            <h4 >Profile Overview</h4>
+           
 
           </div>
 
           <div className="home-profile-buttons">
-            <button className="view-profile-btn">View Profile</button>
-            <button className="edit-profile-btn">Edit Profile</button>
-            <button className="settings-btn">⚙️</button>
+            <button className="view-profile-btn" onClick={()=> navigate('/profile')}>View Profile</button>
+            <button onClick={()=> setProfileEditView(!profileEditView)} className="edit-profile-btn">Edit Profile</button>
+             {profileEditView && (<ProfileEdit setProfileEditView={setProfileEditView} userId={usertoken.user.id} />)}
+            {/* <button className="settings-btn">⚙️</button> */}
           </div>
         </div>
         <Leaderboard />
 
       </div>
       <div className="container-box scrollbar">
+     
         <div className="home-post-box">
           <StorySection storymodeltrue={storymodeltrue} setstorymodeltrue={setstorymodeltrue} />
           <div className="home-post-box-upload">
@@ -400,181 +372,43 @@ const Home = () => {
 
           </div>
 
-
         </div>
+        
 
-        {/* <PollList /> */}
-        {feed.map((allpost) => (
-          allpost.type === "post" ? (
-            <div key={`post-${allpost.post_id}`} className="post">
-
-              <div className="post-header">
-                <div className="post-header-user">
-                  <img
-                    src={allpost.post_user_pic ? allpost.post_user_pic : defaultprofilephoto}
-                    alt="Profile"
-                    className="profile-pic"
-
-                  />
-                  <div className="post-header-username-box">
-                    <h3>{allpost.post_username}</h3>
-                    {<Time posttime={allpost.created_at} />}
-
-                  </div>
-                </div>
-                <div className="post-header-edit">
-
-                  {usertoken.user.id !== allpost.post_user_id && (<Followbtn targetUserId={allpost.post_user_id} />)}
-                  {/* <EllipsisVertical size={20} /> */}
-                  <PostOptions />
-                </div>
-
-              </div>
-
-              {allpost.image &&
-                <>
-                  <div className="post-head-img-box">
-
-                    {allpost.media_type === 'image' ? (<>
-                      <img
-                        src={placeholderimg(allpost.image)}
-
-                        alt="Post"
-                        className={`post-image ${imgloaded ? "hidden" : "visible"}`}
-                      />
-
-
-                      <img
-                        src={allpost.image}
-
-                        loading="lazy"
-                        alt="Post"
-                        className={`post-image ${imgloaded ? "visible" : "blurred"}`}
-                        onLoad={() => setImgLoaded(true)}
-
-                      />
-
-                    </>) : (
-                      <VideoPost videoSrc={allpost.image} />
-                    )}
-                  </div>
-
-
-                </>
-              }
-              <div className={`home-post-contnt-box-out ${allpost.image ? 'post-head-content-box-true' : 'post-head-content-box-false'}`}>
-                {allpost.content && (<p className="home-post-contnt">{allpost.content}</p>)}
-
-              </div>
-
-
-
-
-              <div className="post-actions">
-                <div className="post-action-left">
-
-                  <button
-                    onClick={() => handleLike(allpost.post_id)}
-                    className={isLiked[allpost.post_id] ? "liked" : ""}
-                  >
-                    <ThumbsUp size={20} color={isLiked[allpost.post_id] ? "#007BFF" : "black"} /> {allpost.like_count}
-                  </button>
-                  <button>
-                    <MessageCircle size={20} onClick={() => setSelectedPostId(allpost.post_id)} />
-                    {allpost.comments.filter(comment => comment.comment_id && comment.comment_text).length}
-                  </button>
-                  <button><Share2 size={20} /></button>
-                </div>
-                <div className="post-action-right">
-                  <button>     <ScanEye size={20} /></button>
-
-                  <button>
-
-                    <Album size={20} />
-                  </button>
-                </div>
-
-              </div>
-
-
-
-            </div>
-          ) : (
-            <PollView key={`poll-${allpost.poll_id}`} pollId={allpost.poll_id} />
-          )
-        ))}
-        <div ref={loaderRef} className="loader" style={{ marginBottom: '4rem' }}>
-          {loading && hasMore && allpost.length > 0 && (
-            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-              <CircularProgress color="black" />
-            </Box>
-          )}
-        </div>
-
+        
+        <UploadPreviewWithProgress/>
+        <PostContent feed={feed} setAllpost={setAllpost} allpost={allpost} isLiked={isLiked} loading={loading} loaderRef={loaderRef} hasMore={hasMore}/>
       </div>
       <div ref={homeusggestionRef} className="user-suggestion scrollbar">
         <UserSearch />
         {resizedisplay && <Leaderboard />}
-        <SuggestedUsers />
+        <SuggestedUsers homeuser={true} />
         <TrendingPosts />
 
       </div>
-      {selectedPostId && <PostModel postId={selectedPostId} onClose={() => setSelectedPostId(null)} />}
 
-      {/* <motion.div
-        initial={{ width: "0rem", background: 'transparent' }}
-        animate={{ width: expanded ? "90vw" : "5rem", background: expanded ? 'rgba(82, 82, 82, 0.084)' : 'rgba(0, 0, 0, 0)', backdropFilter: expanded ? 'blur(5px)' : 'blur(0px)' }}
 
-        transition={{ duration: 0.5, ease: "easeInOut" }}
-        onClick={(e) => e.stopPropagation()}
+      
 
-        ref={storyuplodRef} className="home-story-box-post" >
-        <div className="home-story-box-post-inside" onClick={() => setExpanded(true)}>
-          <img src={usertoken.user.profile_pic ? usertoken.user.profile_pic : defaultprofilephoto} alt="" />
-          {!expanded && (
-              <motion.span
-                initial={{ scale: 1 }}
-                animate={{ scale: [1, 1.05, 1] }} // Bouncing animation
-                transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
-                className="home-story-box-post-plus-icon">
-                <CircleFadingPlus size="1.3rem" strokeWidth={2} />
-              </motion.span>
-          )}
-        </div>
-
-        {expanded && (
-          <motion.div
-            className="story-list-container"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-          >
-            <StorySection storymodeltrue={storymodeltrue} setstorymodeltrue={setstorymodeltrue} />
-          </motion.div>
-          </motion.div>
-        )}
-
-      </motion.div> */}
-
-      <motion.div
+     {isMobile && ( <motion.div
         className="home-float-u-btn"
         initial={{ width: 0, height: 0, opacity: 0 }}
         animate={{ width: "4rem", height: "4rem", opacity: 1, scale: visible ? 1 : 0 }}
         whileHover={{
           scale: 1.15,
           boxShadow: "0px 0px 15px rgba(0, 136, 255, 0.6)",
-        }} // Glowing effect on hover
-        whileTap={{ scale: 0.9 }} // Shrinks when tapped
+        }}
+        whileTap={{ scale: 0.9 }}
         transition={{ duration: 0.2, ease: "easeOut" }}
         onClick={() => setMpostbtn(true)}
       >
         <Plus size="2rem" />
       </motion.div>
-
+)}
 
       <AnimatePresence>
         {mpostbtn && (
-          <PostFunctionComponent mpostbtn={mpostbtn} setMpostbtn={setMpostbtn} />
+          <PostFunctionComponent setContent={setContent} mpostbtn={mpostbtn} setMpostbtn={setMpostbtn} />
         )}
       </AnimatePresence>
     </section>

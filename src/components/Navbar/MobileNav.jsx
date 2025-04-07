@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './MobileNav.css'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { House, Store, Megaphone, Search, MessageCircle, User } from 'lucide-react'
+import { House,Medal,Settings, Store, Megaphone, Search, MessageCircle, User } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 
@@ -51,7 +51,7 @@ const MobileNav = () => {
             </NavLink>
             <NavLink to="/search" className="mobile-nav-a">
                 <motion.button whileTap={{ scale: 0.9 }}>
-                <Search className={location.pathname === "/search" ? "mobile-nav-active-icon" : ""} />
+                <Medal className={location.pathname === "/leaderboard" ? "mobile-nav-active-icon" : ""} />
                 </motion.button>
             </NavLink>
             <NavLink to="/trending-post" className="mobile-nav-a">
@@ -63,6 +63,12 @@ const MobileNav = () => {
                 <motion.button whileTap={{ scale: 0.9 }} >
                     <MessageCircle className={location.pathname === "/chat" ? "mobile-nav-active-icon" : ""} />
                 </motion.button>
+            </NavLink>
+            <NavLink to="/setting" className="mobile-nav-a">
+                <motion.button whileTap={{ scale: 0.9 }} >
+                    <Settings className={location.pathname === "/setting" ? "mobile-nav-active-icon" : ""} />
+                </motion.button>
+               
             </NavLink>
         </motion.section>
     )

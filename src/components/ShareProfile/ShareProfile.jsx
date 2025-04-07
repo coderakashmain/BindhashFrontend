@@ -2,7 +2,7 @@ import React from "react";
 import { Send } from "lucide-react";
 import "./ShareProfile.css";
 
-const ShareProfile = ({fontsize,profileurllink}) => {
+const ShareProfile = ({fontsize,profileurllink,backcolor,content,btnhover}) => {
   const profileLink = window.location.href; // Get the current page URL
 
   const handleShare = async () => {
@@ -27,8 +27,8 @@ const ShareProfile = ({fontsize,profileurllink}) => {
   };
 
   return (
-    <button className="share-btn iconbtn active" onClick={handleShare}>
-        <Send  size={fontsize ? fontsize : 18} />
+    <button  className={`share-btn iconbtn active ${ btnhover===false ? '' : 'btnhover' }`} style={{background : backcolor ? backcolor : '',color :'black' , padding : btnhover  ? btnhover : ''}}  onClick={handleShare}>
+        <Send color="black"  size={fontsize ? fontsize : 18}  /> {content ? content : ''}
     </button>
   );
 };

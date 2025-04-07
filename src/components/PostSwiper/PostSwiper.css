@@ -1,0 +1,72 @@
+/* Post Swiper Container */
+.post-swiper-container {
+    width: 100%;
+    /* padding: 20px; */
+    background: #fff;
+    border-radius: 10px;
+  }
+  
+  /* Tab Navigation */
+  .tab-navigation {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    padding: 0.7rem 0;
+    /* background: #f8f9fa; */
+   
+    border-bottom: 1px solid rgb(213, 213, 213);
+  }
+  
+  .post-swiper-container .tab {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+  }
+  
+  .post-swiper-container .tab:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  
+   .post-swiper-container .tab.active {
+    background: #007bff;
+    color: white;
+  }
+  
+  /* Swiper Container */
+  .post-swiper-container .swiper-container {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  /* Post Content */
+  .post-swiper-container .post-content {
+    padding: 20px;
+    text-align: center;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .post-swiper-container .post-content h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  .post-swiper-container .post-content p {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  @media (max-width : 640px) {
+    .tab-navigation {
+        justify-items: space-between;
+    }
+  }

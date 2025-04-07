@@ -3,12 +3,12 @@
     width: 100%;
     /* max-width: 500px; */
     overflow: hidden;
-    border-radius: 10px;
+   
   }
   
   .custom-video {
     width: 100%;
-    border-radius: 10px;
+
     cursor: pointer;
   }
   

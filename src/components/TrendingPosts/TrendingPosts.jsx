@@ -4,6 +4,8 @@ import { Flame ,ChartNoAxesCombined,ThumbsUp} from "lucide-react";
 import defaultprofilepic from '../../Photo/defaultprofilepic.png'
 import './TrendingPosts.css'
 import PostModel from "../Post/PostModel";
+import Time from "../Time/Time";
+
 
 const TrendingPosts = () => {
   const [trendingPosts, setTrendingPosts] = useState([]);
@@ -25,7 +27,7 @@ const TrendingPosts = () => {
 
   return (
     <div className="trendingcom-trending-posts">
-      <h2><ChartNoAxesCombined size = {24} />Trending Posts</h2>
+      <h2> <span className="trendingpost-head-spen"><ChartNoAxesCombined size = {24} />Trending Posts </span><span style={{fontWeight : 'bold'}}>Top 10</span></h2>
       <ul>
         {trendingPosts.map((post) => (
           <li key={post.id} className="trendingcom-trending-post"  >
@@ -38,7 +40,9 @@ const TrendingPosts = () => {
             {post.image && <img src={post.image} alt="Post" className="trendingcom-post-image"  onClick={() => setSelectedPostId(post.id)}/>}
             <div className="trendingcom-post-meta">
               <span className="trendingcom-likes"><ThumbsUp  size={16} color="#007BFF"/> {post.like_count} Likes</span>
-              <span className="trendingcom-time">{new Date(post.created_at).toLocaleString()}</span>
+              <span className="trendingcom-time">
+                <Time posttime={post.created_at}/>
+               </span>
             </div>
           </li>
         ))}

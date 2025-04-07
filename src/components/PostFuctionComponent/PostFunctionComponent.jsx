@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ImageUploader from '../Post/ImageUploader';
 import PostEditView from '../Post/PostEditView';
@@ -6,8 +6,12 @@ import '../../pages/Home/Home.css'
 import PollCreate from '../Poll/PollCreate';
 import { Video, CircleFadingPlus, DiamondPlus } from 'lucide-react'
 import StorySection from '../Story/StorySection';
+import { MobileViewContext } from '../../Context/MobileResizeProvider';
+import { UserAuthCheckContext } from '../../Context/UserAuthCheck';
+import axios from 'axios';
 
-const PostFunctionComponent = ({ mpostbtn, setMpostbtn }) => {
+
+const PostFunctionComponent = ({ mpostbtn, setMpostbtn ,widthsize }) => {
     const [content, setContent] = useState("");
     const [videopost, setVideopost] = useState(null);
     const videouploadRef = useRef();
@@ -15,6 +19,8 @@ const PostFunctionComponent = ({ mpostbtn, setMpostbtn }) => {
     const [pollcreation, setPollcreation] = useState(false);
     const [storymodeltrue, setstorymodeltrue] = useState(false)
     const [videoselect, setVideoselect] = useState(false);
+    const {isMobile} = useContext(MobileViewContext)
+    const {usertoken} = useContext(UserAuthCheckContext);
 
 
 
@@ -22,23 +28,17 @@ const PostFunctionComponent = ({ mpostbtn, setMpostbtn }) => {
         e.preventDefault();
         if (!content.trim()) return;
         setMpostbtn(false)
-
-        const formData = new FormData();
-        formData.append("user_id", usertoken.user.id);
-        formData.append("content", content);
-
+    
         try {
-            await axios.post("/api/posts/create", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-            setContent("");
-
-            alert('sucess');
+          await axios.post("/api/posts/text/create", {user_id : usertoken.user.id,content});
+    
+          alert('sucess');
+          setContent('')
         } catch (err) {
-            console.error("Error creating post:", err);
-            alert('error');
+          console.error("Error creating post:", err);
+          alert('error');
         }
-    };
+      };
     const handlecontendChange = (e) => {
         const contentValue = e.target.value;
         setContent(contentValue);
@@ -51,6 +51,7 @@ const PostFunctionComponent = ({ mpostbtn, setMpostbtn }) => {
         if (videouploadRef.current) {
           
             videouploadRef.current.click();
+        
         }
 
     };
@@ -66,7 +67,7 @@ const PostFunctionComponent = ({ mpostbtn, setMpostbtn }) => {
         setVideoType(file.type);
         setVideoselect(true)
  
-     
+   
 
 
     }
@@ -74,6 +75,7 @@ const PostFunctionComponent = ({ mpostbtn, setMpostbtn }) => {
         setstorymodeltrue(true)
 
     }
+ 
     return (
 
             <>
@@ -84,7 +86,9 @@ const PostFunctionComponent = ({ mpostbtn, setMpostbtn }) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: mpostbtn ? 1 : 0 }}
                     exit={{ backdropFilter: "blur(0px)" }}
+                    
                     transition={{ duration: 0.2, ease: 'easeInOut' }}
+                   
                     onClick={() => setMpostbtn(false)}
 
                     className='mobile-upload-s'>
@@ -92,6 +96,7 @@ const PostFunctionComponent = ({ mpostbtn, setMpostbtn }) => {
                         initial={{ y: "100%" }}
                         animate={{ y: mpostbtn ? "0" : "100%" }}
                         exit={{ y: "100%" }}
+                        style={{width : !isMobile && widthsize ? widthsize : '100%'}}
                         transition={{ duration: 0.2, ease: 'easeInOut' }}
                         onClick={(event) => event.stopPropagation()}
                         className="mobile-upload-s-i">
@@ -102,10 +107,11 @@ const PostFunctionComponent = ({ mpostbtn, setMpostbtn }) => {
                             <form onSubmit={handlePostSubmit} className="home-post-type-box">
                                 <input type="text" name="post" placeholder="Write a post" value={content} onChange={handlecontendChange} />
                                 <button className="button" type="submit">Post</button>
+                             
                             </form>
 
                             <div className="home-post-button-box">
-                                <ImageUploader />
+                                <ImageUploader setMpostbtn={setMpostbtn}  />
                                 <input type="file"
                                     ref={videouploadRef}
                                     onChange={handlevideoChangeinput}

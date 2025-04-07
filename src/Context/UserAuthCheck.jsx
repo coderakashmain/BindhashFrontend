@@ -2,6 +2,8 @@ import React, { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 export const UserAuthCheckContext = createContext();
 import axios from 'axios';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 
@@ -51,7 +53,14 @@ const UserAuthCheck = ({children}) => {
     
 
     if (loading) {
-      return <div>Loading...</div>; // Prevent flashing by showing loading state
+      return (
+        <Backdrop
+          sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+          open={true}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      );
     }
 
   return (

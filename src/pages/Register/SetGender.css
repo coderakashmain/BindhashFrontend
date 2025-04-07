@@ -1,0 +1,98 @@
+.set-gender-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #fff;
+    color: #000;
+    font-family: "Poppins", sans-serif;
+    padding: 20px;
+    width: 100%;
+  }
+
+
+  
+  
+  .set-gender-container .back-btn {
+    align-self: flex-start;
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .set-gender-container h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: start !important;
+  }
+  
+  .set-gender-container .info-text {
+    font-size: 0.9rem;
+    color: gray;
+    margin-bottom: 2rem;
+  }
+  
+  .set-gender-container .gender-options {
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .set-gender-container .gender-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px;
+    border: 2px solid #d0d0d0;
+    border-radius: 0.3rem;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .gender-box input {
+    display: none;
+  }
+  
+  .gender-box.selected {
+    border-color: #007bff;
+    background: rgba(0, 123, 255, 0.1);
+  }
+  
+  .set-gender-container .subtext {
+    font-size: 12px;
+    color: gray;
+    margin-top: 5px;
+  }
+  
+  .set-gender-container .next-btn {
+    width: 100%;
+    max-width: 350px;
+    background: var(--linearcolor);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 0.3rem;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .set-gender-container .account-link {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 14px;
+    margin-top: 1.2rem;
+    cursor: pointer;
+    text-align: center !important;
+  }
+  
