@@ -1,8 +1,10 @@
-import React, { useContext, useEffect } from 'react'
+import React, { Suspense, useContext, useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from '../components/Navbar/Navbar'
 import { MobileViewContext } from './MobileResizeProvider'
 import MobileNav from '../components/Navbar/MobileNav'
+import SkeletonComponent from '../components/Fallback/SkeletonComponent'
+import SkeletonRooms from '../components/Fallback/SkeletonRooms'
 
 
 
@@ -21,11 +23,14 @@ const HomeRouter = () => {
 
 
   return (
-    <>
+    <section style={{height : '100vh' ,minWidth : '80%' , width : '100%'}}>
+    
        <Navbar />
       <Outlet/>
+      
       {isMobile && navvisibelity&&  (<MobileNav/>)}
-    </>
+    </section>
+
   )
 }
 

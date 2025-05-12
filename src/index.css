@@ -1,58 +1,94 @@
 @import "tailwindcss";
 * {
-  font-family: Arial, sans-serif;
+  font-family: 'Nunito', sans-serif;
   margin: 0;
   padding: 0;
  box-sizing: border-box;
 }
 body{
   background-color: var(--webbackcolor);
+  color: var(--textcolor);
 }
 
 :root{
-  --webbackcolor : #f5f5f5;
+  /* --webbackcolor : #FAFCFF; */
+  --webbackcolor : #F2F5FA;
+  /* --webbackcolor : #f5f5f5; */
   --webbackshahow :  0px 4px 10px rgba(0, 0, 0, 0.1);
   --backwhitecolor : white;
+  --lightbackcolor : #f9f9f9;
+  --lightbackhovercolor : #eaeaea;
+  --lightbackcolor2 : #cbd4d742;
+  --icon-back-color : #bae0ea70;
 
   
   --navbackcolor : rgb(255, 255, 255);
   --navboxshodow :  0 4px 10px rgba(0, 0, 0, 0.1);
   --blacktextcolor : #000;
   --textcolor: black;
+
   --textwhitecolor: #ffffff;
-  --lighttextcolor :#777;
+  --lighttextcolor :#555;
+  --icon-color : #2a5b66;
   --buttoncolor: rgb(0, 122, 255);
   --buttonhovercolor : rgba(30, 161, 209, 0.251);
   --popupbackcolor : rgba(0, 0, 0, 0.081);
   /* --linearcolor : linear-gradient(135deg, black, #2890E1); */
   --linearcolor :linear-gradient(135deg, #00d4ff, #0088ff);
+  --secondlinearcolor : linear-gradient(45deg, #f9f9f9, #f9f9f9);
   --texthovercolor : rgb(0, 122, 255);
 
 
   --primary-color: #007bff;
   --text-color: #333;
   --background-color: #fff;
-  --border-color: #ddd;
+  --border-color : 1px solid #e4e4e4;
+
+
+  --skeleton-color: #fcfcfc;
+  --skeleton-bg: #F2F5FA;
+
+  --skroom-bg: #F2F5FA;
+  --skroom-shade: #fcfcfc;
+
+  --border-radius : 10px;
 }
 .dark {
-  --webbackcolor : rgb(213, 213, 213);
+  --webbackcolor : #080C16;
   --navbackcolor: rgb(30, 30, 30);
+  --lightbackcolor : #2b364c5c;
+    --lightbackcolor2 : #0a1621;
+  --lightbackhovercolor : #1f1f1f;
+  --icon-color : #cacaca;
+  --icon-back-color: #24404870;
+
+
+
   --blacktextcolor : #ffffff;
-  --textcolor: white;
+  --textcolor: rgb(234, 234, 234);
   --textwhitecolor: #000000;
   --buttoncolor: rgb(255, 100, 100);
   --buttonhovercolor : rgb(234, 232, 232);
-  --backwhitecolor : '#000';
-  --lighttextcolor :#e1e1e1;
+  --backwhitecolor : #0D1423;
+  --lighttextcolor :#9a9a9a;
   --popupbackcolor : rgba(0, 0, 0, 0.081);
   --mobil-nav-back-color : rgb(0 0 0 / 86%);
+
+  --border-color : 1px solid #494949;
+
+
+  --secondlinearcolor : linear-gradient(45deg, #56565675, #787575);
+
+
+
+
 }
 
-
+/* 
 @media (max-width : 640px) {
 body{
   background-color: var(--backwhitecolor);
 
 }
-}
+} */
 

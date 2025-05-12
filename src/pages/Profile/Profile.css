@@ -18,8 +18,8 @@
 
   .profile-left-box{
    width: 70%;
-   border-right: 1px solid rgb(208, 208, 208);
-   border: 1px solid rgb(225, 225, 225);
+   border-right: var(--border-color);
+   border: var(--border-color);
    border-radius: 0.2rem;
    background-color: var(--backwhitecolor);
    box-shadow: var(--webbackshahow);
@@ -33,7 +33,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgb(234, 234, 234);
+    border-bottom: var(--border-color);
 
     
   }
@@ -239,7 +239,7 @@ transition: transform 0.3s ease-in-out;
 .story-circle p {
   font-size: 0.8rem;
   margin-top: 0.3rem;
-  color: gray;
+  color: var(--lighttextcolor);
 }
 
 .mutual-friends {

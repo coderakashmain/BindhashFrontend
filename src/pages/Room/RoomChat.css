@@ -1,0 +1,166 @@
+#roomchat-container {
+  height: 90%;
+}
+
+.roomchat-header {
+  height: 10%;
+  display: flex;
+  align-items: center;
+  padding: 0rem 1rem;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  position: sticky;
+  border-bottom: 1px solid rgba(180, 212, 220, 0.13);
+  ;
+}
+.roomchat-header-name {
+  width: 15%;
+    border-right: var(--border-color);
+    /* height: 100%; */
+    display: flex;
+    align-items: center;
+;
+}
+.roomchat-header h3 {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-wrap: nowrap;
+  margin-left: 0.9rem;
+  
+}
+.roomchat-header-user-list {
+  width: 85%;
+  display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    position: relative;
+    overflow-y: none;
+}
+.roomchat-header-user{
+  cursor: pointer;
+}
+
+.float-see-live-users{
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 1rem 1.8rem;
+    background-color: var(--backwhitecolor);
+    z-index: 2;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+}
+
+.roomchat-box {
+ height: 90%;
+ display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.roomchat-allrooms-list {
+  width: 35rem;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+    padding: 0.0rem 0.5rem;
+ 
+}
+.roomchat-allrooms-list strong{
+font-size: 0.6rem;
+padding: 0rem 0.5rem;
+color: var(--lighttextcolor);
+text-transform: uppercase;
+display: flex;
+justify-content: space-between;
+align-items: center;
+position: sticky;
+}
+.roomchat-allrooms-list strong span{
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
+
+
+.roomchat-card {
+     padding: 0.5rem 0.5rem ;
+    background-color: var(--lightbackcolor2 );
+    border-radius: var(--border-radius);
+  
+}
+
+.roomchat-allroom-exand{
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    padding: 0.2rem 1rem;
+    cursor: pointer;
+    background-color: var(--icon-back-color);
+    color: var(--icon-color);
+}
+
+.roomchat-card-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.roomchat-card-title-l{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    scrollbar-width: none;
+}
+.roomchat-card-title-l h4{
+    font-size: 0.9rem   ;
+    text-wrap: nowrap;
+    font-weight: bold;
+    
+}
+.roomchat-card-title-r span{
+    font-size: 0.6rem   ;
+    text-wrap: nowrap;
+    background-color: var(--icon-back-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 01rem;
+}
+
+.roomchat-card-title-r{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    margin-left: 0.7rem;
+}   
+.roomchat-card-title-description{
+    font-size: 0.7rem;
+    color: var(--lighttextcolor);
+    margin-top: 0.2rem;
+    /* text-wrap: nowrap; */
+}
+.roomchat-card-user-list{
+    display: flex;
+    margin-top: 0.5rem;
+    justify-content:flex-start;
+
+}
+
+
+
+/* right side
+} */
+.roomchat-chating-box {
+  width: 100%;
+  /* height: 100%; */
+  overflow-y: scroll;
+  scrollbar-width: none;
+}

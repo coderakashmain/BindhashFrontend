@@ -4,6 +4,7 @@ export const UserAuthCheckContext = createContext();
 import axios from 'axios';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import SkeletonComponent from '../components/Fallback/SkeletonComponent';
 
 
 
@@ -60,6 +61,7 @@ const UserAuthCheck = ({children}) => {
         >
           <CircularProgress color="inherit" />
         </Backdrop>
+        // <SkeletonComponent/>
       );
     }
 

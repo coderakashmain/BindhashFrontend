@@ -97,7 +97,7 @@ const Login = () => {
       </div>
       <div className="login-container-box2">
         {/* <img src={loginlogo} alt="loginlogo" /> */}
-        <Bangbox size="10vw" click={false}/>
+        <Bangbox size="6vw" click={false}/>
       </div>
     </div>
   );

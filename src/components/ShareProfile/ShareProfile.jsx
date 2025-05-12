@@ -27,8 +27,8 @@ const ShareProfile = ({fontsize,profileurllink,backcolor,content,btnhover}) => {
   };
 
   return (
-    <button  className={`share-btn iconbtn active ${ btnhover===false ? '' : 'btnhover' }`} style={{background : backcolor ? backcolor : '',color :'black' , padding : btnhover  ? btnhover : ''}}  onClick={handleShare}>
-        <Send color="black"  size={fontsize ? fontsize : 18}  /> {content ? content : ''}
+    <button  className={`share-btn iconbtn active ${ btnhover===false ? '' : 'btnhover' }`} style={{background : backcolor ? backcolor : '',color :'var(--textcolor)' , padding : btnhover  ? btnhover : ''}}  onClick={handleShare}>
+        <Send color="var(--textcolor)"  size={fontsize ? fontsize : 18}  /> {content ? content : ''}
     </button>
   );
 };

@@ -16,13 +16,16 @@ const AllPostContext = ({ children }) => {
     const [totalUserPost, setTotalUserPost] = useState(0);
     const navigate = useNavigate()
 
+    
 
     const fetchPosts = async () => {
-        if (loading) return;
+        
+    
+        if (!usertoken?.user ) return;
         setLoading(true);
 
         try {
-      
+           
             const response = await axios.get(`/api/posts?userId=${usertoken.user.id}&page=${page}&limit=5`);
 
             if (response.data.length === 0) {
@@ -69,10 +72,12 @@ const AllPostContext = ({ children }) => {
             fetchPosts(true); // Initial load
         }
     }, [usertoken]);
+    
 
 
 
     useEffect(() => {
+
         if (allpost.length > 0) {
             const userPosts = allpost.filter(post => post.post_user_id === usertoken.user.id);
             const postCount = userPosts.length > 0 ? userPosts[0].post_count : 0;
@@ -84,8 +89,14 @@ const AllPostContext = ({ children }) => {
 
 
 
+
     useEffect(() => {
-        if (!usertoken || !loaderRef.current || loading) return;
+
+       
+
+        if (!usertoken || !loaderRef.current || loading|| !hasMore) return;
+      
+
 
         const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
@@ -99,7 +110,7 @@ const AllPostContext = ({ children }) => {
     }, [allpost, usertoken,hasMore]); 
 
     return (
-        <AllPostContextData.Provider value={{ allpost, setAllpost, isLiked, setIsLiked, loading, loaderRef,hasMore,totalUserPost }}>
+        <AllPostContextData.Provider value={{ allpost, setAllpost,fetchPosts, isLiked, setIsLiked, loading, loaderRef,hasMore,totalUserPost }}>
             {children}
         </AllPostContextData.Provider>
     );

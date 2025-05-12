@@ -6,11 +6,13 @@
     border-radius: 10px; */
     width: 100% !important;
     /* max-width: 350px; */
+    border: var(--border-color);
+    border-radius:var(--border-radius);
   }
   
   .suggested-users-container h2 {
     font-size: 1rem;
-    color: #333;
+    color: var(--textcolor);
     margin-bottom: 10px;
   }
   
@@ -21,12 +23,12 @@
     padding: 8px 10px;
     border-radius: 8px;
     margin-bottom: 8px;
-    background: #f9f9f9;
+    background: var(--lightbackcolor);
     transition: background 0.3s ease;
   }
   
   .suggestion-profile:hover {
-    background: #eaeaea;
+    background: var(--lightbackhovercolor);
   }
   
   .suggestion-profile-pic{
@@ -51,18 +53,18 @@
   .suggestion-profile-info h3 {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #222;
+    color: var(--textcolor);
     margin: 0;
   }
   
   .suggestion-profile-info p {
     font-size: 0.8rem;
-    color: #777;
+    color: var(--lighttextcolor);
     margin: 2px 0 0;
   }
   
   .suggestion-profile-info strong {
-    color: #333;
+    color: var(--lighttextcolor);
   }
   
   .suggestion-profile button {

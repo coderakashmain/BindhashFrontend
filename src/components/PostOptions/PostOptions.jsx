@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import {
     MoreVertical, Edit, Trash2, Share2, Bookmark,
-    Flag, Link2, EyeOff
+    Flag, Link2, EyeOff,Ellipsis
 } from "lucide-react";
 import { Menu, MenuItem, IconButton, Divider, Snackbar, Alert } from "@mui/material"; // MUI Dropdown
 import  {UserAuthCheckContext} from '../../Context/UserAuthCheck'   
@@ -98,7 +98,8 @@ const PostOptions = ({
         <>
 
             <IconButton onClick={handleClick}>
-                <MoreVertical size={18} />
+
+                <Ellipsis color="var(--textcolor)"  size={25}/>
             </IconButton>
 
 

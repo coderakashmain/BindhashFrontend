@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { usePolls } from "../../Context/PollProvider";
 import "./PollView.css";
-import { EllipsisVertical, ThumbsUp, MessageCircle, ScanEye, AlignEndHorizontal } from "lucide-react";
+import { EllipsisVertical, ThumbsUp, MessageCircle, ScanEye, AlignEndHorizontal, Heart, MessageSquare } from "lucide-react";
 import Followbtn from "../ProfileStats/Followbtn";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import Time from "../Time/Time";
@@ -284,7 +284,7 @@ useEffect(() => {
                             </div>
                         </div>
                         <div className="profile-details-right">
-                            {!(usertoken.user.id === selectedPoll.posted_by.user_id)  && <Followbtn  targetUserId={selectedPoll.posted_by.user_id} />}
+                            {/* {!(usertoken.user.id === selectedPoll.posted_by.user_id)  && <Followbtn  targetUserId={selectedPoll.posted_by.user_id} />} */}
 
                             <span className="more-btn">
                                  <PostOptions
@@ -369,16 +369,16 @@ useEffect(() => {
                     <div className="poll-reaction">
                         <div className="poll-reaction-left">
                         <div onClick={handleLike} className="poll-reaction-item" style={{ color : selectedPoll.user_has_liked ? 'rgb(0, 123, 255)' : '',gap :'0.3rem'}}>
-                            <span>
-                                <ThumbsUp size={18} />
-                            </span>
-                            <p>{selectedPoll.likes}</p>
+                            <button>
+                                <Heart size={20} />{selectedPoll.likes} Like
+                            </button>
+                            
                         </div>
                         <div className="poll-reaction-item" style={{gap : '0.3rem'}}>
-                            <span>
-                                <MessageCircle size={18}/>
-                            </span>
-                            <p>{selectedPoll.comments}</p>
+                            <button>
+                                <MessageSquare size={20}/> {selectedPoll.comments} comments
+                            </button>
+                            <p></p>
                         </div>
                         </div>
                         <div className="poll-reaction-right">

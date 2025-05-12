@@ -1,0 +1,77 @@
+
+  
+  .skroom-wrapper {
+    display: flex;
+    background: var(--skroom-bg);
+    min-height: 100vh;
+    font-family: sans-serif;
+    gap: 2rem;
+    padding: 2rem;
+    position: relative;
+    z-index: 9999;
+    /* position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%; */
+  }
+  
+  .skroom-sidebar {
+    width: 15rem;
+    height: 80vh;
+    background: var(--skroom-shade);
+    border-radius: 0.75rem;
+  }
+  
+  .skroom-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .skroom-search {
+    height: 3rem;
+    background: var(--skroom-shade);
+    border-radius: 0.5rem;
+  }
+  
+  .skroom-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .skroom-title {
+    width: 10rem;
+    height: 2rem;
+    background: var(--skroom-shade);
+    border-radius: 0.5rem;
+  }
+  
+  .skroom-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .skroom-card {
+    flex: 1 1 16rem;
+    height: 8rem;
+    background: var(--skroom-shade);
+    border-radius: 1rem;
+  }
+  
+  .skroom-circles {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .skroom-circle {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background: var(--skroom-shade);
+  }
+  

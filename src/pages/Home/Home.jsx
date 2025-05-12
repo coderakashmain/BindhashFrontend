@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import './Home.css'
+import '../../App.css'
 import { motion, transform, AnimatePresence } from "framer-motion";
 import { AllPostContextData } from "../../Context/AllPostContext";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
@@ -33,11 +34,12 @@ import PostFunctionComponent from "../../components/PostFuctionComponent/PostFun
 import PostContent from "../../components/Post/PostContent";
 import ProfileEdit from "../../components/ProfileEdit/ProfileEdit";
 import UploadPreviewWithProgress from "../../components/UploadPreviewWithProgress/UploadPreviewWithProgress";
+import Queots from "../../components/Queots/Queots";
 
 
 
 const Home = () => {
-  const { allpost, setAllpost, isLiked, setIsLiked, loading, loaderRef, hasMore } = useContext(AllPostContextData);
+  const { allpost, setAllpost } = useContext(AllPostContextData);
   const { usertoken } = useContext(UserAuthCheckContext);
 
   const [newComment, setNewComment] = useState("");
@@ -347,12 +349,15 @@ const Home = () => {
       <div className="container-box scrollbar">
      
         <div className="home-post-box">
-          <StorySection storymodeltrue={storymodeltrue} setstorymodeltrue={setstorymodeltrue} />
+          {/* <StorySection storymodeltrue={storymodeltrue} setstorymodeltrue={setstorymodeltrue} /> */}
           <div className="home-post-box-upload">
 
             <form onSubmit={handlePostSubmit} className="home-post-type-box">
-              <input type="text" name="post" placeholder="Write a post" value={content} onChange={handlecontendChange} />
+              <textarea  name="post" placeholder="What failure did you faced today?" value={content} onChange={handlecontendChange} />
+              <div  style={{display : 'flex', justifyContent : 'center', alignItems : 'center'}}>
+
               <button className="button" type="submit">Post</button>
+              </div>
             </form>
 
             <div className="home-post-button-box">
@@ -377,10 +382,11 @@ const Home = () => {
 
         
         <UploadPreviewWithProgress/>
-        <PostContent feed={feed} setAllpost={setAllpost} allpost={allpost} isLiked={isLiked} loading={loading} loaderRef={loaderRef} hasMore={hasMore}/>
+        <PostContent feed={feed} />
       </div>
       <div ref={homeusggestionRef} className="user-suggestion scrollbar">
-        <UserSearch />
+        {/* <UserSearch /> */}
+        <Queots/>
         {resizedisplay && <Leaderboard />}
         <SuggestedUsers homeuser={true} />
         <TrendingPosts />

@@ -55,8 +55,8 @@
   
   .logout-button {
     background: none;
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
+    border: 1px solid red;
+    color: red;
     padding: 0.8rem 2rem;
     font-size: 1rem;
     border-radius: 2rem;
@@ -65,7 +65,7 @@
   }
   
   .logout-button:hover {
-    background: var(--primary-color);
+    background:red;
     color: #fff;
   }
   

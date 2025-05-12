@@ -13,24 +13,25 @@
   .user-suggesion-input-box{
     width: 100%;
     display: flex;
-    border-radius: 0.4rem;
+    border-radius: 0.6rem;
     justify-content: space-between;
-    border: 1px solid rgb(201, 201, 201);
+    border: var(--border-color);
     position: relative;
     overflow: hidden;
-    /* margin: 0rem 1rem; */
+    /* background-color: var(--webbackcolor); */
     background-color: var(--backwhitecolor);
+    overflow: hidden;
    
   }
   .user-suggesion-input-box button{
-    padding: 0rem 1rem;
+    padding: 0rem 0.5rem;
     background-color: transparent;
     border: none;
-    background-color: rgb(226, 226, 226);
-
-
+    /* background-color: var(--lightbackcolor); */
     cursor: pointer;
+
   }
+
   .user-suggesion-input-box span{
     display: flex;
     justify-content: center;
@@ -39,23 +40,26 @@
     background: linear-gradient(135deg, #00d4ff, #0088ff);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: var(--border-color);
     color: #fff;
   }
 
   .user-suggesion-input-box input{
     /* flex-grow: 1; */
     width: 100%; 
-    padding: 1rem;
+    padding: 0.6rem 0.2rem;
     border: none;
     outline: none;
     font-size: 0.9rem;
-    border-radius: 0.4rem;
+    
+  }
+  .user-suggesion-input-box input::placeholder{
+    color: var(--textcolor);
     
   }
   
   .user-suggesion-input-box:has(input:focus) {
-    border: 1px solid #00d4ff !important;
+    border: 2px solid #00d4ff ;
 }
   
   .searchbox-list-search{

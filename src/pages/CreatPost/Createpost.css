@@ -1,0 +1,45 @@
+/* Createpost.css */
+
+.create-post-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* min-height: 100vh;  */
+    background-color: var(--webbackcolor); 
+    padding: 2rem;
+  }
+  
+  .create-post-card {
+    width: 100%; /* Fixed width for desktop */
+    max-width: 90%; /* Stay responsive */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    background-color: var(--backwhitecolor) !important;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem; /* Good spacing between fields */
+  }
+  
+  .photo-upload {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .submit-btn {
+    margin-top: 1rem;
+    font-weight: bold;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--linearcolor);
+  }
+  
+  .stranger-click{
+    display: flex;
+    align-items: center;
+  }
+  .stranger-click p{
+    font-size: 0.8rem;
+    color: var(--lighttextcolor);
+  }

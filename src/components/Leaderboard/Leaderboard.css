@@ -73,7 +73,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px;
-    border-bottom: 1px solid #eee;
+    border-bottom: var(--border-color);
   }
   
   .rank {
@@ -97,7 +97,7 @@
   
   .score {
     font-size: 0.9rem;
-    color: #555;
+    color: var(--lighttextcolor);
     margin-left: 0.6rem;
     display: flex;
     align-items: center;

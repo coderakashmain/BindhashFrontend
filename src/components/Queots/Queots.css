@@ -1,0 +1,19 @@
+.queots{
+    margin-top: 2rem;
+    border-radius:var(--border-radius);
+    background-color: var(--backwhitecolor);
+    padding: 1rem;
+    border: var(--border-color);
+
+    
+}
+.queots p:first-child{
+    font-style: italic;
+    font-size: 1rem;
+
+}
+.queots  p:last-child{
+    margin-top: 1rem;
+    font-size: 1rem;
+
+}

@@ -1,43 +1,51 @@
-import React, { useContext, useEffect } from 'react'
-import Navbar from './components/Navbar/Navbar'
-
-import Home from './pages/Home/Home'
-import Register from './pages/Register/Register'
+import React, { lazy, Suspense, useContext, useEffect } from 'react'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+
+
+import { PollProvider } from './Context/PollProvider';
+import { SocketProvider } from './Context/SocketContext';
 import AllpageRouter from './Router/AllpageRouter';
-import PageRouter from './Router/PageRouter';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
-import Notfound from './pages/Notfound';
-import Login from './pages/Login/Login';
-import Profile from './pages/Profile/Profile';
+import MobileResizeProvider from './Context/MobileResizeProvider'
+import PageRouter from './Router/PageRouter';
 import AllPostContext from './Context/AllPostContext';
 import UserAuthCheck from './Context/UserAuthCheck';
-import Chat from './pages/Chat/Chat';
-import FullchatPage from './pages/Chat/FullchatPage';
-import DefaultChatPage from './pages/Chat/DefaultChatPage';
 import AllUserList from './Context/AllUserList';
-
-import { SocketProvider } from './Context/SocketContext';
-import { PollProvider } from './Context/PollProvider';
-import StoryView from './components/Story/StoryView';
-import HomeRouter from './Context/HomeRouter';
-import BigRouter from './Router/BigRouter';
-import MobileResizeProvider from './Context/MobileResizeProvider';
-import UserSearch from './components/UserSearch/UserSearch';
-import TrendingPosts from './components/TrendingPosts/TrendingPosts';
-import Leaderboard from './components/Leaderboard/Leaderboard';
 import ProfileRouter from './Router/ProfileRouter';
-import ProfileEdit from './components/ProfileEdit/ProfileEdit';
 import SnackbarProvider from './Context/SnackbarContext';
-import Emailenter from './pages/Register/Emailenter';
-import OtpVerificaiton from './pages/Register/OtpVerificaiton';
-import SetPassword from './pages/Register/SetPassword';
-import SetUsername from './pages/Register/SetUsername';
-import SetGender from './pages/Register/SetGender';
-import Snackbar from './components/Snackbar/Snackbar';
-import SettingsPage from './pages/SettingsPage/SettingsPage';
-import FollowersFollowing from './Context/FollowersFollowing';
 import { UploadProvider } from './Context/UploadProvider';
+import SkeletonRooms from './components/Fallback/SkeletonRooms';
+
+
+
+const RoomChat = lazy(()=> import ('./pages/Room/RoomChat'));
+const HomeRouter = lazy(()=> import ('./Context/HomeRouter'));
+const Home = lazy(()=> import ('./pages/Home/Home')) ;
+const Register = lazy(()=> import ('./pages/Register/Register')) ;
+const Notfound = lazy(()=> import ('./pages/Notfound')) ;
+const Login = lazy(()=> import ('./pages/Login/Login')) ;
+const Profile = lazy(()=> import ('./pages/Profile/Profile')) ;
+const Chat = lazy(()=> import ('./pages/Chat/Chat')) ;
+const FullchatPage = lazy(()=> import ('./pages/Chat/FullchatPage')) ;
+const DefaultChatPage = lazy(()=> import ('./pages/Chat/DefaultChatPage')) ;
+const StoryView = lazy(()=> import ('./components/Story/StoryView')) ;
+const UserSearch = lazy(()=> import ('./components/UserSearch/UserSearch')) ;
+const TrendingPosts = lazy(()=> import ('./components/TrendingPosts/TrendingPosts')) ;
+const Leaderboard = lazy(()=> import ('./components/Leaderboard/Leaderboard')) ;
+const ProfileEdit = lazy(()=> import ('./components/ProfileEdit/ProfileEdit')) ;
+const Emailenter = lazy(()=> import ('./pages/Register/Emailenter')) ;
+const OtpVerificaiton = lazy(()=> import ('./pages/Register/OtpVerificaiton')) ;
+const SetPassword = lazy(()=> import ('./pages/Register/SetPassword')) ;
+const SetUsername = lazy(()=> import ('./pages/Register/SetUsername')) ;
+const SetGender = lazy(()=> import ('./pages/Register/SetGender')) ;
+const Snackbar = lazy(()=> import ('./components/Snackbar/Snackbar')) ;
+const SettingsPage = lazy(()=> import ('./pages/SettingsPage/SettingsPage')) ;
+const FollowersFollowing = lazy(()=> import ('./Context/FollowersFollowing')) ;
+const CreatePost = lazy(()=> import ('./pages/CreatPost/Createpost')) ;
+const Room = lazy(()=> import ('./pages/Room/Room')) ;
+const RoomPlay = lazy(()=> import ('./pages/Room/RoomPlay')) ;
+
 
 
 
@@ -85,16 +93,16 @@ const App = () => {
               children: [
                 {
                   path: '',
-                  element: <><ErrorBoundary><Home /></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><Home /></Suspense></ErrorBoundary></>
                 },
                 {
                   path: '/story-view/:id',
-                  element: <><ErrorBoundary><StoryView /></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><StoryView /></Suspense></ErrorBoundary></>
                 },
 
                 {
                   path: 'profile',
-                  element: <><ErrorBoundary><ProfileRouter /></ErrorBoundary></>,
+                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><ProfileRouter /></Suspense></ErrorBoundary></>,
                   children : [
                     {
                       path: '',
@@ -108,25 +116,44 @@ const App = () => {
                 },
                 {
                   path: 'trending-post',
-                  element: <><ErrorBoundary><TrendingPosts /></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><TrendingPosts /></Suspense></ErrorBoundary></>
                 },
                 {
                   path: 'search',
-                  element: <><ErrorBoundary><UserSearch /></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><UserSearch /></Suspense></ErrorBoundary></>
+                },
+                {
+                  path: 'room',
+                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><Room /></Suspense></ErrorBoundary></>
+                
+                },
+                {
+                  path: 'room/:roomname',
+                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><RoomPlay /></Suspense></ErrorBoundary></>
+                
+                },
+                {
+                  path: 'room/:category/:slug',
+                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><RoomChat /></Suspense></ErrorBoundary></>
+                
                 },
                 {
                   path: 'setting',
-                  element: <><ErrorBoundary><SettingsPage/></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><SettingsPage/></Suspense></ErrorBoundary></>
+                },
+                {
+                  path: 'createpost',
+                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><CreatePost/></Suspense></ErrorBoundary></>
                 },
                 {
                   path: 'leaderboard',
-                  element: <><ErrorBoundary><Leaderboard /></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><Leaderboard /></Suspense></ErrorBoundary></>
                 },
                 ,
                 {
 
                   path: 'chat',
-                  element: <><ErrorBoundary><FullchatPage /></ErrorBoundary></>,
+                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><FullchatPage /></Suspense></ErrorBoundary></>,
                   children: [
                     {
                       path: "",

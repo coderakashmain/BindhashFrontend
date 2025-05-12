@@ -1,9 +1,9 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Time from '../Time/Time'
 import Followbtn from '../ProfileStats/Followbtn'
 import PollView from '../Poll/PollView'
 import defaultprofilephoto from '../../Photo/defaultprofilepic.png'
-import { ThumbsUp, MessageCircle, Share2, ScanEye, Album } from 'lucide-react'
+import { ThumbsUp, MessageCircle, Share2, ScanEye, Album ,Heart,Forward,MessageSquare} from 'lucide-react'
 import PostModel from './PostModel'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -17,9 +17,14 @@ const PostContent = ({feed}) => {
     const [imgloaded, setImgLoaded] =useState(false);
     const [selectedPostId, setSelectedPostId] = useState(null);
     const {usertoken} = useContext(UserAuthCheckContext)
-    const {setIsLiked,loading,loaderRef,hasMore,isLiked,setAllpost,allpost} = useContext(AllPostContextData)
+    const {setIsLiked,loading,loaderRef,fetchPosts,hasMore,isLiked,setAllpost,allpost} = useContext(AllPostContextData)
 
+    useEffect(() => {
+        if(loaderRef.current) {
+          fetchPosts();
+        }
 
+    },[loaderRef.current])
 
     
       const handleLike = async (postId) => {
@@ -87,10 +92,14 @@ const PostContent = ({feed}) => {
                         </div>
                         <div className="post-header-edit">
         
-                          {usertoken.user.id !== allpost.post_user_id && (<Followbtn targetUserId={allpost.post_user_id} />)}
+                          {/* {usertoken.user.id !== allpost.post_user_id && (<Followbtn targetUserId={allpost.post_user_id} />)} */}
                           {/* <EllipsisVertical size={20} /> */}
                           <PostOptions userId = {allpost.post_user_id} postId={allpost.post_id} pollId={allpost.poll_id} />
                         </div>
+        
+                      </div>
+                      <div className={`home-post-contnt-box-out ${allpost.image ? 'post-head-content-box-true' : 'post-head-content-box-false'}`}>
+                        {allpost.content && (<p className="home-post-contnt">{allpost.content}</p>)}
         
                       </div>
         
@@ -125,10 +134,7 @@ const PostContent = ({feed}) => {
         
                         </>
                       }
-                      <div className={`home-post-contnt-box-out ${allpost.image ? 'post-head-content-box-true' : 'post-head-content-box-false'}`}>
-                        {allpost.content && (<p className="home-post-contnt">{allpost.content}</p>)}
-        
-                      </div>
+                     
         
         
         
@@ -140,20 +146,23 @@ const PostContent = ({feed}) => {
                             onClick={() => handleLike(allpost.post_id)}
                             className={isLiked[allpost.post_id] ? "liked" : ""}
                           >
-                            <ThumbsUp size={20} color={isLiked[allpost.post_id] ? "#007BFF" : "black"} /> {allpost.like_count}
+                            
+                            <Heart size={20} color={isLiked[allpost.post_id] ? "#007BFF" : "var(--textcolor)"} /> {allpost.like_count} Like
                           </button>
                           <button>
-                            <MessageCircle size={20} onClick={() => setSelectedPostId(allpost.post_id)} />
-                            {allpost.comments.filter(comment => comment.comment_id && comment.comment_text).length}
+                         
+                            <MessageSquare size={20} onClick={() => setSelectedPostId(allpost.post_id)} />
+                            {allpost.comments.filter(comment => comment.comment_id && comment.comment_text).length} Comments
                           </button>
-                          <button><Share2 size={20} /></button>
+                    
+                          <button><Forward size={20} /> Share</button>
                         </div>
                         <div className="post-action-right">
-                          <button>     <ScanEye size={20} /></button>
+                          {/* <button>     <ScanEye size={20} /></button> */}
         
                           <button>
         
-                            <Album size={20} />
+                            <Album size={20} />Save
                           </button>
                         </div>
         

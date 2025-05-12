@@ -88,8 +88,8 @@ const UserSearch = () => {
 
           <Search size={20} />
         </button>
-        <input type="text" placeholder="Enter Username..." value={query} onChange={handleSearch} />
-        <span>Search</span>
+        <input type="text" placeholder="Search" value={query} onChange={handleSearch} />
+        {/* <span>Search</span> */}
 
         </div>
         <div className={`searchbox-list-search scrollbar ${isMobile  ? "mobile-s-p" :''}`} ref={suggestionBoxRef} >

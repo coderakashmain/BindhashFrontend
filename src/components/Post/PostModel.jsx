@@ -54,7 +54,7 @@ const PostModel = ({ postId, onClose }) => {
       
     }, [postId,isMobile]);
 
-    // ✅ Close animation (100% → 0%)
+    
     const handleClose = () => {
         if (modalRef.current) {
             if(!isMobile){
@@ -107,7 +107,7 @@ const PostModel = ({ postId, onClose }) => {
                 )
             );
 
-            // ✅ Store liked status for UI toggle
+           
             setIsLiked((prevLiked) => ({
                 ...prevLiked,
                 [postId]: response.data.liked, // Store liked status as true/false

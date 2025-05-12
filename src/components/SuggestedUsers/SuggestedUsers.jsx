@@ -14,7 +14,7 @@ const SuggestedUsers = ({homeuser}) => {
   useEffect(() => {
     const fetchSuggestedUsers = async () => {
       try {
-        const response = await axios.get(`/api/users/suggested-users?userId=${usertoken.user.id}`);
+        const response = await axios.get(`/api/users/suggested-users?userId=${usertoken?.user?.id}`);
         setSuggestedUsers(response.data);
       } catch (error) {
         console.error("Error fetching suggested users:", error);
@@ -22,12 +22,12 @@ const SuggestedUsers = ({homeuser}) => {
     };
 
     fetchSuggestedUsers();
-  }, [usertoken.user.id]);
+  }, [usertoken?.user?.id]);
 
 
 
   return (
-    <div className="suggested-users-container" style={homeuser ? {padding : '0.91rem',borderRadius : '10px', boxShadow : 'var(--webbackshahow)'} : {}}>
+    <div className="suggested-users-container" style={homeuser ? {padding : '0.91rem'} : {}}>
      {suggestedUsers.length > 0 ? ( <>
       <h2>Suggested Users</h2>
       {suggestedUsers.map((user) => (
@@ -38,11 +38,11 @@ const SuggestedUsers = ({homeuser}) => {
           </div>
           <div className="suggestion-profile-info">
             <h3>{user.username}</h3>
-            {user.mutual_count > 0 ? (
+            {/* {user.mutual_count > 0 ? (
               <p>Followed by <strong>{user.mutual_count} mutual friends</strong></p>
             ) : (
               <p>Suggested for you</p>
-            )}
+            )} */}
           </div>
           <Followbtn targetUserId={user.id} />
         </div>

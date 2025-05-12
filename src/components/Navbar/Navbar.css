@@ -1,12 +1,12 @@
 .navbar {
-  background: var(--navbackcolor);
-  height: 8%;
+  /* background: var(--navbackcolor); */
+  height: 10%;
   color: var(--blacktextcolor);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.7rem 1.2rem;
-  border-bottom: 1px solid rgba(73, 73, 73, 0.1);
+  padding: 0.7rem 2rem 0.7rem 2.2rem;
+  border-bottom:  var(--border-color);
   position: sticky;
   top: 0%;
   width: 100%;
@@ -20,7 +20,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translateY(-10%);
+  width: 35%;
+
 }
 .nav-left .logo {
   display: inline-block;
@@ -75,9 +76,7 @@
 }
 
 /* Dark Mode Support */
-.dark .navbar {
-  background-color: rgb(30, 30, 30);
-}
+
 
 .dark .nav-link {
   color: white;

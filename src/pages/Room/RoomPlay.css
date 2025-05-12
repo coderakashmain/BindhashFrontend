@@ -1,0 +1,32 @@
+#roomplay{
+    width: 100%;
+    height: 90%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    padding: 1rem;
+}
+#roomplay h3{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#roomplay h3 p{ 
+    font-size: 0.9rem;
+    font-weight: 300;
+    cursor: pointer;
+}
+.roomplay::-webkit-scrollbar {
+    display: none;
+}
+.subrooms-list-play{
+    flex-wrap: wrap !important;
+}
+.subrooms-card-play{
+    /* min-height: 10rem; */
+    flex-basis: 300px !important;
+    flex-grow: 1;
+    /* max-width: 400px; */
+}

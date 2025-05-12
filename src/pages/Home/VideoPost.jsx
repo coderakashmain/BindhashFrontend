@@ -114,7 +114,7 @@ const VideoPost = ({ videoSrc }) => {
                 <input
                     type="range"
                     className="video-progress-bar"
-                    value={progress}
+                    value={progress.toString()}
                     onChange={handleSeek}
                 />
 

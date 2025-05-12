@@ -50,10 +50,11 @@ const Followbtn = ({ targetUserId }) => {
   return (
     <button       onClick={handleFollowToggle}
     
-    style={{ padding: '0.8rem 0.6rem', borderRadius: '5px', background: isFollowing ? '#ebebeb' : 'var(--linearcolor)', cursor: 'pointer',display :'flex',alignItems :'center', gap: '0.3rem',fontSize :'0.8rem',outline : 'none', border : 'none',color: isFollowing ? 'black' : 'white' }} className='active follow-fuction'>
+    style={{ padding: '0.3rem 1rem', borderRadius: '5px', background: 'transparent', cursor: 'pointer',display :'flex',alignItems :'center', gap: '0.3rem',fontSize :'00.9rem', fontWeight :'500',outline : 'none', border : ' 1px solid var(--lighttextcolor)',color: 'var(--blacktextcolor)' ,  }} className='active follow-fuction'>
       {isFollowing ? "Unfollow" : (
         <>
-          Follow <UserPlus size={15} />
+          Follow 
+          {/* <UserPlus size={15} /> */}
         </>
       )}
     </button>

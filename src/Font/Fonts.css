@@ -10,3 +10,15 @@
     font-weight: bold;
     font-style: normal;
   }
+@font-face {
+    font-family: 'Nunito';
+    src: url('./NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'Webname';
+    src: url('./AuralyessFreeTrial-RpMrE.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }

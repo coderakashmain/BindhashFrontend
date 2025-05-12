@@ -38,7 +38,7 @@
    
   
   .scrollbar::-webkit-scrollbar-thumb {
-    background:rgb(236, 236, 236);
+    background:rgb(227, 232, 239);
     border-radius: 1.8rem;
   }
 
@@ -54,9 +54,9 @@
     font-size: 0.95rem;
     /* background-color: black; */
     background-color: transparent;
-    border: 1px solid #cecaca;
+    border: var(--border-color);
     border-radius: 0.3rem;
-    color: #000;
+    color: var(--textcolor);
     font-weight: 500;
     user-select: none;
   }

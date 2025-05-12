@@ -1,17 +1,20 @@
 .bangbox{
-    font-family: 'MyFont';
+    font-family: 'sans-serif';
     text-wrap: nowrap;
-    color: black;
     text-decoration: none;
     user-select: none;
+    font-weight: 700;
 
 }
 .bangbox span{
-    color: rgb(0, 0, 0);
-    font-family: 'MyFont';
+    /* color: rgb(0, 0, 0); */
+    font-family: 'Webname', sans-serif;
+   display: flex;
+   flex-wrap: nowrap;
+   gap:0.5rem;
 }
 .bangbox span:first-child{
 
-    color: #2890e1 !important;
+    /* color: #2890e1 !important; */
 }
 
