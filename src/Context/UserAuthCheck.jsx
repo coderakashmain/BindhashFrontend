@@ -5,6 +5,7 @@ import axios from 'axios';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import SkeletonComponent from '../components/Fallback/SkeletonComponent';
+import CircularLoader from '../components/Fallback/CircularLoader';
 
 
 
@@ -55,12 +56,7 @@ const UserAuthCheck = ({children}) => {
 
     if (loading) {
       return (
-        <Backdrop
-          sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
-          open={true}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
+       <CircularLoader/>
         // <SkeletonComponent/>
       );
     }

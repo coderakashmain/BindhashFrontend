@@ -16,6 +16,9 @@ import ProfileRouter from './Router/ProfileRouter';
 import SnackbarProvider from './Context/SnackbarContext';
 import { UploadProvider } from './Context/UploadProvider';
 import SkeletonRooms from './components/Fallback/SkeletonRooms';
+import RandomsubroomChat from './pages/Room/RandomsubroomChat';
+import RoomChatbox from './pages/Room/RoomChatbox';
+import SubRoomDefaultChatpage from './pages/Room/SubRoomDefaultChatpage';
 
 
 
@@ -134,9 +137,30 @@ const App = () => {
                 },
                 {
                   path: 'room/:category/:slug',
-                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><RoomChat /></Suspense></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><RoomChat /></Suspense></ErrorBoundary></>,
+                  children : [
+                    {
+                      path : '',
+                      element : <><ErrorBoundary><SubRoomDefaultChatpage/></ErrorBoundary></>
+                    },
+                    {
+                      path : 'randomchat/:subroomId',
+                      element :<><ErrorBoundary><RandomsubroomChat/></ErrorBoundary></>
+                    },
+                    {
+                      path : ':chatroomname',
+                      element : <><ErrorBoundary><RoomChatbox /></ErrorBoundary></>
+                    }
+                  ]
+                 
                 
                 },
+                // {
+                //   path: 'room/:category/:slug/:roomname',
+                //   element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><RoomChat /></Suspense></ErrorBoundary></>,
+                 
+                
+                // },
                 {
                   path: 'setting',
                   element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><SettingsPage/></Suspense></ErrorBoundary></>

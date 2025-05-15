@@ -1,27 +1,55 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import './RoomPlay.css'
 import './Room.css'
 
 const RoomPlay = () => {
-    const {room}  = useLocation().state;
-    const {subroom} = room;
+  const location = useLocation();
+    const {room}  = location.state;
+    const navigate = useNavigate();
+    
 
-    console.log(room);
+   const generetSlog = (subroom) => {
+  let slog = subroom.subroom_name.toLowerCase().replace(/\s+/g,'-');
+  
+  const newslog = `${slog}-${subroom.subroom_id}`.toLowerCase();
+
+
+return newslog;
+
+};
+
+const roomName = (room) => {
+  const roomName = room.room_name.toLowerCase().replace(/\s+/g,'-');
+  const newroomName = `${roomName}-${room.room_id}`.toLowerCase();
+  return newroomName;
+   }
+
+const joinRoom = (subroom,room) => {
+
+
+  const slog = generetSlog(subroom);
+  const category = roomName(room);
+
+  navigate(`/room/${category}/${slog}`, { state: { subroom } });
+
+}
+
+
   return (
     <section id='roomplay'>
-        <h3>{room.name} <p>Live Chat</p></h3>
+        <h3>{room.room_name} <p>Live Chat</p></h3>
        <div className="subrooms-list subrooms-list-play">
                       {room.subrooms.map((subroom) => (
                        
-                        <div key={subroom.id} className="subrooms-card subrooms-card-play">
+                        <div key={subroom.subroom_id} className="subrooms-card subrooms-card-play">
                           {/* <img src={subroom.image} alt={subroom.name} /> */}
       
-                          <h5>{subroom.name}</h5>
-                          <div className="subroom-list-join">
+                          <h5>{subroom.subroom_name}</h5>
+                          <div className="subroom-list-join" onClick={()=>joinRoom(subroom,room)}>
                           Join
                           </div>
-                          <p> {subroom.description}</p>
+                          <p> {subroom.subroom_description}</p>
                           
                         </div>
                       

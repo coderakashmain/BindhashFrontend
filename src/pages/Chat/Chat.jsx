@@ -31,7 +31,7 @@ const Chat = () => {
   useEffect(() => {
     if (!usertoken || receiverId === prevReceiverId.current) return;
 
-    console.log(receiver)
+
 
 
     const fetchReceiver = async () => {

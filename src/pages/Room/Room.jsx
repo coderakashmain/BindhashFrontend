@@ -3,99 +3,70 @@ import './Room.css'
 import { AlignEndHorizontal, Ellipsis, MoveRight } from 'lucide-react'
 import { MobileViewContext } from '../../Context/MobileResizeProvider'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { useEffect } from 'react'
+import { useContext } from 'react'
+import CircularLoader from '../../components/Fallback/CircularLoader'
 
 const Room = () => {
+  const { isMobile } = useContext(MobileViewContext)
 
-  const { isMobile } = React.useContext(MobileViewContext)
-  const navigate = useNavigate()  
-  const roomsection = [{
-    id: 1,
-    name: "Students",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-    subrooms: [
-      { id: 1,
-         name: "It Students",
-         description : " This is room for it student who want to find . Join Room at find a stranger.",
-         image: "https://picsum.photos/800/300" },
-      { id: 2, name: "Civil Students",
-        description : " This is room for it student who want to find . Join Room at find a stranger.",
-        image: "https://picsum.photos/800/300" },
-      { id: 3, name: "Civil Students",
-        description : " This is room for it student who want to find . Join Room at find a stranger.",
-        image: "https://picsum.photos/800/300" },
-      { id: 4, name: "Civil Students",
-        description : " This is room for it student who want to find . Join Room at find a stranger.",
-        image: "https://picsum.photos/800/300" },
-      { id: 5, name: "Civil Students",
-        description : " This is room for it student who want to find . Join Room at find a stranger.",
-        image: "https://picsum.photos/800/300" },
-      { id: 6, name: "Civil Students",
-        description : " This is room for it student who want to find . Join Room at find a stranger.",
-        image: "https://picsum.photos/800/300" },
-      { id: 7, name: "Civil Students",
-        description : " This is room for it student who want to find . Join Room at find a stranger.",
-        image: "https://picsum.photos/800/300" },
-      { id: 8, name: "Civil Students",
-        description : " This is room for it student who want to find . Join Room at find a stranger.",
-        image: "https://picsum.photos/800/300" },
-      { id: 9, name: "Civil Students",
-        description : " This is room for it student who want to find . Join Room at find a stranger.",
-        image: "https://picsum.photos/800/300" },
-     
-    ],
-  },
-  {
-    id: 2,
-    name: "Humer Nature",
-    description: "This is room 2",
-    subrooms: [
-      { id: 1, name: "John Smith",
-        description : " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300" },
-      { id: 2, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-      { id: 3, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-      { id: 4, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    ],
-  },
-  {
-    id: 3,
-    name: "Emotions",
-    description: "This is room 2",
-    subrooms: [
-      { id: 5, name: "John Smith", image: "https://picsum.photos/800/300" },
-      { id: 6, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    ],
-  },
-  {
-    id: 4,
-    name: "Hobies",
-    description: "This is room 2",
-    subrooms: [
-      { id: 7, name: "John Smith", image: "https://picsum.photos/800/300" },
-      { id: 8, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    ],
+  const navigate = useNavigate();
+  const [rooms, setRooms] = React.useState([])
+  const [loading, setLoading] = React.useState(true)
+
+  useEffect(() => {
+    const fetchRoom = async () => {
+      setLoading(true)
+      try {
+        const response = await axios.get('/api/room');
+
+        setRooms(response.data);
+
+      } catch (error) {
+        console.error('Error fetching rooms:', error);
+      }
+      finally {
+        setLoading(false)
+      }
+    };
+
+    fetchRoom();
+  }, []);
+
+useEffect(()=>{
+  if(loading){
+    <CircularLoader/>
   }
-];
+
+},[loading])
 
 
-const generetSlog = (room) => {
-  let slog = room.name.toLowerCase().replace(/\s+/g,'-');
-  
-  const newslog = `${slog}-${room.id}`.toLowerCase();
+  const generetSlog = (subroom) => {
+    let slog = subroom.subroom_name.toLowerCase().replace(/\s+/g, '-');
+
+    const newslog = `${slog}-${subroom.subroom_id}`.toLowerCase();
 
 
-return newslog;
+    return newslog;
 
-};
+  };
 
-const joinRoom = (subroom,room) => {
+  const roomName = (room) => {
+    const roomName = room.room_name.toLowerCase().replace(/\s+/g, '-');
+    const newroomName = `${roomName}-${room.room_id}`.toLowerCase();
+    return newroomName;
+  }
+
+  const joinRoom = (subroom, room) => {
 
 
-  const slog = generetSlog(subroom);
-  const roomName = room.name.toLowerCase();
+    const slog = generetSlog(subroom);
+    const category = roomName(room);
 
-  navigate(`${roomName}/${slog}`, { state: { subroom } });
+    navigate(`${category}/${slog}`, { state: { subroom } });
 
-}
+  }
 
 
 
@@ -108,55 +79,56 @@ const joinRoom = (subroom,room) => {
           <button className='create-room'>Create Room</button>
         </div> */}
         <div className="room-list">
-          {roomsection.map((room) => (
-            <div key={room.id} className="room-card">
-              
-              <h3>{room.name} </h3>
-               <small style={{fontSize : '0.8rem', fontWeight : '400',color : 'var(--lighttextcolor)'}}>{room.description}</small>
-             
-              
+          {rooms.map((room) => (
+            <div key={room.room_id} className="room-card">
+
+              <h3>{room.room_name} </h3>
+              <small style={{ fontSize: '0.8rem', fontWeight: '400', color: 'var(--lighttextcolor)' }}>{room.room_description}</small>
+
+
               <div className="subrooms-list">
-                {room.subrooms.slice(0, isMobile ? 2 :3).map((subroom) => (
-                  <>
-                  <div key={subroom.id} className="subrooms-card">
-                    {/* <img src={subroom.image} alt={subroom.name} /> */}
+                {room.subrooms.slice(0, isMobile ? 2 : 3).map((subroom) => (
+                 
+                    <div key={subroom.subroom_id} className="subrooms-card">
+                      {/* <img src={subroom.image} alt={subroom.name} /> */}
 
-                    <h5>{subroom.name}</h5>
-                    <div className="subroom-list-join" onClick={()=>joinRoom(subroom,room)}>
-                    Join
-                    </div>
-                    <p> {subroom.description}</p>
-                    
-                  </div>
-                  {subroom?.id  ===3 && (
-                    <div className='more-rooms'>
-                      <div className="more-r-a" onClick={()=>{
-                          navigate(subroom.name,{state : {room}});
-
-                      }}>
-                      <MoveRight  />
+                      <h5>{subroom.subroom_name}</h5>
+                      <div className="subroom-list-join" onClick={() => joinRoom(subroom, room)}>
+                        Join
                       </div>
-                    </div>
-                  )}
+                      <p> {subroom.subroom_description}</p>
 
-                  </>
+                    </div>
+                    
+
+                 
                 ))}
+                {room.subrooms.length > 3 && (
+                      <div className='more-rooms'>
+                        <div className="more-r-a" onClick={() => {
+                          navigate(room.room_name, { state: { room } });
+
+                        }}>
+                          <MoveRight />
+                        </div>
+                      </div>
+                    )}
               </div>
-             
-              
+
+
             </div>
           ))}
         </div>
       </div>
 
-          <div className="room-custum">
-            <ul>
-              <li>P/R</li>
-              <li>A/R</li>
-              <li>F/R</li>
-              <li>S/R</li>
-            </ul>
-          </div>
+      <div className="room-custum">
+        <ul>
+          <li>P/R</li>
+          <li>A/R</li>
+          <li>F/R</li>
+          <li>S/R</li>
+        </ul>
+      </div>
     </section>
   )
 }
