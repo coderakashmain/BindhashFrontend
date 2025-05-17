@@ -8,12 +8,14 @@ import { useEffect } from 'react'
 import { useContext } from 'react'
 import CircularLoader from '../../components/Fallback/CircularLoader'
 
+
 const Room = () => {
   const { isMobile } = useContext(MobileViewContext)
 
   const navigate = useNavigate();
   const [rooms, setRooms] = React.useState([])
-  const [loading, setLoading] = React.useState(true)
+  const [loading, setLoading] = React.useState(true);
+  const [navigateLoading, setNavigateLoading] = React.useState(false);
 
   useEffect(() => {
     const fetchRoom = async () => {
@@ -34,12 +36,12 @@ const Room = () => {
     fetchRoom();
   }, []);
 
-useEffect(()=>{
-  if(loading){
-    <CircularLoader/>
-  }
+  useEffect(() => {
+    if (loading) {
+      <CircularLoader />
+    }
 
-},[loading])
+  }, [loading])
 
 
   const generetSlog = (subroom) => {
@@ -59,12 +61,15 @@ useEffect(()=>{
   }
 
   const joinRoom = (subroom, room) => {
+    if(navigateLoading) return;
 
-
+    setNavigateLoading(true);
+    
     const slog = generetSlog(subroom);
     const category = roomName(room);
-
     navigate(`${category}/${slog}`, { state: { subroom } });
+
+
 
   }
 
@@ -82,37 +87,49 @@ useEffect(()=>{
           {rooms.map((room) => (
             <div key={room.room_id} className="room-card">
 
-              <h3>{room.room_name} </h3>
+              <h3>{room.room_name}
+              </h3>
               <small style={{ fontSize: '0.8rem', fontWeight: '400', color: 'var(--lighttextcolor)' }}>{room.room_description}</small>
 
 
               <div className="subrooms-list">
                 {room.subrooms.slice(0, isMobile ? 2 : 3).map((subroom) => (
-                 
-                    <div key={subroom.subroom_id} className="subrooms-card">
-                      {/* <img src={subroom.image} alt={subroom.name} /> */}
 
-                      <h5>{subroom.subroom_name}</h5>
-                      <div className="subroom-list-join" onClick={() => joinRoom(subroom, room)}>
-                        Join
-                      </div>
-                      <p> {subroom.subroom_description}</p>
+                  <div key={subroom.subroom_id} className="subrooms-card">
+                    {/* <img src={subroom.image} alt={subroom.name} /> */}
 
+                    <h5>{subroom.subroom_name}</h5>
+                    <div className="subroom-list-join active click" onClick={() => {
+                      if (!navigateLoading) {
+                        
+                      
+
+                        joinRoom(subroom, room)
+                      }
+                    }}>
+                      {console.log(navigateLoading)}
+                      Join
                     </div>
-                    
+                    <p> {subroom.subroom_description}</p>
 
-                 
+                  </div>
+
+
+
                 ))}
-                {room.subrooms.length > 3 && (
-                      <div className='more-rooms'>
-                        <div className="more-r-a" onClick={() => {
-                          navigate(room.room_name, { state: { room } });
+                {room.subrooms.length > 3 && !isMobile && (
+                  <div className='more-rooms click'>
+                    <div className="more-r-a" onClick={() => {
+                      if (!navigateLoading) {
 
-                        }}>
-                          <MoveRight />
-                        </div>
-                      </div>
-                    )}
+                        navigate(room.room_name, { state: { room } });
+                      }
+
+                    }}>
+                      <MoveRight />
+                    </div>
+                  </div>
+                )}
               </div>
 
 

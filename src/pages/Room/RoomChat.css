@@ -31,7 +31,7 @@
   
 }
 .roomchat-header-user-list {
-flex: 1;
+  flex: 1;
   display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -67,7 +67,10 @@ flex: 1;
     border-radius: 40px !important;
     margin-top: 1rem !important;
     cursor: pointer;
-        background-color: var(--lightbackcolor2 );
+        background: var(--linearcolor );
+        box-shadow: 2px 2px 3px  var( --secondary-box-shadow ) !important;
+        transition: all 0.2s ease-in-out;
+        /* color: var(--bothwhitecolor); */
 }
 
 .roomchat-box {
@@ -78,8 +81,6 @@ flex: 1;
 }
 .roomchat-allrooms-list {
   width: 30rem ;
-  min-width: 30rem;
-  
   overflow-y: scroll;
   scroll-behavior: smooth;
   display: flex;
@@ -111,6 +112,37 @@ gap: 0.5rem;
     border-radius: var(--border-radius);
     /* box-shadow: ; */
   
+}
+
+.room-user-setting{
+  position: absolute;
+  right: 5%;
+  top: 100%;
+  background-color: var(--backwhitecolor);
+  /* width: 10rem; */
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px var(--secondary-box-shadow);
+  z-index: 10;
+    user-select: auto !important;
+  pointer-events: auto !important;
+  display: flex;
+  flex-direction: row;
+  text-wrap: nowrap;
+  gap: 1rem;
+}
+.room-user-setting select {
+    background-color: var(--backwhitecolor);
+    font-size: 0.9rem;
+    border: var(--border-color);
+    border-radius:4px;
+    outline: none;
+
+}
+.room-user-setting option {
+    
+  border-radius: 0rem;
+
 }
 
 .roomchat-allroom-exand{
@@ -193,14 +225,57 @@ gap: 0.5rem;
 }
 
 .roomchat-chating-box{
-  /* width: 20rem; */
-  min-width:30rem;
-  flex: 1;
-  height: 100%;
+  flex-grow: 1;
+  max-width: 40rem;
   position: relative;
   transition: width 0.5rem ease-in-out;
 }
-.roochat-active-user-full-d-list{
-  width: 100%;
-  background-color: blue;
+.roomchat-active-user-full-d-list{
+  width: 15rem;
+  /* background:linear-gradient(45deg, rgb(36, 36, 41), blue); */
+  padding: 0.7rem;
+  border-left: var(--border-color2);
+   background-color: var(--backwhitecolor);
+   box-shadow: -2px 0px 5px var(--secondary-box-shadow);
+
+}
+.roomchat-active-user-full-d-list header{
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ font-size: 0.9rem;
+}
+
+.roomchat-live-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+   
+ 
+}
+
+.roochat-active-user-full-d-list-i-o-b{
+  flex: 1;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  margin-top:0.9rem;
+  user-select: none;
+}
+
+.roochat-active-user-full-d-list-item{
+  display: flex;
+  font-size: 0.8rem;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  text-wrap: nowrap;
+ 
+  /* color: var(--lighttextcolor); */
+}
+
+@media (max-width : 1041px) {
+    .roomchat-allrooms-list {
+  width: 25rem ;
+ 
+}
 }

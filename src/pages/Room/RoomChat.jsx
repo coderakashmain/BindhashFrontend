@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import './RoomChat.css'
 import TruncatedText from '../../components/TextReducer/TruncatedText';
@@ -20,22 +20,27 @@ import { UserAuthCheckContext } from '../../Context/UserAuthCheck';
 import { useContext } from 'react';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion'
+import { MobileViewContext } from '../../Context/MobileResizeProvider';
 
 
 const RoomChat = () => {
-    const { category, slug } = useParams();
+    const { category, slug, subroomId, chatroomname } = useParams();
     const location = useLocation();
     const subroom = location.state?.subroom || null;
     const [expand, setExpand] = React.useState(false);
     const navigate = useNavigate();
     const [navigatePath, setNavigatePath] = React.useState(null);
     const [subsubroomname, setSubsubroomname] = React.useState(null);
-    const { chatroomname } = useParams();
+    const randomnavigateRef = useRef(false);
+
     const socket = useSocket();
     const { usertoken } = useContext(UserAuthCheckContext);
     const [activeUsers, setActiveuser] = useState([]);
     const [finalSubroomId, setFinalSubroomId] = useState(null);
     const [userlist, setUserList] = useState(false);
+    const [userSetting, setUserSetting] = useState(false);
+    const { isMobile } = useContext(MobileViewContext);
+    const userSettingRef = useRef(null);
 
 
 
@@ -44,7 +49,6 @@ const RoomChat = () => {
     const roomid = category.split('-').pop();
     const subroomname = slug.split('-').slice(0, -1).join(' ');
     const subroomid = slug.split('-').pop();
-
 
 
 
@@ -278,13 +282,32 @@ const RoomChat = () => {
 
 
 
+    const outsideclick = (event) => {
+        if (userSettingRef.current && !userSettingRef.current.contains(event.target)) {
+            setUserSetting(false);
+        }
+    }
+
+
+    useEffect(() => {
+        window.addEventListener('mousedown', outsideclick);
+
+        return () => window.removeEventListener('mousedown', outsideclick);
+    }, [])
 
 
 
 
+    const handlerandomnavigate = () => {
+        if (randomnavigateRef.current) return;
 
+        randomnavigateRef.current = true;
+        navigate(`randomchat/${subroomid}`, { state: { subroomid } })
 
-
+        setTimeout(() => {
+            randomnavigateRef.current = false;
+        }, 2000)
+    }
 
     return (
         <section id='roomchat-container'>
@@ -318,19 +341,46 @@ const RoomChat = () => {
                         </Badge>
 
                     </Tooltip>
-                    <Tooltip title='Setting'>
+                    <Tooltip title='Setting' onClick={() => setUserSetting(!userSetting)}>
                         <ManageAccountsIcon sx={{ height: 26, width: 26 }} />
                     </Tooltip>
+
+                    <AnimatePresence>
+
+                        {userSetting && (<motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 3 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            transition={{ duration: 0.2, delay: 0.1 }}
+                            ref={userSettingRef}
+                            className="room-user-setting">
+
+                            Chat as
+
+                            <select name="subroomusersetting" id="subroomusersetting">
+                                <option value="ownself">Ownself</option>
+                                <option value="anonymous">Anonymous</option>
+
+                            </select>
+
+                        </motion.div>)}
+                    </AnimatePresence>
 
                 </div>
 
 
             </header>
             <div className="roomchat-box ">
-                <aside className='roomchat-allrooms-list scrollbar'>
-                    <div className="roomchat-random-chat roomchat-card" onClick={() => navigate(`randomchat/${subroomid}`, { state: { subroomid } })}>
+                <aside style={isMobile ? chatroomname || subroomId ? { display: 'none' } : { display: 'flex', flexGrow: 1 } : {}} className='roomchat-allrooms-list scrollbar'>
+                    {!subroomId ? (<div className="roomchat-random-chat roomchat-card active click" onClick={handlerandomnavigate}>
                         <ChatIcon /> Chat with Random
-                    </div>
+                    </div>) :
+                        (
+                            <div className="roomchat-random-chat roomchat-card" style={{ background: subroomId ? 'var(  --lightbackcolor2 )' : '', color: subroomId ? '' : 'white' }} onClick={() => navigate(`/room/${category}/${slug}`)}>
+                                Leave Random Chat
+                            </div>
+                        )
+                    }
                     <strong style={{ marginTop: '0.7rem' }}>Active Users  <span>{activeUsers.length}</span></strong>
                     <div className="roomchat-card">
                         <PublicIcon />   Global Chat
@@ -401,20 +451,33 @@ const RoomChat = () => {
                     ))}
 
                 </aside>
-                <motion.div 
-                     transition={{  duration : 0.4}}
-                className="roomchat-chating-box">
+                <motion.div
+                    transition={{ duration: 0.4 }}
+                    style={isMobile ? chatroomname || subroomId ? { display: 'block', flexGrow: 1 } : { display: 'none' } : {}}
+                 
+                    className="roomchat-chating-box">
                     <Outlet subroomname={navigatePath} />
 
                 </motion.div>
                 <AnimatePresence>
-                 { userlist&& (  <motion.div
+                    {userlist && (<motion.div
                         initial={{ x: "100%", opacity: 0.8 }}
-                        animate={{ x:  '0%', opacity: 1 }}
+                        animate={{ x: '0%', opacity: 1 }}
                         exit={{ x: '100%' }}
-                        transition={{ duration: 0.3 ,bounce : 2}}
+                        transition={{ duration: 0.3, bounce: 2 }}
+                        className="roomchat-active-user-full-d-list">
+                        <header><strong>Active Users </strong>
+                            <div className=" roomchat-live-box"> <div className='live-dot'></div><span>{activeUsers.length}</span></div>
+                        </header>
 
-                        className="roochat-active-user-full-d-list">
+                        <div className="roochat-active-user-full-d-list-i-o-b">
+
+                            {activeUsers.map((user) => (
+                                <div key={user.id} className="roochat-active-user-full-d-list-item">
+                                    <ActiveAvatar username={user.username} profile_pic={user.profile_pic} size={40} /> {user.username}
+                                </div>
+                            ))}
+                        </div>
 
                     </motion.div>)}
                 </AnimatePresence>

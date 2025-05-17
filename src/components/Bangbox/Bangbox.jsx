@@ -25,7 +25,7 @@ const Bangbox = ({size,click}) => {
         Bindhash
         
         </span>
-    </a>) : ( <h1 href='/' className='bangbox' style={{fontSize : size ? size : "1.8rem"}}>
+    </a>) : ( <h1 className='bangbox' style={{fontSize : size ? size : "1.8rem"}}>
       <span>
       <Avatar sx={{ bgcolor: blue[500] }} variant="rounded">
         B

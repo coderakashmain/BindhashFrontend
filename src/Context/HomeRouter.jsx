@@ -23,12 +23,12 @@ const HomeRouter = () => {
 
 
   return (
-    <section style={{height : '100vh' ,minWidth : '80%' , width : '100%'}}>
+    <section style={{height : '100vh' , width : '80%', flexGrow : 1}}>
     
        <Navbar />
       <Outlet/>
       
-      {isMobile && navvisibelity&&  (<MobileNav/>)}
+      {/* {isMobile && navvisibelity&&  (<MobileNav/>)} */}
     </section>
 
   )

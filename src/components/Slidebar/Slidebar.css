@@ -1,16 +1,15 @@
 .sidebar {
-    /* min-width: 18rem; */
-    width: 20%;
+    width: 18rem;
     height: 100vh;
    
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 1rem 1.5rem;
     border-right: var(--border-color);
     position: relative;
     overflow-x: hidden;
    background-color: var(--backwhitecolor);
+   transition: all 0.2s ease-in-out;
    
   }
 
@@ -34,6 +33,9 @@
   }
   .logo{
     margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   
  .sidebar nav ul {
@@ -94,7 +96,7 @@
     bottom: 0%;
     left: 0%;
     width: 100%;
-    height: 5rem;
+    /* height: 5rem; */
     background-color: var(--backwhitecolor);
     border-top:var(--border-color);
     display: flex;
@@ -155,4 +157,11 @@
  cursor: pointer;
 
 
+  }
+  .centerli li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:rgb(180, 180, 180);
+    border-radius: 10px;
   }

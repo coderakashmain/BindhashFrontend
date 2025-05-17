@@ -11,12 +11,15 @@ import ReportPopup from '../../components/Reports/ReportPopup';
 import defaultprofilepic from '../../Photo/defaultprofilepic.png'
 import Tooltip from '@mui/material/Tooltip';
 import SendIcon from '@mui/icons-material/Send';
+import { Avatar } from '@mui/material';
+import Bangbox from '../../components/Bangbox/Bangbox';
 
 
 
 
 const RandomsubroomChat = () => {
   const socket = useSocket()
+
 
 
   const [message, setMessage] = useState('');
@@ -31,18 +34,46 @@ const RandomsubroomChat = () => {
   const [strangerInfo, setStrangerInfo] = useState(null);
   const [canSendMessage, setCanSendMessage] = useState(true);
   const { usertoken } = useContext(UserAuthCheckContext);
+  const [chattype, setChattype] = useState('');
   const location = useLocation();
   const subroomid = location.state?.subroomid || null;
   const [showReports, setShowReport] = useState(false);
   const { slug } = useParams();
   const [reportdId, setRortedId] = useState(null);
-  const [autoMatching,SetAutomatching] = useState(false);
-  const [newUserFind,setNewUserFind] = useState(false);
-
+  const [autoMatching, SetAutomatching] = useState(false);
+  const [newUserFind, setNewUserFind] = useState(false);
+  const [ownInfo, setOwnInfo] = useState(null);
+  const [selfLeft, setSelfLeft] = useState(false);
   let subRoomIdChat;
-
-
   const subroomidSlug = slug.split('-').pop();
+
+
+
+
+
+
+
+
+
+  useEffect(() => {
+    const data = localStorage.getItem('randomchatype');
+    console.log(data)
+    if (data) {
+      setChattype(data);
+    }
+
+  }, []);
+
+
+
+
+
+
+
+
+
+
+
 
 
   if (!subroomid) {
@@ -61,18 +92,15 @@ const RandomsubroomChat = () => {
     setRoomId(null);
     setStrangerInfo(null);
     setStrangerjoin(false)
+    setSelfLeft(false)
     setTimeout(() => {
-        socket.emit('random_find_partner', { name: user.name, avatar: user.avatar, text: message, subroomId: subRoomIdChat, userId: usertoken?.user.id })
-    }, 5000);
-    
+      socket.emit('random_find_partner', { name: chattype === "ownself" ? usertoken?.user.username : 'Stranger', avatar: chattype === 'ownself' ? usertoken?.user.profile_pic : defaultprofilepic, text: message, subroomId: subRoomIdChat, userId: usertoken?.user.id })
+    }, 2000);
+
   };
 
 
-  useEffect(() => {
-    if (usertoken?.user) {
-      setUser({ name: usertoken.user.username, avatar: usertoken.user.profile_pic ? usertoken.user.profile_pic : defaultprofilepic });
-    }
-  }, [usertoken]);
+
 
 
   useEffect(() => {
@@ -80,7 +108,7 @@ const RandomsubroomChat = () => {
 
       findNewUser();
     }
-  }, [user]);
+  }, [autoMatching]);
 
   useEffect(() => {
     if (strangerLeft && autoMatching) {
@@ -125,21 +153,23 @@ const RandomsubroomChat = () => {
     });
 
     socket.on('random_stranger_left', () => {
-    
+
       setRoomId(null)
       setStrangerLeft(true);
 
 
       setStrangerjoin(false)
       setStrangerInfo(null);
-      setMessages([]);
+
 
 
     });
 
     socket.on('random_stranger_info', (stranger1, stranger2) => {
       const stranger = stranger1.id === usertoken.user.id ? stranger2 : stranger1;
+      const owninformation = stranger1.id !== usertoken.user.id ? stranger2 : stranger1;
       setStrangerInfo(stranger);
+      setOwnInfo(owninformation)
       setRortedId(stranger.id);
 
 
@@ -159,6 +189,7 @@ const RandomsubroomChat = () => {
 
 
     return () => {
+
       socket.emit('random_stranger_left');
       socket.off('random_receive_message-private');
 
@@ -171,16 +202,7 @@ const RandomsubroomChat = () => {
     }
   }, [socket]);
 
-  //   useEffect(() => {
-  //         const disconectHandle = () => {
-  //             if (document.visibilityState === "hidden") {
-  //                 socket.emit("random_stranger_left");
-  //             }
-  //         }
-  //         document.addEventListener("visibilitychange", disconectHandle);
 
-  //         return ()=> document.removeEventListener('visibilitychange',disconectHandle);
-  //     }, [])
 
 
   useEffect(() => {
@@ -191,10 +213,10 @@ const RandomsubroomChat = () => {
 
 
   const sendMessage = () => {
-    if (!canSendMessage) return;
+    if (!canSendMessage || !roomId) return;
 
     if (message.trim() !== '') {
-      const data = { roomId, name: user.name, avatar: user.avatar, message };
+      const data = { roomId, name: chattype === "ownself" ? usertoken?.user.username : 'Stranger', avatar: chattype === 'ownself' ? usertoken?.user.profile_pic : defaultprofilepic, message };
       socket.emit('random_send_message-private', data);
       setMessage('');
 
@@ -206,10 +228,25 @@ const RandomsubroomChat = () => {
   };
 
   const handlechange = (e) => {
+    setMessage(e.target.value);
 
-    setMessage(e.target.value)
-    socket.emit('random_typing-private', { roomId, name: user.name });
+    const textarea = e.target;
+    textarea.style.height = 'auto';
+    textarea.style.height = `${textarea.scrollHeight}px`;
+    if (roomId && canSendMessage) {
+      socket.emit('random_typing-private', { roomId, name: usertoken?.user.username });
+    }
+
   }
+
+  useEffect(() => {
+    if (strangerInfo) {
+      if (!ownInfo) {
+        socket.emit('random_stranger_left');
+      }
+    }
+
+  }, [ownInfo]);
 
 
 
@@ -217,6 +254,40 @@ const RandomsubroomChat = () => {
 
   return (
     <section className='sbr-r-chat'>
+
+      {!chattype && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+
+          className='sbr-chatype-box'>
+          <header><Bangbox click={false} /></header>
+
+          <p>Welcome to Bindhash and let Start Random chat with Strangers . <br />
+
+            This is platform where you can make your type of Friends.
+
+
+          </p>
+
+          <div className='sbr-chatype-btn'>
+            <button className='button' onClick={() => {
+              localStorage.setItem('randomchatype', 'ownself');
+
+              setChattype('ownself')
+            }}>Chat as your Self</button>
+            <button className='button' onClick={() => {
+              localStorage.setItem('randomchatype', 'anonymous')
+              setChattype('anonymous')
+            }}>Chat as Annonmyous</button>
+
+          </div>
+
+        </motion.div>
+
+      )}
       <div className="sbr-r-chat-box scrollbar" ref={chatBoxRef}>
         <AnimatePresence>
           {strangerInfo && strangerJoin && (
@@ -250,117 +321,199 @@ const RandomsubroomChat = () => {
 
                 <Tooltip title="Report">
                   <OutlinedFlagIcon className='btnhover' sx={{ cursor: 'pointer', height: "3rem", width: "3rem" }} onClick={() => setShowReport(true)} />
-               
+
                 </Tooltip>
-            
+
 
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <AnimatePresence>
-          {strangerInfo && roomId ? (
-            messages.map((msg, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                style={{ padding: '0rem 1rem' }}
-                transition={{ duration: 0.3 }}
-                className={`sbr-r-message ${user.name === msg.name ? 'sbr-r-own-message' : 'sbr-r-unknown-message'}`}
-              >
-                <div className="sbr-r-message-item-box">
-                  <img src={msg.avatar} alt="avatar" className="sbr-r-avatar" />
-                  <p className='sbr-r-chat-messages'>
-                    {/* <strong>{msg.name}:</strong>  */}
-                    {msg.message}
-                    <small className='sbr-r-time-data'>{new Date(msg.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
-                    </small>
-                  </p>
-                </div>
-              </motion.div>
-            ))
-          ) : ( 
-           newUserFind ? (<motion.div
-              className="sbr-r-typing-status"
-              key="finding"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+
+        {messages.length > 0 && messages.map((msg, idx) => (
+          <AnimatePresence>
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.6 }}
+              style={{ padding: '0rem 1rem' }}
+              transition={{ duration: 0.3 }}
+              className={`sbr-r-message ${usertoken.user.id === msg.userId ? 'sbr-r-own-message' : 'sbr-r-unknown-message'}`}
             >
-              🔍 Finding a stranger...
-            </motion.div>) : (
-            !strangerLeft && ( <motion.div 
-              className='sbr-r-nutral-chat'
-              >
-                Let Connect With Similar Mindset.
+
+              <div className="sbr-r-message-item-box">
+                <Avatar src={msg.avatar} alt={msg.name} className='sbr-r-avatar' />
+                {/* <img src={msg.avatar} alt="avatar" className="sbr-r-avatar" /> */}
+                <p className='sbr-r-chat-messages'>
+
+                  {msg.message}
+                  <small className='sbr-r-time-data'>{new Date(msg.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+                  </small>
+                </p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        ))}
+        {
+          console.log(strangerInfo)
+        }
+        {
+          console.log(roomId)
+
+        }
+        {(!strangerInfo || !roomId) && (
+          <div className="sbr-match-user-box">
+            {newUserFind ? (
+              <AnimatePresence>
+                <motion.div
+                  className="sbr-r-typing-status"
+                  key="finding"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  🔍 Finding a stranger...
+                </motion.div>
+              </AnimatePresence>
+            ) : (
+              !strangerLeft ? (
+                !selfLeft ? (<AnimatePresence>
+                  <motion.div
+                    className='sbr-r-nutral-chat'
+                    initial={{ opacity: 0 , y : 10 }}
+                    animate={{ opacity: 1 , y : 0}}
+                    exit={{ opacity: 0 ,y : 10}}
+                    transition={{ duration: 0.6 }}
+                  >
+                    Let Connect With Similar Mindset People.
 
 
-              </motion.div>)
+                  </motion.div>
+                </AnimatePresence>) :
+                  (<AnimatePresence>
+                    <motion.div
+                      className='sbr-r-nutral-chat-self-left'
+                      initial={{ opacity: 0,y : 10 }}
+                      animate={{ opacity: 0.7,y : 0 }}
+                      exit={{ opacity: 0  ,y: 10 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      You Left The Chat.
+
+
+                    </motion.div>
+                  </AnimatePresence>)
+
+
+              ) : (
+
+
+                <AnimatePresence>
+                  {!roomId && strangerLeft && (
+                    <motion.div
+                      className="sbr-r-stranger-left-popup"
+                      initial={{ opacity: 0, y: -30 }}
+                      animate={{ opacity: 0.7, y: 0 }}
+                      exit={{ opacity: 0, y: -30 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      Stranger has left the chat. Search for a new match...
+                    </motion.div>
+                  )}
+
+                  {showReports && (<ReportPopup
+                    reportedId={reportdId}
+                    reportingId={usertoken?.user.id}
+                    onClose={() => {
+                      setShowReport(false)
+                    }}
+                  />)}
+                </AnimatePresence>
+              )
             )
-          )}
-        </AnimatePresence>
+            }
 
-        {typingStatus && <div className="sbr-r-typing-status">{typingStatus}</div>}
+          </div>
+        )}
+
+
+
+
+        <AnimatePresence>
+          {typingStatus &&
+
+            <motion.div
+
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 10, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              class="typing-dots subroom-typing-dots">
+              <span></span><span></span><span></span>
+            </motion.div>}
+        </AnimatePresence>
       </div>
 
       <div className="sbr-r-typing-container ">
         <div className="sbr-r-typing-inside">
-        <button className="sbr-r-new-leave active">
-          
-        {!roomId ? (  
-          newUserFind ? (<span> Matching...</span>) : (<span onClick={()=>{
-            findNewUser();
-          }}>Connect</span>)
-        ) : (
-          <spane onClick = {()=> 
-            
-            {
-              socket.emit('random_stranger_left');
-              setStrangerInfo(null);
-              setRoomId(null);
-             }
-          
-          }>Leave</spane>
-        )}
-           
-        </button>
-        <textarea
-          placeholder="Type your thoughts..."
-          value={message}
-          onChange={handlechange}
-          onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-          className='scrollbar'
-        />
+          <button className="sbr-r-new-leave active">
 
-        <button className='sbr-r-button active' disabled={!strangerJoin} onClick={sendMessage}><SendIcon sx={{height : 20 , width : 20}}/></button>
+            {!roomId ? (
+              newUserFind ? (
+                <span> Matching...</span>) : (<span onClick={() => {
+                  if (chattype) {
+                    findNewUser();
+
+                  } else {
+                    setChattype('');
+                  }
+                }}>Connect</span>)
+            ) : (
+              <span onClick={() => {
+                socket.emit('random_stranger_left');
+                setSelfLeft(true);
+                setStrangerInfo(null);
+                setRoomId(null);
+              }
+
+              }>Leave</span>
+            )}
+
+          </button>
+          <div className="sbr-r-chat-sub-box">
+            <textarea
+              disabled={!chattype}
+              placeholder="Type your thoughts..."
+              value={message}
+              onChange={handlechange}
+              style={{ height: '38px' }}
+              className='scrollbar'
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  sendMessage();
+                }
+              }}
+
+
+            />
+          </div>
+          <button className='sbr-r-button active' disabled={!strangerJoin} onClick={() => {
+            if (chattype) {
+              sendMessage();
+            } else {
+              setChattype('');
+            }
+
+
+          }}><SendIcon sx={{ height: 20, width: 20 }} /></button>
         </div>
       </div>
 
-      <AnimatePresence>
-        {!roomId && strangerLeft && (
-          <motion.div
-            className="sbr-r-stranger-left-popup"
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.5 }}
-          >
-            Stranger has left the chat. Searching for a new match...
-          </motion.div>
-        )}
 
-        {showReports && (<ReportPopup
-          reportedId={reportdId}
-          reportingId={usertoken?.user.id}
-          onClose={() => {
-            setShowReport(false)
-          }}
-        />)}
-      </AnimatePresence>
     </section>
   )
 }

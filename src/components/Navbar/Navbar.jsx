@@ -31,11 +31,11 @@ const Navbar = () => {
 
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" style={{ padding : isMobile ? '0rem 0.8rem' : ''}}>
       {/* Left Side - Logo */}
       <div className="nav-left">
-        {/* <Bangbox  size= {'1.7rem'} click={true} />
-         */}
+    {isMobile && (    <Bangbox  size= {'2rem'} click={true} />)}
+        
 
        {!isMobile && (   <UserSearch/>)}
       </div>
