@@ -1,5 +1,5 @@
 #room{
-    height: 90%;
+    height: 100%;
     position: relative;
     overflow-y: scroll;
     scrollbar-width: none;
@@ -64,34 +64,56 @@
     border-radius:var(--border-radius);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     position: relative;
-     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.179);
+     box-shadow:1px 1px 2px rgb(0 0 0 / 18%);
      
    
 }
 
 .subroom-list-join{
-    position : absolute;
-    right: 3%;
-    top: 5%;
-    width: 4rem;
-    height: 4rem;
+        /* position : absolute;
+        right: 3%;
+        top: 5%; */
+    /* width: 4rem;
+    height: 4rem; */
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--navbackcolor);
-    border-radius: 50%;
-    font-size: 1.1rem;
+    background:var(--secondlinearcolor);
+    /* color: white; */
+    border-radius: 1rem;
+    padding: 0.3rem 1rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
     box-shadow: var(--webbackshahow);
        box-shadow: 2px 2px 2px rgba(38, 50, 51, 0.39);
 }
 .subrooms-card h5{
-    font-weight: 500;
+    font-weight: 600;
 }
 .subrooms-card p{
-    font-size: 0.9rem;
+    margin: 0.2rem 0 0.8rem;
+    font-size: 0.8rem;
     color: var(--lighttextcolor);
+}
+.subrooms-b-join{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+.subrooms-b-join-l{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.subrooms-b-join-l span{
+    font-size: 0.7rem;
+    color: var(--active-color);
+     font-weight: 600;
 }
 
 .room-custum{

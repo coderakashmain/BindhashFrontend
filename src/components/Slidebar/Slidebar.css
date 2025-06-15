@@ -1,10 +1,10 @@
 .sidebar {
     width: 18rem;
     height: 100vh;
-   
+   min-width: 4rem;
     display: flex;
     flex-direction: column;
-    padding: 1rem 1.5rem;
+    padding: 0.5rem 1.5rem;
     border-right: var(--border-color);
     position: relative;
     overflow-x: hidden;
@@ -36,6 +36,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
+    
   }
   
  .sidebar nav ul {
@@ -48,6 +50,11 @@
   .sidebar nav ul li {
     margin: 0 0 0.5rem 0;
     text-wrap: nowrap;
+    padding: 0rem 0.5rem;
+    border-radius: 0.3rem;
+  }
+  .sidebar nav ul li:hover{
+   background-color: var( --light-blue-color) !important;
   }
   
  .sidebar  nav ul li a {
@@ -162,6 +169,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color:rgb(180, 180, 180);
     border-radius: 10px;
   }

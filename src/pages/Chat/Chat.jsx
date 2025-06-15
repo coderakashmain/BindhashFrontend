@@ -8,20 +8,31 @@ import { SendHorizontal, SmilePlus, UserRound } from 'lucide-react';
 import profilelogo from '../../Photo/defaultprofile2.png'
 import { useSocket } from "../../Context/SocketContext";
 import defaultprofilepic from '../../Photo/defaultprofilepic.png'
+import { Avatar, Tooltip } from "@mui/material";
+import OutlinedFlagIcon from '@mui/icons-material/OutlinedFlag';
+import ReportPopup from "../../components/Reports/ReportPopup";
+import StraightRoundedIcon from '@mui/icons-material/StraightRounded';
+import { motion } from "framer-motion";
+import ChatSkeleton from "../../components/Fallback/ChatSkeleton";
+import AnonymousAavatar from "../../components/Avatar/AnonymousAavatar";
 
 
 
 const Chat = () => {
   const socket = useSocket();
   const { usertoken } = useContext(UserAuthCheckContext);
-  const { receiverId } = useParams();
   const [receiver, setReceiver] = useState('');
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const prevReceiverId = useRef(null);
   const chatContainerRef = useRef(null);
+  const [showReports, setShowReport] = useState(false);
+  const textareaRef = useRef(null);
+  const [chatloading, setChatLoading] = useState(true);
+  const { receiverId } = useParams();
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
-
+  const parsedReceiverId = parseInt(receiverId);
 
 
 
@@ -29,7 +40,7 @@ const Chat = () => {
 
 
   useEffect(() => {
-    if (!usertoken || receiverId === prevReceiverId.current) return;
+    if (!usertoken || parsedReceiverId === prevReceiverId.current) return;
 
 
 
@@ -37,7 +48,7 @@ const Chat = () => {
     const fetchReceiver = async () => {
 
       try {
-        const response = await axios.get(`/api/messages/chat/data?userId=${receiverId}`);
+        const response = await axios.get(`/api/messages/chat/data?userId=${parsedReceiverId}`);
         setReceiver(response.data[0])
 
       } catch (err) {
@@ -50,82 +61,153 @@ const Chat = () => {
     const messagefetch = async () => {
 
       try {
-        const response = await axios.get(`/api/messages/${receiverId}?userId=${usertoken.user.id}`);
+        const response = await axios.get(`/api/messages/${parsedReceiverId}?userId=${usertoken.user.id}`);
         setMessages(response.data);
 
       } catch (err) {
         console.error(err)
+      }
+      finally {
+        setChatLoading(false);
       }
     }
 
     messagefetch();
 
 
-  }, [usertoken, receiverId]);
+  }, [usertoken, parsedReceiverId]);
 
 
   useEffect(() => {
-    if (!socket || !receiverId) return;
+    if (!socket || !parsedReceiverId) return;
 
-    socket.emit("markAsRead", { sender_id: receiverId, receiver_id: usertoken.user.id });
-  }, [socket, receiverId]);
+    socket.emit("markAsRead", { sender_id: parsedReceiverId, receiver_id: usertoken.user.id });
+  }, [socket, parsedReceiverId]);
+
 
 
 
 
   useEffect(() => {
+
+
+
     const handlePrivateMessage = (msg) => {
-      console.log("Received privateMessage:", msg);
-  
-      if (msg.sender_id === receiverId || msg.receiver_id === receiverId) {
-        setMessages((prev) => [...prev, msg]);
+    
+      if (parseInt(msg.sender_id) === parsedReceiverId) {
+        
+        socket.emit("markAsRead", {
+          sender_id: parsedReceiverId,
+          receiver_id: usertoken.user.id,
+        });
       }
+
+
+
+      setMessages((prevMessages) => {
+        if (parseInt(msg.sender_id) === usertoken.user.id) {
+          
+          return prevMessages.map((m) => {
+          
+            return m.id === msg.id ? { ...m, status: msg.status } : m
+          }
+          );
+        } else if (
+
+          parseInt(msg.receiver_id) === usertoken.user.id &&
+          parseInt(msg.sender_id) === parsedReceiverId
+        ) {
+
+
+          return [...prevMessages, msg];
+        }
+        return prevMessages;
+      });
     };
 
 
+
     const handleMessageRead = ({ sender_id, receiver_id }) => {
-      console.log("Received messageRead:", sender_id, receiver_id);
-  
+
+
       setMessages((prevMessages) =>
         prevMessages.map((msg) => {
-          if (msg.sender_id === sender_id && msg.receiver_id === receiverId && msg.status !== "read") {
+          if (msg.sender_id === sender_id && msg.receiver_id === parsedReceiverId && msg.status !== "read") {
             return { ...msg, status: "read" };
           }
           return msg;
         })
       );
     };
-  
-  
+
+
+
+
+
     socket.on("privateMessage", handlePrivateMessage);
-    
-  socket.on("messageRead", handleMessageRead);
-  
+
+    socket.on("messageRead", handleMessageRead);
+
     return () => {
       socket.off("privateMessage", handlePrivateMessage);
       socket.off("messageRead", handleMessageRead);
+
     };
-  }, [receiverId, socket]);
+  }, [parsedReceiverId, socket, usertoken?.user?.id]);
+
+
+
+  useEffect(() => {
+    if (!socket || !parsedReceiverId) return;
+
+    const handleModeChange = (data) => {
+
+      const { id, username, visibility, profile_pic } = data.results[0];
+
+
+      if (parseInt(id) === parseInt(parsedReceiverId)) {
+
+
+        setReceiver((prev) => ({
+          ...prev,
+          username: username,
+          profile_pic: profile_pic === "null" ? null : profile_pic,
+          visibility: visibility
+        }));
+      } else {
+
+        return;
+      }
+
+    }
+    socket.on("modeChanged", handleModeChange);
+    return () => {
+      socket.off("modeChanged", handleModeChange);
+    }
+  }, [socket])
+
 
   const sendMessage = () => {
     if (message.trim() === "") return;
 
     const msgData = {
       sender_id: usertoken.user.id,
-      receiver_id: receiverId,
+      receiver_id: parsedReceiverId,
 
       message,
     };
 
-    // Save to database
+
     axios.post("/api/messages", msgData)
       .then((res) => {
-        const savedMessage = { ...msgData, message_id: res.data.message_id, created_at: res.data.created_at || new Date().toISOString(), status: "sent" };
 
-        // Notify receiver via WebSocket
-      
+        const savedMessage = {
+          ...msgData,
+          id: res.data.message_id,
+          created_at: res.data.created_at || new Date().toISOString(),
+          status: "sent"
+        };
 
-        // Update UI
         setMessages((prev) => [...prev, savedMessage]);
         setMessage("");
       })
@@ -149,10 +231,28 @@ const Chat = () => {
     const minutes = date.getMinutes().toString().padStart(2, "0");
     const ampm = hours >= 12 ? "PM" : "AM";
 
-    // Convert 24-hour format to 12-hour format
-    hours = hours % 12 || 12; // Converts 0 to 12 for midnight
+
+    hours = hours % 12 || 12;
 
     return `${hours}:${minutes} ${ampm}`;
+  };
+
+  const handleInputChange = (e) => {
+    setMessage(e.target.value);
+
+
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = Math.min(textarea.scrollHeight, 120) + "px";
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
   };
 
 
@@ -163,29 +263,51 @@ const Chat = () => {
       <div className="chat-scrollbox" ref={chatContainerRef}>
         <div className="receiver-data">
           <div className="receiver-pic">
-            <img
-              src={receiver?.profile_pic ? receiver.profile_pic : defaultprofilepic} loading="lazy" alt="receiverphtot"
 
-            />
+            {receiver.visibility === 'anonymous' ? (<AnonymousAavatar size='40px' />) : (<Avatar src={receiver?.profile_pic} alt={receiver.username} sx={{ height: '32px', width: '32px' }} />)}
+            <h3>{receiver?.username}
+            </h3>
           </div>
-          <h3>@ {receiver?.username}
-          </h3>
-          <button style={{ padding: '0.5rem 1rem' }} className=" button">View Profile</button>
           <div className="receiver-new-chat">
             {receiver?.philosophy || ''}
+          </div>
+          <div className="receiver-activity ">
+            <Tooltip title="view profile ">
+              <button style={{ padding: '0.5rem 1rem' }} className="active">View</button>
+            </Tooltip>
+
+            <Tooltip title="Report">
+              <OutlinedFlagIcon className='btnhover' sx={{ cursor: 'pointer', height: "3rem", width: "3rem" }} onClick={() => setShowReport(true)} />
+
+            </Tooltip>
+            {showReports && (<ReportPopup
+              reportedId={parsedReceiverId}
+              reportingId={usertoken?.user.id}
+              onClose={() => {
+                setShowReport(false)
+              }}
+            />)}
+
           </div>
         </div>
 
 
         <div className="chat-messages">
-          {messages.map((msg, index) => (
-            <div className={`chat-messaged-each ${msg.sender_id === usertoken.user.id ? "own-message" : "other-message"}`} key={index}>
+          {!chatloading ? messages.map((msg, index) => (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              transition={{ duration: '0.3', ease: 'easeInOut' }}
+              className={`chat-messaged-each ${msg.sender_id === usertoken.user.id ? "own-message" : "other-message"}`} key={index}>
               <p className="message-text">{msg.message}</p>
               <p className="message-status">
-                {msg.created_at ? formatTime(msg.created_at) : "Time N/A"} {msg.sender_id === usertoken.user.id && (msg.status === "read" ? "✓✓ Read" : msg.status === "delivered" ? "✓ Delivered" : "✓ Sent")}
+                {msg.created_at ? formatTime(msg.created_at) : "Time N/A"} {msg.sender_id === usertoken.user.id && (msg.status === "read" ? "✓✓ Read" : msg.status === "delivered" ? "✓ Delivered" : `✓ ${msg.status}`)}
               </p>
-            </div>
-          ))}
+            </motion.div>
+          )) : (
+            <ChatSkeleton />
+          )}
         </div>
       </div>
 
@@ -193,17 +315,20 @@ const Chat = () => {
         <div className="chat-input-left">
           <button>
 
-            <SmilePlus size={25} color='black' />
+            <SmilePlus size={25} />
           </button>
         </div>
         <div className="chat-input-right">
-          <input
-            type="text"
+          <textarea
+            ref={textareaRef}
             placeholder="Type a message..."
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            rows={1}
           />
-          <button onClick={sendMessage}><SendHorizontal size={20} color='white' className="i" /></button>
+
+          <button onClick={sendMessage}><StraightRoundedIcon sx={{ fontSize: '2rem', color: 'var(--bothwhitecolor)' }} className="i active" /></button>
         </div>
 
       </div>

@@ -22,3 +22,10 @@
     font-weight: normal;
     font-style: normal;
   }
+
+  @font-face {
+    font-family: 'clash';
+    src: url('./ClashDisplay/ClashDisplay-Medium.otf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 const  ThemeSwitcher = ()=> {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
@@ -16,15 +17,15 @@ const  ThemeSwitcher = ()=> {
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       style={{
-        backgroundColor: "var(--buttoncolor)",
+        backgroundColor: "",
         color: "var(--textcolor)",
-        padding: "8px 16px",
+        padding: "8px 0px",
         border: "none",
         borderRadius: "5px",
         cursor: "pointer",
       }}
     >
-      {theme === "dark" ? "☀️ Light Mode" : "🌙 Dark Mode"}
+      {theme === "dark" ? <LightModeRoundedIcon/> : <DarkModeIcon />}
     </button>
   )
 }

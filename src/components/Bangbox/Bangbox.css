@@ -1,21 +1,28 @@
 .bangbox{
-    font-family: 'sans-serif';
+    font-family: 'clash';
     text-wrap: nowrap;
     text-decoration: none;
     user-select: none;
-    font-weight: 700;
     display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+       gap:0.9rem;
 
 }
 .bangbox span{
     /* color: rgb(0, 0, 0); */
-    font-family: 'Webname', sans-serif;
+    font-family: 'clash', sans-serif;
    display: flex;
    flex-wrap: nowrap;
-   gap:0.5rem;
-}
-.bangbox span:first-child{
 
-    /* color: #2890e1 !important; */
+   background: var(--logolinearcolor);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   background-clip: text;
+   
+
 }
+
 

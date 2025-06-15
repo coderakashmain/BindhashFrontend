@@ -23,7 +23,7 @@ import PollCreate from "../../components/Poll/PollCreate";
 import PollList from "../../components/Poll/PollList";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import { colors } from "@mui/material";
+import { Button, Chip, colors, Menu, MenuItem, Typography } from "@mui/material";
 import PollView from "../../components/Poll/PollView";
 import PostOptions from "../../components/PostOptions/PostOptions";
 import { MobileViewContext } from "../../Context/MobileResizeProvider";
@@ -35,6 +35,8 @@ import PostContent from "../../components/Post/PostContent";
 import ProfileEdit from "../../components/ProfileEdit/ProfileEdit";
 import UploadPreviewWithProgress from "../../components/UploadPreviewWithProgress/UploadPreviewWithProgress";
 import Queots from "../../components/Queots/Queots";
+import { EmojiEventsOutlined, SortOutlined, TrendingUpOutlined } from "@mui/icons-material";
+import BottomSheet from "../../components/BottomSheet/BottomSheet";
 
 
 
@@ -66,6 +68,10 @@ const Home = () => {
   const videouploadRef = useRef();
   const [videotype, setVideoType] = useState(null);
   const [profileEditView, setProfileEditView] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState("all")
+  const [sortBy, setSortBy] = useState("recent")
+  const [anchorEl, setAnchorEl] = useState(null);
+ 
 
 
 
@@ -103,7 +109,7 @@ const Home = () => {
     setFeed(rankedFeed);
   }, [allpost])
 
- 
+
 
 
   if (usertoken === null) {
@@ -313,14 +319,14 @@ const Home = () => {
                 <p>{usertoken.user.fullname ? usertoken.user.fullname : "Fullname not set"}</p>
               </div>
             </div>
-            
-            <ShareProfile  fontsize={20} profileurllink={`/profile/${usertoken.user.username}`} />
+
+            <ShareProfile fontsize={20} profileurllink={`/profile/${usertoken.user.username}`} />
 
           </div>
 
           <div className="profile-stats">
             <div className="home-profile-stats-box-left">
-              <strong>{allpost.length > 0 ? allpost.find(post => post.post_user_id === usertoken.user.id)?.post_count || 0 : 0}</strong> <span style={{fontSize : '0.8rem' ,color : 'gray'}}>Posts</span>
+              <strong>{allpost.length > 0 ? allpost.find(post => post.post_user_id === usertoken.user.id)?.post_count || 0 : 0}</strong> <span style={{ fontSize: '0.8rem', color: 'gray' }}>Posts</span>
 
 
             </div>
@@ -332,14 +338,14 @@ const Home = () => {
           {/* <p className="profile-bio">{usertoken.user.bio || "No bio available."}</p> */}
           <div className="home-profile-overviev">
 
-           
+
 
           </div>
 
           <div className="home-profile-buttons">
-            <button className="view-profile-btn" onClick={()=> navigate('/profile')}>View Profile</button>
-            <button onClick={()=> setProfileEditView(!profileEditView)} className="edit-profile-btn">Edit Profile</button>
-             {profileEditView && (<ProfileEdit setProfileEditView={setProfileEditView} userId={usertoken.user.id} />)}
+            <button className="view-profile-btn" onClick={() => navigate('/profile')}>View Profile</button>
+            <button onClick={() => setProfileEditView(!profileEditView)} className="edit-profile-btn">Edit Profile</button>
+            {profileEditView && (<ProfileEdit setProfileEditView={setProfileEditView} userId={usertoken.user.id} />)}
             {/* <button className="settings-btn">⚙️</button> */}
           </div>
         </div>
@@ -347,16 +353,15 @@ const Home = () => {
 
       </div>
       <div className="container-box scrollbar">
-     
-        <div className="home-post-box">
-          {/* <StorySection storymodeltrue={storymodeltrue} setstorymodeltrue={setstorymodeltrue} /> */}
+
+        {/* <div className="home-post-box">
           <div className="home-post-box-upload">
 
             <form onSubmit={handlePostSubmit} className="home-post-type-box">
-              <textarea  name="post" placeholder="What failure did you faced today?" value={content} onChange={handlecontendChange} />
-              <div  style={{display : 'flex', justifyContent : 'center', alignItems : 'center'}}>
+              <textarea name="post" placeholder="What failure did you faced today?" value={content} onChange={handlecontendChange} />
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
-              <button className="button" type="submit">Post</button>
+                <button className="button" type="submit">Post</button>
               </div>
             </form>
 
@@ -377,16 +382,118 @@ const Home = () => {
 
           </div>
 
-        </div>
-        
+        </div> */}
 
-        
-        <UploadPreviewWithProgress/>
+        {/* <motion.div
+          className="feed-header"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="feed-header-content">
+            <div className="feed-title-section">
+              <Typography variant="h3" component="h1" className="feed-title">
+                Failure Stories Feed
+              </Typography>
+              <Typography variant="body1" className="feed-subtitle">
+                Share your setbacks, find strength in vulnerability
+              </Typography>
+            </div>
+          </div>
+        </motion.div> */}
+
+        <motion.div
+
+          className="feed-controls-section"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+
+
+          <div className="feed-controls">
+            <div className="feed-filters">
+             
+              <Chip
+                label="All Stories"
+                onClick={() => setSelectedFilter("all")}
+                color={selectedFilter === "all" ? "var(--blue-color)" : "var(--blacktextcolor)"}
+                sx={{ color: selectedFilter === "all" ? "var(--blue-color)" : "var(--blacktextcolor)" }}
+                className="filter-chip"
+              />
+              <Chip
+                label="Trending"
+                onClick={() => setSelectedFilter("trending")}
+                color={selectedFilter === "trending" ? "var(--blue-color)" : "var(--blacktextcolor)"}
+                sx={{ color: selectedFilter === "trending" ? "var(--blue-color)" : "var(--blacktextcolor)" }}
+                className="filter-chip"
+                icon={<TrendingUpOutlined />}
+              />
+              <Chip
+                label="Most Supported"
+                onClick={() => setSelectedFilter("supported")}
+                color={selectedFilter === "supported" ? "var(--blue-color)" : "var(--blacktextcolor)"}
+                sx={{ color: selectedFilter === "supported" ? "var(--blue-color)" : "var(--blacktextcolor)" }}
+                className="filter-chip"
+                icon={<EmojiEventsOutlined />}
+              />
+              <Chip
+                label="Recent"
+                onClick={() => setSelectedFilter("recent")}
+                color={selectedFilter === "recent" ? "var(--blue-color)" : "var(--blacktextcolor)"}
+                sx={{ color: selectedFilter === "recent" ? "var(--blue-color)" : "var(--blacktextcolor)" }}
+                className="filter-chip"
+              />
+            </div>
+
+            <div className="feed-sort">
+              <Button
+                variant="outlined"
+                startIcon={<SortOutlined />}
+                onClick={(e) => setAnchorEl(e.currentTarget)}
+                className="sort-button"
+              >
+                Sort: {sortBy === "recent" ? "Recent" : sortBy === "popular" ? "Popular" : "Most Reactions"}
+              </Button>
+              <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
+                <MenuItem
+                  onClick={() => {
+                    setSortBy("recent")
+                    setAnchorEl(null)
+                  }}
+                >
+                  Recent
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    setSortBy("popular")
+                    setAnchorEl(null)
+                  }}
+                >
+                  Popular
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    setSortBy("reactions")
+                    setAnchorEl(null)
+                  }}
+                >
+                  Most Reactions
+                </MenuItem>
+              </Menu>
+            </div>
+          </div>
+
+        </motion.div>
+
+
+
+        <UploadPreviewWithProgress />
         <PostContent feed={feed} />
       </div>
       <div ref={homeusggestionRef} className="user-suggestion scrollbar">
         {/* <UserSearch /> */}
-        <Queots/>
+        <Queots />
         {resizedisplay && <Leaderboard />}
         <SuggestedUsers homeuser={true} />
         <TrendingPosts />
@@ -394,12 +501,12 @@ const Home = () => {
       </div>
 
 
-      
 
-     {isMobile && ( <motion.div
+
+      {isMobile && (<motion.div
         className="home-float-u-btn"
         initial={{ width: 0, height: 0, opacity: 0 }}
-        animate={{ width: "4rem", height: "4rem", opacity: 1, scale: visible ? 1 : 0 }}
+        animate={{ width: "4rem", height: "4rem", opacity: 1}}
         whileHover={{
           scale: 1.15,
           boxShadow: "0px 0px 15px rgba(0, 136, 255, 0.6)",
@@ -410,13 +517,18 @@ const Home = () => {
       >
         <Plus size="2rem" />
       </motion.div>
-)}
+      )}
 
       <AnimatePresence>
         {mpostbtn && (
           <PostFunctionComponent setContent={setContent} mpostbtn={mpostbtn} setMpostbtn={setMpostbtn} />
         )}
       </AnimatePresence>
+
+
+
+
+     
     </section>
   );
 };

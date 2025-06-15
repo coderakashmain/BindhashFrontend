@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './Bangbox.css'
 import Avatar from '@mui/material/Avatar';
 import { deepOrange, green ,blue} from '@mui/material/colors';
+import { ChatBubbleOutline } from '@mui/icons-material';
 
 const Bangbox = ({size,click}) => {
     const [clickstate, setClickstate] = useState(false)
@@ -18,18 +19,20 @@ const Bangbox = ({size,click}) => {
     <>
     
     {clickstate ? (<a href='/' className='bangbox' style={{fontSize : size ? size : "1.8rem" }}>
+    <span>
+      <ChatBubbleOutline style={{fontSize : size ? size : 32, color  : '#1976d2'}}/>
+    </span>
       <span>
-      <Avatar sx={{ bgcolor: blue[500] }} variant="rounded" >
-        B
-      </Avatar>
+      
         Bindhash
         
         </span>
     </a>) : ( <h1 className='bangbox' style={{fontSize : size ? size : "1.8rem"}}>
+       <span>
+      <ChatBubbleOutline style={{fontSize : size ? size : 32, color  : '#1976d2'}}/>
+    </span>
       <span>
-      <Avatar sx={{ bgcolor: blue[500] }} variant="rounded">
-        B
-      </Avatar>
+     
       Bindhash</span>
     </h1>)}
     

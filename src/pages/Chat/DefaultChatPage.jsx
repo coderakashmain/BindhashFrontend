@@ -8,10 +8,10 @@ import './DefaultChatPage.css';
 import CloseIcon from '@mui/icons-material/Close';
 import { FollowersFollowingContext } from '../../Context/FollowersFollowing';
 import { useNavigate } from 'react-router-dom';
-import defaultprofilepic from '../../Photo/defaultprofilepic.png'; 
+import defaultprofilepic from '../../Photo/defaultprofilepic.png';
 
 const DefaultChatPage = () => {
-  const { followersList,followingList,fetchFollowers,fetchFollowing } = useContext(FollowersFollowingContext);
+  const { followersList, followingList, fetchFollowers, fetchFollowing } = useContext(FollowersFollowingContext);
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
@@ -22,42 +22,42 @@ const DefaultChatPage = () => {
     fetchFollowing();
     setOpen(true);
   };
-  
-  
+
+
   const handleClose = () => {
     setOpen(false);
     setSearchQuery('');
   };
 
 
-   useEffect(() => {
-        const shouldAutoClick = sessionStorage.getItem('autoClickFind');
-        
-        if (shouldAutoClick === 'true') {
-     
-          fetchFollowers();
-          fetchFollowing();
-          setOpen(true);
-            sessionStorage.removeItem('autoClickFind'); 
-          } 
-  
-      }, []);
+  useEffect(() => {
+    const shouldAutoClick = sessionStorage.getItem('autoClickFind');
+
+    if (shouldAutoClick === 'true') {
+
+      fetchFollowers();
+      fetchFollowing();
+      setOpen(true);
+      sessionStorage.removeItem('autoClickFind');
+    }
+
+  }, []);
 
 
-  
-      const filteredFollowings = followingList?.filter(user =>
-        (user?.fullname || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (user?.username || '').toLowerCase().includes(searchQuery.toLowerCase())
-      ) || [];
-      
-      const filteredFollowers = followersList?.filter(user =>
-        (user?.fullname || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (user?.username || '').toLowerCase().includes(searchQuery.toLowerCase())
-      ) || [];
+
+  const filteredFollowings = followingList?.filter(user =>
+    (user?.fullname || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (user?.username || '').toLowerCase().includes(searchQuery.toLowerCase())
+  ) || [];
+
+  const filteredFollowers = followersList?.filter(user =>
+    (user?.fullname || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (user?.username || '').toLowerCase().includes(searchQuery.toLowerCase())
+  ) || [];
 
 
-  const gotochat = (u)=>{
-  
+  const gotochat = (u) => {
+
 
     navigate(`/chat/${u.id}`);
   }
@@ -71,14 +71,14 @@ const DefaultChatPage = () => {
         <p className="default-chat-subtext">
           Find someone interesting? Say hello and break the ice.
         </p>
-        <Button 
-          variant="contained" 
+        <Button
+          variant="contained"
           className='default-chat-button'
           onClick={handleClickOpen}
-          sx={{ 
+          sx={{
             borderRadius: '50px',
             paddingX: 3,
-            background : 'var(--linearcolor)',
+            background: 'var(--linearcolor)',
             paddingY: 1,
             fontWeight: 'bold',
             '&:hover': { backgroundColor: '#1c6bad' }
@@ -87,10 +87,11 @@ const DefaultChatPage = () => {
           Find Friends
         </Button>
 
-        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-          <DialogTitle sx={{ m: 0, p: 2 }}>
+        <Dialog open={open} onClose={handleClose} style={{ background: '--var(backwhitecolor)' }} fullWidth maxWidth="sm">
+          <DialogTitle sx={{ m: 0, p: 2 }} style={{ background: 'var(--backwhitecolor)', color: 'var(--blacktextcolor)' }}>
             Search Friends
             <IconButton
+
               aria-label="close"
               onClick={handleClose}
               sx={{
@@ -103,14 +104,27 @@ const DefaultChatPage = () => {
               <CloseIcon />
             </IconButton>
           </DialogTitle>
-          <DialogContent dividers>
-          <TextField
+          <DialogContent dividers style={{ background: 'var(--backwhitecolor)', color: 'var(--blacktextcolor)' }} >
+            <TextField
               fullWidth
               placeholder="Search by name or username..."
               variant="outlined"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              sx={{ mb: 2 }}
+              sx={{
+                mb: 2,
+                input: {
+                  border: ' var(--border-color)',
+                  color: 'var(--blacktextcolor)',
+                  '::placeholder': {
+                    color: 'var(--lighttextcolor)',
+                    opacity: 1,
+                  },
+                },
+
+              }}
+              style={{ color: 'var(--lighttextcolor)' }}
+
             />
 
             {/* Following Users */}
@@ -118,19 +132,28 @@ const DefaultChatPage = () => {
             <List>
               {filteredFollowings.length > 0 ? (
                 filteredFollowings.map((user) => (
-                  <ListItem key={`following-${user.id}`}  button={true} 
-                  onClick={() => gotochat(user)}>
+                  <ListItem key={`following-${user.id}`} button={true}
+                    onClick={() => gotochat(user)} >
                     <ListItemAvatar>
-                      <Avatar src={user.profile_pic ? user.profile_pic : defaultprofilepic} />
+                      <Avatar src={user.profile_pic}  alt={user.username}/>
                     </ListItemAvatar>
-                    <ListItemText 
+                    <ListItemText
                       primary={user.fullname}
-                      secondary={`@${user.username}`} 
+                      secondary={`@${user.username}`}
+                      sx={{
+                        '& .MuiListItemText-primary': {
+                          color: 'var(--blacktextcolor)',
+                        },
+                        '& .MuiListItemText-secondary': {
+                          color: 'var(--lighttextcolor)', 
+                        },
+                      }}
+
                     />
                   </ListItem>
                 ))
               ) : (
-                <Typography variant="body2" color="text.secondary">No matching following users.</Typography>
+                <Typography variant="body2" style={{ color: 'var(--lighttextcolor)' }}>No matching following users.</Typography>
               )}
             </List>
 
@@ -139,18 +162,26 @@ const DefaultChatPage = () => {
             <List>
               {filteredFollowers.length > 0 ? (
                 filteredFollowers.map((user) => (
-                  <ListItem key={`follower-${user.id}`}  button={true} onClick ={gotochat}>
+                  <ListItem key={`follower-${user.id}`} button={true} onClick={gotochat}>
                     <ListItemAvatar>
                       <Avatar src={user.profile_pic} />
                     </ListItemAvatar>
-                    <ListItemText 
+                    <ListItemText
                       primary={user.fullname}
-                      secondary={`@${user.username}`} 
+                      secondary={`@${user.username}`}
+                        sx={{
+                        '& .MuiListItemText-primary': {
+                          color: 'var(--blacktextcolor)',
+                        },
+                        '& .MuiListItemText-secondary': {
+                          color: 'var(--lighttextcolor)', 
+                        },
+                      }}
                     />
                   </ListItem>
                 ))
               ) : (
-                <Typography variant="body2" color="text.secondary">No matching followers.</Typography>
+                <Typography variant="body2" style={{ color: 'var(--lighttextcolor)' }}>No matching followers.</Typography>
               )}
             </List>
           </DialogContent>

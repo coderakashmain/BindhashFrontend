@@ -2,7 +2,7 @@
 .post-swiper-container {
     width: 100%;
     /* padding: 20px; */
-    background: #fff;
+    background: var(--backwhitecolor);
     border-radius: 10px;
   }
   
@@ -14,7 +14,7 @@
     padding: 0.7rem 0;
     /* background: #f8f9fa; */
    
-    border-bottom: 1px solid rgb(213, 213, 213);
+    border-bottom: var(--border-color);
   }
   
   .post-swiper-container .tab {
@@ -36,7 +36,7 @@
   
    .post-swiper-container .tab.active {
     background: #007bff;
-    color: white;
+    color: var(--bothwhitecolor);
   }
   
   /* Swiper Container */
@@ -49,7 +49,7 @@
   .post-swiper-container .post-content {
     padding: 20px;
     text-align: center;
-    background: white;
+    background: var(--backwhitecolor);
     border-radius: 10px;
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
   }
@@ -57,12 +57,12 @@
   .post-swiper-container .post-content h2 {
     font-size: 20px;
     margin-bottom: 8px;
-    color: #333;
+    color: var(--lighttextcolor);
   }
   
   .post-swiper-container .post-content p {
     font-size: 14px;
-    color: #666;
+    color: var(--lighttextcolor);
   }
   
   @media (max-width : 640px) {

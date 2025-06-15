@@ -1,9 +1,25 @@
 .user-list {
-  width: 38rem;
-  border-right: 1px solid rgb(212, 212, 212);
+  min-width: 30rem;
+  width: 30%;
+
+  border-right: var(--border-color);
   overflow-y: scroll;
   padding: 0.8rem 1rem 0;
   background: var(--backwhitecolor);
+}
+.user-list h3 {
+  font-weight: bold;
+}
+
+.global-random-chat-btn{
+  width: 100%;
+  background: var(--logolinearcolor);
+  color: var(--bothwhitecolor);
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  border-radius: 3rem;
 }
 
 @media (max-width: 794px) {
@@ -57,33 +73,70 @@
 .chat-groups ul::-webkit-scrollbar {
   display: none; /* Hide scrollbar */
 }
-.user-list h3 {
-  margin: 1rem 0rem;
-}
-.user-list .user-item {
-  padding: 1rem 1rem;
-  margin: 0.2rem 0rem;
+
+ .user-item {
+  padding: 0.5rem 0.4rem;
+  border-radius: var(--border-radius);
+  margin: 0.2rem 0rem 0.5rem;
   display: flex;
   cursor: pointer;
-
-  border-bottom: 0.5px solid #f0eeee;
+  overflow: hidden;
+  gap: 0.5rem;
 }
 .user-list .user-item:hover {
-  background-color: rgba(245, 245, 245, 0.456);
+  background-color: var(--lightbackcolor);
 }
-.user-item .user-item-image-box {
+
+
+.user-item h3 {
+  color: var(--blacktextcolor);
+  font-size: 0.9rem;
+}
+.user-item-name-massage{
+  color: var(--lighttextcolor);
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+ 
+ 
+}
+.user-item-name-massage h3{
+ display: flex;
+justify-content: space-between;
+
+}
+.user-item-name-massage h3 span{
+  font-weight: 400;
+  font-size: 0.8rem;
+
+}
+.u-i-n-m-lastm{
+  display: flex;
+  justify-content: space-between;
+}
+.unseen-badge{
+ 
+  color: var(--bothwhitecolor);
   border-radius: 50%;
-  border: 2px solid rgba(200, 200, 200, 0.46);
-  width: 3rem;
-  height: 3rem;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  font-size: 0.6rem;
+  background: var(--logolinearcolor);
 }
-.user-item img {
-  border-radius: 50%;
-  height: 100%;
-  aspect-ratio: 1/1;
-  object-fit: cover;
+.no-chat-user{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 3rem;
 }
-.user-item strong {
-  margin: 0.4rem 0rem 0rem 0.6rem;
+.no-chat-user button{
+  padding: 0.5rem 1rem;
   font-size: 1rem;
+  border: var(--border-color);
+  border-radius:  1rem;
 }

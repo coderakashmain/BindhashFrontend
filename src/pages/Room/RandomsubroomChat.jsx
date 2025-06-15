@@ -57,7 +57,7 @@ const RandomsubroomChat = () => {
 
   useEffect(() => {
     const data = localStorage.getItem('randomchatype');
-    console.log(data)
+
     if (data) {
       setChattype(data);
     }
@@ -356,13 +356,7 @@ const RandomsubroomChat = () => {
             </motion.div>
           </AnimatePresence>
         ))}
-        {
-          console.log(strangerInfo)
-        }
-        {
-          console.log(roomId)
-
-        }
+        
         {(!strangerInfo || !roomId) && (
           <div className="sbr-match-user-box">
             {newUserFind ? (
@@ -451,7 +445,7 @@ const RandomsubroomChat = () => {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 10, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              class="typing-dots subroom-typing-dots">
+              className="typing-dots subroom-typing-dots">
               <span></span><span></span><span></span>
             </motion.div>}
         </AnimatePresence>

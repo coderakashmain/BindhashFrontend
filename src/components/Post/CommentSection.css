@@ -2,25 +2,53 @@
 height: 75%;
 }
 .commentsectoin-modal-right h3 {
-    padding-top: 1rem;
-    font-size: 1.4rem;
+    padding-top: 0.5rem;
+    font-size: 1.1rem;
     text-align: start;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--blue-color);
+    font-weight: bold;
+
+}
+.commentsectoin-modal-right h3 p{
+    height: 1px;
+    flex: 1;
+    width: 100%;
+    border-radius: 0.3rem;
+    background: var(--blue-color);
 }
 
 .commentsectoin-modal-right ul {
     list-style: none;
     padding: 0;
     height: 100%;
+    margin-top: 1rem;
     overflow-y: auto;
 }
 
 .comment-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
     position: relative;
+    margin-bottom: 1.3rem;
+}
+.comment-profile-box{
+    display: flex;
+    justify-content: space-between;
+}
+.comment-profile-box-l{
+    display: flex;
+    gap: 0.5rem;
+}
+.comment-profile-box-r{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  
+}
+.comment-profile-box-r p{
+   font-size: 0.8rem;
+   color: var(--blue-color);
 }
 
 .comment-item.pinned {
@@ -29,23 +57,23 @@ height: 75%;
 }
 
 .comment-profile-pic {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .comment-content {
     flex: 1;
+    margin-top: 1rem;
 }
 .comment-header{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     font-size: 0.9rem;
-    color: rgb(55, 55, 55);
 }
 .comment-header strong span{
-   font-size: 0.7rem;
+   font-size: 0.6rem;
    margin-left: 0.3rem;
    font-weight: 700 ;
 }
@@ -59,13 +87,28 @@ height: 75%;
 .comment-sec-text{
     text-align: start;
     margin-top: 0.8rem;
+    font-size: 0.84rem;
 }
 
 .comment-actions {
     display: flex;
-    gap: 10px;
-    margin-top: 5px;
+    gap: 12px;
+    margin-top: 1rem;
     align-items: center;
+    font-size: 0.75rem;
+
+}
+.comment-action-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    gap: 0.4rem;
+    /* background: var(--lightbackcolor); */
+    /* box-shadow: 1px 1px  1px  var(--post-box-shadow); */
+    border-radius: 1rem;
+    /* padding: 0.2rem 0.6rem; */
 }
 
 .comment-actions svg {
@@ -73,24 +116,101 @@ height: 75%;
 }
 
 .comment-input {
+    position: fixed;
+    left: 0%;
+    bottom: 0%;
+    bottom: 0%;
+    right: 0%;
+    height: 100%;
+    width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     margin-top: 10px;
+    padding: 1rem;
+    color: var(--bothwhitecolor);
+
+}
+.comment-input span{
+        font-size: 1.5rem;
 }
 
 .comment-input input {
-    flex: 1;
+   
     padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius:0.3rem ;
+    width: 100%;
+    min-width: 20rem;;
+    outline: none;
 }
 
 .comment-input button {
-    background: #007bff;
+   
     border: none;
     padding: 8px;
     border-radius: 5px;
     color: white;
     cursor: pointer;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+      background: var(--linearcolor);
+      border: 1px solid white;
+}
+.comment-input button:nth-child(3) {
+    background: #000000;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    width:6rem;
+     align-self: flex-end;
+}
+.comment-input button:nth-child(2) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+
+}
+.replies-section{
+
+    padding-left: 2rem;
+}
+.reply-item{
+    margin-bottom: 1rem;
+}
+.reply-item-header{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+}
+.comment-replies-content{
+    display: flex;
+    flex : 1;
+    justify-content: space-between;
+    color: var(--blue-color);
+}
+
+.floating-comment{
+  position: fixed;
+  bottom: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 3%;
+  width: 4rem;
+  height: 4rem;
+  color: white;
+  background: var(--linearcolor);
+  border-radius: 50%;
+
 }

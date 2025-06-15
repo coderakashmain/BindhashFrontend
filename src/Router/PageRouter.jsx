@@ -16,15 +16,9 @@ const PageRouter = () => {
   const { usertoken } = useContext(UserAuthCheckContext);
   const socket = useSocket();
 
-  useEffect(() => {
-    const userId = usertoken?.user?.id;
-    socket.on("connect", () => {
-      console.log("Connected to socket:", socket.id);
-      socket.emit("addUser", userId); // 🔥 Very important
-    });
-  }, [socket, usertoken]);
 
-  if(!usertoken) return;
+
+
   
   
   return (

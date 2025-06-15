@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const TruncatedText = ({ text, limit = 100 }) => {
+const TruncatedText = ({ text, limit = 100,isShowmore = true}) => {
   const [showFull, setShowFull] = useState(false);
 
   if (text.length <= limit) return <p>{text}</p>;
@@ -12,7 +12,7 @@ const TruncatedText = ({ text, limit = 100 }) => {
         style={{ color: 'lightblue', cursor: 'pointer' }}
         onClick={() => setShowFull(!showFull)}
       >
-        {showFull ? ' show less' : 'read more'}
+        {isShowmore&&( showFull ? ' show less' : 'read more')}
       </span>
     </p>
   );

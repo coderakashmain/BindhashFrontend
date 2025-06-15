@@ -1,0 +1,17 @@
+.bottom-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: var(--border-color);
+  height: 50px;
+  padding: 0.2rem 1rem;
+}
+.bottom-sheet-header h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  /* color: var(--textcolor); */
+   background: var(--logolinearcolor);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

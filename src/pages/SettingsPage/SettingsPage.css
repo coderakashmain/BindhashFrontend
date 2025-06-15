@@ -4,14 +4,16 @@
     max-width: 40rem;
     margin: 0 auto;
     padding: 2rem 1.5rem;
-    background: var(--background-color);
-    color: var(--text-color);
+    background: var(--backwhitecolor);
+   
     font-family: "Poppins", sans-serif;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin: 0.5rem auto;
+    height: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    border-radius: 0.3rem;
     
   }
   

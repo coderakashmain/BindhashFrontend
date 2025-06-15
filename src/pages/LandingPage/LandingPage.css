@@ -1,0 +1,988 @@
+
+
+.land-p-container {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #f8faff, #e3f2fd, #bbdefb);
+  min-height: 100vh;
+  color: #1a1a1a;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Navigation */
+.land-p-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(100, 181, 246, 0.2);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 20px rgba(100, 181, 246, 0.1);
+}
+
+.land-p-nav-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.land-p-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.land-p-logo h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: var(--logolinearcolor);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.land-p-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.land-p-nav-link {
+  color: #424242;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.land-p-nav-link:hover {
+  color: #1976d2;
+  transform: translateY(-2px);
+}
+
+.land-p-nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background:var( --linearcolor);
+  transition: width 0.3s ease;
+}
+
+.land-p-nav-link:hover::after {
+  width: 100%;
+}
+
+.land-p-join-btn {
+  background:var( --linearcolor);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+}
+
+.land-p-join-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+}
+
+.land-p-mobile-menu {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 4px;
+}
+
+.land-p-mobile-menu span {
+  width: 25px;
+  height: 3px;
+  background: #424242;
+  transition: all 0.3s ease;
+}
+
+/* Hero Section */
+.land-p-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 8rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff, #f3f8ff, #e8f4fd);
+}
+
+.land-p-hero-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.land-p-hero-title {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background:var(--titlelinearcolor);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: land-p-fadeInUp 1s ease-out;
+  line-height: 1.2;
+}
+
+.land-p-hero-subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  color: #616161;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+  animation: land-p-fadeInUp 1s ease-out 0.2s both;
+}
+
+.land-p-hero-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  animation: land-p-fadeInUp 1s ease-out 0.4s both;
+  flex-wrap: wrap;
+}
+
+.land-p-cta-btn {
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.land-p-cta-btn.primary {
+  background: var(--linearcolor);
+  color: white;
+  box-shadow: 0 8px 25px rgba(25, 118, 210, 0.3);
+}
+
+.land-p-cta-btn.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(25, 118, 210, 0.4);
+}
+
+.land-p-cta-btn.secondary {
+  background: white;
+  color: #1976d2;
+  border: 2px solid #1976d2;
+  box-shadow: 0 4px 15px rgba(25, 118, 210, 0.1);
+}
+
+.land-p-cta-btn.secondary:hover {
+  background: #f3f8ff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(25, 118, 210, 0.2);
+}
+
+.land-p-cta-btn.large {
+  padding: 1.2rem 2.5rem;
+  font-size: 1.1rem;
+}
+
+.land-p-hero-stats {
+  display: flex;
+  gap: 2rem;
+  animation: land-p-fadeInUp 1s ease-out 0.6s both;
+}
+
+.land-p-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.land-p-stat-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1976d2;
+}
+
+.land-p-stat-label {
+  font-size: 0.9rem;
+  color: #757575;
+}
+
+.land-p-hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: land-p-fadeInUp 1s ease-out 0.8s both;
+}
+
+.land-p-hero-svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Chat animations */
+.land-p-chat-group {
+  animation: land-p-chatFloat 3s ease-in-out infinite;
+}
+
+.land-p-connection-line {
+  animation: land-p-dashMove 2s linear infinite;
+}
+
+/* Section Headers */
+.land-p-section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.land-p-section-title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: var(--titlelinearcolor);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.land-p-section-subtitle {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: #616161;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Features Section */
+.land-p-features {
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, #fafafa, #f0f7ff);
+}
+
+.land-p-features-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.land-p-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.land-p-feature-card {
+  background: white;
+  border: 1px solid rgba(25, 118, 210, 0.1);
+  border-radius: 20px;
+  padding: 2.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(25, 118, 210, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.land-p-feature-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(25, 118, 210, 0.05), transparent);
+  transition: left 0.5s ease;
+}
+
+.land-p-feature-card:hover::before {
+  left: 100%;
+}
+
+.land-p-feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(25, 118, 210, 0.15);
+  border-color: rgba(25, 118, 210, 0.3);
+}
+
+.land-p-feature-visual {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.land-p-feature-card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1976d2;
+}
+
+.land-p-feature-card p {
+  color: #616161;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* How It Works Section */
+.land-p-how-it-works {
+  padding: 6rem 2rem;
+  background: white;
+}
+
+.land-p-how-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.land-p-steps-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+}
+
+.land-p-step {
+  text-align: center;
+  position: relative;
+}
+
+.land-p-step-visual {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.land-p-step h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1a1a1a;
+}
+
+.land-p-step p {
+  color: #616161;
+  line-height: 1.6;
+}
+
+/* Categories Section */
+.land-p-categories {
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, #f8faff, #e3f2fd);
+}
+
+.land-p-categories-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.land-p-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.land-p-category-card {
+  background: white;
+  border: 1px solid rgba(25, 118, 210, 0.1);
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(25, 118, 210, 0.05);
+}
+
+.land-p-category-card:hover {
+  transform: translateY(-5px);
+  background: #fafafa;
+  border-color: rgba(25, 118, 210, 0.3);
+  box-shadow: 0 8px 25px rgba(25, 118, 210, 0.15);
+}
+
+.land-p-category-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.land-p-category-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1a1a1a;
+}
+
+.land-p-category-card p {
+  color: #757575;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.land-p-member-count {
+  color: #1976d2;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.land-p-categories-cta {
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(25, 118, 210, 0.1);
+}
+
+.land-p-categories-cta p {
+  margin-bottom: 1.5rem;
+  color: #616161;
+  font-size: 1.1rem;
+}
+
+/* Benefits Section */
+.land-p-benefits {
+  padding: 6rem 2rem;
+  background: white;
+}
+
+.land-p-benefits-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.land-p-benefits-text h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 2rem;
+  background: var(--titlelinearcolor);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.land-p-benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.land-p-benefit-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.land-p-benefit-item h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1a1a1a;
+}
+
+.land-p-benefit-item p {
+  color: #616161;
+  line-height: 1.6;
+}
+
+.land-p-benefits-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.land-p-support-figure {
+  animation: land-p-supportFloat 4s ease-in-out infinite;
+}
+
+.land-p-floating-heart {
+  animation: land-p-heartFloat 6s ease-in-out infinite;
+}
+
+/* Testimonials Section */
+.land-p-testimonials {
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, #fafafa, #f0f7ff);
+}
+
+.land-p-testimonials-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.land-p-testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.land-p-testimonial-card {
+  background: white;
+  border: 1px solid rgba(25, 118, 210, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(25, 118, 210, 0.08);
+}
+
+.land-p-testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(25, 118, 210, 0.15);
+}
+
+.land-p-testimonial-content {
+  margin-bottom: 1.5rem;
+}
+
+.land-p-testimonial-content p {
+  color: #424242;
+  font-style: italic;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.land-p-testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.land-p-author-name {
+  font-weight: 600;
+  color: #1a1a1a;
+  display: block;
+}
+
+.land-p-author-category {
+  color: #1976d2;
+  font-size: 0.9rem;
+}
+
+/* Final CTA Section */
+.land-p-final-cta {
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb, #90caf9);
+}
+
+.land-p-final-cta-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.land-p-cta-text h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+background:var(--titlelinearcolor);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.land-p-cta-text p {
+  color: #424242;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.land-p-final-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.land-p-trust-indicators {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.land-p-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #616161;
+  font-size: 0.9rem;
+}
+
+.land-p-trust-icon {
+  font-size: 1.2rem;
+}
+
+/* Footer */
+.land-p-footer {
+  background: linear-gradient(135deg, #f5f5f5, #e8f4fd);
+  padding: 4rem 2rem 2rem;
+  border-top: 1px solid rgba(25, 118, 210, 0.2);
+}
+
+.land-p-footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.land-p-footer-main {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 2rem;
+}
+
+.land-p-footer-brand {
+  max-width: 300px;
+}
+
+.land-p-footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.land-p-footer-logo span {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: var(--logolinearcolor);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.land-p-footer-brand p {
+  color: #616161;
+  line-height: 1.6;
+}
+
+.land-p-footer-column h4 {
+  color: #1a1a1a;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.land-p-footer-column a {
+  color: #757575;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.land-p-footer-column a:hover {
+  color: #1976d2;
+}
+
+.land-p-footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(25, 118, 210, 0.2);
+}
+
+.land-p-footer-bottom p {
+  color: #757575;
+}
+
+/* Animations */
+@keyframes land-p-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes land-p-chatFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes land-p-dashMove {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 20;
+  }
+}
+
+@keyframes land-p-supportFloat {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-15px) scale(1.05);
+  }
+}
+
+@keyframes land-p-heartFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+    opacity: 1;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .land-p-hero-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .land-p-benefits-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .land-p-final-cta-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .land-p-nav-links {
+    display: none;
+  }
+
+  .land-p-mobile-menu {
+    display: flex;
+  }
+
+  .land-p-hero {
+    padding: 6rem 1rem 4rem;
+  }
+
+  .land-p-hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .land-p-hero-stats {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .land-p-features,
+  .land-p-how-it-works,
+  .land-p-categories,
+  .land-p-benefits,
+  .land-p-testimonials,
+  .land-p-final-cta {
+    padding: 4rem 1rem;
+  }
+
+  .land-p-features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .land-p-steps-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .land-p-categories-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .land-p-testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .land-p-footer-main {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .land-p-trust-indicators {
+    justify-content: center;
+  }
+
+  .land-p-final-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .land-p-nav-content {
+    padding: 1rem;
+  }
+
+  .land-p-hero-title {
+    font-size: 2rem;
+  }
+
+  .land-p-cta-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .land-p-section-title {
+    font-size: 1.8rem;
+  }
+
+  .land-p-feature-card,
+  .land-p-testimonial-card {
+    padding: 1.5rem;
+  }
+
+  .land-p-hero-stats {
+    gap: 1rem;
+  }
+
+  .land-p-stat-number {
+    font-size: 1.5rem;
+  }
+
+  .land-p-trust-indicators {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(25, 118, 210, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #1976d2, #42a5f5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #1565c0, #1976d2);
+}
+
+/* Material-UI Icon Styling */
+.land-p-feature-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(25, 118, 210, 0.1);
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
+.land-p-feature-card:hover .land-p-feature-icon-wrapper {
+  transform: scale(1.1);
+  background: rgba(25, 118, 210, 0.2);
+}
+
+.land-p-step-icon-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.land-p-step-number {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: linear-gradient(45deg, #1976d2, #42a5f5);
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+}
+
+.land-p-category-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.land-p-author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(25, 118, 210, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.land-p-logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Update existing benefit icon styles */
+.land-p-benefit-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.land-p-trust-icon {
+  display: flex;
+  align-items: center;
+}

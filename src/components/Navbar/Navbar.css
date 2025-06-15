@@ -1,6 +1,6 @@
 .navbar {
   /* background: var(--navbackcolor); */
-  height: 10%;
+  height: 3rem;
   color: var(--blacktextcolor);
   display: flex;
   justify-content: space-between;
@@ -12,6 +12,7 @@
   width: 100%;
   left: 0%;
   z-index: 1;
+  background: var(--webbackcolor);
   /* box-shadow: var(--navboxshodow); */
 }
 
@@ -19,9 +20,13 @@
 .nav-left {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 35%;
+  flex: 1;
 
+}
+.nav-left-search-b{
+  width: 25rem;
 }
 .nav-left .logo {
   display: inline-block;
@@ -90,8 +95,8 @@
   background: rgba(255, 255, 255, 0.1);
 }
 .nav-user-profile-icon{
-  height: 2.4rem;
-  width: 2.4rem;
+  height: 2rem;
+  width: 2rem;
   padding: 0;
  
 }
@@ -100,7 +105,13 @@
   height: 100%;
   border-radius: 50%;
 }
-
+.feedback-btn-nav{
+  background: var(--logolinearcolor);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   background-clip: text;
+   cursor: pointer;
+}
 /* Responsive */
 @media (max-width: 768px) {
   .nav-center {

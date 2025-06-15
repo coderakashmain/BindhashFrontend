@@ -15,10 +15,13 @@ import AllUserList from './Context/AllUserList';
 import ProfileRouter from './Router/ProfileRouter';
 import SnackbarProvider from './Context/SnackbarContext';
 import { UploadProvider } from './Context/UploadProvider';
-import SkeletonRooms from './components/Fallback/SkeletonRooms';
+import CircularLoader from './components/Fallback/CircularLoader';
 import RandomsubroomChat from './pages/Room/RandomsubroomChat';
 import RoomChatbox from './pages/Room/RoomChatbox';
 import SubRoomDefaultChatpage from './pages/Room/SubRoomDefaultChatpage';
+import CreateChatRoom from './pages/Room/CreateChatRoom';
+import LandingPage from './pages/LandingPage/LandingPage';
+import Feedback from './pages/Feedback/Feedback';
 
 
 
@@ -96,16 +99,16 @@ const App = () => {
               children: [
                 {
                   path: '',
-                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><Home /></Suspense></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><Home /></Suspense></ErrorBoundary></>
                 },
                 {
                   path: '/story-view/:id',
-                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><StoryView /></Suspense></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><StoryView /></Suspense></ErrorBoundary></>
                 },
 
                 {
                   path: 'profile',
-                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><ProfileRouter /></Suspense></ErrorBoundary></>,
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><ProfileRouter /></Suspense></ErrorBoundary></>,
                   children : [
                     {
                       path: '',
@@ -119,25 +122,34 @@ const App = () => {
                 },
                 {
                   path: 'trending-post',
-                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><TrendingPosts /></Suspense></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><TrendingPosts /></Suspense></ErrorBoundary></>
                 },
                 {
                   path: 'search',
-                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><UserSearch /></Suspense></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><UserSearch /></Suspense></ErrorBoundary></>
+                },
+                {
+                  path: 'feedback',
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><Feedback /></Suspense></ErrorBoundary></>
                 },
                 {
                   path: 'room',
-                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><Room /></Suspense></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><Room /></Suspense></ErrorBoundary></>
+                
+                },
+                  {
+                  path: 'room/:category/:slug/creatroom',
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><CreateChatRoom /></Suspense></ErrorBoundary></>
                 
                 },
                 {
                   path: 'room/:roomname',
-                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><RoomPlay /></Suspense></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><RoomPlay /></Suspense></ErrorBoundary></>
                 
                 },
                 {
                   path: 'room/:category/:slug',
-                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><RoomChat /></Suspense></ErrorBoundary></>,
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><RoomChat /></Suspense></ErrorBoundary></>,
                   children : [
                     {
                       path : '',
@@ -157,41 +169,41 @@ const App = () => {
                 },
                 // {
                 //   path: 'room/:category/:slug/:roomname',
-                //   element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><RoomChat /></Suspense></ErrorBoundary></>,
+                //   element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><RoomChat /></Suspense></ErrorBoundary></>,
                  
                 
                 // },
                 {
                   path: 'setting',
-                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><SettingsPage/></Suspense></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><SettingsPage/></Suspense></ErrorBoundary></>
                 },
                 {
                   path: 'createpost',
-                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><CreatePost/></Suspense></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><CreatePost/></Suspense></ErrorBoundary></>
                 },
                 {
                   path: 'leaderboard',
-                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><Leaderboard /></Suspense></ErrorBoundary></>
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><Leaderboard /></Suspense></ErrorBoundary></>
                 },
                 ,
                 {
 
                   path: 'chat',
-                  element: <><ErrorBoundary><Suspense fallback = {<SkeletonRooms/>}><FullchatPage /></Suspense></ErrorBoundary></>,
+                  element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><FullchatPage /></Suspense></ErrorBoundary></>,
                   children: [
                     {
                       path: "",
                       element: <><ErrorBoundary><DefaultChatPage /></ErrorBoundary></>
                     },
                     {
-                      path: ":receiverId",
+                      path: ":receiverId/:username",
                       element: <><ErrorBoundary><Chat /></ErrorBoundary></>
                     },
                     
                   ]
                 },
                 {
-                  path: "/chat/mobilechat/:receiverId",
+                  path: "/chat/mobilechat/:receiverId/:username",
                   element: <><ErrorBoundary><Chat /></ErrorBoundary></>
                 }
 
@@ -231,6 +243,11 @@ const App = () => {
               element : <><ErrorBoundary><SetGender/></ErrorBoundary></>
             }
           ]
+        },
+        {
+          path : 'landing-page',
+          index : true,
+          element : <><ErrorBoundary><LandingPage/></ErrorBoundary></>
         }
 
 

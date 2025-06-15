@@ -65,7 +65,7 @@ const RoomChat = () => {
         socket.emit("get-subroom-users", subroomid);
 
         socket.on("subroom-active-user", ({ subroomId, users }) => {
-            // console.log("👥 Active users in subroom:", subroomId, users);
+           
             setFinalSubroomId(subroomId);
 
 
@@ -329,7 +329,7 @@ const RoomChat = () => {
 
                     {activeUsers.map((user) => (
                         <div key={user.id} className="roomchat-header-user">
-                            <ActiveAvatar username={user.username} profile_pic={user.profile_pic} size={40} />
+                            <ActiveAvatar username={user.username} profile_pic={user.profile_pic} size="32px" />
                         </div>
                     ))}
 
@@ -376,7 +376,7 @@ const RoomChat = () => {
                         <ChatIcon /> Chat with Random
                     </div>) :
                         (
-                            <div className="roomchat-random-chat roomchat-card" style={{ background: subroomId ? 'var(  --lightbackcolor2 )' : '', color: subroomId ? '' : 'white' }} onClick={() => navigate(`/room/${category}/${slug}`)}>
+                            <div className="roomchat-random-chat roomchat-card" style={{ background: subroomId ? 'var(  --lightbackcolor2 )' : '', color: subroomId ? 'var(--textcolor)' : 'var(--textcolor)' }} onClick={() => navigate(`/room/${category}/${slug}`)}>
                                 Leave Random Chat
                             </div>
                         )
@@ -387,7 +387,7 @@ const RoomChat = () => {
                     </div>
 
 
-                    <strong style={{ marginTop: "0.5rem" }}>Your Rooms  <span> <Avatar sx={{ backgroundColor: 'var(--icon-back-color)', color: 'var(--icon-color)', height: 20, width: 20, cursor: 'pointer' }}><AddIcon sx={{ height: 15, width: 15 }} /></Avatar > {demolist.length}</span></strong>
+                    <strong style={{ marginTop: "0.5rem" }}>Your Rooms  <span> <Avatar sx={{ backgroundColor: 'var(--icon-back-color)', color: 'var(--icon-color)', height: 20, width: 20, cursor: 'pointer' }}><AddIcon sx={{ height: 15, width: 15 }}  onClick = {()=> navigate('creatroom')}/></Avatar > {demolist.length}</span></strong>
 
                     {demolist.slice(0, !expand ? 3 : demolist.length).map((room) => (
                         <div key={room.id} className="roomchat-card" style={{

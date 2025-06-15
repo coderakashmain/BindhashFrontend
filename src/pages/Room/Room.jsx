@@ -9,6 +9,7 @@ import { useContext } from 'react'
 import CircularLoader from '../../components/Fallback/CircularLoader'
 
 
+
 const Room = () => {
   const { isMobile } = useContext(MobileViewContext)
 
@@ -61,10 +62,10 @@ const Room = () => {
   }
 
   const joinRoom = (subroom, room) => {
-    if(navigateLoading) return;
+    if (navigateLoading) return;
 
     setNavigateLoading(true);
-    
+
     const slog = generetSlog(subroom);
     const category = roomName(room);
     navigate(`${category}/${slog}`, { state: { subroom } });
@@ -99,18 +100,28 @@ const Room = () => {
                     {/* <img src={subroom.image} alt={subroom.name} /> */}
 
                     <h5>{subroom.subroom_name}</h5>
-                    <div className="subroom-list-join active click" onClick={() => {
-                      if (!navigateLoading) {
-                        
-                      
 
-                        joinRoom(subroom, room)
-                      }
-                    }}>
-                      {console.log(navigateLoading)}
-                      Join
-                    </div>
                     <p> {subroom.subroom_description}</p>
+                    <hr style={{ color: 'var(--icon-color)', opacity: '0.2' }} />
+
+                    <div className="subrooms-b-join">
+
+                      <div className="subrooms-b-join-l">
+                         <div className='live-dot'></div>
+                      <span >+235 active now</span>
+                      </div>
+                     
+                      <div className="subroom-list-join active click" onClick={() => {
+                        if (!navigateLoading) {
+
+                          joinRoom(subroom, room)
+                        }
+                      }}>
+                        Get In
+                      </div>
+                    </div>
+
+
 
                   </div>
 

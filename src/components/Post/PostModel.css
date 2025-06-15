@@ -1,131 +1,115 @@
-.modal-overlay {
-    position: fixed;
-    top: 0%;
-    left: 0;
-    width: 100%;  /* Start closed */
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10 !important;
-  }
-  
-  .modal-content {
-    width: 60rem;
-    height: 70%;
-    background: white;
-    border-radius: 10px;
-    display: flex;
-    position: relative;
-    align-items: flex-start;
-  }
-  
-  .modal-left {
-    width: 50%;
-    padding: 1.2rem;
+.modal-content {
+  flex: 1;
+  /* background: white; */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: flex-start;
+  padding: 0.5rem 0rem;
+}
 
-  }
-  .modle-left-name-box{
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
+.modal-left {
+  width: 100%;
+}
+.modle-left-name-box {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  padding: 0rem 1rem;
+}
+.modle-left-name-box-inside {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.8rem;
+}
+.modle-left-name-box-inside img {
+  height: 3.5rem;
+  width: 3.5rem;
+  border-radius: 50%;
+}
+.modle-left-name-box-name{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 0.2rem;
+}
+.modle-left-name-box-name h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-wrap: nowrap;
+}
+.modle-left-name-box-name p {
+  font-size: 0.8rem;
+  display: inline-block;
+  color: gray;
+  text-wrap: nowrap;
+  margin-left: 1rem;
+}
+.post-view-box-image {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.post-model-contect {
+  font-size: 0.9rem;
+  text-align: left;
+  margin: 1rem 1rem;
+}
 
-  }
-  .modle-left-name-box-inside{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.8rem;
-  }
-  .modle-left-name-box-inside img{
-    height: 2.4rem;
-    width: 2.4rem;
-    border-radius: 50%;
-  }
-  .modle-left-name-box-name h3{
-    font-size: 1rem;
-    text-wrap: nowrap;
-  }
-  .modle-left-name-box-name h3 p{
-    font-size: 0.8rem;
-    display: inline-block;
-    color: gray;
-    text-wrap: nowrap;
-  }
-  .post-view-box-image{
-   display: flex;
-   justify-content: center;
-   height: 25rem;
+.modal-left .post-image {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+}
 
-  }
-  .post-model-contect{
-    font-size: 0.9rem;
-    text-align: left;
-    margin: 1rem 1rem;
-    
-  }
+.modal-right {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0rem 1rem;
+  height: 100%;
+}
+.modal-right-content-function-box {
 
-  .modal-left .post-image {
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 1/1;
-    object-fit: contain;
-    border-radius: 8px;
-  }
-  
- 
-  
-  .modal-right {
-    width: 50%;
-    padding: 20px;
-    border-left: 1px solid #ddd;
-    /* overflow-y: auto; */
-    height: 100%;
-  }
-  .modal-right-content-function-box{
-    height: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  user-select: none;
+  padding-bottom: 0.6rem;
+}
+.modal-right-content-function-box span {
 
-    padding-bottom: 0.6rem;
-  }
-  .modal-right-content-function-box span{
-   padding: 0.5rem 1rem;
-   background-color: rgb(249 249 249);
-   border-radius: 0.5rem;
-   display: flex;
-   gap: 0.3rem;
-   
-  }
-  .modal-right-content-function-box .likes{
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+.modal-right-content-function-box .likes {
   display: flex;
   align-items: center;
   gap: 0.2rem;
-  }
-  .modal-right-content-function-box .liked{
-     color: rgb(47, 119, 201);
-  }
-  .model-right-comment-area{
-    width: 100%;
-    height: 100%;
+}
+.modal-right-content-function-box .liked {
+  color: rgb(47, 119, 201);
+}
+.model-right-comment-area {
+  width: 100%;
+  height: 100%;
+}
+.modal-right-content-function-box-inside {
+  width: 100%;
+  height: 87%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
 
-  }
-  .modal-right-content-function-box-inside{
-    width: 100%;
-    height: 87%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-
-  }
-  
-  /* .modal-right h3 {
+/* .modal-right h3 {
     padding-top: 1rem;
     font-size: 1.4rem;
     text-align: start;
@@ -164,67 +148,62 @@
     color: white;
     cursor: pointer;
   } */
-  .report-btn{
-    outline: none;
-    border: none;
-    background-color: transparent;
-    border-radius: 50%;
-    transition: all 0.2s ease-in-out;
-    display: flex;
-    align-items: center;
-    align-items: center;
-    padding: 0.2rem;
-   
-  }
-  .report-btn:hover{
-  background-color : rgba(212, 212, 212, 0.596);
-   
-  }
-  
-  .close-btn {
-    position: absolute;
-    top: 10px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .close-btn {
-    right: 10px;
-  }
-  
-  .report-btn {
-    left: 10px;
-  }
-  
-
-  @media (max-width:820px) {
-    .modal-content {
-      width: 50rem;
-    
-  }
+.report-btn {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  align-items: center;
+  padding: 0.2rem;
+}
+.report-btn:hover {
+  background-color: rgba(212, 212, 212, 0.596);
 }
 
-  @media (max-width:698px) {
-    .modal-content {
-      width: 45rem;
-    
+.close-btn {
+  position: absolute;
+  top: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.close-btn {
+  right: 10px;
+}
+
+.report-btn {
+  left: 10px;
+}
+
+
+
+@media (max-width: 820px) {
+  /* .modal-content {
+    width: 50rem;
+  } */
+}
+
+@media (max-width: 698px) {
+  /* .modal-content {
+    width: 45rem;
+  } */
+}
+@media (max-width: 644px) {
+  /* .modal-left {
+    display: none;
+  }
+  .modal-right {
+    width: 100%;
+  }
+  .modal-content {
+    width: 100%;
+  } */
+  .modal-overlay {
+    align-items: flex-end;
+    border-radius: 0rem !important;
   }
 }
-  @media (max-width : 644px) {
-    .modal-left {
-      display: none;
-    }
-    .modal-right{
-      width: 100%;
-    }
-    .modal-content {
-      width: 100%
-    }
-    .modal-overlay {
-      align-items: flex-end;
-      border-radius: 0rem !important;
-
-    }
-    
-  }

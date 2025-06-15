@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 10;
 }
 
 .rpt-popup {
@@ -78,7 +78,7 @@
 
 .rpt-cancel {
   background-color: #f0f0f0;
-  color: #333;
+  color: #333 !important;
 }
 
 .rpt-cancel:hover {
@@ -86,8 +86,8 @@
 }
 
 .rpt-submit {
-  background-color: var( --danger-color);
-  color: var(--bothwhitecolor);
+  background: var(--linearcolor);
+  color: var(--bothwhitecolor) !important;
   /* color: #fff; */
 }
 

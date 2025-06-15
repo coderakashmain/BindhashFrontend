@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import './VideoPost.css'
+import axios from "axios";
 
-const VideoPost = ({ videoSrc }) => {
+
+const VideoPost = ({ postId }) => {
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(true);
@@ -93,9 +95,10 @@ const VideoPost = ({ videoSrc }) => {
         <div className="video-container">
             <video
                 ref={videoRef}
-                src={videoSrc}
+                src={`/api/posts/video/stream/${postId}`}
                 className="custom-video"
-                preload="metadata"
+                // preload="metadata"
+                preload="note"
                 playsInline
                 loop
                 muted={isMuted}

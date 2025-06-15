@@ -132,13 +132,13 @@ const Slidebar = () => {
 
   return (
     <motion.div 
-    animate = {{  width : collapsed ? 'initial' : '18rem' , display : isMobile  ? 'none' : ''}}
+    animate = {{  width : collapsed ? '3%' : '18rem' , display : isMobile  ? 'none' : ''}}
     transition={{duration : 0.9}}
 
     style={{padding : collapsed ? '0.8rem 0.4rem' : ''}}
     className="sidebar" ref={sidebarref}>
       {/* Logo */}
-      <div className="logo">
+      <div className="logo" style={{justifyContent : collapsed ? 'center' : 'space-between'}}>
        {!collapsed && ( <Bangbox size="1.7rem" />)} <ViewSidebarIcon onClick={() => setCollapsed(!collapsed)} className="squize-sidebar" sx={{ cursor: 'pointer' }} />
       </div>
 
@@ -170,7 +170,7 @@ const Slidebar = () => {
         <hr style={{ borderColor: 'var(--lighttextcolor)', opacity: 0.2 }} />
         {!collapsed && (<h4>Own Rooms</h4>)}
         <ul className="own-rooms-ul">
-          <li> <Avatar sx={{ backgroundColor: 'var(--icon-back-color)', color: 'var(--icon-color)' }}><AddIcon /></Avatar> {collapsed ? '' : 'Create a new room'}</li>
+          <li style={collapsed ? {justifyContent : 'center'} : { justifyContent : 'flex-start'}}> <Avatar sx={{ backgroundColor: 'var(--icon-back-color)', color: 'var(--icon-color)' }}><AddIcon /></Avatar> {collapsed ? '' : 'Create a new room'}</li>
         </ul>
 
       </nav>

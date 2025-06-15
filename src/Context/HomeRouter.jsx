@@ -9,7 +9,7 @@ import SkeletonRooms from '../components/Fallback/SkeletonRooms'
 
 
 const HomeRouter = () => {
-  const {isMobile} = useContext(MobileViewContext)
+  const { isMobile } = useContext(MobileViewContext)
   const location = useLocation();
   const [navvisibelity, setNavVisibility] = React.useState(true);
 
@@ -23,11 +23,13 @@ const HomeRouter = () => {
 
 
   return (
-    <section style={{height : '100vh' , width : '80%', flexGrow : 1}}>
-    
-       <Navbar />
-      <Outlet/>
-      
+    <section style={{ height: '100vh', width: '80%', flexGrow: 1,display : 'flex',flexDirection : 'column' }}>
+
+      <Navbar />
+      <section style={{height : '80%', flex: 1 }}>
+        <Outlet />
+      </section>
+
       {/* {isMobile && navvisibelity&&  (<MobileNav/>)} */}
     </section>
 

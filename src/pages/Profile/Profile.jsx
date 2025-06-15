@@ -79,7 +79,7 @@ const Profile = () => {
 
 
       <div className="profile-left-box">
-        <div className="profile-sub-nav">
+        {/* <div className="profile-sub-nav">
           <div className="prifle-sub-nav-inside-box">
             <div className="profile-back">
               <button onClick= {()=> {
@@ -94,7 +94,7 @@ const Profile = () => {
           <div onClick={()=> navigate('/setting')} className="profile-userdataedit btnhover">
             <Settings  className="" />
           </div>
-        </div>
+        </div> */}
         <div className="profile-page-profile-image-box">
           <div className="profile-back-img-box" >
             {profilebackpicloading && <div style={{ borderRadius: '0%' }} className="profile-pic-loading">
@@ -167,7 +167,7 @@ const Profile = () => {
               <ProfileStats gap='5rem' />
             </div>
 
-            <div className="user-leadboard-point">
+            {/* <div className="user-leadboard-point">
               <h2><Compass size='1rem' />Leaderboard</h2>
               <div className="user-leadboard-point-box" >
                 <span onClick={() => {
@@ -177,8 +177,8 @@ const Profile = () => {
                   }
                 }}> Points 759<Gem size={14} color="blue" /></span>
               </div>
-            </div>
-
+            </div> */}
+{/* 
             <div className="mutual-friends">
               <p>Commen Friends </p>
               {[1, 2].map((_, i) => (
@@ -187,7 +187,7 @@ const Profile = () => {
                   <span>Friend {i + 1}</span>
                 </div>
               ))}
-            </div>
+            </div> */}
 
 
 

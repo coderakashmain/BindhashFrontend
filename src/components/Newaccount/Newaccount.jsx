@@ -72,7 +72,7 @@ const Newaccount = ({ setShowsearch, showsearch }) => {
   return (
     <div className="new-user-container">
       <h2 className="user-list-user">
-        <strong style={{textWrap : 'nowrap'}}>@ {usertoken.user.username}</strong>
+        <strong style={{textWrap : 'nowrap',color : "var(--blacktextcolor)"}}>@ {usertoken.user.username}</strong>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
           {location.pathname !== '/chat' && (
             <button style={{ cursor: 'pointer' }} onClick={searchclick}>
@@ -80,17 +80,17 @@ const Newaccount = ({ setShowsearch, showsearch }) => {
             </button>
           )}
           <IconButton onClick={handleClickOpen}>
-            <ArrowRightLeft size={22} />
+            <ArrowRightLeft size={22}  color="var(--blacktextcolor)"/>
           </IconButton>
         </div>
       </h2>
 
 
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Switch Account</DialogTitle>
-        <List sx={{ minWidth: "20rem", padding: 1 }}>
+      <Dialog open={open} onClose={handleClose} >
+        <DialogTitle style={{background: 'var(--backwhitecolor)' ,color : 'var(--blacktextcolor)'}}>Switch Account</DialogTitle>
+        <List sx={{ minWidth: "20rem", padding: 1 ,color : 'var(--blacktextcolor)'}} style={{background: 'var(--backwhitecolor)'}}>
           {/* Add new account */}
-          <ListItemButton onClick={() => alert("Add New Account clicked!")}>
+          <ListItemButton onClick={() => navigate('/login')}>
             <ListItemAvatar>
               <Avatar>
                 <AddCircleOutlineIcon color="primary" />
@@ -100,10 +100,11 @@ const Newaccount = ({ setShowsearch, showsearch }) => {
           </ListItemButton>
 
           {/* List of accounts */}
+
           {accounts.map((account, index) => (
             <ListItemButton key={index} onClick={() => handleAccountSwitch(account)}>
               <ListItemAvatar>
-                <Avatar src={account.profile_pic || defaultprofilepic} />
+                <Avatar src={account.profile_pic} alt={account.username} />
               </ListItemAvatar>
               <ListItemText primary={account.username} />
             </ListItemButton>

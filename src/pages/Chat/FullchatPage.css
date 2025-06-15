@@ -1,18 +1,18 @@
 .full-chat-page{
-    width: 100%;
     display: flex;
-    left: 0%;
-    top: 0%;
-    height: 92%;
-    overflow: hidden;
+    height: 100%;
+    /* overflow: hidden; */
+    width: 100%;
     
     
 }
 .chat-data{
-    flex-grow: 1;
+    
     height: 100%;
     /* padding-top: 5rem ; */
-    width: 100%;
+    /* max-width: 40rem; */
+    width: 30%;
+    flex: 1;
 }
 
 @media (max-width: 640px) {
