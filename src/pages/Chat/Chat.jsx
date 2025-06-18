@@ -6,9 +6,9 @@ import "./Chat.css";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import axios from "axios";
 import { SendHorizontal, SmilePlus, UserRound } from 'lucide-react';
-import profilelogo from '../../Photo/defaultprofile2.png'
+
 import { useSocket } from "../../Context/SocketContext";
-import defaultprofilepic from '../../Photo/defaultprofilepic.png'
+
 import { Avatar, Tooltip } from "@mui/material";
 import OutlinedFlagIcon from '@mui/icons-material/OutlinedFlag';
 import ReportPopup from "../../components/Reports/ReportPopup";
