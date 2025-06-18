@@ -7,6 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import SkeletonComponent from '../components/Fallback/SkeletonComponent';
 import CircularLoader from '../components/Fallback/CircularLoader';
 import { useSocket } from './SocketContext';
+import MainLoader from '../components/Fallback/MainLoader';
 
 
 
@@ -16,7 +17,6 @@ const UserAuthCheck = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const loginkchecktoken = sessionStorage.getItem('logintoken');
   const location = useLocation();
-  const landingpage = location.pathname !== "/landing-page"
   const socket = useSocket();
 
   const navigate = useNavigate();
@@ -115,7 +115,7 @@ const UserAuthCheck = ({ children }) => {
 
   useEffect(() => {
 
-    if (!loading && !usertoken && landingpage) {
+    if (!loading && !usertoken && !location.pathname.startsWith('/register') && location.pathname !== '/') {
       navigate('/login');
     }
   }, [usertoken, loading, navigate]);
@@ -125,7 +125,7 @@ const UserAuthCheck = ({ children }) => {
 
   if (loading) {
     return (
-      <CircularLoader />
+      <MainLoader />
 
     );
   }

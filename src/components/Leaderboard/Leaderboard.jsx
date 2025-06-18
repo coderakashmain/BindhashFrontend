@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import defaultprofilepic from '../../Photo/defaultprofilepic.png'
 import './Leaderboard.css'
-import { CircleAlert, Compass, Info, HandHeart, MessagesSquare, Waypoints, Users, Gem } from 'lucide-react'
+import { CircleAlert, Compass, Info, HandHeart, MessagesSquare, Waypoints, Users, Gem, CopyMinus } from 'lucide-react'
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
+import CombineAvatat from "../Avatar/CombineAvatat";
 
 const Leaderboard = () => {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -54,7 +55,8 @@ const Leaderboard = () => {
         {leaderboard.map((user, index) => (
           <li key={user.id}>
             <div className="leader-board-img">
-              <img src={user.profile_pic ? user.profile_pic : defaultprofilepic} alt={user.username} className="profile-pic" />
+          
+              <CombineAvatat username={user.username } size= '2rem' profile_pic ={user.profile_pic} visibility={user.visibility}/>
               <div className="leader-own-user">
                 <span className="username">{user.username}</span>
                 {user.username === usertoken.user.username ? <p style={{ fontSize: '0.9rem',color : 'blue' }}>You</p> : ''}
@@ -74,6 +76,7 @@ const Leaderboard = () => {
           <div className="user-rank-item">
             <div className="leader-own-user">
               <img src={userRank.profile_pic || defaultprofilepic} alt={userRank.username} className="profile-pic" />
+                {/* <CombineAvatat username={user.username } size= '2rem' userRank ={user.profile_pic} visibility={userRank.visibility}/> */}
               <div className="leader-own-user-name">
                 <span className="username">{userRank.username}</span>
 

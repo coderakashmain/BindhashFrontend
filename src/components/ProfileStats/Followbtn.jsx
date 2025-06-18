@@ -1,64 +1,56 @@
 import axios from 'axios';
-import React, { useContext, useState, useEffect } from 'react'
-import { UserPlus } from 'lucide-react'
+import React, { useContext, useState, useEffect } from 'react';
 import { UserAuthCheckContext } from '../../Context/UserAuthCheck';
 import './Followbtn.css'
-
-const Followbtn = ({ targetUserId }) => {
-  const [isFollowing, setIsFollowing] = useState(false);
-  const {usertoken} = useContext(UserAuthCheckContext);
+const Followbtn = ({ targetUserId = null, isFollowingInitial = null, userId }) => {
+  const { usertoken } = useContext(UserAuthCheckContext);
+  const actualTargetId = targetUserId || userId;
+  const [isFollowing, setIsFollowing] = useState(isFollowingInitial);
+  const [checked, setChecked] = useState(isFollowingInitial !== null); // mark if we already know follow status
 
   useEffect(() => {
+    if (!actualTargetId || checked) return;
+
     const checkFollowingStatus = async () => {
       try {
-        const response = await axios.get(`/api/users/is-following?followerId=${usertoken.user.id}&followingId=${targetUserId}`);
+        const response = await axios.get(`/api/users/is-following?followerId=${usertoken.user.id}&followingId=${actualTargetId}`);
         setIsFollowing(response.data.isFollowing);
+        setChecked(true); // prevent future calls
       } catch (error) {
         console.error("Error checking follow status:", error);
       }
     };
-    
+
     checkFollowingStatus();
-  }, [targetUserId, usertoken.user.id]);
-
-
-  
-
+  }, [actualTargetId, checked]);
 
   const handleFollowToggle = async () => {
     if (!usertoken) return navigate("/login");
-
+          setIsFollowing(!isFollowing);
     try {
-      if (isFollowing) {
-        await axios.post("/api/users/unfollow", {
-          followerId: usertoken.user.id,
-          followingId: targetUserId,
-        });
-      } else {
-        await axios.post("/api/users/follow", {
-          followerId: usertoken.user.id,
-          followingId: targetUserId,
-        });
-      }
-
-      setIsFollowing(!isFollowing);
+      const endpoint = isFollowing ? '/api/users/unfollow' : '/api/users/follow';
+      await axios.post(endpoint, {
+        followerId: usertoken.user.id,
+        followingId: actualTargetId,
+      });
+     
     } catch (error) {
       console.error("Error toggling follow status:", error);
+       setIsFollowing(!isFollowing);
     }
   };
 
+  if (!actualTargetId) return null; // no target = no button
+
   return (
-    <button       onClick={handleFollowToggle}
-    
-    style={{ padding: '0.3rem 1rem', borderRadius: '5px', background: 'transparent', cursor: 'pointer',display :'flex',alignItems :'center', gap: '0.3rem',fontSize :'00.9rem', fontWeight :'500',outline : 'none', border : ' 1px solid var(--lighttextcolor)',color: 'var(--blacktextcolor)' ,  }} className='active follow-fuction'>
-      {isFollowing ? "Unfollow" : (
-        <>
-          Follow 
-          {/* <UserPlus size={15} /> */}
-        </>
-      )}
+    <button
+      onClick={handleFollowToggle}
+      className='active follow-fuction'
+      
+    >
+      {isFollowing ? "Unfollow" : "Follow"}
     </button>
   );
-}
+};
 
-export default Followbtn
+export default Followbtn;

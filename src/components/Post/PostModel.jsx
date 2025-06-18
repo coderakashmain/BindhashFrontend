@@ -12,6 +12,7 @@ import { MobileViewContext } from "../../Context/MobileResizeProvider";
 import { Chip } from "@mui/material";
 import { motion } from "framer-motion";
 import Followbtn from "../ProfileStats/Followbtn";
+import ReportPopup from "../Reports/ReportPopup";
 
 
 const PostModel = ({ postId, onClose }) => {
@@ -22,6 +23,8 @@ const PostModel = ({ postId, onClose }) => {
     const modalRef = useRef(null);
     const modelboxRef = useRef(null);
     const { isMobile } = useContext(MobileViewContext)
+        const [report,setReport] = useState(false);
+        const [selectedId,setSelectedId] =useState(null);
 
 
     const post = allpost.find(post => post.post_id === postId);
@@ -102,8 +105,11 @@ const PostModel = ({ postId, onClose }) => {
                         </div>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Followbtn targetUserId={post.post_user_id} />
-                    <button className="report-btn"><Flag size={24} /></button>
+                  { usertoken.user.id !== post.post_user_id && <Followbtn userId={post.post_user_id} />}
+                    <button className="report-btn"  onClick={()=>{
+                        setReport(true);
+                        setSelectedId(post.post_user_id)
+                    }}><Flag size={20} /></button>
                     </div>
 
                 </div>
@@ -119,7 +125,7 @@ const PostModel = ({ postId, onClose }) => {
 
                 <div className="model-right-comment-area">
                     <div className="modal-right-content-function-box">
-                        {console.log("Post is",post)}
+              
                         <span className="likes"><Heart size={16} onClick={handlelike} className={isLiked[post.post_id] ? "liked" : ""} /> {post.like_count} Likes</span>
                         <span><MessageSquare size={16} />   {post.comments.filter(comment =>  comment.parent_comment_id === null  ).length} Comments</span>
 
@@ -134,6 +140,11 @@ const PostModel = ({ postId, onClose }) => {
 
                 </div>
             </div>
+              {report && <ReportPopup reportedId={selectedId} reportingId={usertoken.user.id} onClose={()=> {
+            
+               setReport(false)
+               setSelectedId(null)
+                        }} />}
 
         </div>
 

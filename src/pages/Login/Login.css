@@ -41,6 +41,7 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .login-social-btn {
@@ -197,6 +198,12 @@
 }
 }
 
+@media (max-width :640px) {
+    .login-container-box2{
+      display: none;
+    }
+
+}
 @media (max-width : 533px) {
     .login-container-box1-inside {
         max-width: 92vw;

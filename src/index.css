@@ -22,7 +22,7 @@ body{
   --backwhitecolor : rgb(255, 255, 255);
   --backblackcolor : #000000;
   --lightbackcolor : #f9f9f9;
-  --lightbackhovercolor : #eaeaea;
+  --lightbackhovercolor : #f6f6f6;
   --lightbackcolor2 : #cbd4d742;
   --icon-back-color : #bae0ea70;
 
@@ -64,8 +64,9 @@ body{
   --light-blue-color : #b0d8f96c;
 
 
-  --skeleton-color: #fcfcfc;
-  --skeleton-bg: #F2F5FA;
+  --skeleton-color: #e0e0e0;
+  --skeleton-before-c : #f0f0f0;
+  --skeleton-bg: white;
 
   --skroom-bg: #F2F5FA;
   --skroom-shade: #fcfcfc;
@@ -79,7 +80,7 @@ body{
   --navbackcolor: rgb(30, 30, 30);
   --lightbackcolor : #2b364c5c;
     --lightbackcolor2 : #0a1621;
-  --lightbackhovercolor : #1f1f1f;
+  --lightbackhovercolor : #0f3e6c2c;
   --icon-color : #cacaca;
   --icon-back-color: #24404870;
   --backblackcolor : #ffffff;
@@ -98,13 +99,14 @@ body{
   --mobil-nav-back-color : rgb(0 0 0 / 86%);
 
   --border-color : 1px solid #494949;
-
+    --post-card-border : 1px solid rgba(18, 64, 109, 0.1) ;
 
   --secondlinearcolor : linear-gradient(45deg, #56565675, #787575);
 
  --bothwhitecolor : white;
 
    --secondary-box-shadow :   rgba(22, 38, 51, 0.618);
+     --post-box-shadow  : #13191cb3;
 
 
 

@@ -19,7 +19,13 @@ const AnonymousAavatar = ({ size }) => {
             height: size,
             fontSize: '1.2rem',
 
-        }} >
+        }}
+        slotProps={{
+        img: {
+            loading: "lazy",
+        },
+    }}
+        >
             {usertoken.user.visibility === 'anonymous' ? <SecurityOutlined /> : null}
         </Avatar>
     )

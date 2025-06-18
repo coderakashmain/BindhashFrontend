@@ -1,0 +1,19 @@
+.floating-back-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 4rem;
+    left: 1rem;
+    height: 3rem;
+    width: 3rem;
+    background:var(--logolinearcolor);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 2rem;
+    color: var(--bothwhitecolor);
+    z-index: 2;
+}
+.floating-back-btn:active{
+    opacity: 0.9;
+}

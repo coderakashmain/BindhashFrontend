@@ -8,6 +8,7 @@ import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import { MobileViewContext } from "../../Context/MobileResizeProvider";
 import { useNavigate } from "react-router-dom";
 import {motion} from 'framer-motion'
+import Subheadcomponent from "../Subheadcomponent/Subheadcomponent";
 
 const ProfileEdit = ({ userId,setProfileEditView }) => {
     const {usertoken} = useContext(UserAuthCheckContext);
@@ -31,7 +32,7 @@ const ProfileEdit = ({ userId,setProfileEditView }) => {
 
  
 
-    // Handle input change
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
        
@@ -47,32 +48,42 @@ const ProfileEdit = ({ userId,setProfileEditView }) => {
         }));
     };
 
-    // Save data to backend
+
     const handleSave = async (field) => {
 
        
         setLoading(true);
         try {
             await axios.put(`/api/users/profiledit/${usertoken.user.id}`, user);
-            setEditingField(null); // Disable input after saving
-            alert("Profile updated successfully!");
+            setEditingField(null); 
+
         } catch (error) {
             console.error("Failed to update profile", error);
         }
         setLoading(false);
     };
 
-    // Toggle edit mode for fields
+ 
     const enableEdit = (field) => {
         setEditingField(field);
     };
 
     return (
-        <motion.div className="Profile-edit-container-box">
+        <motion.div
+            initial = {{ opacity : 0}}
+        animate = {{  opacity : 1}}
+        exit = {{ opacity : 0}}
+        transition={{duration : 0.2}}
+        className="Profile-edit-container-box">
 
         
-        <div className="profile-edit-container">
-            <h2>Edit Profile</h2>
+        <motion.div
+        initial = {{ y  : 50 , opacity : 0}}
+        animate = {{ y  : 0 , opacity : 1}}
+        exit = {{ y  : 50 , opacity : 0}}
+        transition={{duration : 0.2}}
+        className="profile-edit-container">
+            <Subheadcomponent headline = "Edit" onClose={()=>      setProfileEditView(false)} />
 
             {/* Full Name */}
             <div className="input-group">
@@ -129,13 +140,11 @@ const ProfileEdit = ({ userId,setProfileEditView }) => {
             {/* Save All Button */}
             <div className="profile-edit-btn-box">
                 <button  onClick={()=>{
-                    if(isMobile){
-                        navigate(-1);
-                    }else{
-                        if(setProfileEditView){
+                   
+                      
                             setProfileEditView(false)
-                        }
-                    }
+                 
+                
 
                 }} className="edit-cancel-p-btn">Cancel</button>
             <button className="save-btn" onClick={() => handleSave()} disabled={loading}>
@@ -143,7 +152,7 @@ const ProfileEdit = ({ userId,setProfileEditView }) => {
             </button>
             </div>
            
-        </div>
+        </motion.div>
         </motion.div>
     );
 };

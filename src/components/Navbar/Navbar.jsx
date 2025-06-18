@@ -40,11 +40,11 @@ const Navbar = () => {
     } else {
       setAnonmode('self');
     }
-
+   
   }, [usertoken])
 
 
-
+  
   return (
     <nav className="navbar" style={{ padding: isMobile ? '0rem 0.5rem' : '' }}>
       {/* Left Side - Logo */}
@@ -58,22 +58,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Middle - Navigation Links */}
-      {/* {!isMobile && (<div className="nav-center">
-        <NavLink to="/" style={{ backgroundColor: `${location.pathname === '/' ? 'var(--buttonhovercolor)' : ''}`, color: `${location.pathname === '/' ? 'var(--buttoncolor) ' : ''}` }} className="nav-link">
-          <Home size={20} />
-        </NavLink>
-        <NavLink to="/profile" style={{ backgroundColor: `${location.pathname === '/profile' ? 'var(--buttonhovercolor)' : ''}`, color: `${location.pathname === '/profile' ? 'var(--buttoncolor) ' : ''}` }} className="nav-link">
-          <User size={20} />
-        </NavLink>
-        <NavLink to="/login" style={{ backgroundColor: `${location.pathname === '/login' ? 'var(--buttonhovercolor)' : ''}`, color: `${location.pathname === '/login' ? 'var(--buttoncolor) ' : ''}` }} className="nav-link">
-          <LogIn size={20} />
-        </NavLink>
-        <NavLink to="/register" style={{ backgroundColor: `${location.pathname === '/register' ? 'var(--buttonhovercolor)' : ''}`, color: `${location.pathname === '/register' ? 'var(--buttoncolor) ' : ''}` }} className="nav-link">
-          <UserPlus size={20} />
 
-        </NavLink>
-      </div>)} */}
 
       {/* Right Side - Icons */}
       <div className="nav-right">
@@ -99,15 +84,8 @@ const Navbar = () => {
         <NavLink to="/notifications" className="icon-button">
           <Bell size={17} />
         </NavLink>
-        {/* {!isMobile && (<NavLink to="/chat" className="icon-button">
-          <MessageCircle size={22} />
-        </NavLink>)}
-        {isMobile && (<NavLink to="/search" className="icon-button ">
-
-          <Search size={22} strokeWidth={2} />
-
-        </NavLink>)} */}
-        <NavLink to="/profile" className="icon-button nav-user-profile-icon">
+  
+        <NavLink to={`/profile/o/${usertoken.user.username}`} className="icon-button nav-user-profile-icon">
 
           <ActiveAvatar username={usertoken?.user.username} profile_pic={usertoken?.user.profile_pic} size="2rem" />
         </NavLink>

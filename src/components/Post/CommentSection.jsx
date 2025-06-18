@@ -13,6 +13,8 @@ import MoodIcon from '@mui/icons-material/Mood';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import { SnackbarContext } from "../../Context/SnackbarContext";
 import CommmentSkeleton from "../../components/Fallback/CommentSkeleton";
+import ReportPopup from "../Reports/ReportPopup";
+import { MobileViewContext } from "../../Context/MobileResizeProvider";
 
 const CommentSection = ({ post }) => {
     const { usertoken } = useContext(UserAuthCheckContext);
@@ -25,7 +27,11 @@ const CommentSection = ({ post }) => {
     const socket = useSocket();
     const [activecommnet, setActiveComment] = useState(false);
     const [loading, setLoading] = useState(false);
-        const [sendcommentload, setSendCommentLoad] = useState(false);
+    const [sendcommentload, setSendCommentLoad] = useState(false);
+    const [report, setReport] = useState(false);
+    const [selectedId, setSelectedId] = useState(null);
+    const { isMobile } = useContext(MobileViewContext);
+
 
     const { setSnackbar } = useContext(SnackbarContext);
 
@@ -53,7 +59,7 @@ const CommentSection = ({ post }) => {
                 const response = await axios.get(`/api/posts/comments/fetch?post_id=${post.post_id}`);
 
 
-          
+
 
 
                 if (response.data.length > 0) {
@@ -196,6 +202,7 @@ const CommentSection = ({ post }) => {
 
 
 
+
     const handleCommentSubmit = async () => {
         if (!newComment.trim()) return;
         setSendCommentLoad(true);
@@ -217,7 +224,7 @@ const CommentSection = ({ post }) => {
             };
 
 
-            setSnackbar({open : true, message : "Comment added successfully", type : "success"});
+            setSnackbar({ open: true, message: "Comment added successfully", type: "success" });
             socket.emit("new_comment", newCommentData);
             setActiveComment(false);
             setNewComment("");
@@ -225,7 +232,7 @@ const CommentSection = ({ post }) => {
         } catch (error) {
             console.error("Error adding comment:", error);
         }
-        finally{
+        finally {
             setSendCommentLoad(false)
         }
     };
@@ -252,7 +259,6 @@ const CommentSection = ({ post }) => {
     if (loading) return <CommmentSkeleton />
 
 
-   
     return (
         <div className="commentsectoin-modal-right">
             <h3>Comments
@@ -264,11 +270,13 @@ const CommentSection = ({ post }) => {
                 paddingTop: '7rem'
             }}>No Comments </div>)}
 
-            {comments.length > 0 && (<ul className="scrollbar">
+            {Array.isArray(comments) && comments.length > 0 && (<ul className="scrollbar">
                 {comments
                     .filter(c => c.commenter_username)
-                    .map((c) => (
-                        <li key={c.comment_id} className={`comment-item ${c.pinned ? "Pinned" : ""}`}>
+                    .map((c, index) => (
+
+                        <li key={`comment-${c.comment_id || index}`} className={`comment-item ${c.pinned ? "Pinned" : ""}`}>
+
                             <aside className="comment-profile-box">
                                 <div className="comment-profile-box-l">
                                     <img src={c.commenter_pic ? c.commenter_pic : defaultprofilephoto} alt="Profile" className="comment-profile-pic" />
@@ -279,7 +287,10 @@ const CommentSection = ({ post }) => {
                                 </div>
                                 <div className="comment-profile-box-r">
                                     {post.post_user_id === usertoken.user.id && <PushPinIcon sx={{ fontSize: "01.1rem" }} onClick={() => handlePinComment(c.comment_id, c.pinned)} />}
-                                    {c.commenter_id !== usertoken.user.id && (<p>Report</p>)}
+                                    {c.commenter_id !== usertoken.user.id && (<p onClick={() => {
+                                        setSelectedId(c.commenter_id)
+                                        setReport(true)
+                                    }}>Report</p>)}
                                 </div>
 
                             </aside>
@@ -325,25 +336,34 @@ const CommentSection = ({ post }) => {
                                             {expandedReplies[c.comment_id] ? "Hide Replies" : `View Replies (${c.replies.length})`}
                                         </button> */}
 
-                                        {expandedReplies[c.comment_id] && (
+                                        {Array.isArray(c.replies) && expandedReplies[c.comment_id] && (
                                             <ul className="replies-list">
-                                                {c.replies.map(reply => (
+                                                {c.replies.map((reply, rIndex) => {
+                                              
+                                                    const key = `reply-${reply.comment_id || `r${rIndex}`}`;
+                                                    
+                                                    return (
 
-                                                    <li key={reply.comment_id} className="reply-item">
+                                                        <li key={key} className="reply-item">
 
-                                                        <div className="reply-item-header">
-                                                            <img src={reply.commenter_pic ? reply.commenter_pic : defaultprofilephoto} alt="Profile" className="comment-profile-pic" />
-                                                            <div className="comment-replies-content">
-                                                                <div className="comment-header">
-                                                                    <strong>{reply.commenter_username}</strong>
-                                                                    <span className="comment-date">{reply.created_at && formatTimeAgo(reply.created_at)}</span>
+
+                                                            <div className="reply-item-header">
+                                                                <img src={reply.commenter_pic ? reply.commenter_pic : defaultprofilephoto} alt="Profile" className="comment-profile-pic" />
+                                                                <div className="comment-replies-content">
+                                                                    <div className="comment-header">
+                                                                        <strong>{reply.commenter_username}</strong>
+                                                                        <span className="comment-date">{reply.created_at && formatTimeAgo(reply.created_at)}</span>
+                                                                    </div>
+                                                                    {reply.comment_id !== usertoken.user.id && (<p onClick={() => {
+                                                                        setSelectedId(reply.comment_id)
+                                                                        setReport(true)
+                                                                    }}>Report</p>)}
                                                                 </div>
-                                                                {reply.comment_id !== usertoken.user.id && (<p>Report</p>)}
                                                             </div>
-                                                        </div>
-                                                        <p style={{ marginLeft: '0.4rem' }} className="comment-sec-text">{reply.comment}</p>
-                                                    </li>
-                                                ))}
+                                                            <p style={{ marginLeft: '0.4rem' }} className="comment-sec-text">{reply.comment}</p>
+                                                        </li>
+                                                    )
+                                                })}
                                             </ul>
                                         )}
                                     </div>
@@ -357,16 +377,18 @@ const CommentSection = ({ post }) => {
 
 
             {/* Floating Comment Button */}
-            <AnimatePresence>
+            <AnimatePresence >
                 <motion.div
+                key="floating-button"
                     initial={{ scale: 0, opacity: 0 }}
-                    animate={{
-
-                        bottom: activecommnet ? '0%' : "3%",
+                    animate={isMobile ? {
+                        
+                        bottom: activecommnet ? '0%' : "7%",
                         right: activecommnet ? '0%' : "3%",
                         scale: activecommnet ? 25 : 1, opacity: 1,
-                    }}
+                    } : { bottom: '3%', right: '1%', scale: activecommnet ? 0 : 1, opacity: 1 }}
                     exit={{ scale: 0, opacity: 0 }}
+                    style={{position : isMobile ? 'fixed' : 'sticky'}}
                     onClick={() => {
 
                         if (!activecommnet) {
@@ -386,13 +408,17 @@ const CommentSection = ({ post }) => {
                         transition={{ duration: 0.2 }}
                         className=""
 
-                    > <MessageSquare size={20} /></motion.button>)}
+                    > <MessageSquare size={20} /></motion.button>)
+                    }
                 </motion.div>
 
                 <AnimatePresence>
-                    {activecommnet && (<motion.div initial={{ opacity: 0, y: "100%", background: 'transparent' }}
-                        animate={{ opacity: 1, zIndex: 10, y: 0 }} exit={{ opacity: 0, y: "20%" }}
-
+                    {activecommnet && (<motion.div
+                    key="comment-input" 
+                        initial={{ opacity: 0, y: "100%" }}
+                        animate={{ opacity: 1, zIndex: 10, y: 0 }}
+                        exit={{ opacity: 0, y: "20%" }}
+                        style={!isMobile ? { position: 'sticky', background: 'var(--logolinearcolor)', bottom: '0%', left: '0%' } : { position: 'fixed' }}
                         transition={{ duration: 0.2 }}
                         className="comment-input">
                         {replyingTo ? (<span>Replying to {comments.find(c => c.comment_id === replyingTo)?.commenter_username}</span>)
@@ -400,15 +426,20 @@ const CommentSection = ({ post }) => {
                         }
                         <input ref={commentInputRef} type="text" placeholder="Write a comment..." value={newComment} onChange={(e) => setNewComment(e.target.value)} />
 
-                        <button style={{opacity : sendcommentload ? 0.7 : 1}}  disabled={sendcommentload} onClick={handleCommentSubmit}>
-                            Send<Send size={20}  />
-                            
-                            </button>
+                        <button style={{ opacity: sendcommentload ? 0.7 : 1 }} disabled={sendcommentload} onClick={handleCommentSubmit}>
+                            Send<Send size={20} />
+
+                        </button>
                         <button onClick={() => setActiveComment(false)}>Cancle</button>
                     </motion.div>)}
                 </AnimatePresence>
             </AnimatePresence>
 
+            {report && <ReportPopup reportedId={selectedId} reportingId={usertoken.user.id} onClose={() => {
+
+                setReport(false)
+                setSelectedId(null)
+            }} />}
         </div>
     );
 };

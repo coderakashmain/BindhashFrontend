@@ -1,9 +1,9 @@
 import React from 'react';
 import './ChatListSkeleton.css'; 
-const ChatListSkeleton = () => {
+const ChatListSkeleton = ({rows = 7}) => {
   return (
     <div className="chatlist-skal-container">
-      {[...Array(7)].map((_, i) => (
+      {[...Array(rows)].map((_, i) => (
         <div key={i} className="chatlist-skal-item">
           <div className="chatlist-skal-avatar shimmer"></div>
           <div className="chatlist-skal-text">

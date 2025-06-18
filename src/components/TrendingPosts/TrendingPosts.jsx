@@ -27,9 +27,9 @@ const TrendingPosts = () => {
 
   return (
     <div className="trendingcom-trending-posts">
-      <h2> <span className="trendingpost-head-spen"><ChartNoAxesCombined size = {24} />Trending Posts </span><span style={{fontWeight : 'bold'}}>Top 10</span></h2>
+      <h2> <span className="trendingpost-head-spen">Trending Posts </span><span style={{fontWeight : 'bold'}}>Top 10</span></h2>
       <ul>
-        {trendingPosts.map((post) => (
+        {trendingPosts.length > 0 ? trendingPosts.map((post) => (
           <li key={post.id} className="trendingcom-trending-post"  >
             <div className="trendingcom-user-info" >
               <img src= {post.profile_pic ? post.profile_pic : defaultprofilepic} alt={post.username} className="profile-pic"  />
@@ -45,7 +45,10 @@ const TrendingPosts = () => {
                </span>
             </div>
           </li>
-        ))}
+        )) : (
+          <button className="no-t-p">No Post Yet</button>
+
+        )}
       </ul>
       {selectedPostId && <PostModel postId={selectedPostId} onClose={() => setSelectedPostId(null)} />}
     </div>

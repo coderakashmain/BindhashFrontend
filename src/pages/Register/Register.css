@@ -3,24 +3,23 @@
     height: 100vh;
     height: 100svh;
     display: flex;
-    background: var(--backwhitecolor);
+    flex-direction: row-reverse;
+    background: var(--secondwebbackcolor);
 }
 .register-container-box1 {
     width: 50%;
     height: 100%;
-    /* background-color: red; */
+    /* background-color: var(--backwhitecolor); */
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
-.register-container-box1-inside {
-    width: 25rem;
-    margin-bottom: 3rem;
-    border-radius: 1.5rem;
-}
+
 .register-container-box1-inside h2{
-    font-size: 2rem;
+    font-size: 2.4rem  !important;
     font-family: sans-serif;
+    font-weight: 600 !important;
 }
 .register-container-box1-inside .error{
 color: red;
@@ -33,7 +32,7 @@ color: red;
     border-radius: 0.3rem;
     border: 1px solid black;
     background-color: black;
-    color: #fff;
+    color: var(--bothwhitecolor);
 }
 .register-container-box1-inside button:hover {
     cursor: pointer;
@@ -57,16 +56,17 @@ color: red;
 }
 
 .register-container-box1-inside form button {
-    background-color:var(--buttoncolor);
-    border: 1px solid var(--buttoncolor);
+    background:var(--linearcolor);
+    outline: none;
     letter-spacing: 0.1rem;
     font-weight: 600;
     font-size: 1.1rem;
+    border: none;
 }
 .register-container-box1-inside p {
     color: black;
     font-size: 0.7rem;
-    margin-top: 1.4rem;
+    margin-top: 0.4rem;
     text-align: start;
 }
 .register-container-box1-inside p a{
@@ -105,10 +105,10 @@ color: red;
     font-size: 0.8rem;
     margin-left: 0.1rem;
     letter-spacing: 0.03rem;
-    color: var(--buttoncolor);
+    color: var(--blue-color);
 }
 .terms-condition-box a:hover {
-    color: var(--buttoncolor);
+    font-weight: bold;
     transition: all 0.15s ease-in;
     transform: scale(1.02);
 }
@@ -118,6 +118,7 @@ color: red;
     /* background-color: yellow; */
     font-size: 5rem;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import './RoomChat.css'
 import TruncatedText from '../../components/TextReducer/TruncatedText';
 import '../../App.css'
@@ -65,7 +66,7 @@ const RoomChat = () => {
         socket.emit("get-subroom-users", subroomid);
 
         socket.on("subroom-active-user", ({ subroomId, users }) => {
-           
+
             setFinalSubroomId(subroomId);
 
 
@@ -311,6 +312,13 @@ const RoomChat = () => {
 
     return (
         <section id='roomchat-container'>
+            <Helmet>
+                <title>{`${chatroomName.toUpperCase()} | ${subroomname} Room – Bindhash`}</title>
+                <meta
+                    name="description"
+                    content={`Explore the ${chatroomName} section in the ${subroomname} Room on Bindhash. Join focused discussions, share your thoughts, and connect with like-minded individuals anonymously.`}
+                />
+            </Helmet>
             <header className="roomchat-header">
                 <div className="roomchat-header-name">
                     <Tooltip title="Exit">
@@ -387,7 +395,7 @@ const RoomChat = () => {
                     </div>
 
 
-                    <strong style={{ marginTop: "0.5rem" }}>Your Rooms  <span> <Avatar sx={{ backgroundColor: 'var(--icon-back-color)', color: 'var(--icon-color)', height: 20, width: 20, cursor: 'pointer' }}><AddIcon sx={{ height: 15, width: 15 }}  onClick = {()=> navigate('creatroom')}/></Avatar > {demolist.length}</span></strong>
+                    <strong style={{ marginTop: "0.5rem" }}>Your Rooms  <span> <Avatar sx={{ backgroundColor: 'var(--icon-back-color)', color: 'var(--icon-color)', height: 20, width: 20, cursor: 'pointer' }}><AddIcon sx={{ height: 15, width: 15 }} onClick={() => navigate('creatroom')} /></Avatar > {demolist.length}</span></strong>
 
                     {demolist.slice(0, !expand ? 3 : demolist.length).map((room) => (
                         <div key={room.id} className="roomchat-card" style={{
@@ -454,7 +462,7 @@ const RoomChat = () => {
                 <motion.div
                     transition={{ duration: 0.4 }}
                     style={isMobile ? chatroomname || subroomId ? { display: 'block', flexGrow: 1 } : { display: 'none' } : {}}
-                 
+
                     className="roomchat-chating-box">
                     <Outlet subroomname={navigatePath} />
 

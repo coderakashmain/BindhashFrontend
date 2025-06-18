@@ -3,6 +3,7 @@ import "./Feedback.css";
 import axios from "axios";
 import { Angry, Frown, Meh, Smile, Laugh } from "lucide-react";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
+import { Helmet } from "react-helmet";
 
 const Feedback = () => {
   const [feedbackType, setFeedbackType] = useState("");
@@ -22,7 +23,7 @@ const Feedback = () => {
         type: feedbackType,
         feedback: feedbackText,
         rating: rating,
-        user:usertoken.user.username, // Optional: you can fetch from context/session
+        user: usertoken.user.username, // Optional: you can fetch from context/session
       };
 
       await axios.post("/api/feedback", payload);
@@ -44,7 +45,15 @@ const Feedback = () => {
   }
 
   return (
+
     <div className="feedback-section">
+      <Helmet>
+        <title>Feedback – Help Us Improve | Bindhash</title>
+        <meta
+          name="description"
+          content="We value your voice. Share your feedback, suggestions, or report any issues to help us make Bindhash better for everyone."
+        />
+      </Helmet>
       <div className="feedback-container">
         <h2>Customer FeedBack</h2>
         <p>
@@ -56,9 +65,9 @@ const Feedback = () => {
         <div className="feedback-container-feedback-type">
           <p>Feedback Type</p>
           <div className="feedback-container-feedback-type-details">
-            <label style={feedbackType === "Comment"  ?{ background :  'var(--buttoncolor)' , color : 'var(--bothwhitecolor)' } : {}}  >
+            <label style={feedbackType === "Comment" ? { background: 'var(--buttoncolor)', color: 'var(--bothwhitecolor)' } : {}}  >
               <input
-              
+
                 type="radio"
                 name="type"
                 value="Comment"
@@ -66,7 +75,7 @@ const Feedback = () => {
               />
               Comment
             </label>
-            <label style={feedbackType === "Suggestion"  ?{ background :  'var(--buttoncolor)' , color : 'var(--bothwhitecolor)' } : {}} >
+            <label style={feedbackType === "Suggestion" ? { background: 'var(--buttoncolor)', color: 'var(--bothwhitecolor)' } : {}} >
               <input
                 type="radio"
                 name="type"
@@ -75,7 +84,7 @@ const Feedback = () => {
               />
               Suggestion
             </label>
-            <label style={feedbackType === "Question"  ?{ background :  'var(--buttoncolor)' , color : 'var(--bothwhitecolor)' } : {}} >
+            <label style={feedbackType === "Question" ? { background: 'var(--buttoncolor)', color: 'var(--bothwhitecolor)' } : {}} >
               <input
                 type="radio"
                 name="type"

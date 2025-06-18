@@ -1,3 +1,16 @@
+.bottom-sheet{
+  position: fixed;
+  bottom: 0%;
+  right: 0%;
+  width: 40rem;
+  height: 80%;
+  padding: 0px 0px;
+  background: var(--backwhitecolor);
+  z-index: 1011 !important;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
 .bottom-sheet-header {
   display: flex;
   align-items: center;
@@ -14,4 +27,10 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+@media (max-width : 640px) {
+  .bottom-sheet{ 
+    height: 100%;
+    width: 100%;
+  }
 }

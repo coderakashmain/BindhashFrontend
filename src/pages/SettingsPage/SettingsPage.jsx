@@ -3,30 +3,37 @@ import { useNavigate } from "react-router-dom";
 import "./SettingsPage.css";
 import { SnackbarContext } from "../../Context/SnackbarContext";
 import axios from "axios";
-
+import { Helmet } from "react-helmet";
 const SettingsPage = () => {
   const navigate = useNavigate();
-  const {setSnackbar} = useContext(SnackbarContext);
+  const { setSnackbar } = useContext(SnackbarContext);
 
-   const handleLogout = async () => {
-  
+  const handleLogout = async () => {
 
-    
 
-    try{        
-       await axios.post(`/api/auth/logout`)
 
-            navigate("/login");
-            setSnackbar({ open: true, message: "Logged out successfully", type: "success" });
-            window.location.reload();
-    }catch(err){
-        console.error("Logout Error:", err)
+
+    try {
+      await axios.post(`/api/auth/logout`)
+
+      navigate("/login");
+      setSnackbar({ open: true, message: "Logged out successfully", type: "success" });
+      window.location.reload();
+    } catch (err) {
+      console.error("Logout Error:", err)
     }
-      
-}
+
+  }
 
   return (
     <div className="settings-container">
+      <Helmet>
+        <title>Settings – Manage Your Profile | Bindhash</title>
+        <meta
+          name="description"
+          content="Customize your Bindhash experience. Update your profile, privacy settings, notification preferences, and more in one place."
+        />
+      </Helmet>
       <h1 className="settings-title">Settings</h1>
 
       <div className="settings-section">

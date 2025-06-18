@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
+import { Helmet } from "react-helmet";
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
 import "./Chat.css";
@@ -93,9 +94,9 @@ const Chat = () => {
 
 
     const handlePrivateMessage = (msg) => {
-    
+
       if (parseInt(msg.sender_id) === parsedReceiverId) {
-        
+
         socket.emit("markAsRead", {
           sender_id: parsedReceiverId,
           receiver_id: usertoken.user.id,
@@ -106,9 +107,9 @@ const Chat = () => {
 
       setMessages((prevMessages) => {
         if (parseInt(msg.sender_id) === usertoken.user.id) {
-          
+
           return prevMessages.map((m) => {
-          
+
             return m.id === msg.id ? { ...m, status: msg.status } : m
           }
           );
@@ -260,6 +261,13 @@ const Chat = () => {
   return (
 
     <div className="chat-container">
+      <Helmet>
+        <title>Chat – Connect Anonymously | Bindhash</title>
+        <meta
+          name="description"
+          content="Start or continue private and anonymous chats on Bindhash. Share your thoughts freely and connect emotionally with people who truly understand."
+        />
+      </Helmet>
       <div className="chat-scrollbox" ref={chatContainerRef}>
         <div className="receiver-data">
           <div className="receiver-pic">

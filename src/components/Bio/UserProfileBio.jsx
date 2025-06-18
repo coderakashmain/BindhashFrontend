@@ -15,12 +15,10 @@ const UserProfileBio = ({ userId ,setProfileEditView}) => {
   const navigate = useNavigate();
 
 const editclick= ()=>{
-    if(isMobile){
-        navigate('/profile/edit')
-    }else{
+  
         
         setProfileEditView(true)
-    }
+
 }
  
 

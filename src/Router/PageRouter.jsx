@@ -24,10 +24,10 @@ const PageRouter = () => {
   return (
     <section id='page-layout' >
 
-      <Suspense fallback={<SkeletonComponent/>}>
+      {/* <Suspense fallback={<SkeletonComponent/>}> */}
       <Slidebar/>
       <Outlet/>
-     </Suspense>
+     {/* </Suspense> */}
 
   
 

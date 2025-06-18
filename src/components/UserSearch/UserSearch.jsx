@@ -7,6 +7,7 @@ import gsap from 'gsap'
 import Followbtn from "../ProfileStats/Followbtn";
 import SuggestedUsers from "../SuggestedUsers/SuggestedUsers";
 import { MobileViewContext } from "../../Context/MobileResizeProvider";
+import CombineAvatat from "../Avatar/CombineAvatat";
 
 const UserSearch = () => {
   const [query, setQuery] = useState("");
@@ -16,22 +17,34 @@ const UserSearch = () => {
   const [showsearch, setShowsearch] = useState(false);
   const userdearchoxRef = useRef(null);
   const { isMobile } = useContext(MobileViewContext);
+  const debounceRef = useRef(null);
+  const [loading, setLoading] = useState(false);
 
 
   const handleSearch = (e) => {
     const searchQuery = e.target.value.toLowerCase();
     setQuery(searchQuery);
 
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current); // clear previous timeout
+    }
+
 
     if (searchQuery.length > 1) {
+      setLoading(true);
 
-      const filteredUsers = alluser.filter(user =>
-        user.username.toLowerCase().includes(searchQuery)
-      );
-      setResults(filteredUsers);
-      setShowsearch(true)
+      debounceRef.current = setTimeout(() => {
+        const filteredUsers = alluser.filter(user =>
+          user.username.toLowerCase().includes(searchQuery) && user.visibility !=="anonymous"
+        );
+        setResults(filteredUsers);
+        setShowsearch(true)
+        setLoading(false);
+      }, 300);
     } else {
       setResults([]);
+      setShowsearch(false);
+      setLoading(false);
 
     }
 
@@ -80,35 +93,38 @@ const UserSearch = () => {
     <div className="user-searchbox-box" ref={userdearchoxRef}>
       <div className="user-seachbox-div-search">
 
-    
 
-      <div className="user-suggesion-input-box">
-        
-        <button>
 
-          <Search size={20} />
-        </button>
-        <input type="text" placeholder="Search" value={query} onChange={handleSearch} />
-        {/* <span>Search</span> */}
+        <div className="user-suggesion-input-box">
+
+          <button>
+
+            <Search size={20} />
+          </button>
+          <input type="text" placeholder="Search" value={query} onChange={handleSearch} />
+          {/* <span>Search</span> */}
 
         </div>
-        <div className={`searchbox-list-search scrollbar ${isMobile  ? "mobile-s-p" :''}`} ref={suggestionBoxRef} >
+        <div className={`searchbox-list-search scrollbar ${isMobile ? "mobile-s-p" : ''}`} ref={suggestionBoxRef} >
 
-     {!isMobile && (     <PanelRightClose onClick={handleclose} className="search-close-btn" />)}
+          {!isMobile && (<PanelRightClose onClick={handleclose} className="search-close-btn" />)}
 
           <h3 className="search-result-text">Results</h3>
           <ul>
-            {results.length > 0 ? (results.map((user) => (
+              {loading && <li>Searching...</li>}
+            {!loading && results.length > 0 ? (results.map((user) => (
               <li key={user.id} className="user-search-list-item">
                 <div className="user-search-list-item-box">
-                  <img src={user.profile_pic ? `http://localhost:3000${user.profile_pic}` : defaultlogo} alt={user.username} width="30" />
+                 
+                  <CombineAvatat username = {user.username} profile_pic={user.profile_pic} visibility={user.visibility} size= "2.4rem"/>
                   <div className="user-search-user-name-box">
-                    <p>{user.username}</p>
+                    <p style={{fontWeight : 'bold'}}>@ {user.username}</p>
                   </div>
                 </div>
-                <Followbtn />
+           <Followbtn targetUserId={user.id} isFollowingInitial={user.isFollowing} />
+
               </li>
-            ))) : (  query.length > 0 && <li style={{ padding: '0rem 1rem', fontSize: '0.7rem' }}> No results found</li>)}
+            ))) : (query.length > 0 && !loading && <li style={{ padding: '0rem 1rem', fontSize: '0.7rem' }}> No results found</li>)}
           </ul>
           <SuggestedUsers />
         </div>

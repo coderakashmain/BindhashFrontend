@@ -89,3 +89,11 @@
     font-size: 0.8rem;
   }
   
+  .no-t-p{
+    margin-top: 1rem;
+    width: 100%;
+    padding: 00.5rem;
+    border-radius: 2rem;
+
+    border: 1px solid gray;
+  }

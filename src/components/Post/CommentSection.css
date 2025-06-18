@@ -1,5 +1,6 @@
 .commentsectoin-modal-right {
 height: 75%;
+position: relative;
 }
 .commentsectoin-modal-right h3 {
     padding-top: 0.5rem;
@@ -66,6 +67,7 @@ height: 75%;
 .comment-content {
     flex: 1;
     margin-top: 1rem;
+    padding-left: 2.9rem;
 }
 .comment-header{
     display: flex;
@@ -84,10 +86,12 @@ height: 75%;
     color: gray;
 }
 
-.comment-sec-text{
+.reply-item .comment-sec-text{
     text-align: start;
     margin-top: 0.8rem;
     font-size: 0.84rem;
+    padding-left: 2.5rem;
+
 }
 
 .comment-actions {

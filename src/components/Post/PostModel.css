@@ -157,11 +157,10 @@
   display: flex;
   align-items: center;
   align-items: center;
-  padding: 0.2rem;
+  padding: 0.5rem;
+  cursor: pointer;
 }
-.report-btn:hover {
-  background-color: rgba(212, 212, 212, 0.596);
-}
+
 
 .close-btn {
   position: absolute;
@@ -192,16 +191,12 @@
     width: 45rem;
   } */
 }
-@media (max-width: 644px) {
-  /* .modal-left {
-    display: none;
-  }
+@media (max-width: 640px) {
+ 
   .modal-right {
-    width: 100%;
+    padding-bottom: 4rem;
   }
-  .modal-content {
-    width: 100%;
-  } */
+
   .modal-overlay {
     align-items: flex-end;
     border-radius: 0rem !important;

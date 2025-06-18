@@ -24,7 +24,7 @@ const PostSwiper = () => {
   }, [allpost, usertoken]);
   
 
-console.log('this is user Post',userpost)
+
 
 
 

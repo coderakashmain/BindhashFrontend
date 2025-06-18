@@ -2,11 +2,13 @@
     position: fixed;
     left: 0%;
     top: 0%;
-    backdrop-filter: blur(4px);
     width: 100%;
     height: 100%;
     z-index: 1000;
     background: var(--popupbackcolor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
 .profile-edit-container {
@@ -15,12 +17,10 @@
     margin: auto;
     background: var(--backwhitecolor);
     padding: 20px;
+    padding-top: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
-    position: fixed;
-    left: 50%;
-    top: 50%;
     transform: translate(-50%,-50%);
 
   }
@@ -110,16 +110,14 @@
 
   @media (max-width : 640px) {
     .profile-edit-container {
-        max-width: 100%;
+ 
         width: 100%;
-        background: #fff;
+        height: 100%;
         padding: 20px;
+        padding-top: 10px;
         border-radius: 10px;
         box-shadow: none;
         text-align: center;
-        position: absolute;
-        display: block;
-        margin-bottom: 10rem;
     
       }
       

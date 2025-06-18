@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Helmet } from 'react-helmet'
 import './Profile.css'
+import '../../App.css'
 import Post from "../../components/Post/Post";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import defaultprofilepicture from '../../Photo/defaultprofilepic.png'
-import { Images,Settings, Ellipsis, Undo2, Pencil, Compass, Gem, SwitchCamera, MessageCircle, UserPlus, Send } from 'lucide-react'
+import { Images, Settings, Ellipsis, Undo2, Pencil, Compass, Gem, SwitchCamera, MessageCircle, UserPlus, Send } from 'lucide-react'
 import ProfileStats from "../../components/ProfileStats/ProfileStats";
 import SuggestedUsers from "../../components/SuggestedUsers/SuggestedUsers";
 import ProfileUpload from "../../components/ProfileUpload/ProfileUpload";
@@ -20,6 +22,7 @@ import UserProfileBio from "../../components/Bio/UserProfileBio";
 import { MobileViewContext } from "../../Context/MobileResizeProvider";
 import ProfileEdit from "../../components/ProfileEdit/ProfileEdit";
 import PostSwiper from "../../components/PostSwiper/PostSwiper";
+import ProfileSkeleton from "../../components/Fallback/ProfileSkeleton";
 
 
 const Profile = () => {
@@ -32,10 +35,11 @@ const Profile = () => {
   const [profilebackpicloading, setProfilbackepicloading] = useState(false);
   const postopenRef = useRef(null)
   const [mpostbtn, setMpostbtn] = useState(false);
-  const { totalUserPost,allpost } = useContext(AllPostContextData)
+  const { totalUserPost, allpost } = useContext(AllPostContextData)
   const [profileEditView, setProfileEditView] = useState(false);
   const { isMobile } = useContext(MobileViewContext);
-
+  const { username } = useParams();
+  const [loading, setLoading] = useState(true);
 
 
 
@@ -44,12 +48,21 @@ const Profile = () => {
     if (!usertoken?.user?.id) {
       navigate('/login');
     }
+
+
+
   }, [usertoken, navigate]);
 
+  useEffect(() => {
+    if (usertoken?.user?.username !== username) {
+      navigate('*');
+    } else {
+      setLoading(false);
+    }
+  }, [usertoken])
 
 
 
-  
 
 
 
@@ -57,7 +70,7 @@ const Profile = () => {
 
 
 
- 
+
 
   const [isFollowing, setIsFollowing] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -70,6 +83,12 @@ const Profile = () => {
   const handlepostclick = () => {
     setMpostbtn(true)
   };
+
+
+
+  if (loading) return <ProfileSkeleton />;
+
+
 
   return (
     <div className="profile-container">
@@ -95,13 +114,21 @@ const Profile = () => {
             <Settings  className="" />
           </div>
         </div> */}
+
+        <Helmet>
+          <title>{`${usertoken?.user?.username} | Profile – Bindhash`}</title>
+          <meta
+            name="description"
+            content={`View ${usertoken?.user?.name}'s profile on Bindhash. Discover their posts, interests, and connect through anonymous rooms or chats.`}
+          />
+        </Helmet>
         <div className="profile-page-profile-image-box">
           <div className="profile-back-img-box" >
             {profilebackpicloading && <div style={{ borderRadius: '0%' }} className="profile-pic-loading">
               <div className="profile-pic-anime-loader"></div>
             </div>}
 
-            <img src={usertoken.user.profileback_pic ? usertoken.user.profileback_pic : "https://picsum.photos/800/300"} alt="Cover" />
+            <img src={usertoken?.user.profileback_pic ? usertoken?.user.profileback_pic : "https://picsum.photos/800/300"} alt="Cover" />
             <div className="profile-back-img-edit">
               <ProfileUpload mainphoto={false} borderRadius="0.2rem" size={19} paddingvalue='0.8rem' setProfilepicloading={setProfilbackepicloading} />
             </div>
@@ -110,7 +137,7 @@ const Profile = () => {
             {profilepicloading && <div className="profile-pic-loading">
               <div className="profile-pic-anime-loader"></div>
             </div>}
-            <img src={usertoken.user.profile_pic ? usertoken.user.profile_pic : defaultprofilepicture} alt="" />
+            <img src={usertoken?.user?.profile_pic ? usertoken?.user?.profile_pic : defaultprofilepicture} alt="" />
             <div className="profile-main-img-edit">
               {/* <SwitchCamera size={18} /> */}
 
@@ -142,13 +169,13 @@ const Profile = () => {
 
               {usertoken.user.id ? (<button
                 onClick={() => {
-                  if (isMobile) {
-                    navigate('/profile/edit')
+                  // if (isMobile) {
+                  //   navigate('/profile/edit')
 
-                  }
-                  else {
-                    setProfileEditView(true)
-                  }
+                  // }
+                  // else {
+                  setProfileEditView(true)
+                  // }
                 }
 
                 }
@@ -156,9 +183,11 @@ const Profile = () => {
 
 
                 : (<button className="message-btn button active"><MessageCircle size={18} /> Message</button>)}
-              {profileEditView && (<ProfileEdit setProfileEditView={setProfileEditView} userId={usertoken.user.id} />)}
-
-              <div className="message-btn button active"> <ShareProfile backcolor='none' btnhover= {false} fontsize={20} content="Share Profile" profileurllink={`/profile/${usertoken.user.username}`} /></div>
+              <AnimatePresence>
+                {profileEditView && (
+                  <ProfileEdit setProfileEditView={setProfileEditView} userId={usertoken.user.id} />)}
+              </AnimatePresence>
+              <div className="message-btn button active"> <ShareProfile backcolor='none' btnhover={false} fontsize={20} content="Share Profile" profileurllink={`/profile/${usertoken.user.username}`} /></div>
 
             </div>
 
@@ -178,7 +207,7 @@ const Profile = () => {
                 }}> Points 759<Gem size={14} color="blue" /></span>
               </div>
             </div> */}
-{/* 
+            {/* 
             <div className="mutual-friends">
               <p>Commen Friends </p>
               {[1, 2].map((_, i) => (
@@ -198,14 +227,15 @@ const Profile = () => {
             <h1>              {usertoken.user.fullname ? usertoken.user.fullname : "Not set yet"}</h1>
             <p>{usertoken.user.username}</p>
             {usertoken.user?.bio?.philosophy && (<p>{usertoken.user.bio.philosophy}</p>)}
+            <AnimatePresence>
 
-            <TagSelector userId={usertoken.user.id} />
-
+              <TagSelector userId={usertoken.user.id} />
+            </AnimatePresence>
             <UserProfileBio setProfileEditView={setProfileEditView} />
           </div>
         </div>
 
-        <PostSwiper/>
+        <PostSwiper />
 
       </div>
       <div className="profile-right-box">

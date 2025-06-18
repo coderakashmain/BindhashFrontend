@@ -4,6 +4,7 @@ import Avatar from '@mui/material/Avatar';
 import { deepOrange, green ,blue} from '@mui/material/colors';
 import { ChatBubbleOutline } from '@mui/icons-material';
 
+
 const Bangbox = ({size,click}) => {
     const [clickstate, setClickstate] = useState(false)
   

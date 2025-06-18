@@ -43,7 +43,11 @@ export default function ActiveAvatar({username,profile_pic,size }) {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         variant="dot"
       >
-        <Avatar alt={username.toUpperCase()} src={profile_pic}  sx={{ width: size ? size : 40, height: size ? size:  40 }} />
+        <Avatar alt={username?.toUpperCase()} src={profile_pic} slotProps={{
+        img: {
+            loading: "lazy",
+        },
+    }}  sx={{ width: size ? size : 40, height: size ? size:  40 , background : 'var(--linearcolor)'}} />
       </StyledBadge>
     </Stack>
   );

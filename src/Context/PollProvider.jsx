@@ -23,7 +23,7 @@ export const PollProvider = ({ children}) => {
     const fetchPolls = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`/api/polls/${usertoken.user.id}`);
+            const response = await axios.get(`/api/polls/${usertoken?.user.id}`);
          
             setPolls(response.data);
    

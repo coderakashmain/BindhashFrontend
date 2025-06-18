@@ -16,7 +16,7 @@ const ModeSwitcherToast = ({ mode }) => {
 
   useEffect(() => {
     if (!mode || !['anonymous', 'self'].includes(mode)) return;
-    if (usertoken?.user?.visibility === mode) return;
+    // if (usertoken?.user?.visibility === mode) return;
 
     setVisible(true);
     setLoading(true);
@@ -25,13 +25,13 @@ const ModeSwitcherToast = ({ mode }) => {
       try {
         const response = await axios.post('/api/auth/modeswitcher', { mode });
 
-        if (response.status === 200) {
+      
           const { userId, mode: updatedMode } = response.data;
           socket.emit('modeChange', { userId, mode: updatedMode });
 
-          // Optional global snackbar
+        
           setSnackbar({ type: 'success', message: `Switched to ${updatedMode} mode` });
-        }
+        
       } catch (error) {
         console.error("Mode switch error:", error);
         setSnackbar({ type: 'error', message: 'Failed to switch mode' });

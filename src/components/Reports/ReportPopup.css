@@ -9,7 +9,7 @@
 }
 
 .rpt-popup {
-  background: var(--webbackcolor);
+  background: var(--backwhitecolor);
   backdrop-filter: blur(10px);
   padding: 24px;
   border-radius: var(--border-radius);
@@ -54,7 +54,7 @@
   font-size: 14px;
   box-sizing: border-box;
   background-color: transparent;
-   background: var(--webbackcolor);
+   background: var(--backwhitecolor);
 }
 
 .rpt-textarea {

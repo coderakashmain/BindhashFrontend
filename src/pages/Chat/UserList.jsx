@@ -3,18 +3,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import './Userlist.css'
-import { ArrowRightLeft } from 'lucide-react'
-import profilelogo from '../../Photo/defaultprofilepic.png'
 import '../../App.css'
 import Newaccount from "../../components/Newaccount/Newaccount";
 import { MobileViewContext } from '../../Context/MobileResizeProvider'
 import { Avatar } from "@mui/material";
 import TruncatedText from "../../components/TextReducer/TruncatedText";
-import {
 
-  SecurityOutlined,
-
-} from "@mui/icons-material"
 import ChatListSkeleton from "../../components/Fallback/ChatListSkeleton";
 import AnonymousAavatar from "../../components/Avatar/AnonymousAavatar";
 import { useSocket } from "../../Context/SocketContext";
@@ -216,7 +210,7 @@ const UserList = () => {
 
               ) :
                 (
-                  <Avatar src={u.profile_pic} alt={u.username} />
+                  <Avatar style={{background : 'var(--logolinearcolor)'}} src={u.profile_pic} alt={u.username} />
                 )
               }
 

@@ -1,5 +1,7 @@
 import React, { useContext } from "react"
 import "./LandingPage.css"
+import { Helmet } from "react-helmet";
+
 
 import {
   ChatBubbleOutline,
@@ -30,13 +32,26 @@ import { Avatar } from "@mui/material";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import Bangbox from "../../components/Bangbox/Bangbox";
 
+
 export default function LandingPage() {
 
   const navigate = useNavigate();
-  const {usertoken} = useContext(UserAuthCheckContext);
+  const { usertoken } = useContext(UserAuthCheckContext);
 
   return (
     <div className="land-p-container">
+
+
+      <Helmet >
+        <title>Bindhash – Where Real Stories Begin</title>
+        <meta
+          name="description"
+          content="Bindhash is a platform where users share anonymous failures, emotions, and personal stories. Join rooms, chat, and connect with similar minds without judgment."
+        />
+      </Helmet>
+
+
+
       {/* Navigation */}
       <nav className="land-p-nav">
         <div className="land-p-nav-content">
@@ -45,7 +60,7 @@ export default function LandingPage() {
               <ChatBubbleOutline sx={{ fontSize: 32, color: "#1976d2" }} />
             </div>
             <h2>Bindhash</h2> */}
-            <Bangbox size='2rem' click={false}/>
+            <Bangbox size='2rem' click={false} />
           </div>
           <div className="land-p-nav-links">
             <a href="#home" className="land-p-nav-link">
@@ -60,8 +75,8 @@ export default function LandingPage() {
             <a href="#categories" className="land-p-nav-link">
               Categories
             </a>
-          {usertoken && (  <Avatar alt={usertoken?.user?.username} src={usertoken?.user?.profile_pic} style={{cursor : 'pointer', outline : '2px solid blue',outlineOffset : '2px'}} onClick ={()=> navigate('/')}/>)}
-            <button className="land-p-join-btn" onClick={()=> navigate(usertoken ? '/' : '/login')}>Join Anonymous</button>
+            {usertoken && (<Avatar alt={usertoken?.user?.username} src={usertoken?.user?.profile_pic} style={{ cursor: 'pointer', outline: '2px solid blue', outlineOffset: '2px' }} onClick={() => navigate('/')} />)}
+            <button className="land-p-join-btn" onClick={() => navigate(usertoken ? '/feed' : '/login')}>Join Anonymous</button>
           </div>
           <div className="land-p-mobile-menu">
             <span></span>
@@ -85,7 +100,7 @@ export default function LandingPage() {
               find support in category-based communities.
             </p>
             <div className="land-p-hero-buttons">
-              <button className="land-p-cta-btn primary" onClick={()=> navigate(usertoken ? '/' : '/login')}>Start Sharing Anonymously</button>
+              <button className="land-p-cta-btn primary" onClick={() => navigate(usertoken ? '/feed' : '/login')}>Start Sharing Anonymously</button>
               <button className="land-p-cta-btn secondary">Explore Communities</button>
             </div>
             <div className="land-p-hero-stats">
@@ -644,7 +659,7 @@ export default function LandingPage() {
             <h2>Ready to Turn Your Failures into Strength?</h2>
             <p>Join thousands who've found support, growth, and genuine connections through shared vulnerability.</p>
             <div className="land-p-final-buttons">
-              <button className="land-p-cta-btn primary large"onClick={()=> navigate(usertoken ? '/' : '/login')}>Start Your Anonymous Journey</button>
+              <button className="land-p-cta-btn primary large" onClick={() => navigate(usertoken ? '/feed' : '/login')}>Start Your Anonymous Journey</button>
               <button className="land-p-cta-btn secondary large">Explore Communities First</button>
             </div>
             <div className="land-p-trust-indicators">
@@ -673,7 +688,7 @@ export default function LandingPage() {
               <div className="land-p-footer-logo">
                 {/* <ChatBubbleOutline sx={{ fontSize: 32, color: "#1976d2" }} />
                 <span>Bindhash</span> */}
-                <Bangbox size='1.8rem' click={false}/>
+                <Bangbox size='1.8rem' click={false} />
               </div>
               <p>A safe space for authentic connections and personal growth through shared vulnerability.</p>
             </div>

@@ -5,6 +5,7 @@
   gap: 1rem;
   position: relative;
   z-index: 1;
+  background: var(--webbackcolor );
   height: 100%;
   /* padding: 0rem 1.7rem; */
  
@@ -386,6 +387,7 @@
   background-color: var(--backwhitecolor);
   border: var(--post-card-border);
   box-shadow: 0px 1px 1px var(--post-box-shadow);
+
   
 }
 

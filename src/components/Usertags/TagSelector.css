@@ -1,102 +1,136 @@
 .user-tags-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+}
+
+.selected-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.tag {
+  background: linear-gradient(45deg, #2890e1, black);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tag.selected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eee;
+  color: #252c34b8;
+  border: none;
+}
+
+.add-tags-btn {
+  background: none;
+  border: 1px dashed #2890e1;
+  color: #2890e1;
+  padding: 4px 12px;
+  font-size: 0.9rem;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.tag-selection-modal {
+  background: var(--backwhitecolor);
+  padding: 20px;
+  padding-top: 5px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+.tag-selection-modal-back {
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  background: var(--popupbackcolor);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+      overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.tag-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.tag-option {
+  background: #ddd;
+  border: none;
+
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tag-option.active {
+  background: #000;
+  color: white;
+}
+
+.save-btn,
+.cancel-btn {
+  margin-top: 10px;
+  padding: 8px 14px;
+  border-radius: 0.3rem;
+  border: none;
+  cursor: pointer;
+}
+
+.save-btn {
+  background: var(--linearcolor);
+  color: white;
+  margin-right: 1rem;
+  /* display: flex;
     align-items: center;
+    justify-content: center; */
+}
+
+.cancel-btn {
+  background: lightgray;
+}
+
+@media (max-width: 640px) {
+  
+  .tag-selection-modal {
     width: 100%;
+    height: 100%;
+    overflow: scroll;
+    padding-bottom: 2rem !important;
+    scrollbar-width: none;
+
   }
-  
-  .selected-tags {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
-  
-  .tag {
-    background: linear-gradient(45deg, #2890E1, black);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .tag.selected {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #eee;
-    color: #252c34b8;
-    border: none;
-  }
-  
-  .add-tags-btn {
-    background: none;
-    border: 1px dashed #2890E1;
-    color: #2890E1;
-    padding: 4px 12px;
-    font-size: 0.9rem;
-    border-radius: 20px;
-    cursor: pointer;
+  .tag-option {
+    width: 40%;
+    flex-grow: 1;
+      padding: 10px 12px;
   }
   
   .tag-selection-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 90%;
-    max-width: 400px;
+    padding: 3rem 20px 0px;
   }
-  
-  .tag-selection {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 10px;
-    justify-content: center;
-  }
-  
-  .tag-option {
-    background: #ddd;
-    border: none;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .tag-option.active {
-    background: #000;
-    color: white;
-  }
-  
-  .save-btn, .cancel-btn {
-    margin-top: 10px;
-    padding: 8px 14px;
-    border-radius: 0.3rem;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .save-btn {
-    background: var(--linearcolor);
-    color: white;
-    margin-right: 1rem;
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
-  }
-  
-  .cancel-btn {
-    background: lightgray;
-  }
-  
+}

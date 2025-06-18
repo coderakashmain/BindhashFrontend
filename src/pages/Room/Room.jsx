@@ -7,6 +7,7 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { useContext } from 'react'
 import CircularLoader from '../../components/Fallback/CircularLoader'
+import { Helmet } from 'react-helmet'
 
 
 
@@ -84,6 +85,15 @@ const Room = () => {
           <h2>Rooms</h2>
           <button className='create-room'>Create Room</button>
         </div> */}
+
+
+        <Helmet>
+          <title>{` Rooms – Bindhash`}</title>
+          <meta
+            name="description"
+            content={`Join the any Room on Bindhash to chat anonymously, share emotions, and connect with others going through similar experiences.`}
+          />
+        </Helmet>
         <div className="room-list">
           {rooms.map((room) => (
             <div key={room.room_id} className="room-card">
@@ -107,10 +117,10 @@ const Room = () => {
                     <div className="subrooms-b-join">
 
                       <div className="subrooms-b-join-l">
-                         <div className='live-dot'></div>
-                      <span >+235 active now</span>
+                        <div className='live-dot'></div>
+                        <span >+235 active now</span>
                       </div>
-                     
+
                       <div className="subroom-list-join active click" onClick={() => {
                         if (!navigateLoading) {
 

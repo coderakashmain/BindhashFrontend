@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -6,6 +6,7 @@ import { IconButton, TextField, Button } from "@mui/material";
 import './SetPassword.css'; // 
 import CircularProgress from '@mui/material/CircularProgress';
 import { SnackbarContext } from "../../Context/SnackbarContext";
+import { Helmet } from "react-helmet";
 
 const SetPassword = () => {
   const [password, setPassword] = useState("");
@@ -14,14 +15,14 @@ const SetPassword = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-   const [loading, setLoading] = useState(false);
-   const {setSnackbar} = useContext(SnackbarContext);
-  
-  const email = location.state?.email || ""; 
+  const [loading, setLoading] = useState(false);
+  const { setSnackbar } = useContext(SnackbarContext);
+
+  const email = location.state?.email || "";
 
   useEffect(() => {
     if (!email) {
-      navigate("/register"); 
+      navigate("/register");
     }
   }, [email, navigate]);
 
@@ -47,10 +48,10 @@ const SetPassword = () => {
     try {
       const response = await axios.post("/api/auth/setpassword", { email, password });
       if (response.data.success) {
-       
-        navigate("/register/setusername",{state:{email}});
+
+        navigate("/register/setusername", { state: { email } });
         setSnackbar({ open: true, message: "Password set successfully", type: "success" });
-       setLoading(false)
+        setLoading(false)
       } else {
         setError("Failed to set password. Try again.");
         setLoading(false)
@@ -66,10 +67,17 @@ const SetPassword = () => {
 
   return (
     <div className="set-password-container">
-      <h2 style={{fontSize : '2rem',margin : '0rem 0rem 2rem 0' , fontWeight : 'bold'}}>Set Your Password</h2>
+      <Helmet>
+        <title>Set Your Password – Secure Your Account | Bindhash</title>
+        <meta
+          name="description"
+          content="Create a strong password to protect your Bindhash account. Your security matters—set your password to continue connecting safely."
+        />
+      </Helmet>
+      <h2 style={{ fontSize: '2rem', margin: '0rem 0rem 2rem 0', fontWeight: 'bold' }}>Set Your Password</h2>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit} className="password-form">
-        
+
         {/* Password Field */}
         <TextField
           type={showPassword ? "text" : "password"}
@@ -90,29 +98,29 @@ const SetPassword = () => {
 
         {/* Confirm Password Field */}
         <TextField
-          type={ "password"}
+          type={"password"}
           label="Confirm Password"
           variant="outlined"
           fullWidth
           required
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-        
+
         />
 
         {/* Submit Button */}
-        <Button type="submit" disabled={loading}  variant="contained"sx={{
-    background: 'var(--linearcolor)',
-    marginTop : '2rem',
-    padding: '0.8rem',
-    color: '#fff',
-    '&:hover': {
-      background: 'var(--linearcolor)', // optional, same as default
-      opacity: 0.9
-    },
-  }} fullWidth>
-    {loading ?<CircularProgress size='1.5rem' color='white'/> : "Set Password"}
-         
+        <Button type="submit" disabled={loading} variant="contained" sx={{
+          background: 'var(--linearcolor)',
+          marginTop: '2rem',
+          padding: '0.8rem',
+          color: '#fff',
+          '&:hover': {
+            background: 'var(--linearcolor)', // optional, same as default
+            opacity: 0.9
+          },
+        }} fullWidth>
+          {loading ? <CircularProgress size='1.5rem' color='white' /> : "Set Password"}
+
         </Button>
       </form>
     </div>

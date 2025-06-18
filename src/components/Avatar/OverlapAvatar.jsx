@@ -14,7 +14,7 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 
 
 
-export default function OverlapAvatar({username,profile_pic,secondusername,secondprofile_pic,size}) {
+export default function OverlapAvatar({ username, profile_pic, secondusername, secondprofile_pic, size }) {
 
 
 
@@ -24,10 +24,18 @@ export default function OverlapAvatar({username,profile_pic,secondusername,secon
         overlap="circular"
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         badgeContent={
-          <SmallAvatar alt={secondusername} src={secondprofile_pic} />
+          <SmallAvatar alt={secondusername} src={secondprofile_pic} slotProps={{
+            img: {
+              loading: "lazy",
+            },
+          }} />
         }
       >
-        <Avatar alt={username} src={profile_pic}  />
+        <Avatar alt={username} src={profile_pic} sx={{ background: 'var(--linearcolor)'}} slotProps={{
+          img: {
+            loading: "lazy",
+          },
+        }} />
       </Badge>
     </Stack>
   );

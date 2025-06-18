@@ -1,5 +1,5 @@
 import React from "react";
-
+import Emptyuser from '../../Photo/BindhashLogo.png'
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -21,55 +21,54 @@ class ErrorBoundary extends React.Component {
         <div
           style={{
             position: "fixed",
-            zIndex: "1111111111111111",
-            background: "white",
-            left: "0",
-            top: "0",
+            zIndex: 99999,
+            background: "var(--webbackcolor)",
+            left: 0,
+            top: 0,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            height: "100%",
-            width: "100%",
+            height: "100vh",
+            width: "100vw",
+            textAlign: "center",
             padding: "2rem",
+            fontFamily: "sans-serif",
           }}
         >
-          <h1 style={{ textAlign: "center" }}>
-            🚨 Something went wrong!
-          </h1>
-          <p style={{ color: "red", fontWeight: "bold" }}>
-            {this.state.error?.toString()}
-          </p>
-          <pre
+          <img
+            src={Emptyuser}
+            alt="Something went wrong"
             style={{
-              whiteSpace: "pre-wrap",
-              wordBreak: "break-word",
-              maxHeight: "300px",
-              overflowY: "auto",
-              border: "1px solid #ccc",
-              padding: "1rem",
-              backgroundColor: "#f0f0f0",
-              width: "80%",
-              textAlign: "left",
+              height: "160px",
+              width: "160px",
+              userSelect: "none",
+              marginBottom: "1rem",
+              opacity: 0.8,
             }}
-          >
-            {this.state.errorInfo?.componentStack}
-          </pre>
+          />
+          <h2 style={{ color: "var(--textcolor)", marginBottom: "0.5rem" }}>
+            Oops! Something went wrong.
+          </h2>
+          <p style={{ color: "#5e6c84", maxWidth: "400px" }}>
+            An unexpected error has occurred. Please try refreshing the page or come back later.
+          </p>
+
           <button
             onClick={() => window.location.reload()}
             style={{
-              padding: "0.8rem 1.5rem",
-              marginTop: "1rem",
-              fontSize: "1rem",
-              fontWeight: "bold",
-              backgroundColor: "#007bff",
-              color: "#fff",
+              marginTop: "1.5rem",
+              background: "var(--logolinearcolor)",
+              color: "white",
+              padding: "0.6rem 1.2rem",
               border: "none",
               borderRadius: "5px",
               cursor: "pointer",
+              fontWeight: 500,
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
             }}
           >
-            🔄 Refresh
+            Reload Page
           </button>
         </div>
       );

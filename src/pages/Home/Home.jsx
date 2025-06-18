@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import './Home.css'
 import '../../App.css'
+import { Helmet } from "react-helmet";
 import { motion, transform, AnimatePresence } from "framer-motion";
 import { AllPostContextData } from "../../Context/AllPostContext";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
@@ -71,7 +72,7 @@ const Home = () => {
   const [selectedFilter, setSelectedFilter] = useState("all")
   const [sortBy, setSortBy] = useState("recent")
   const [anchorEl, setAnchorEl] = useState(null);
- 
+
 
 
 
@@ -297,6 +298,13 @@ const Home = () => {
 
   return (
     <section className="container">
+      <Helmet>
+        <title>Live Feed – Stories & Confessions | Bindhash</title>
+        <meta
+          name="description"
+          content="Scroll through real, raw, and anonymous posts from people just like you. Discover emotional stories, failures, and victories shared from the heart."
+        />
+      </Helmet>
       {videoselect && <PostEditView setVideoselect={setVideoselect} setVideopost={setVideopost} setVideoType={setVideoType} postdata={videopost} type={videotype} />}
       <div ref={homeporfileRef} className="home-profile-out-box scrollbar">
         <div className="home-profile">
@@ -354,53 +362,7 @@ const Home = () => {
       </div>
       <div className="container-box scrollbar">
 
-        {/* <div className="home-post-box">
-          <div className="home-post-box-upload">
 
-            <form onSubmit={handlePostSubmit} className="home-post-type-box">
-              <textarea name="post" placeholder="What failure did you faced today?" value={content} onChange={handlecontendChange} />
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-
-                <button className="button" type="submit">Post</button>
-              </div>
-            </form>
-
-            <div className="home-post-button-box">
-              <ImageUploader />
-              <input type="file"
-                ref={videouploadRef}
-                onChange={handlevideoChange}
-                accept="video/*"
-                style={{ display: "none" }}
-                className=" home-vidoe-post-input"
-              />
-              <button onClick={videobtnclick} className="home-post-button-box-video"><Video size={18} className="home-upload-icon" />Video</button>
-              <button onClick={hanldestorymodel} className="home-post-button-box-story"><CircleFadingPlus size={18} className="home-upload-icon" />Story</button>
-              <button className="home-post-button-box-story" onClick={() => setPollcreation(true)}><DiamondPlus size={18} className="home-upload-icon" />Poll</button>
-              {pollcreation && <PollCreate pollcreation={pollcreation} onClose={() => setPollcreation(false)} />}
-            </div>
-
-          </div>
-
-        </div> */}
-
-        {/* <motion.div
-          className="feed-header"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="feed-header-content">
-            <div className="feed-title-section">
-              <Typography variant="h3" component="h1" className="feed-title">
-                Failure Stories Feed
-              </Typography>
-              <Typography variant="body1" className="feed-subtitle">
-                Share your setbacks, find strength in vulnerability
-              </Typography>
-            </div>
-          </div>
-        </motion.div> */}
 
         <motion.div
 
@@ -413,7 +375,7 @@ const Home = () => {
 
           <div className="feed-controls">
             <div className="feed-filters">
-             
+
               <Chip
                 label="All Stories"
                 onClick={() => setSelectedFilter("all")}
@@ -446,7 +408,7 @@ const Home = () => {
               />
             </div>
 
-            <div className="feed-sort">
+            {/* <div className="feed-sort">
               <Button
                 variant="outlined"
                 startIcon={<SortOutlined />}
@@ -481,7 +443,7 @@ const Home = () => {
                   Most Reactions
                 </MenuItem>
               </Menu>
-            </div>
+            </div> */}
           </div>
 
         </motion.div>
@@ -492,7 +454,7 @@ const Home = () => {
         <PostContent feed={feed} />
       </div>
       <div ref={homeusggestionRef} className="user-suggestion scrollbar">
-        {/* <UserSearch /> */}
+
         <Queots />
         {resizedisplay && <Leaderboard />}
         <SuggestedUsers homeuser={true} />
@@ -506,7 +468,7 @@ const Home = () => {
       {isMobile && (<motion.div
         className="home-float-u-btn"
         initial={{ width: 0, height: 0, opacity: 0 }}
-        animate={{ width: "4rem", height: "4rem", opacity: 1}}
+        animate={{ width: "4rem", height: "4rem", opacity: 1 }}
         whileHover={{
           scale: 1.15,
           boxShadow: "0px 0px 15px rgba(0, 136, 255, 0.6)",
@@ -528,7 +490,7 @@ const Home = () => {
 
 
 
-     
+
     </section>
   );
 };

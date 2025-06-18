@@ -2,8 +2,8 @@
     position: fixed;
     bottom: 0%;
     left: 0%;
-    height: 5rem;
-    background: rgb(246, 244, 244);
+    height: 3rem;
+    background: var(--backwhitecolor);
 
     width: 100%;
     display: flex;
@@ -11,13 +11,11 @@
     padding: 0rem 1.5rem;
     justify-content: space-between;
     backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.2);
     z-index: 1;
     
 }
 .mobile-nav.glass {
-    background: rgba(255, 255, 255, 0.1);
+     background: var(--backwhitecolor);
 }
 
 /* Hide the navbar when scrolling down */
@@ -29,10 +27,12 @@
     color: rgb(0, 0, 0);
     padding: 0.75rem;
     border-radius: 50%;
-    background:linear-gradient(135deg, #e7e7e7a1, #f2f2f2);
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--textcolor);
+    font-size: 7rem;
+    /* background:linear-gradient(135deg, #e7e7e7a1, #f2f2f2); */
+    /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); */
+
+    /* border: 1px solid rgba(255, 255, 255, 0.3); */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,25 +40,17 @@
     cursor: pointer;
 }
 
-.mobile-nav-a button:hover {
-    box-shadow: 0px 6px 12px rgba(39, 39, 39, 0.39);
-    transform: scale(1.1) rotate(-5deg);
-}
+
 
 /* Tap Effect */
 .mobile-nav-a button:active {
     transform: scale(0.95);
 }
 
-/* Icon Styling */
-.mobile-nav-a button svg {
-    width: 1.6rem;
-    height: 1.6rem;
-    /* fill: none; */
-    stroke: #000;
-    stroke-width: 2;
-}
+
 .mobile-nav-active-icon{
-    fill: black !important;
-    stroke: black !important;
+    /* fill: black !important;
+    stroke: black !important; */
+    color: var(--blue-color);
+    
 }

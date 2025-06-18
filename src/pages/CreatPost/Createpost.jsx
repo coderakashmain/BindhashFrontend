@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Createpost.css";
+import { Helmet } from 'react-helmet'
 import {
     TextField,
     Button,
@@ -71,10 +72,17 @@ export default function CreatePost() {
 
     return (
         <div className="create-post-container">
+            <Helmet>
+                <title>Create Post – Share Freely | Bindhash</title>
+                <meta
+                    name="description"
+                    content="Share your story, experience, or failure anonymously or with your identity on Bindhash. Express yourself and connect with others who relate."
+                />
+            </Helmet>
             <Card className="create-post-card">
                 <CardContent>
                     <Typography variant="h5" align="center" gutterBottom>
-                    Share Your Failure
+                        Share Your Failure
                     </Typography>
 
                     <div className="form-group">

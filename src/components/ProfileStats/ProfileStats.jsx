@@ -10,6 +10,8 @@ import { duration } from "@mui/material";
 import Followbtn from "./Followbtn";
 import SuggestedUsers from "../SuggestedUsers/SuggestedUsers";
 import { FollowersFollowingContext } from "../../Context/FollowersFollowing";
+import Subheadcomponent from "../Subheadcomponent/Subheadcomponent";
+import CombineAvatat from "../Avatar/CombineAvatat";
 
 
 const ProfileStats = ({ gap }) => {
@@ -52,9 +54,11 @@ const ProfileStats = ({ gap }) => {
   return (
     <div className="profile-follow-data" style={{ display: 'flex', flexDirection: 'row', gap: gap ? gap : '2vw' }}>
       <div onClick={fetchFollowersdlist} style={{ cursor: 'pointer' }}>
-        <strong style={{ fontSize: '1.1rem', display: 'block', textAlign: 'center' }}>{stats.followers_count}</strong> <span
+        <strong style={{ fontSize: '1.1rem', display: 'block', textAlign: 'center' }}>{stats.followers_count}</strong>
+         <span
           style={{ fontSize: '0.75rem', color: 'gray' }}
-        >Followers</span>
+        >Followers
+        </span>
       </div>
       <div onClick={fetchFollowinglist} style={{ cursor: "pointer" }}>
         <strong style={{ fontSize: '1.1rem', display: 'block', textAlign: 'center' }}>{stats.following_count}</strong> <span
@@ -69,8 +73,8 @@ const ProfileStats = ({ gap }) => {
           transition={{ duration: 0.3, ease: 'easeInOut' }}
 
         >
-          <button className="close-btn" onClick={() => setShowFollowers(false)}><X /></button>
-          <h4>Followers</h4>
+      
+         <Subheadcomponent headline="Followers" onClose={()=> setShowFollowers(false)} />
           {followersList.length === 0 ? (
             <p>No followers yet.</p>
           ) : (
@@ -78,14 +82,14 @@ const ProfileStats = ({ gap }) => {
               {followersList.map((user) => (
                 <li key={user.id} className="followrslist-li">
                   <div className="followrslist-li-div">
-                  <img src={user.profile_pic || dafaultprofilepic} alt="Profile" className="profile-img" />
+                     <CombineAvatat username={user.username} profile_pic={user.profile_pic} visibility={user.visibility} size="2.2rem"/>
                   <div className="followrs-user-details-left">
                     <span className="user-name">{user.fullname}</span>
                     <span className="user-username">@{user.username}</span>
                   </div>
                   </div>
                   <div className="followres-user-details-right">
-                    <Followbtn targetUserId={user.id} />
+                    <Followbtn userId={user.id} />
                   </div>
                 </li>
               ))}
@@ -101,23 +105,25 @@ const ProfileStats = ({ gap }) => {
 
           animate={{ opacity: 1, scale: 1, x: isMobile ? '0%' : 0 }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}>
-          <button className="close-btn" onClick={() => setShowFollowing(false)}><X /></button>
-          <h4>Following</h4>
+    
+    
+                  <Subheadcomponent headline="Following" onClose={()=> setShowFollowing(false)} />
           {followingList.length === 0 ? (
             <p>Not following anyone yet.</p>
           ) : (
             <ul>
               {followingList.map((user) => (
-
-                <li key={user.id}>
-                  <img src={user.profile_pic || dafaultprofilepic} alt="Profile" className="profile-img" />
+              
+                <li key={user.id} className="user-details-li">
+                  {/* <img src={user.profile_pic || dafaultprofilepic} alt="Profile" className="profile-img" /> */}
+                  <CombineAvatat username={user.username} profile_pic={user.profile_pic} visibility={user.visibility} size="2.2rem"/>
                   <div className="user-details">
                     <div className="followrs-user-details-left">
                       <span className="user-name">{user.fullname}</span>
-                      <span className="user-username">@{user.username}</span>
+                      <span className="user-username">@ {user.username}</span>
                     </div>
                     <div className="followres-user-details-right">
-                      <Followbtn targetUserId={user.id} />
+                      <Followbtn userId={user.id} />
                     </div>
                   </div>
                 </li>

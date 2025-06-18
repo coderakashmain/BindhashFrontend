@@ -28,6 +28,8 @@ const Slidebar = () => {
   const {isMobile}  = useContext(MobileViewContext)
 
 
+if (!usertoken || !usertoken.user) return null;
+
   useEffect(() => {
     const handleMouseDown = (e) => {
       if (sidebarref.current) {
@@ -161,7 +163,7 @@ const Slidebar = () => {
             <Link to="/createpost" style={location.pathname === '/createpost' ? { color: 'var(--primary-color)' } : {}}><PenLine strokeWidth={location.pathname === '/createpost' ? 3 : '2'} size='1.3rem' />{collapsed ? '' : "Create Post"} </Link>
           </li>
           <li>
-            <Link to="/profile" style={location.pathname === '/profile' ? { color: 'var(--primary-color)' } : {}}><CircleUser strokeWidth={location.pathname === '/profile' ? 3 : '2'} size='1.3rem' /> {collapsed ? '' : "Profile"}</Link>
+            <Link to={`/profile/o/${usertoken?.user?.username}`} style={location.pathname === `/profile/o/${usertoken?.user?.username}` ? { color: 'var(--primary-color)' } : {}}><CircleUser strokeWidth={location.pathname === `/Profile/o/${usertoken.user.username}` ? 3 : '2'} size='1.3rem' /> {collapsed ? '' : "Profile"}</Link>
           </li>
           <li>
             <Link to="/setting" style={location.pathname === '/setting' ? { color: 'var(--primary-color)' } : {}}><Settings size='1.3rem' strokeWidth={location.pathname === '/setting' ? 3 : '2'} /> {collapsed ? '' : "Settings"}</Link>

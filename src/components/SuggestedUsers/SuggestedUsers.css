@@ -1,12 +1,7 @@
 .suggested-users-container {
     margin: 2rem 0 0 0 !important;
     background-color: var(--backwhitecolor)!important; ;
-    /* box-shadow: var(--webbackshahow); */
-    /* padding: 0.91rem;
-    border-radius: 10px; */
-    width: 100% !important;
-    /* max-width: 350px; */
-    border: var(--border-color);
+    padding: 0.7rem 0.4rem;
     border-radius:var(--border-radius);
   }
   
@@ -14,6 +9,7 @@
     font-size: 1rem;
     color: var(--textcolor);
     margin-bottom: 10px;
+    margin-left: 0.6rem;
   }
   
   .suggestion-profile {
@@ -23,7 +19,6 @@
     padding: 8px 10px;
     border-radius: 8px;
     margin-bottom: 8px;
-    background: var(--lightbackcolor);
     transition: background 0.3s ease;
   }
   
@@ -31,19 +26,7 @@
     background: var(--lightbackhovercolor);
   }
   
-  .suggestion-profile-pic{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ddd;
-    overflow: hidden;
-  }
-  .suggestion-profile-pic img {
-   height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-  }
+  
   
   .suggestion-profile-info {
     flex-grow: 1;
@@ -52,7 +35,7 @@
   
   .suggestion-profile-info h3 {
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--textcolor);
     margin: 0;
   }
@@ -66,30 +49,3 @@
   .suggestion-profile-info strong {
     color: var(--lighttextcolor);
   }
-  
-  .suggestion-profile button {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .suggestion-profile button:hover {
-    background: #0056b3;
-  }
-  
-  .suggestion-profile button.liked {
-    background: red;
-  }
-  
-  .suggestion-profile button.liked:hover {
-    background: darkred;
-  }
-  

@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import SendIcon from '@mui/icons-material/Send';
 import { Avatar } from '@mui/material';
 import Bangbox from '../../components/Bangbox/Bangbox';
+import { Helmet } from 'react-helmet';
 
 
 
@@ -20,7 +21,7 @@ import Bangbox from '../../components/Bangbox/Bangbox';
 const RandomsubroomChat = () => {
   const socket = useSocket()
 
-
+    const { category,subroomId, chatroomname } = useParams();
 
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
@@ -48,7 +49,8 @@ const RandomsubroomChat = () => {
   const subroomidSlug = slug.split('-').pop();
 
 
-
+    const chatroomName = category.split('-').slice(0, -1).join(' ');
+    const subroomname = slug.split('-').slice(0, -1).join(' ');
 
 
 
@@ -255,6 +257,14 @@ const RandomsubroomChat = () => {
   return (
     <section className='sbr-r-chat'>
 
+      <Helmet>
+        <title>{`Random Chat | ${chatroomName.toUpperCase()} – ${subroomname} Room | Bindhash`}</title>
+        <meta
+          name="description"
+          content={`Start an anonymous random chat in the ${chatroomName} section of the ${subroomname} Room on Bindhash. Connect instantly with like-minded people going through similar experiences.`}
+        />
+      </Helmet>
+
       {!chattype && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -356,7 +366,7 @@ const RandomsubroomChat = () => {
             </motion.div>
           </AnimatePresence>
         ))}
-        
+
         {(!strangerInfo || !roomId) && (
           <div className="sbr-match-user-box">
             {newUserFind ? (
@@ -377,9 +387,9 @@ const RandomsubroomChat = () => {
                 !selfLeft ? (<AnimatePresence>
                   <motion.div
                     className='sbr-r-nutral-chat'
-                    initial={{ opacity: 0 , y : 10 }}
-                    animate={{ opacity: 1 , y : 0}}
-                    exit={{ opacity: 0 ,y : 10}}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.6 }}
                   >
                     Let Connect With Similar Mindset People.
@@ -390,9 +400,9 @@ const RandomsubroomChat = () => {
                   (<AnimatePresence>
                     <motion.div
                       className='sbr-r-nutral-chat-self-left'
-                      initial={{ opacity: 0,y : 10 }}
-                      animate={{ opacity: 0.7,y : 0 }}
-                      exit={{ opacity: 0  ,y: 10 }}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 0.7, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.6 }}
                     >
                       You Left The Chat.

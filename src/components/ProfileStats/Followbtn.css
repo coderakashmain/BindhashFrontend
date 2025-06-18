@@ -1,3 +1,18 @@
-.follow-fuction{
-    transition: all 0.2s ease-in-out !important;
+.follow-fuction {
+  transition: all 0.2s ease-in-out !important;
+  padding: 0.3rem 1rem !important;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  outline: none;
+  /* border: 1px solid var(--lighttextcolor); */
+
+  background: var(--logolinearcolor);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
