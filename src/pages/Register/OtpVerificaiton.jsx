@@ -1,11 +1,9 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
-    import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet";
 import { useLocation, useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useEditor } from '@tiptap/react';
 import { TextField, Button } from "@mui/material";
-import './Otpverification.css'
 import { SnackbarContext } from "../../Context/SnackbarContext";
 import '../../App.css'
 
@@ -100,18 +98,18 @@ const OtpVerificaiton = () => {
     return (
         <div className="register-container-box1">
             <Helmet>
-  <title>Verify OTP – Secure Your Access | Bindhash</title>
-  <meta 
-    name="description" 
-    content="Enter the OTP sent to your email to verify your identity and complete your Bindhash login or registration. This helps keep your account secure." 
-  />
-</Helmet>
+                <title>Verify OTP – Secure Your Access | Bindhash</title>
+                <meta
+                    name="description"
+                    content="Enter the OTP sent to your email to verify your identity and complete your Bindhash login or registration. This helps keep your account secure."
+                />
+            </Helmet>
             <div className="register-container-box1-inside">
-                <h2>Email Authentication</h2>
+                <h2 style={{marginBottom : '2rem'}}>Email Authentication</h2>
                 {error && <p className="error">{error}</p>}
                 <form onSubmit={handleVerifyOtp} style={{ width: '100%' }}>
 
-                    {/* <input type="number" placeholder="OTP" value={otp} onChange={(e) => setOtp(e.target.value)} required /> */}
+               
                     <TextField
                         label="OTP"
                         variant="outlined"
@@ -132,8 +130,8 @@ const OtpVerificaiton = () => {
                         {loading ? <CircularProgress size='1.2rem' color='white' /> : "Verify OTP"}
                     </button>
                 </form>
-                <p style={{fontSize : '0.8rem', marginTop : '1rem'}}>
-                    Didn't receive OTP?  {isresend ? (<span style={{color : 'var(--blue-color)', cursor : 'pointer', fontWeight : 'bold'}} onClick={() =>navigate(-1)}>Resend OTP.</span>) : (<span style={{color : 'var(--blue-color)'}} > Resend in {timer}</span>)}
+                <p style={{ fontSize: '0.8rem', marginTop: '1rem' }}>
+                    Didn't receive OTP?  {isresend ? (<span style={{ color: 'var(--blue-color)', cursor: 'pointer', fontWeight: 'bold' }} onClick={() => navigate(-1)}>Resend OTP.</span>) : (<span style={{ color: 'var(--blue-color)' }} > Resend in {timer}</span>)}
                 </p>
 
             </div>
