@@ -22,7 +22,7 @@ const SetUsername = () => {
     if (!email) {
       navigate("/register"); // Redirect if no email found
     }
-    console.log("This is my email ", email)
+
   }, [email, navigate]);
 
   const handleSubmit = async (e) => {
