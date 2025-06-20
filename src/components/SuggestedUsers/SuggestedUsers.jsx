@@ -48,16 +48,7 @@ const SuggestedUsers = ({ homeuser }) => {
           </div>
         ))}
       </>) : (
-        // <Box sx={{ width: "100%" }} >
-        //   <Skeleton height={50} />
-        //   <Skeleton animation="wave" height={50} />
-        //   <Skeleton height={50} />
-        //   <Skeleton animation="wave" height={50} />
-        //   <Skeleton height={50} />
-        //   <Skeleton animation="wave" />
-        //   <Skeleton animation="wave" />
-        //   <Skeleton animation={false} />
-        // </Box>
+      
         <ChatListSkeleton rows={5}/>
       )}
     </div>

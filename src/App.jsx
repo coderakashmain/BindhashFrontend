@@ -16,16 +16,23 @@ import ProfileRouter from './Router/ProfileRouter';
 import SnackbarProvider from './Context/SnackbarContext';
 import { UploadProvider } from './Context/UploadProvider';
 import CircularLoader from './components/Fallback/CircularLoader';
-import RandomsubroomChat from './pages/Room/RandomsubroomChat';
-import RoomChatbox from './pages/Room/RoomChatbox';
-import SubRoomDefaultChatpage from './pages/Room/SubRoomDefaultChatpage';
-import CreateChatRoom from './pages/Room/CreateChatRoom';
-import LandingPage from './pages/LandingPage/LandingPage';
-import Feedback from './pages/Feedback/Feedback';
-import ForgatePassword from './pages/Register/ForgatePassword';
 
 
 
+
+
+
+
+
+
+
+const RandomsubroomChat = lazy(() => import('./pages/Room/RandomsubroomChat'));
+const RoomChatbox = lazy(() => import('./pages/Room/RoomChatbox'));
+const SubRoomDefaultChatpage = lazy(() => import('./pages/Room/SubRoomDefaultChatpage'));
+const CreateChatRoom = lazy(() => import('./pages/Room/CreateChatRoom'));
+const Feedback = lazy(() => import('./pages/Feedback/Feedback'));
+const LandingPage = lazy(() => import('./pages/LandingPage/LandingPage'));
+const ForgatePassword = lazy(() => import('./pages/Register/ForgatePassword'));
 const RoomChat = lazy(() => import('./pages/Room/RoomChat'));
 const HomeRouter = lazy(() => import('./Context/HomeRouter'));
 const Home = lazy(() => import('./pages/Home/Home'));
@@ -91,8 +98,7 @@ const App = () => {
       children: [
         {
           path: 'welcome-page',
-          index: true,
-          element: <><ErrorBoundary><LandingPage /></ErrorBoundary></>
+          element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><LandingPage /></Suspense></ErrorBoundary></>
         },
 
         {
@@ -108,10 +114,7 @@ const App = () => {
                   path: '',
                   element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><Home /></Suspense></ErrorBoundary></>
                 },
-                // {
-                //   path: '/:postid/:pusername',
-                //   element: <><ErrorBoundary><Suspense fallback = {<CircularLoader/>}><Home /></Suspense></ErrorBoundary></>
-                // },
+                
                 {
                   path: '/story-view/:id',
                   element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><StoryView /></Suspense></ErrorBoundary></>
@@ -251,7 +254,7 @@ const App = () => {
             },
             {
               path: 'forgotepassword',
-              element: <><ErrorBoundary><ForgatePassword /></ErrorBoundary></>
+              element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><ForgatePassword /></Suspense></ErrorBoundary></>
             },
           ]
         },

@@ -21,9 +21,7 @@ export default defineConfig({
       },
     },
   },
-  // optimizeDeps: {
-  //   include: ["@ffmpeg/ffmpeg"],
-  // },
+
   build: {
     rollupOptions: {
       output: {
