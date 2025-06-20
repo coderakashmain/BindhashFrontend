@@ -20,7 +20,7 @@ const SuggestedUsers = ({ homeuser }) => {
         const nonAnonymousUsers = response.data.filter(user => user.visibility !== "anonymous");
         setSuggestedUsers(nonAnonymousUsers);
       } catch (error) {
-        console.error("Error fetching suggested users:", error);
+        console.error("Error fetching suggested users:", error.response.data.error);
       }
     };
 
