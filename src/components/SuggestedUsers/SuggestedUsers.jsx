@@ -12,13 +12,16 @@ import ChatListSkeleton from "../Fallback/ChatListSkeleton";
 const SuggestedUsers = ({ homeuser }) => {
   const { usertoken } = useContext(UserAuthCheckContext);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+
     const fetchSuggestedUsers = async () => {
       try {
         const response = await axios.get(`/api/users/suggested-users?userId=${usertoken?.user?.id}`);
         const nonAnonymousUsers = response.data.filter(user => user.visibility !== "anonymous");
         setSuggestedUsers(nonAnonymousUsers);
+        setLoading(false)
       } catch (error) {
         console.error("Error fetching suggested users:", error.response.data.error);
       }
@@ -31,26 +34,34 @@ const SuggestedUsers = ({ homeuser }) => {
 
   return (
     <div className="suggested-users-container" style={homeuser ? { padding: '0.91rem' } : {}}>
-      {suggestedUsers.length > 0 ? (<>
-        <h2>Suggested Users</h2>
-        {suggestedUsers.map((user) => (
-          <div key={user.id} className="suggestion-profile">
-            <div className="suggestion-profile-pic">
+      {!suggestedUsers.length > 0 && (
+        loading ? (
+          <>
 
-              <CombineAvatat username={user.username} profile_pic={user.profile_pic} visibility={user.visibility} size="2.2rem" />
+            <h2>Suggested Users</h2>
+            {suggestedUsers.map((user) => (
+              <div key={user.id} className="suggestion-profile">
+                <div className="suggestion-profile-pic">
 
-            </div>
-            <div className="suggestion-profile-info">
-              <h3>{user.username}</h3>
-             
-            </div>
-            <Followbtn targetUserId={user.id} />
-          </div>
-        ))}
-      </>) : (
-      
-        <ChatListSkeleton rows={5}/>
-      )}
+                  <CombineAvatat username={user.username} profile_pic={user.profile_pic} visibility={user.visibility} size="2.2rem" />
+
+                </div>
+                <div className="suggestion-profile-info">
+                  <h3>{user.username}</h3>
+
+                </div>
+                <Followbtn targetUserId={user.id} />
+              </div>
+            ))}
+          </>
+        ) :
+          (
+
+            <ChatListSkeleton rows={5} />
+          )
+      )
+      }
+
     </div>
   );
 };

@@ -8,7 +8,7 @@ import './DefaultChatPage.css';
 import CloseIcon from '@mui/icons-material/Close';
 import { FollowersFollowingContext } from '../../Context/FollowersFollowing';
 import { useNavigate } from 'react-router-dom';
-import defaultprofilepic from '../../Photo/defaultprofilepic.png';
+
 
 const DefaultChatPage = () => {
   const { followersList, followingList, fetchFollowers, fetchFollowing } = useContext(FollowersFollowingContext);

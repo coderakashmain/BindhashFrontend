@@ -237,7 +237,7 @@ const UserList = () => {
           </div>
         )) :
         (<div className="no-chat-user">
-          <button> Start a new chat </button>
+          <button> No Friends yet!</button>
 
         </div>) : (<ChatListSkeleton />)
       }

@@ -45,6 +45,14 @@
     border-color: transparent transparent rgba(0, 0, 0, 0.85) transparent;
   }
   
+
+  .user-rank-box h3{
+    display: inline-block;
+    padding: 0.5rem 2rem;
+    border: var(--border-color);
+    border-radius: 2rem;
+    margin: 2rem 0  !important;
+  }
   
   .leaderboard h2 {
     font-size: 1.5rem;
@@ -96,11 +104,12 @@
   
   .score {
     font-size: 0.9rem;
-    color: var(--lighttextcolor);
+    /* color: var(--lighttextcolor); */
     margin-left: 0.6rem;
     display: flex;
     align-items: center;
     gap: 0.2rem;
+    
   }
   .leader-own-user{
     display: flex;
@@ -129,6 +138,7 @@
   .leader-own-user{
     display: flex;
     flex-direction: row;
+    gap: 0.5rem;
   }
   .leader-own-user-name{
     display: flex;

@@ -97,9 +97,22 @@ const Room = () => {
         <div className="room-list">
           {rooms.map((room) => (
             <div key={room.room_id} className="room-card">
-
-              <h3>{room.room_name}
+              <header>
+                    <h3>{room.room_name}
               </h3>
+
+              <div className="all-r-l-arrow click" onClick={() => {
+                      if (!navigateLoading) {
+
+                        navigate(room.room_name, { state: { room } });
+                      }
+
+                    }}>
+                        <MoveRight />
+              </div>
+
+              </header>
+          
               <small style={{ fontSize: '0.8rem', fontWeight: '400', color: 'var(--lighttextcolor)' }}>{room.room_description}</small>
 
 
@@ -118,7 +131,7 @@ const Room = () => {
 
                       <div className="subrooms-b-join-l">
                         <div className='live-dot'></div>
-                        <span >+235 active now</span>
+                        <span >Live</span>
                       </div>
 
                       <div className="subroom-list-join active click" onClick={() => {
@@ -159,14 +172,14 @@ const Room = () => {
         </div>
       </div>
 
-      <div className="room-custum">
+      {/* <div className="room-custum">
         <ul>
           <li>P/R</li>
           <li>A/R</li>
           <li>F/R</li>
           <li>S/R</li>
         </ul>
-      </div>
+      </div> */}
     </section>
   )
 }

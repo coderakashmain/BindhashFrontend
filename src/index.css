@@ -1,115 +1,109 @@
 @import "tailwindcss";
 * {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   margin: 0;
   padding: 0;
- box-sizing: border-box;
- 
+  box-sizing: border-box;
 }
-body{
+body {
   background-color: var(--webbackcolor);
   color: var(--textcolor);
-  
-
 }
 
-:root{
+:root {
   /* --webbackcolor : #FAFCFF; */
-  --webbackcolor : #F2F5FA;
-  --secondwebbackcolor : linear-gradient(135deg, #f8faff, #e3f2fd, #bbdefb);
+  --webbackcolor: #f2f5fa;
+  --secondwebbackcolor: linear-gradient(135deg, #f8faff, #e3f2fd, #bbdefb);
   /* --webbackcolor : #f5f5f5; */
-  --webbackshahow :  0px 4px 10px rgba(0, 0, 0, 0.1);
-  --backwhitecolor : rgb(255, 255, 255);
-  --backblackcolor : #000000;
-  --lightbackcolor : #f9f9f9;
-  --lightbackhovercolor : #f6f6f6;
-  --lightbackcolor2 : #cbd4d742;
-  --icon-back-color : #bae0ea70;
+  --webbackshahow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  --backwhitecolor: rgb(255, 255, 255);
+  --backblackcolor: #000000;
+  --lightbackcolor: #f9f9f9;
+  --lightbackhovercolor: #f6f6f6;
+  --lightbackcolor2: #cbd4d742;
+  --icon-back-color: #bae0ea70;
 
-  
-  --navbackcolor : rgb(255, 255, 255);
-  --navboxshodow :  0 4px 10px rgba(0, 0, 0, 0.1);
-  
+  --navbackcolor: rgb(255, 255, 255);
+  --navboxshodow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
   --textwhitecolor: #ffffff;
-  --blacktextcolor : #000;
+  --blacktextcolor: #000;
   --textcolor: black;
-  --lighttextcolor :#757575;
-  --icon-color : #2a5b66;
+  --lighttextcolor: #757575;
+  --icon-color: #2a5b66;
   --buttoncolor: rgb(59 85 99);
-  --buttonhovercolor : rgba(30, 161, 209, 0.251);
-  --popupbackcolor : rgba(0, 0, 0, 0.081);
+  --buttonhovercolor: rgba(30, 161, 209, 0.251);
+  --popupbackcolor: rgba(0, 0, 0, 0.081);
   /* --linearcolor : linear-gradient(135deg, black, #2890E1); */
   /* --linearcolor :linear-gradient(135deg, #00d4ff, #0088ff); */
-  --linearcolor : linear-gradient(45deg, #1976d2, #42a5f5);
-  --secondlinearcolor : linear-gradient(45deg, #f9f9f9, #f9f9f9);
-  --logolinearcolor : linear-gradient(45deg, #1976d2, #42a5f5);
-  --titlelinearcolor :  linear-gradient(45deg, #1a1a1a, #1976d2);
-  --texthovercolor : rgb(0, 122, 255);
-
+  --linearcolor: linear-gradient(45deg, #1976d2, #42a5f5);
+  --secondlinearcolor: linear-gradient(45deg, #f9f9f9, #f9f9f9);
+  --logolinearcolor: linear-gradient(45deg, #1976d2, #42a5f5);
+  --titlelinearcolor: linear-gradient(45deg, #1a1a1a, #1976d2);
+  --texthovercolor: rgb(0, 122, 255);
 
   --primary-color: #1976d2;
-  --active-color : #00be00;
-   --tooltip-color : #878787;
+  --active-color: #00be00;
+  --tooltip-color: #878787;
   --text-color: #333;
   --background-color: #fff;
 
-  --border-color : 1px solid #e4e4e4;
-  --border-color2 : 1px solid rgb(180 212 220 / 13%);
-  --post-card-border : 1px solid rgba(25, 118, 210, 0.1) ;
-  --post-box-shadow :  #8b8b8bb3;
-  --danger-color : red;
-  --light-danger-color : #d62839;
-  --secondary-box-shadow :   rgba(120, 142, 147, 0.316);
-  --blue-color : #1976d2;
-  --light-blue-color : #b0d8f96c;
-
+  --border-color: 1px solid #e4e4e4;
+  --border-color2: 1px solid rgb(180 212 220 / 13%);
+  --post-card-border: 1px solid rgba(25, 118, 210, 0.1);
+  --post-box-shadow: #8b8b8bb3;
+  --danger-color: red;
+  --light-danger-color: #d62839;
+  --secondary-box-shadow: rgba(120, 142, 147, 0.316);
+  --blue-color: #1976d2;
+  --light-blue-color: #b0d8f96c;
 
   --skeleton-color: #e0e0e0;
-  --skeleton-before-c : #f0f0f0;
+  --skeleton-before-c: #f0f0f0;
   --skeleton-bg: white;
 
-  --skroom-bg: #F2F5FA;
+  --skroom-bg: #f2f5fa;
   --skroom-shade: #fcfcfc;
 
-  --border-radius : 10px;
+  --border-radius: 10px;
 
-  --bothwhitecolor : white;
+  --bothwhitecolor: white;
 }
 .dark {
-  --webbackcolor : #080C16;
+  --webbackcolor: #080c16;
   --navbackcolor: rgb(30, 30, 30);
-  --lightbackcolor : #2b364c5c;
-    --lightbackcolor2 : #0a1621;
-  --lightbackhovercolor : #0f3e6c2c;
-  --icon-color : #cacaca;
+  --lightbackcolor: #2b364c5c;
+  --lightbackcolor2: #0a1621;
+  --lightbackhovercolor: #0f3e6c2c;
+  --icon-color: #cacaca;
   --icon-back-color: #24404870;
-  --backblackcolor : #ffffff;
+  --backblackcolor: #ffffff;
 
-
- --primary-color: #3a7bf4;
- --tooltip-color : #9e9e9e;
-  --blacktextcolor : #ffffff;
+  --primary-color: #3a7bf4;
+  --tooltip-color: #9e9e9e;
+  --blacktextcolor: #ffffff;
   --textcolor: rgb(234, 234, 234);
   --textwhitecolor: #000000;
   --buttoncolor: rgb(27, 165, 183);
-  --buttonhovercolor : rgb(234, 232, 232);
-  --backwhitecolor : #0D1423;
-  --lighttextcolor :#9a9a9a;
-  --popupbackcolor : rgba(0, 0, 0, 0.081);
-  --mobil-nav-back-color : rgb(0 0 0 / 86%);
+  --buttonhovercolor: rgb(234, 232, 232);
+  --backwhitecolor: #0d1423;
+  --lighttextcolor: #9a9a9a;
+  --popupbackcolor: rgba(0, 0, 0, 0.081);
+  --mobil-nav-back-color: rgb(0 0 0 / 86%);
 
-  --border-color : 1px solid #494949;
-    --post-card-border : 1px solid rgba(18, 64, 109, 0.1) ;
+  --border-color: 1px solid #494949;
+  --post-card-border: 1px solid rgba(18, 64, 109, 0.1);
 
-  --secondlinearcolor : linear-gradient(45deg, #56565675, #787575);
+  --secondlinearcolor: linear-gradient(45deg, #56565675, #787575);
 
- --bothwhitecolor : white;
+  --bothwhitecolor: white;
 
-   --secondary-box-shadow :   rgba(22, 38, 51, 0.618);
-     --post-box-shadow  : #13191cb3;
+  --secondary-box-shadow: rgba(22, 38, 51, 0.618);
+  --post-box-shadow: #13191cb3;
 
-
-
+  /* --skeleton-color: #2a2a2a; */
+  /* --skeleton-before-c: #868484; */
+  --skeleton-bg: #0d1423;
 }
 
 /* 
@@ -119,4 +113,3 @@ body{
 
 }
 } */
-

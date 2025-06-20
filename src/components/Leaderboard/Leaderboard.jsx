@@ -72,21 +72,21 @@ const Leaderboard = () => {
 
       {userRank && !leaderboard.some(user => user.id === userId) && (
         <div className="user-rank-box">
-          <h3 style={{ marginTop: '0.2rem' }}>Your Points</h3>
+          <h3 >Your Points</h3>
           <div className="user-rank-item">
             <div className="leader-own-user">
-              <img src={userRank.profile_pic || defaultprofilepic} alt={userRank.username} className="profile-pic" />
-                {/* <CombineAvatat username={user.username } size= '2rem' userRank ={user.profile_pic} visibility={userRank.visibility}/> */}
+              {/* <img src={userRank.profile_pic || defaultprofilepic} alt={userRank.username} className="profile-pic" /> */}
+                <CombineAvatat username={userRank.username } size= '2rem' userRank ={userRank.profile_pic} visibility={userRank.visibility}/>
               <div className="leader-own-user-name">
                 <span className="username">{userRank.username}</span>
 
-                <p style={{ fontSize: "0.9rem", color: "blue" }}>You</p>
+                <p style={{ fontSize: "0.9rem", color: "var(--blue-color)" }}>You</p>
               </div>
 
             </div>
             <div className="leadboard-rank-box">
               {/* <span className="rank" style={{ color: "blue" }}>#{userRank.user_rank}</span> */}
-              <span className="score"><Gem size={14} color="black" /> {userRank.engagement_score} Points</span>
+              <span className="score"><Gem size={14} color="var(--blue-color)" /> {userRank.engagement_score} Points</span>
             </div>
           </div>
         </div>

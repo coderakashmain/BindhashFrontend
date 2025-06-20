@@ -14,6 +14,7 @@ import axios from 'axios'
 import { AllPostContextData } from '../../Context/AllPostContext'
 import { AnimatePresence, motion } from 'framer-motion'
 import BottomSheet from '../BottomSheet/BottomSheet'
+import CombineAvatat from '../Avatar/CombineAvatat'
 
 const PostContent = ({ feed }) => {
   const [imgloaded, setImgLoaded] = useState(false);
@@ -88,12 +89,13 @@ const PostContent = ({ feed }) => {
 
             <div className="post-header">
               <div className="post-header-user">
-                <img
+                {/* <img
                   src={allpost.post_user_pic ? allpost.post_user_pic : defaultprofilephoto}
                   alt="Profile"
                   className="profile-pic"
 
-                />
+                /> */}
+                <CombineAvatat username  = {allpost.post_username} profile_pic={allpost.post_user_pic} size='2.2rem' visibility={allpost.post_visibility}/>
                 <div className="post-header-username-box">
                   <h3>{allpost.post_username}</h3>
                   {<Time posttime={allpost.created_at} />}
