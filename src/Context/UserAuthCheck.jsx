@@ -115,10 +115,13 @@ const UserAuthCheck = ({ children }) => {
 
   useEffect(() => {
 
-    if (!loading && !usertoken && !location.pathname.startsWith('/register') && location.pathname !== '/') {
-      navigate('/login');
+    if (!loading && !usertoken && !location.pathname.startsWith('/register') &&!location.pathname.startsWith('/login')) {
+      navigate('/welcome-page');
     }
+    
   }, [usertoken, loading, navigate]);
+  
+  
 
 
 

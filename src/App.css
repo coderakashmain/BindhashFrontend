@@ -121,7 +121,7 @@
   height: 6px;
   background: var(--linearcolor); /* customize */
   border-radius: 50%;
-  animation: bounce 0.6s infinite ease-in-out;
+  animation: bounce 0.8s infinite ease-in-out;
 }
 
 .typing-dots span:nth-child(2) {

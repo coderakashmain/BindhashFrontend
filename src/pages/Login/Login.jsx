@@ -53,7 +53,7 @@ const Login = () => {
       const response = await axios.post("/api/auth/login", { username, password }, { withCredentials: true });
       sessionStorage.setItem('logintoken', true);
       setUsertoken(response.data);
-      navigate("/feed");
+      navigate("/");
     } catch (err) {
       if (err.response && err.response.data && err.response.data.error) {
         setError(err.response.data.error);

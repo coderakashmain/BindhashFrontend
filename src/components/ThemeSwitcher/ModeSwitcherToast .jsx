@@ -7,7 +7,7 @@ import { SnackbarContext } from '../../Context/SnackbarContext';
 import { useSocket } from "../../Context/SocketContext";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 
-const ModeSwitcherToast = ({ mode }) => {
+const ModeSwitcherToast = ({ mode ,loadingmode}) => {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const socket = useSocket();
@@ -15,7 +15,7 @@ const ModeSwitcherToast = ({ mode }) => {
   const { usertoken } = useContext(UserAuthCheckContext);
 
   useEffect(() => {
-    if (!mode || !['anonymous', 'self'].includes(mode)) return;
+    if (!mode || !['anonymous', 'self'].includes(mode) ||loadingmode) return;
     // if (usertoken?.user?.visibility === mode) return;
 
     setVisible(true);

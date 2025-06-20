@@ -21,6 +21,7 @@ const Navbar = () => {
   const { usertoken } = useContext(UserAuthCheckContext)
   const navigate = useNavigate();
   const [anonmode, setAnonmode] = useState('')
+  const [loadingmode,setLoadingmode] = useState(true);
   useEffect(() => {
     if (!usertoken) {
       return
@@ -36,11 +37,13 @@ const Navbar = () => {
 
   useEffect(() => {
     if (usertoken?.user.visibility === 'anonymous') {
+      
       setAnonmode('anonymous')
     } else {
       setAnonmode('self');
     }
    
+
   }, [usertoken])
 
 
@@ -68,7 +71,7 @@ const Navbar = () => {
         {!isMobile && (<p>Beta Version</p>)}
         <Tooltip title={anonmode === 'anonymous' ? "Switch to Self Mode" : "Switch to Anonymous Mode"}>
           <button style={{ cursor: 'pointer' }} onClick={() => {
-
+            setLoadingmode(false);
             setAnonmode((prev) => (prev === 'anonymous' ? 'self' : 'anonymous'));
           }}>
             {anonmode === 'anonymous' ? <FlutterDashRoundedIcon /> : <Ghost />}
@@ -76,7 +79,7 @@ const Navbar = () => {
 
           </button>
         </Tooltip>
-            <ModeSwitcherToast mode={anonmode} />
+            <ModeSwitcherToast mode={anonmode} loadingmode={loadingmode} />
         <Tooltip title="switch theme">
           <span>  <ThemeSwitcher /></span>
         </Tooltip>

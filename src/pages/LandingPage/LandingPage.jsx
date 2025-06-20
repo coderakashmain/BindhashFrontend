@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import "./LandingPage.css"
 import { Helmet } from "react-helmet";
 
@@ -37,6 +37,7 @@ export default function LandingPage() {
 
   const navigate = useNavigate();
   const { usertoken } = useContext(UserAuthCheckContext);
+  const [loading,setLoading] = useState(true);
 
   return (
     <div className="land-p-container">
@@ -75,8 +76,8 @@ export default function LandingPage() {
             <a href="#categories" className="land-p-nav-link">
               Categories
             </a>
-            {usertoken && (<Avatar alt={usertoken?.user?.username} src={usertoken?.user?.profile_pic} style={{ cursor: 'pointer', outline: '2px solid blue', outlineOffset: '2px' }} onClick={() => navigate('/')} />)}
-            <button className="land-p-join-btn" onClick={() => navigate(usertoken ? '/feed' : '/login')}>Join Anonymous</button>
+            {usertoken && (<Avatar alt={usertoken?.user?.username} src={usertoken?.user?.profile_pic} style={{ cursor: 'pointer'}} onClick={() => navigate('/')} />)}
+            <button className="land-p-join-btn" onClick={() => navigate(usertoken ? '/' : '/login')}>Join Anonymous</button>
           </div>
           <div className="land-p-mobile-menu">
             <span></span>
@@ -100,7 +101,7 @@ export default function LandingPage() {
               find support in category-based communities.
             </p>
             <div className="land-p-hero-buttons">
-              <button className="land-p-cta-btn primary" onClick={() => navigate(usertoken ? '/feed' : '/login')}>Start Sharing Anonymously</button>
+              <button className="land-p-cta-btn primary" onClick={() => navigate(usertoken ? '/' : '/login')}>Start Sharing Anonymously</button>
               <button className="land-p-cta-btn secondary">Explore Communities</button>
             </div>
             <div className="land-p-hero-stats">
@@ -659,7 +660,7 @@ export default function LandingPage() {
             <h2>Ready to Turn Your Failures into Strength?</h2>
             <p>Join thousands who've found support, growth, and genuine connections through shared vulnerability.</p>
             <div className="land-p-final-buttons">
-              <button className="land-p-cta-btn primary large" onClick={() => navigate(usertoken ? '/feed' : '/login')}>Start Your Anonymous Journey</button>
+              <button className="land-p-cta-btn primary large" onClick={() => navigate(usertoken ? '/' : '/login')}>Start Your Anonymous Journey</button>
               <button className="land-p-cta-btn secondary large">Explore Communities First</button>
             </div>
             <div className="land-p-trust-indicators">

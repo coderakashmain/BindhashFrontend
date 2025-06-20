@@ -55,10 +55,10 @@ const HomeRouter = () => {
 
 
   return (
-    <section style={{ height: '100vh', width: '80%', flexGrow: 1,display : 'flex',flexDirection : 'column' ,zIndex : 1 }}>
+    <section style={{ height: '100vh', width: '80%', flexGrow: 1,display : 'flex',flexDirection : 'column'}}>
 
       <Navbar />
-      <section className='homerouter' style={{height : '80%', flex: 1, position : "relative" ,zIndex : 1 }}>
+      <section className='homerouter' style={{height : '80%', flex: 1, position : "relative" }}>
         <Outlet />
       </section>
 

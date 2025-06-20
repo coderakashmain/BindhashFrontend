@@ -13,6 +13,12 @@ import AddIcon from '@mui/icons-material/Add';
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
 import {motion , AnimatePresence} from 'framer-motion'
 import { MobileViewContext } from "../../Context/MobileResizeProvider";
+import Diversity3RoundedIcon from '@mui/icons-material/Diversity3';
+import ChatRoundedIcon from '@mui/icons-material/ChatRounded';
+import HouseOutlinedIcon from '@mui/icons-material/HouseRounded';
+import AppsOutlinedIcon from '@mui/icons-material/AppsRounded';
+import Face6Icon from '@mui/icons-material/Face6';
+import DrawIcon from '@mui/icons-material/Draw';
 
 
 const Slidebar = () => {
@@ -147,32 +153,33 @@ if (!usertoken || !usertoken.user) return null;
       {/* Navigation Links */}
       <nav>
         <ul className={`${collapsed ? 'centerli' : ''} `}>
+          
           <li>
-            <Link to="" style={location.pathname === '/' ? { color: 'var(--primary-color)' } : {}}><House strokeWidth={location.pathname === '/' ? 3 : '2'} size='1.3rem' /> {collapsed ? '' : "Home"}</Link>
+            <Link to="/" style={location.pathname === '/' ? { color: 'var(--primary-color)' } : {}}><HouseOutlinedIcon strokeWidth={location.pathname === '/' ? 3 : '2'} size='1.3rem' /> {collapsed ? '' : "Home"}</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/explore" style={location.pathname === '/explore' ? { color: 'var(--primary-color)' } : {}}><CirclePlus strokeWidth={location.pathname === '/explore' ? 3 : '2'} size='1.3rem' /> {collapsed ? '' : "Explore"}</Link>
+          </li> */}
+          <li>
+            <Link to="/room" style={location.pathname === '/room' ? { color: 'var(--primary-color)' } : {}}><Diversity3RoundedIcon strokeWidth={location.pathname === '/room' ? 3 : '2'} size='1.3rem' /> {collapsed ? '' : "Rooms"}</Link>
           </li>
           <li>
-            <Link to="/room" style={location.pathname === '/room' ? { color: 'var(--primary-color)' } : {}}><CirclePlus strokeWidth={location.pathname === '/room' ? 3 : '2'} size='1.3rem' /> {collapsed ? '' : "Rooms"}</Link>
+            <Link to="/chat" style={location.pathname === '/chat' ? { color: 'var(--primary-color)' } : {}}><ChatRoundedIcon strokeWidth={location.pathname === '/chat' ? 3 : '2'} size='1.3rem' />{collapsed ? '' : "Chats"} </Link>
           </li>
           <li>
-            <Link to="/chat" style={location.pathname === '/chat' ? { color: 'var(--primary-color)' } : {}}><CirclePlus strokeWidth={location.pathname === '/chat' ? 3 : '2'} size='1.3rem' />{collapsed ? '' : "Chats"} </Link>
+            <Link to="/createpost" style={location.pathname === '/createpost' ? { color: 'var(--primary-color)' } : {}}><DrawIcon strokeWidth={location.pathname === '/createpost' ? 3 : '2'} size='1.3rem' />{collapsed ? '' : "Create Post"} </Link>
           </li>
           <li>
-            <Link to="/createpost" style={location.pathname === '/createpost' ? { color: 'var(--primary-color)' } : {}}><PenLine strokeWidth={location.pathname === '/createpost' ? 3 : '2'} size='1.3rem' />{collapsed ? '' : "Create Post"} </Link>
+            <Link to={`/profile/o/${usertoken?.user?.username}`} style={location.pathname === `/profile/o/${usertoken?.user?.username}` ? { color: 'var(--primary-color)' } : {}}><Face6Icon strokeWidth={location.pathname === `/Profile/o/${usertoken.user.username}` ? 3 : '2'} size='1.3rem' /> {collapsed ? '' : "Profile"}</Link>
           </li>
           <li>
-            <Link to={`/profile/o/${usertoken?.user?.username}`} style={location.pathname === `/profile/o/${usertoken?.user?.username}` ? { color: 'var(--primary-color)' } : {}}><CircleUser strokeWidth={location.pathname === `/Profile/o/${usertoken.user.username}` ? 3 : '2'} size='1.3rem' /> {collapsed ? '' : "Profile"}</Link>
-          </li>
-          <li>
-            <Link to="/setting" style={location.pathname === '/setting' ? { color: 'var(--primary-color)' } : {}}><Settings size='1.3rem' strokeWidth={location.pathname === '/setting' ? 3 : '2'} /> {collapsed ? '' : "Settings"}</Link>
+            <Link to="/setting" style={location.pathname === '/setting' ? { color: 'var(--primary-color)' } : {}}><AppsOutlinedIcon size='1.3rem' strokeWidth={location.pathname === '/setting' ? 3 : '2'} /> {collapsed ? '' : "Settings"}</Link>
           </li>
         </ul>
         <hr style={{ borderColor: 'var(--lighttextcolor)', opacity: 0.2 }} />
         {!collapsed && (<h4>Own Rooms</h4>)}
         <ul className="own-rooms-ul">
-          <li style={collapsed ? {justifyContent : 'center'} : { justifyContent : 'flex-start'}}> <Avatar sx={{ backgroundColor: 'var(--icon-back-color)', color: 'var(--icon-color)' }}><AddIcon /></Avatar> {collapsed ? '' : 'Create a new room'}</li>
+          <li style={collapsed ? {justifyContent : 'center'} : { justifyContent : 'flex-start'}}> <Avatar sx={{ background: 'var(--logolinearcolor)', color: 'var(--bothwhitecolor)' }}><AddIcon /></Avatar> {collapsed ? '' : 'Create a new room'}</li>
         </ul>
 
       </nav>

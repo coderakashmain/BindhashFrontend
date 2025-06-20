@@ -57,28 +57,28 @@ const RoomPlay = lazy(() => import('./pages/Room/RoomPlay'));
 
 
 const App = () => {
-  const VITE_VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY;
+  // const VITE_VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY;
 
 
 
 
 
-  useEffect(() => {
-    if ("serviceWorker" in navigator && "PushManager" in window) {
-      navigator.serviceWorker.register("/sw.js").then(registration => {
-        return registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: VITE_VAPID_PUBLIC_KEY
-        });
-      }).then(subscription => {
-        fetch("http://localhost:3000/subscribe", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId: "123", subscription })
-        });
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if ("serviceWorker" in navigator && "PushManager" in window) {
+  //     navigator.serviceWorker.register("/sw.js").then(registration => {
+  //       return registration.pushManager.subscribe({
+  //         userVisibleOnly: true,
+  //         applicationServerKey: VITE_VAPID_PUBLIC_KEY
+  //       });
+  //     }).then(subscription => {
+  //       fetch("http://localhost:3000/subscribe", {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({ userId: "123", subscription })
+  //       });
+  //     });
+  //   }
+  // }, []);
 
   const router = createBrowserRouter([
     {
@@ -90,7 +90,7 @@ const App = () => {
       element: <><ErrorBoundary><SocketProvider><UserAuthCheck><PollProvider><AllPostContext><MobileResizeProvider><FollowersFollowing><SnackbarProvider><AllUserList><><Snackbar /><UploadProvider><AllpageRouter /></UploadProvider></></AllUserList></SnackbarProvider></FollowersFollowing></MobileResizeProvider></AllPostContext></PollProvider></UserAuthCheck></SocketProvider></ErrorBoundary></>,
       children: [
         {
-          path: '',
+          path: 'welcome-page',
           index: true,
           element: <><ErrorBoundary><LandingPage /></ErrorBoundary></>
         },
@@ -105,7 +105,7 @@ const App = () => {
               children: [
 
                 {
-                  path: '/feed',
+                  path: '',
                   element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><Home /></Suspense></ErrorBoundary></>
                 },
                 // {
