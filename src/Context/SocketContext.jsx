@@ -9,11 +9,14 @@ export const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        const newSocket = io("http://localhost:3000");  // Change to your server URL
+        const newSocket = io(import.meta.env.MODE === "production"
+            ? import.meta.env.VITE_SOCKET_URL
+            : "http://localhost:3000",
+            { withCredentials: true });
         setSocket(newSocket);
 
         return () => {
-            newSocket.disconnect();  // Cleanup when component unmounts
+            newSocket.disconnect();  
         };
     }, []);
 
