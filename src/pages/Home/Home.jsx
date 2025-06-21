@@ -457,9 +457,9 @@ const Home = () => {
 
         <Queots />
         {resizedisplay && <Leaderboard />}
-        {/* <SuggestedUsers homeuser={true} /> */}
+        <SuggestedUsers homeuser={true} />
         
-        {/* <TrendingPosts /> */}
+        <TrendingPosts />
 
       </div>
 
