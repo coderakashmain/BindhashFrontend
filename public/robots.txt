@@ -1,4 +1,5 @@
 User-agent: *
 Disallow:
 
+
 Sitemap: https://beta.bindhash.xyz/sitemap.xml
