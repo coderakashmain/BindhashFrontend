@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { useContext } from 'react'
 import CircularLoader from '../../components/Fallback/CircularLoader'
 import { Helmet } from 'react-helmet'
+import '../../App.css'
 
 
 
@@ -37,6 +38,8 @@ const Room = () => {
 
     fetchRoom();
   }, []);
+
+  console.log(rooms)
 
   useEffect(() => {
     if (loading) {

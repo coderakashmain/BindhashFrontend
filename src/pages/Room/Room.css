@@ -79,20 +79,17 @@
     border-radius:var(--border-radius);
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
     position: relative;
      box-shadow:1px 1px 2px rgb(0 0 0 / 18%);
      flex-grow: 1;
+     max-width: 35%;
+
      
    
 }
 
 .subroom-list-join{
-        /* position : absolute;
-        right: 3%;
-        top: 5%; */
-    /* width: 4rem;
-    height: 4rem; */
+       
     display: flex;
     justify-content: center;
     align-items: center;
