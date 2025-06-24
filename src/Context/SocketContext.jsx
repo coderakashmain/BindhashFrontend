@@ -12,7 +12,9 @@ export const SocketProvider = ({ children }) => {
         const newSocket = io(import.meta.env.MODE === "production"
             ? import.meta.env.VITE_SOCKET_URL
             : "http://localhost:3000",
-            { withCredentials: true });
+            { 
+                transports: ["websocket"],  
+                withCredentials: true });
         setSocket(newSocket);
 
         return () => {
