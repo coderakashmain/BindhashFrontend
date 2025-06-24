@@ -9,6 +9,14 @@ body {
   background-color: var(--webbackcolor);
   color: var(--textcolor);
 }
+#nprogress .bar {
+  background: var(--logolinearcolor); 
+   height: 10px;
+}
+
+/* #nprogress .peg {
+  box-shadow: 0 0 10px #ff1e1e, 0 0 5px #ff1e1e;
+} */
 
 :root {
   /* --webbackcolor : #FAFCFF; */
