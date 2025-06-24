@@ -458,7 +458,6 @@ const Home = () => {
         <Queots />
         {resizedisplay && <Leaderboard />}
         <SuggestedUsers homeuser={true} />
-        
         <TrendingPosts />
 
       </div>

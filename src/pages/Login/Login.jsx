@@ -47,6 +47,7 @@ const Login = () => {
   }, [email])
 
   const handleLogin = async (e) => {
+    if(!username || !password) return ;
     setLoading(true)
     e.preventDefault();
     try {
@@ -60,7 +61,7 @@ const Login = () => {
         setSnackbar({ open: true, message: err.response.data.error, type: "error" });
 
       } else {
-        setError("Something went wrong. Please try again."); // fallback error
+        setError("Something went wrong. Please try again."); 
       }
 
 

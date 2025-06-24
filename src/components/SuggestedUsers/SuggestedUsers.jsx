@@ -2,40 +2,38 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import Followbtn from "../ProfileStats/Followbtn";
-import defaultprofilepic from '../../Photo/defaultprofilepic.png'
 import "./SuggestedUsers.css";
-import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
 import CombineAvatat from "../Avatar/CombineAvatat";
 import ChatListSkeleton from "../Fallback/ChatListSkeleton";
 
 const SuggestedUsers = ({ homeuser }) => {
   const { usertoken } = useContext(UserAuthCheckContext);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-
+    setLoading(true)
     const fetchSuggestedUsers = async () => {
       try {
-        const response = await axios.get(`/api/users/suggested-users?userId=${usertoken?.user?.id}`);
+        const response = await axios.get(`/api/users/suggested-users?userId=${usertoken.user.id}`);
         const nonAnonymousUsers = response.data.filter(user => user.visibility !== "anonymous");
-        setSuggestedUsers(nonAnonymousUsers);
         setLoading(false)
+
+        setSuggestedUsers(nonAnonymousUsers);
       } catch (error) {
-        console.error("Error fetching suggested users:", error.response.data.error);
+        console.error("Error fetching suggested users");
       }
     };
 
     fetchSuggestedUsers();
-  }, [usertoken?.user?.id]);
+  }, [usertoken?.user.id]);
 
 
 
   return (
     <div className="suggested-users-container" style={homeuser ? { padding: '0.91rem' } : {}}>
-      {!suggestedUsers.length > 0 && (
-        loading ? (
+      {suggestedUsers.length > 0 && (
+        !loading ? (
           <>
 
             <h2>Suggested Users</h2>
