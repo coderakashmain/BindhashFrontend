@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import "./LandingPage.css"
 import { Helmet } from "react-helmet";
+import { MobileViewContext } from "../../Context/MobileResizeProvider";
 
 
 import {
@@ -38,6 +39,7 @@ export default function LandingPage() {
   const navigate = useNavigate();
   const { usertoken } = useContext(UserAuthCheckContext);
   const [loading,setLoading] = useState(true);
+  const {isMobile} = useContext(MobileViewContext);
 
   return (
     <div className="land-p-container">
@@ -61,9 +63,10 @@ export default function LandingPage() {
               <ChatBubbleOutline sx={{ fontSize: 32, color: "#1976d2" }} />
             </div>
             <h2>Bindhash</h2> */}
-            <Bangbox size='2rem' click={false} />
+            <Bangbox size='1.5rem' click={false} />
           </div>
           <div className="land-p-nav-links">
+          {!isMobile && (  <>
             <a href="#home" className="land-p-nav-link">
               Home
             </a>
@@ -76,14 +79,15 @@ export default function LandingPage() {
             <a href="#categories" className="land-p-nav-link">
               Categories
             </a>
+            </>)}
             {usertoken && (<Avatar alt={usertoken?.user?.username} src={usertoken?.user?.profile_pic} style={{ cursor: 'pointer'}} onClick={() => navigate('/')} />)}
             <button className="land-p-join-btn" onClick={() => navigate(usertoken ? '/' : '/login')}>Join Anonymous</button>
           </div>
-          <div className="land-p-mobile-menu">
+         {/* { <div className="land-p-mobile-menu">
             <span></span>
             <span></span>
             <span></span>
-          </div>
+          </div>} */}
         </div>
       </nav>
 

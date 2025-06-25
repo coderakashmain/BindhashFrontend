@@ -38,13 +38,21 @@ const Emailenter = () => {
       if (error.response && error.response.status === 429) {
         navigate("varifyotp", { state: { email } });
       }
+      if (error.response && error.response.status === 409) {
+             setSnackbar({ open: true, message: error.response.data.error, type: "error" });
+             setError("Email already registered!");
+             setLoading(false)
+             return;
+      }
+  
       setLoading(false)
       setError("Registration failed. Try again.");
       setSnackbar({ open: true, message: error.response.data.error, type: "error" });
-      alert(err)
+   
 
     }
   };
+  
 
   useEffect(() => {
     const email = sessionStorage.getItem('emailId');
