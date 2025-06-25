@@ -80,8 +80,7 @@ const Emailenter = () => {
           <div></div>OR  <div></div>
 
         </div>
-        <h3 style={{ fontSize: '1.4rem' }}>What's your email?</h3>
-        <p style={{ margin: '1rem 0', fontSize: '0.9rem' }}>Enter the email on whice you can be connected.</p>
+        <p style={{ margin: '1rem 0', fontSize: '0.9rem', textAlign :'start' }}>Enter the email on whice you can be connected.</p>
         <form onSubmit={handleRegister} style={{ width: '100%' }}>
 
 
@@ -95,8 +94,8 @@ const Emailenter = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <div className="terms-condition-box">
-            <input style={{ margin: '0 0.3rem 0 0' }} type="checkbox" name="terms and condition box" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
+          <div className="terms-condition-box" style={{color : "var(--lighttextcolor)" }}>
+            <input style={{ margin: '0 0.3rem 0 0'}} type="checkbox" name="terms and condition box" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
             I accept company's
             <NavLink href="terms-condition">Terms of use </NavLink> & <NavLink href="privacy-policy"> Privacy policy</NavLink>
           </div>

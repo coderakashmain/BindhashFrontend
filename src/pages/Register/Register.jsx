@@ -24,13 +24,7 @@ const Register = () => {
       <Outlet />
       <div className="register-container-box2">
         <Bangbox size={"5rem"} />
-        {/* <p style={{ fontSize: "1.1rem", marginTop: "1rem" }}>
-          Welcome to <strong>Bindhash</strong> — a space where stories, struggles, and souls connect.
-          <br />
-          🌱 Share your journey, anonymously or as yourself.<br />
-          🤝 Find people with similar mindsets and emotions.<br />
-          🔐 Feel safe. Express freely. Connect deeply.
-        </p> */}
+    
       </div>
     </div>
   );
