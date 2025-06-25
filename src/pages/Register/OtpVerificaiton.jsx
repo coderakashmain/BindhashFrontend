@@ -6,6 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { TextField, Button } from "@mui/material";
 import { SnackbarContext } from "../../Context/SnackbarContext";
 import '../../App.css'
+import './OtpVerification.css'
 
 const OtpVerificaiton = () => {
     const [otp, setOtp] = useState('');
@@ -104,7 +105,7 @@ const OtpVerificaiton = () => {
                     content="Enter the OTP sent to your email to verify your identity and complete your Bindhash login or registration. This helps keep your account secure."
                 />
             </Helmet>
-            <div className="register-container-box1-inside">
+            <div className="register-container-box1-inside otp-page" >
                 <h2 style={{marginBottom : '2rem'}}>Email Authentication</h2>
                 {error && <p className="error">{error}</p>}
                 <form onSubmit={handleVerifyOtp} style={{ width: '100%' }}>

@@ -1,7 +1,6 @@
 .register-container {
     width: 100%;
-    height: 100vh;
-    height: 100svh;
+    height: 100%;
     display: flex;
     flex-direction: row-reverse;
     background: var(--secondwebbackcolor);

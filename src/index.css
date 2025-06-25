@@ -121,3 +121,35 @@ body{
 
 }
 } */
+
+
+@media (max-width: 1414px) {
+    html {
+      font-size:90%; /* 1rem = 10px (if root font size is 16px) */
+    }
+  }
+  @media (max-width: 1111px) {
+    html {
+      font-size:80%; /* 1rem = 10px (if root font size is 16px) */
+    }
+  }
+  @media (max-width: 698px) {
+    html {
+      font-size:85%; /* 1rem = 10px (if root font size is 16px) */
+    }
+  }
+  @media (max-width: 402px) {
+    html {
+      font-size:80%; /* 1rem = 10px (if root font size is 16px) */
+    }
+  }
+  @media (max-width: 350px) {
+    html {
+      font-size:70%; /* 1rem = 10px (if root font size is 16px) */
+    }
+  }
+  @media (max-width: 300px) {
+    html {
+      font-size:3vw; /* 1rem = 10px (if root font size is 16px) */
+    }
+  }

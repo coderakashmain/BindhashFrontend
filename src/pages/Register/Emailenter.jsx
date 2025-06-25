@@ -101,7 +101,7 @@ const Emailenter = () => {
           </div>
           <button type="submit" disabled={loading} > {loading ? <CircularProgress size='1.2rem' color='white' /> : 'Next'}</button>
         </form>
-        <p style={{ fontSize: '1rem' }}>
+        <p style={{ fontSize: '1rem' , marginTop : '1rem',color  : "var(--lighttextcolor)"}}>
           Already have an account? <Link style={{ fontSize: '1rem', color: 'var(--blue-color)' }} to="/login">Login</Link>
         </p>
 
