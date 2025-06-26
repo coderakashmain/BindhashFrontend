@@ -10,6 +10,7 @@ import axios from "axios";
 import { useSocket } from "../../Context/SocketContext";
 import { LinearProgress, Box, Typography } from "@mui/material";
 import PostOptions from '../PostOptions/PostOptions'
+import CombineAvatat from "../Avatar/CombineAvatat";
 
 
 const PollView = ({ pollId }) => {
@@ -55,7 +56,7 @@ const PollView = ({ pollId }) => {
 
 useEffect(() => {
     socket.on("poll_update", (data) => {
-        console.log("🔥 Received poll_update:", data);
+        console.log("Received poll_update:", data);
      
 
         // setPolls((prevPolls) =>
@@ -272,11 +273,12 @@ useEffect(() => {
                     {/* Profile Section */}
                     <div className="poll-view-container-inside-profile-details">
                         <div className="poll-view-container-inside-profile-details-user-details">
-                            <img
+                            {/* <img
                                 src={selectedPoll.posted_by.profile_pic || "/default-profile.png"}
                                 alt="Profile"
                                 className="poll-view-container-inside-profile-details-profile-pic"
-                            />
+                            /> */}
+                            <CombineAvatat username={selectedPoll.posted_by.username} profile_pic={selectedPoll.posted_by.profile_pic} visibility={selectedPoll.posted_by.post_visibility} size="2.5rem"/>
                             <div className="poll-view-container-inside-profile-details-username-deatils">
                                 <h3>{selectedPoll.posted_by.username}</h3>
                                 <p><Time posttime={selectedPoll.created_at} /></p>

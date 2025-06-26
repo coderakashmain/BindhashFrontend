@@ -9,10 +9,10 @@ const TruncatedText = ({ text, limit = 100,isShowmore = true}) => {
     <p>
       {showFull ? text : `${text.substring(0, limit)}... `}
       <span
-        style={{ color: 'lightblue', cursor: 'pointer' }}
+        style={{ color: 'var(--blue-color)', cursor: 'pointer',display : 'inline' }}
         onClick={() => setShowFull(!showFull)}
       >
-        {isShowmore&&( showFull ? ' show less' : 'read more')}
+        {isShowmore&&( showFull ? 'Show less' : 'Read more')}
       </span>
     </p>
   );

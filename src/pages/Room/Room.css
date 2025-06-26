@@ -196,3 +196,9 @@
         display: none;
     }
 }
+
+@media (max-width : 640px) {
+    .subrooms-card{
+        max-width: 100%;
+    }
+}

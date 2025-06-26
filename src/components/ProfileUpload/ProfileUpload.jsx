@@ -34,7 +34,7 @@ const ProfileUpload = ({setProfilepicloading,paddingvalue,size,mainphoto,borderR
   const handleUpload = async () => {
     if (!croppedImage) return;
     setProfilepicloading(true);
-    const originalFormat = "image/jpeg"; // Adjust format if necessary
+    const originalFormat = "image/jpeg";
     const file = new File([croppedImage], `profile_pic_${Date.now()}.jpg`, { type: originalFormat });
 
 

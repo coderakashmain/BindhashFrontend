@@ -23,6 +23,7 @@ import { MobileViewContext } from "../../Context/MobileResizeProvider";
 import ProfileEdit from "../../components/ProfileEdit/ProfileEdit";
 import PostSwiper from "../../components/PostSwiper/PostSwiper";
 import ProfileSkeleton from "../../components/Fallback/ProfileSkeleton";
+import CombineAvatat from "../../components/Avatar/CombineAvatat";
 
 
 const Profile = () => {
@@ -98,22 +99,7 @@ const Profile = () => {
 
 
       <div className="profile-left-box">
-        {/* <div className="profile-sub-nav">
-          <div className="prifle-sub-nav-inside-box">
-            <div className="profile-back">
-              <button onClick= {()=> {
-                navigate(-1)
-              }} className="btnhover"><Undo2 /></button>
-            </div>
-            <div className="profile-username-box">
-              {usertoken.user.fullname ? (<strong>{usertoken.user.fullname}</strong>) : (<strong>Not set yet</strong>)}
-              <p>{usertoken.user.username}</p>
-            </div>
-          </div>
-          <div onClick={()=> navigate('/setting')} className="profile-userdataedit btnhover">
-            <Settings  className="" />
-          </div>
-        </div> */}
+       
 
         <Helmet>
           <title>{`${usertoken?.user?.username} | Profile – Bindhash`}</title>
@@ -137,7 +123,8 @@ const Profile = () => {
             {profilepicloading && <div className="profile-pic-loading">
               <div className="profile-pic-anime-loader"></div>
             </div>}
-            <img src={usertoken?.user?.profile_pic ? usertoken?.user?.profile_pic : defaultprofilepicture} alt="" />
+            {/* <img src={usertoken?.user?.profile_pic ? usertoken?.user?.profile_pic : defaultprofilepicture} alt="" /> */}
+            <CombineAvatat username={usertoken.user.username} profile_pic={usertoken.user.profile_pic} visibility={usertoken.user.visibility} iconsize={isMobile ? '5rem' : '10rem'} size="100%"/>
             <div className="profile-main-img-edit">
               {/* <SwitchCamera size={18} /> */}
 
@@ -169,13 +156,9 @@ const Profile = () => {
 
               {usertoken.user.id ? (<button
                 onClick={() => {
-                  // if (isMobile) {
-                  //   navigate('/profile/edit')
-
-                  // }
-                  // else {
+                
                   setProfileEditView(true)
-                  // }
+                
                 }
 
                 }
@@ -196,27 +179,7 @@ const Profile = () => {
               <ProfileStats gap='5rem' />
             </div>
 
-            {/* <div className="user-leadboard-point">
-              <h2><Compass size='1rem' />Leaderboard</h2>
-              <div className="user-leadboard-point-box" >
-                <span onClick={() => {
-                  if (isMobile) {
-                    navigate('/leaderboard')
-
-                  }
-                }}> Points 759<Gem size={14} color="blue" /></span>
-              </div>
-            </div> */}
-            {/* 
-            <div className="mutual-friends">
-              <p>Commen Friends </p>
-              {[1, 2].map((_, i) => (
-                <div className="friend" key={i}>
-                  <img src="https://picsum.photos/30" alt="Friend" />
-                  <span>Friend {i + 1}</span>
-                </div>
-              ))}
-            </div> */}
+           
 
 
 

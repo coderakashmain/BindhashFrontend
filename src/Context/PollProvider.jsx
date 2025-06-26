@@ -37,7 +37,7 @@ export const PollProvider = ({ children}) => {
 
 
 
-
+// console.log(polls)
 
   return (
     <PollContext.Provider value={{ polls,setPolls, loading, error }}>

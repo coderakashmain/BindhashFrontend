@@ -12,7 +12,7 @@ const ModeSwitcherToast = ({ mode ,loadingmode}) => {
   const [loading, setLoading] = useState(false);
   const socket = useSocket();
   const { setSnackbar } = useContext(SnackbarContext);
-  const { usertoken } = useContext(UserAuthCheckContext);
+  const { usertoken ,setSocketChangge,socketChange} = useContext(UserAuthCheckContext);
 
   useEffect(() => {
     if (!mode || !['anonymous', 'self'].includes(mode) ||loadingmode) return;
@@ -29,7 +29,7 @@ const ModeSwitcherToast = ({ mode ,loadingmode}) => {
           const { userId, mode: updatedMode } = response.data;
           socket.emit('modeChange', { userId, mode: updatedMode });
 
-        
+          setSocketChangge(!socketChange)        
           setSnackbar({ type: 'success', message: `Switched to ${updatedMode} mode` });
         
       } catch (error) {
@@ -55,15 +55,15 @@ const ModeSwitcherToast = ({ mode ,loadingmode}) => {
           transition={{ duration: 0.3 }}
         >
           {mode === "anonymous" ? (
-            <>
+            <div className="anon-icon-box">
               <Ghost className="anon-icon anonymous-icon" />
               <span>Switched to Anonymous Mode</span>
-            </>
+            </div>
           ) : (
-            <>
+            <div className="anon-icon-box self-box">
               <User className="anon-icon self-icon" />
               <span>Switched to Self Mode</span>
-            </>
+            </div>
           )}
         </motion.div>
       )}

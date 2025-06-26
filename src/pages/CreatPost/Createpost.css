@@ -1,46 +1,131 @@
 /* Createpost.css */
 
 .create-post-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--webbackcolor); 
-    padding: 2rem;
-    height: 100%;
-    overflow-y: scroll;
-  }
-  
+  background-color: var(--webbackcolor) !important;
+  height: 100%;
+
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* padding: 1rem; */
+}
+
+.create-post-card {
+  background-color: var(--webbackcolor) !important;
+  width: 40rem;
+  max-width: 90%;
+  border-radius: 16px;
+  padding-top: 1rem;
+  overflow-y: scroll;
+  /* box-shadow: 2px 2px 10px  rgb(160 170 174 / 32%); */
+  box-shadow: none;
+  scrollbar-width: none;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+.form-group label {
+  color: var(--textcolor);
+}
+.form-group input {
+  width: 100%;
+  background: var(--backwhitecolor);
+  padding: 1rem;
+  outline: none;
+  box-shadow: var(--creat-post-shadow);
+  border-radius: 0.3rem;
+  margin-top: 0.5rem;
+  color: var(--textcolor);
+}
+.form-group textarea {
+  width: 100%;
+  background: var(--backwhitecolor);
+  padding: 1rem;
+  outline: none;
+  box-shadow: var(--creat-post-shadow);
+  border-radius: 0.3rem;
+  margin-top: 0.5rem;
+  resize: none;
+  color: var(--textcolor);
+}
+
+.form-group textarea::placeholder {
+  color: var(--lighttextcolor) !important;
+}
+.form-group input::placeholder {
+  color: var(--lighttextcolor) !important;
+}
+.form-group select {
+  width: 100%;
+  padding: 1rem;
+  outline: none;
+  background: var(--backwhitecolor);
+  border-radius: 0.3rem;
+  box-shadow: var(--creat-post-shadow);
+}
+.form-group select option {
+  padding: 1rem;
+  outline: none;
+  background: var(--backwhitecolor);
+  border-radius: 0.3rem;
+  box-shadow: var(-- --creat-post-shadow);
+}
+.stranger-click label {
+  color: var(--textcolor);
+}
+.photo-upload {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.submit-btn {
+  margin-top: 1rem;
+  font-weight: bold;
+  padding: 0.75rem;
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  background: var(--logolinearcolor);
+}
+
+.stranger-click {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.stranger-click p {
+  font-size: 0.8rem;
+  color: var(--lighttextcolor);
+}
+
+.creat-post-header {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.creat-post-header-l {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.creat-post-header-r {
+  display: flex;
+  gap: 02rem;
+  align-items: center;
+  color: var(--lighttextcolor);
+
+}
+.create-post-icon{
+  cursor: pointer;
+}
+@media (max-width: 640px) {
   .create-post-card {
-    width: 100%; /* Fixed width for desktop */
-    max-width: 90%; /* Stay responsive */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 16px;
-    background-color: var(--backwhitecolor) !important;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
   }
-  
-  .form-group {
-    margin-bottom: 1.5rem; /* Good spacing between fields */
+  .create-post-container {
+    padding: 0rem;
   }
-  
-  .photo-upload {
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .submit-btn {
-    margin-top: 1rem;
-    font-weight: bold;
-    padding: 0.75rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    background: var(--linearcolor);
-  }
-  
-  .stranger-click{
-    display: flex;
-    align-items: center;
-  }
-  .stranger-click p{
-    font-size: 0.8rem;
-    color: var(--lighttextcolor);
-  }
+}

@@ -85,9 +85,12 @@ function ImageUploader({setMpostbtn}) {
                         </div>
                         <div className="port-p-u-btn">
                         <button style={{background : 'rgba(0,0,0,0.3)'}} onClick={()=>{
-                              setImage(null);
+                            if(!croppedImage){
+                                setImage(null);
+                            }
+                                
                               setShowCropper(false); 
-                              setCroppedImage(null);
+                              setCroppedAreaPixels(null);
 
                         }}>Cancel</button>
                         <button style={{background : 'black'}} onClick={()=>{

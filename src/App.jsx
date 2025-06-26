@@ -16,6 +16,7 @@ import ProfileRouter from './Router/ProfileRouter';
 import SnackbarProvider from './Context/SnackbarContext';
 import { UploadProvider } from './Context/UploadProvider';
 import CircularLoader from './components/Fallback/CircularLoader';
+import PostModel from './components/Post/PostModel';
 
 
 
@@ -26,6 +27,8 @@ import CircularLoader from './components/Fallback/CircularLoader';
 
 
 
+
+const SharePostRouter = lazy(() => import('./Router/SharePostRouter'));
 const RandomsubroomChat = lazy(() => import('./pages/Room/RandomsubroomChat'));
 const RoomChatbox = lazy(() => import('./pages/Room/RoomChatbox'));
 const SubRoomDefaultChatpage = lazy(() => import('./pages/Room/SubRoomDefaultChatpage'));
@@ -114,6 +117,10 @@ const App = () => {
                   path: '',
                   element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><Home /></Suspense></ErrorBoundary></>
                 },
+                {
+                  path: '/post/:postIdSlug',
+                  element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><SharePostRouter /></Suspense></ErrorBoundary></>
+                },
                 
                 {
                   path: '/story-view/:id',
@@ -130,10 +137,10 @@ const App = () => {
                     }
                   ]
                 },
-                {
-                  path: 'trending-post',
-                  element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><TrendingPosts /></Suspense></ErrorBoundary></>
-                },
+                // {
+                //   path: 'trending-post',
+                //   element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><TrendingPosts /></Suspense></ErrorBoundary></>
+                // },
                 {
                   path: 'search',
                   element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><UserSearch /></Suspense></ErrorBoundary></>

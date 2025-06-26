@@ -55,7 +55,7 @@ const ProfileStats = ({ gap }) => {
     <div className="profile-follow-data" style={{ display: 'flex', flexDirection: 'row', gap: gap ? gap : '2vw' }}>
       <div onClick={fetchFollowersdlist} style={{ cursor: 'pointer' }}>
         <strong style={{ fontSize: '1.1rem', display: 'block', textAlign: 'center' }}>{stats.followers_count}</strong>
-         <span
+        <span
           style={{ fontSize: '0.75rem', color: 'gray' }}
         >Followers
         </span>
@@ -73,20 +73,21 @@ const ProfileStats = ({ gap }) => {
           transition={{ duration: 0.3, ease: 'easeInOut' }}
 
         >
-      
-         <Subheadcomponent headline="Followers" onClose={()=> setShowFollowers(false)} />
+          <div style={{ marginBottom: '1rem' }}>
+            <Subheadcomponent headline="Followers" onClose={() => setShowFollowers(false)} />
+          </div>
           {followersList.length === 0 ? (
-            <p>No followers yet.</p>
+            <p style={{padding : '0rem 1rem'}}>No followers yet.</p>
           ) : (
             <ul>
               {followersList.map((user) => (
                 <li key={user.id} className="followrslist-li">
                   <div className="followrslist-li-div">
-                     <CombineAvatat username={user.username} profile_pic={user.profile_pic} visibility={user.visibility} size="2.2rem"/>
-                  <div className="followrs-user-details-left">
-                    <span className="user-name">{user.fullname}</span>
-                    <span className="user-username">@{user.username}</span>
-                  </div>
+                    <CombineAvatat username={user.username} profile_pic={user.profile_pic} visibility={user.visibility} size="2.2rem" />
+                    <div className="followrs-user-details-left">
+                      <span className="user-name">{user.fullname}</span>
+                      <span className="user-username">@{user.username}</span>
+                    </div>
                   </div>
                   <div className="followres-user-details-right">
                     <Followbtn userId={user.id} />
@@ -105,18 +106,20 @@ const ProfileStats = ({ gap }) => {
 
           animate={{ opacity: 1, scale: 1, x: isMobile ? '0%' : 0 }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}>
-    
-    
-                  <Subheadcomponent headline="Following" onClose={()=> setShowFollowing(false)} />
+
+          <div style={{ marginBottom: '1rem' }}>
+
+            <Subheadcomponent headline="Following" onClose={() => setShowFollowing(false)} />
+          </div>
           {followingList.length === 0 ? (
-            <p>Not following anyone yet.</p>
+            <p style={{padding : '0rem 1rem'}}>Not following anyone yet.</p>
           ) : (
             <ul>
               {followingList.map((user) => (
-              
+
                 <li key={user.id} className="user-details-li">
                   {/* <img src={user.profile_pic || dafaultprofilepic} alt="Profile" className="profile-img" /> */}
-                  <CombineAvatat username={user.username} profile_pic={user.profile_pic} visibility={user.visibility} size="2.2rem"/>
+                  <CombineAvatat username={user.username} profile_pic={user.profile_pic} visibility={user.visibility} size="2.2rem" />
                   <div className="user-details">
                     <div className="followrs-user-details-left">
                       <span className="user-name">{user.fullname}</span>

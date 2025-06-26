@@ -1,17 +1,44 @@
-.main-loader{
-    background: var(--backwhitecolor);
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-    user-select: none;
+.main-loader {
+  background: var(--webbackcolor);
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  user-select: none;
 }
-.main-loader img{
-    height: 5rem;
-    width : 5rem;
+
+.main-loader picture {
+  animation: redditBounce 2s infinite ease-in-out;
+}
+
+.main-loader img {
+  height: 5rem;
+  width: 5rem;
+  animation: redditRotate 2s infinite linear;
+  filter: drop-shadow(0 0 12px #2890e1);
+}
+
+
+@keyframes redditBounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+
+@keyframes redditRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

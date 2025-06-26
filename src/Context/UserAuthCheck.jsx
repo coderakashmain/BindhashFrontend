@@ -2,10 +2,6 @@ import React, { createContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 export const UserAuthCheckContext = createContext();
 import axios from 'axios';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import SkeletonComponent from '../components/Fallback/SkeletonComponent';
-import CircularLoader from '../components/Fallback/CircularLoader';
 import { useSocket } from './SocketContext';
 import MainLoader from '../components/Fallback/MainLoader';
 
@@ -18,6 +14,7 @@ const UserAuthCheck = ({ children }) => {
   const loginkchecktoken = sessionStorage.getItem('logintoken');
   const location = useLocation();
   const socket = useSocket();
+  const[socketChange,setSocketChangge] = useState(false)
 
   const navigate = useNavigate();
 
@@ -45,12 +42,17 @@ const UserAuthCheck = ({ children }) => {
 
 
   useEffect(() => {
-    if (!socket || !usertoken) return;
 
+    if (!socket || !usertoken) return;
+    setSocketChangge(!socketChange);
+
+
+  
     const handlemodeChange = (data) => {
+
       const { visibility, id } = data.results[0];
 
-
+   
 
       if (parseInt(id) !== usertoken?.user.id) return;
       if (visibility === 'anonymous') {
@@ -97,6 +99,7 @@ const UserAuthCheck = ({ children }) => {
         const response = await axios.get("/api/auth-check/check", { withCredentials: true });
 
         setUsertoken(response.data)
+
       } catch (error) {
         console.error("Auth check failed:", error.response ? error.response.data : error.message);
         setUsertoken(null);
@@ -111,7 +114,7 @@ const UserAuthCheck = ({ children }) => {
 
 
 
-  }, [loginkchecktoken]);
+  }, [loginkchecktoken,socketChange]);
 
   useEffect(() => {
 
@@ -141,7 +144,7 @@ const UserAuthCheck = ({ children }) => {
 
 
   return (
-    <UserAuthCheckContext.Provider value={{ usertoken, setUsertoken }}>
+    <UserAuthCheckContext.Provider value={{ usertoken, setUsertoken,setSocketChangge,socketChange }}>
       {children}
 
     </UserAuthCheckContext.Provider>

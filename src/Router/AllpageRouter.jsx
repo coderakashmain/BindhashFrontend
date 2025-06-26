@@ -5,6 +5,7 @@ import CircularLoader from '../components/Fallback/CircularLoader'
 import RouteLoader from '../components/Fallback/RouteLoader'
 
 
+
 const AllpageRouter = () => {
 
 
@@ -15,6 +16,7 @@ const AllpageRouter = () => {
   return (
     <Suspense fallback={<CircularLoader />} >
       <RouteLoader/>
+    
       <section id='page-router'>
         <Outlet />
       </section>

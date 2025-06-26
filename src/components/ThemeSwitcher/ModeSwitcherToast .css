@@ -5,6 +5,7 @@
   right: 0px;
   /* background: var(--lightbackcolor2); */
   background: rgba(0, 0, 0, 0.6);
+  background: black;
   color: #333;
   padding: 12px 16px;
   border-radius: 0;
@@ -19,22 +20,42 @@
   z-index: 10000;
   font-weight: 500;
   transition: all 0.3s ease;
-    pointer-events: auto;
-    z-index: 1000;
+  pointer-events: auto;
+  z-index: 1000;
 }
 
 .mode-toast .anon-icon {
-  width: 50px;
-  height: 50px;
+  width: 15rem;
+  height: 15rem;
+  background-color: black;
+  padding: 2rem;
+  border-radius: 50%;
+  border: 3px solid #9333ea;
 }
 
 .mode-toast .anonymous-icon {
-  color: #9333ea; /* purple */
+  color: #9333ea; 
 }
 
 .mode-toast .self-icon {
-  color: #2563eb; /* blue */
+  color: #2563eb;
 }
-.mode-toast span{
-color: var(--bothwhitecolor);
+.mode-toast span {
+  color: #9333ea;
+  margin-top: 2rem;
+}
+
+.self-box .self-icon{
+  border: 3px solid #2563eb !important;
+}
+.self-box span{
+    color: #2563eb;
+}
+.anon-icon-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  user-select: none;
 }

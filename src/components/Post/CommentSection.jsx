@@ -15,6 +15,7 @@ import { SnackbarContext } from "../../Context/SnackbarContext";
 import CommmentSkeleton from "../../components/Fallback/CommentSkeleton";
 import ReportPopup from "../Reports/ReportPopup";
 import { MobileViewContext } from "../../Context/MobileResizeProvider";
+import CombineAvatat from "../Avatar/CombineAvatat";
 
 const CommentSection = ({ post }) => {
     const { usertoken } = useContext(UserAuthCheckContext);
@@ -212,7 +213,8 @@ const CommentSection = ({ post }) => {
                 user_id: usertoken.user.id,
                 post_id: post.post_id,
                 comment: newComment,
-                parent_comment_id: replyingTo
+                parent_comment_id: replyingTo,
+                user_visibility : usertoken.user.visibility
             });
 
 
@@ -220,7 +222,7 @@ const CommentSection = ({ post }) => {
                 ...response.data,
                 commenter_username: usertoken.user.username,  // Add username from logged-in user
                 commenter_pic: usertoken.user.profile_pic,  // Add profile pic from logged-in user
-                // created_at: new Date().toISOString(), 
+             
             };
 
 
@@ -279,7 +281,8 @@ const CommentSection = ({ post }) => {
 
                             <aside className="comment-profile-box">
                                 <div className="comment-profile-box-l">
-                                    <img src={c.commenter_pic ? c.commenter_pic : defaultprofilephoto} alt="Profile" className="comment-profile-pic" />
+                              
+                                    <CombineAvatat username={c.commenter_username} profile_pic={c.commenter_pic} visibility={c.user_visibility} size="2.5rem"/>
                                     <div className="comment-header">
                                         <strong>{c.commenter_username} <span>{c.pinned ? "Pinned" : ""}</span></strong>
                                         <span className="comment-date">{c.created_at && formatTimeAgo(c.created_at)}</span>

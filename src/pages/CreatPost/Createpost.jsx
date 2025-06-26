@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./Createpost.css";
 import { Helmet } from 'react-helmet'
+import VideoCallRoundedIcon from '@mui/icons-material/VideoCallRounded';
+import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
+import AddToPhotosRoundedIcon from '@mui/icons-material/AddToPhotosRounded';
+
 import {
     TextField,
     Button,
@@ -13,20 +17,34 @@ import {
     Typography,
     Checkbox,
     FormControlLabel,
+    Tooltip,
 } from "@mui/material";
 import { ImagePlus } from "lucide-react";
 import axios from "axios";
+import CombineAvatat from '../../components/Avatar/CombineAvatat'
+
+import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
+import { SnackbarContext } from "../../Context/SnackbarContext";
+import { useNavigate } from "react-router-dom";
+import PostFunctionComponent from "../../components/PostFuctionComponent/PostFunctionComponent";
+import { AnimatePresence } from "framer-motion";
+
+
 
 export default function CreatePost() {
     const [photo, setPhoto] = useState(null);
     const [isAnonymous, setIsAnonymous] = useState(false);
+    const { usertoken } = useContext(UserAuthCheckContext);
+    const [loading, setLoading] = useState(false);
+    const { setSnackbar } = useContext(SnackbarContext);
+    const [mpostbtn,setMpostbtn] = useState(false);
+    const navigate = useNavigate();
+
+
     const [postData, setPostData] = useState({
         title: "",
         description: "",
-        category: "",
-        lesson: "",
-        feeling: "",
-        advice: "",
+        category: ""
     });
 
     const handlePhotoChange = (e) => {
@@ -45,28 +63,44 @@ export default function CreatePost() {
     };
 
     const handlePostSubmit = async () => {
-        const formData = new FormData();
-        formData.append("title", postData.title);
-        formData.append("description", postData.description);
-        formData.append("category", postData.category);
-        formData.append("lesson", postData.lesson);
-        formData.append("feeling", postData.feeling);
-        formData.append("advice", postData.advice);
-        formData.append("isAnonymous", isAnonymous);
 
-        if (photo) {
-            formData.append("photo", photo);
+        setLoading(true)
+
+        if (!postData.title || !postData.description || !postData.category) {
+            setLoading(false)
+            return;
         }
 
+        // const formData = new FormData();
+        // formData.append("title", postData.title);
+        // formData.append("description", postData.description);
+        // formData.append("category", postData.category);
+        // formData.append("isAnonymous", isAnonymous);
+
+
+
         try {
-            const response = await axios.post("/api/createfailpost", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
+            const response = await axios.post("/api/posts/text/createfailpost", {
+                title: postData.title,
+                description: postData.description,
+                category: postData.category,
+                isAnonymous: isAnonymous,
+            },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
             console.log("Post submitted successfully:", response.data);
+            setSnackbar({ open: true, message: 'Post Successfully', type: 'success' })
+            navigate('/')
         } catch (error) {
             console.error("Error submitting post:", error);
+            setSnackbar({ open: true, message: "Error submitting post", type: 'error' })
+        }
+        finally {
+            setLoading(false)
         }
     };
 
@@ -81,15 +115,27 @@ export default function CreatePost() {
             </Helmet>
             <Card className="create-post-card">
                 <CardContent>
-                    <Typography variant="h5" align="center" gutterBottom>
-                        Share Your Failure
-                    </Typography>
+                    <div className="creat-post-header">
+                        <div className="creat-post-header-l">
+                            <CombineAvatat username={usertoken.user.username} profile_pic={usertoken.user.profile_pic} visibility={usertoken.user.visibility} size="2.5rem" />
+                            <h3>{usertoken.user.username}</h3>
+
+                        </div>
+                        <div className="creat-post-header-r">
+                            <Tooltip title="Poll post">
+
+                                <AddToPhotosRoundedIcon onClick={()=> setMpostbtn(true)} className="create-post-icon active" />
+                            </Tooltip>
+
+                        </div>
+
+                    </div>
 
                     <div className="form-group">
-                        <TextField
-                            fullWidth
-                            label="Title (short)"
-                            variant="outlined"
+
+                        <input
+                            id="title"
+                            placeholder="Title"
                             name="title"
                             value={postData.title}
                             onChange={handleInputChange}
@@ -97,12 +143,12 @@ export default function CreatePost() {
                     </div>
 
                     <div className="form-group">
-                        <TextField
-                            fullWidth
-                            label="What went wrong today?"
-                            multiline
+                        <textarea
+
+                            sx={{ background: 'var(--backwhitecolor)' }}
+                            placeholder="What went wrong today?"
+
                             rows={4}
-                            variant="outlined"
                             name="description"
                             value={postData.description}
                             onChange={handleInputChange}
@@ -111,62 +157,78 @@ export default function CreatePost() {
 
                     <div className="form-group">
                         <FormControl fullWidth>
-                            <InputLabel>Category</InputLabel>
+                            <InputLabel
+                                sx={{
+                                    color: '#666',
+                                    '&.Mui-focused': {
+                                        color: '#2890e1', // focus color
+                                    },
+                                }}
+                            >
+                                Category
+                            </InputLabel>
+
                             <Select
                                 label="Category"
                                 name="category"
                                 value={postData.category}
                                 onChange={handleInputChange}
+                                sx={{
+                                    background: 'var(--backwhitecolor)',
+                                    borderRadius: '0.3rem',
+                                    boxShadow: ' var( --creat-post-shadow)',
+                                    outline: 'none',
+                                    border: 'none',
+                                    color: 'var(--textcolor)',
+                                    '& fieldset': {
+                                        border: 'none',
+                                    },
+
+                                }}
+                                MenuProps={{
+                                    PaperProps: {
+                                        sx: {
+                                            backgroundColor: 'var(--backwhitecolor)',
+                                            color: 'var(--blacktextcolor)',
+                                            borderRadius: 2,
+                                        },
+                                    },
+                                }}
                             >
-                                <MenuItem value="business">Business</MenuItem>
-                                <MenuItem value="exams">Exams</MenuItem>
-                                <MenuItem value="startup">Startup</MenuItem>
-                                <MenuItem value="mentalhealth">Mental Health</MenuItem>
-                                <MenuItem value="love">Love</MenuItem>
-                                <MenuItem value="fitness">Fitness</MenuItem>
-                                <MenuItem value="other">Other</MenuItem>
+                                {[
+                                    { value: 'business', label: 'Business' },
+                                    { value: 'exams', label: 'Exams' },
+                                    { value: 'startup', label: 'Startup' },
+                                    { value: 'mentalhealth', label: 'Mental Health' },
+                                    { value: 'love', label: 'Love' },
+                                    { value: 'fitness', label: 'Fitness' },
+                                    { value: 'other', label: 'Other' },
+                                ].map((item) => (
+                                    <MenuItem
+                                        key={item.value}
+                                        value={item.value}
+                                        sx={{
+                                            backgroundColor: 'transparent',
+                                            '&:hover': {
+                                                backgroundColor: 'var(--lightbackcolor)', // light blue on hover
+                                            },
+                                            '&.Mui-selected': {
+                                                backgroundColor: '#cce4ff', // blue when selected
+                                                color: '#003366',
+                                            },
+                                        }}
+                                    >
+                                        {item.label}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
+
                     </div>
 
-                    <div className="form-group">
-                        <TextField
-                            fullWidth
-                            label="What did you learn?"
-                            multiline
-                            rows={3}
-                            variant="outlined"
-                            name="lesson"
-                            value={postData.lesson}
-                            onChange={handleInputChange}
-                        />
-                    </div>
 
-                    <div className="form-group">
-                        <TextField
-                            fullWidth
-                            label="How are you feeling?"
-                            variant="outlined"
-                            name="feeling"
-                            value={postData.feeling}
-                            onChange={handleInputChange}
-                        />
-                    </div>
 
-                    <div className="form-group">
-                        <TextField
-                            fullWidth
-                            label="Lesson Learned (optional)"
-                            multiline
-                            rows={2}
-                            variant="outlined"
-                            name="advice"
-                            value={postData.advice}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-
-                    <div className="form-group photo-upload">
+                    {/* <div className="form-group photo-upload">
                         <Button
                             variant="outlined"
                             component="label"
@@ -181,7 +243,7 @@ export default function CreatePost() {
                                 onChange={handlePhotoChange}
                             />
                         </Button>
-                    </div>
+                    </div> */}
 
                     <div className="form-group stranger-click">
                         <FormControlLabel
@@ -190,6 +252,7 @@ export default function CreatePost() {
                                     checked={isAnonymous}
                                     onChange={() => setIsAnonymous(!isAnonymous)}
                                     name="anonymous"
+                                    style={{ color: 'var(--blue-color)' }}
                                 />
                             }
                             label="Post Anonymously"
@@ -203,11 +266,19 @@ export default function CreatePost() {
                         color="primary"
                         fullWidth
                         onClick={handlePostSubmit}
+                        disabled={loading}
+
                     >
                         Post
                     </Button>
+                    <AnimatePresence>
+                        {mpostbtn && (
+                            <PostFunctionComponent widthsize='40rem' mpostbtn={mpostbtn} setMpostbtn={setMpostbtn} />
+                        )}
+                    </AnimatePresence>
                 </CardContent>
             </Card>
         </div>
     );
 }
+

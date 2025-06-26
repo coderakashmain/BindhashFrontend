@@ -18,6 +18,7 @@
     height: 80%;
     background-color: var(--backwhitecolor);
     overflow: scroll;
+    scrollbar-width: none;
    
     border-radius: 1rem;
 }
@@ -64,6 +65,7 @@
     height: 100%;
     background-color: var(--backwhitecolor);
     overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 .create-poll-small-msg {
@@ -219,7 +221,7 @@
  text-align: start;
     text-decoration: none;
     font-size: 0.7rem;
-    background-color:#e2f5ff;
+    background:var(--lightbackcolor);
     color: var(--blacktextcolor);
     color:#325465 ;
     border-radius: 0.2rem;
@@ -227,6 +229,7 @@
     display: flex;
     align-items: center;
     gap: 0.2rem;
+    cursor: pointer;
 }
 .poll-visiblity-msg {
     margin-top: 2rem;

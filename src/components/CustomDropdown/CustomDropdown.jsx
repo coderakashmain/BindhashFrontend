@@ -9,22 +9,28 @@ const CustomDropdown = ({setDropselect}) => {
     if(selected === 'public'){
         setDropselect("public")
     }else{
-        setDropselect("Followers")
+        setDropselect("anonymous")
     }
   },[selected])
 
   return (
     <div className="custom-dropdown">
-      <button className="dropdown-btn">
+      <button className="dropdown-btn" disabled>
         {selected === "public" ? <Earth  size={18}/> : <Users  size={18}/>}
-        {selected === "public" ? " Public" : " Followers"}
+        {selected === "public" ? " public" : " Anonymous"}
       </button>
       <div className="dropdown-menu">
-        <div onClick={() => setSelected("public")}>
+        <div onClick={(e) => {
+          e.preventDefault();
+          
+          setSelected("public")}
+          }>
           <Earth size={18} /> Public
         </div>
-        <div onClick={() => setSelected("followers")}>
-          <Users size={18} /> Followers
+        <div onClick={(e) => {
+               e.preventDefault();
+          setSelected("anonymous")}}>
+          <Users size={18} /> Anonymous
         </div>
       </div>
     </div>

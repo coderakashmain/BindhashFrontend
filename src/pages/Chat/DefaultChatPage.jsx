@@ -8,6 +8,7 @@ import './DefaultChatPage.css';
 import CloseIcon from '@mui/icons-material/Close';
 import { FollowersFollowingContext } from '../../Context/FollowersFollowing';
 import { useNavigate } from 'react-router-dom';
+import CombineAvatat from '../../components/Avatar/CombineAvatat';
 
 
 const DefaultChatPage = () => {
@@ -59,7 +60,7 @@ const DefaultChatPage = () => {
   const gotochat = (u) => {
 
 
-    navigate(`/chat/${u.id}`);
+    navigate(`/chat/${u.id}/${u.username}`);    
   }
   return (
     <div className="default-chat-page">
@@ -132,10 +133,11 @@ const DefaultChatPage = () => {
             <List>
               {filteredFollowings.length > 0 ? (
                 filteredFollowings.map((user) => (
-                  <ListItem key={`following-${user.id}`} button={true}
-                    onClick={() => gotochat(user)} >
+                  <ListItem key={`following-${user.id}`} button
+                    onClick={() => gotochat(user)} style={{cursor : 'pointer'}} >
                     <ListItemAvatar>
-                      <Avatar src={user.profile_pic}  alt={user.username}/>
+                      {/* <Avatar src={user.profile_pic}  alt={user.username}/> */}
+                      <CombineAvatat usernmae ={user.username} profile_pic={user.profile_pic} visibility={user.visibility} size='3rem'/>
                     </ListItemAvatar>
                     <ListItemText
                       primary={user.fullname}
@@ -162,9 +164,10 @@ const DefaultChatPage = () => {
             <List>
               {filteredFollowers.length > 0 ? (
                 filteredFollowers.map((user) => (
-                  <ListItem key={`follower-${user.id}`} button={true} onClick={gotochat}>
+                  <ListItem key={`follower-${user.id}`} button onClick={()=>gotochat(user)} style={{cursor : 'pointer'}}>
                     <ListItemAvatar>
-                      <Avatar src={user.profile_pic} />
+                      {/* <Avatar src={user.profile_pic} /> */}
+                       <CombineAvatat usernmae ={user.username} profile_pic={user.profile_pic} visibility={user.visibility} size='3rem'/>
                     </ListItemAvatar>
                     <ListItemText
                       primary={user.fullname}

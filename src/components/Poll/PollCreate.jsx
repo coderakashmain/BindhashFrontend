@@ -6,16 +6,19 @@ import CustomDropdown from '../CustomDropdown/CustomDropdown'
 import gsap from 'gsap'
 import { UserAuthCheckContext } from '../../Context/UserAuthCheck'
 import Bangbox from '../Bangbox/Bangbox'
+import CloseIcon from '@mui/icons-material/Close';
+import { SnackbarContext } from '../../Context/SnackbarContext'
 
 const PollCreate = ({ onClose, pollcreation }) => {
     const [dropselect, setDropselect] = useState();
     const [question, setQuestion] = useState("");
     const [options, setOptions] = useState(["", ""]);
-    const [visibility, setVisibility] = useState("public");
     const [images, setImages] = useState([]);
     const pollsectionRef = useRef(null);
     const pollboxRef = useRef(null);
     const {usertoken} = useContext(UserAuthCheckContext);
+    const {setSnackbar} = useContext(SnackbarContext)
+    
     const [postbutton,setPostbutton] = useState(false);
 
     const handleImageUpload = (e, index) => {
@@ -50,7 +53,9 @@ const PollCreate = ({ onClose, pollcreation }) => {
         formData.append("user_id", usertoken.user.id);
         
         formData.append("question", question);
-        formData.append("visibility", visibility);
+        formData.append("visibility", dropselect);
+
+      
 
         const allowoptions = options.filter(options => options.trim() !== "");
         if(allowoptions.length <2){
@@ -64,6 +69,7 @@ const PollCreate = ({ onClose, pollcreation }) => {
               formData.append(`option_images`, image);
             }
           });
+          
 
         try {
             const response = await axios.post("/api/polls/creation", formData, {
@@ -71,6 +77,7 @@ const PollCreate = ({ onClose, pollcreation }) => {
                 "Content-Type": "multipart/form-data",
               },
             });
+            setSnackbar({open : true, message : 'Create successfully', type : 'success'})
             console.log("Poll Created:", response.data);
             onClose();
           } catch (error) {
@@ -121,7 +128,7 @@ const addOption = () => {
         <section ref={pollsectionRef} className='poll-section '>
             <div ref={pollboxRef} className="poll-container  scrollbar">
                 <form >
-            <h2><Bangbox size={"1.5rem"} click = {true}/><span className='poll-post-box'><button disabled = {!postbutton} type='submit' onClick={createPoll} className={`poll-submit-button active ${!postbutton  ?  'post-off-poll' : ''}`}>Post</button><X size={18} style={{ cursor: 'pointer' }} onClick={handleclose}  /></span> </h2>
+            <h2><Bangbox size={"1.5rem"} click = {true}/><span className='poll-post-box'><button disabled = {!postbutton} type='submit' onClick={createPoll} className={`poll-submit-button active ${!postbutton  ?  'post-off-poll' : ''}`}>Post</button><CloseIcon size={18} style={{ cursor: 'pointer' }} onClick={handleclose}  /></span> </h2>
                     <div className="poll-container-inside scrollbar">
                         <p className="create-poll-small-msg">Complete the below fields to create your poll </p>
 
@@ -164,7 +171,7 @@ const addOption = () => {
 
                             ))}
                             <div className="poll-container-add-another-option-btn">
-                                <p  onClick={addOption}><Plus size={18} />Add an another Option </p> <p ><MapPinPlusInside size={18} />Add location</p> <CustomDropdown setDropselect={setDropselect} />
+                                <p  onClick={addOption}><Plus size={18} />Add an another Option </p>  <CustomDropdown setDropselect={setDropselect} />
 
 
                             </div>

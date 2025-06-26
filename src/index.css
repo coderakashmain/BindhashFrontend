@@ -60,6 +60,9 @@ body {
   --border-color2: 1px solid rgb(180 212 220 / 13%);
   --post-card-border: 1px solid rgba(25, 118, 210, 0.1);
   --post-box-shadow: #8b8b8bb3;
+    --creat-post-shadow :  1px 1px 2px rgba(135, 135, 135, 0.414);
+  
+
   --danger-color: red;
   --light-danger-color: #d62839;
   --secondary-box-shadow: rgba(120, 142, 147, 0.316);
@@ -108,10 +111,14 @@ body {
 
   --secondary-box-shadow: rgba(22, 38, 51, 0.618);
   --post-box-shadow: #13191cb3;
+  --creat-post-shadow :  1px 1px 2px rgba(135, 135, 135, 0.414);
 
   /* --skeleton-color: #2a2a2a; */
   /* --skeleton-before-c: #868484; */
   --skeleton-bg: #0d1423;
+
+
+    --light-blue-color: #576d7f6c;
 }
 
 /* 

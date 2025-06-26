@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AddIcon from '@mui/icons-material/Add';
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
-import {motion , AnimatePresence} from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { MobileViewContext } from "../../Context/MobileResizeProvider";
 import Diversity3RoundedIcon from '@mui/icons-material/Diversity3';
 import ChatRoundedIcon from '@mui/icons-material/ChatRounded';
@@ -19,6 +19,8 @@ import HouseOutlinedIcon from '@mui/icons-material/HouseRounded';
 import AppsOutlinedIcon from '@mui/icons-material/AppsRounded';
 import Face6Icon from '@mui/icons-material/Face6';
 import DrawIcon from '@mui/icons-material/Draw';
+import CombineAvatat from "../Avatar/CombineAvatat";
+import LiveAvatar from "../Avatar/LiveAvatar";
 
 
 const Slidebar = () => {
@@ -31,10 +33,10 @@ const Slidebar = () => {
   const { usertoken } = useContext(UserAuthCheckContext)
   const { setSnackbar } = useContext(SnackbarContext);
   const [collapsed, setCollapsed] = useState(false);
-  const {isMobile}  = useContext(MobileViewContext)
+  const { isMobile } = useContext(MobileViewContext)
 
 
-if (!usertoken || !usertoken.user) return null;
+  if (!usertoken || !usertoken.user) return null;
 
   useEffect(() => {
     const handleMouseDown = (e) => {
@@ -125,41 +127,39 @@ if (!usertoken || !usertoken.user) return null;
   }
 
 
-  useEffect(()=>{
-    const resizeHandle = ()=>{
-      if(window.innerWidth < 872){
+  useEffect(() => {
+    const resizeHandle = () => {
+      if (window.innerWidth < 872) {
         setCollapsed(true);
       };
 
     }
-    
-    window.addEventListener('resize',resizeHandle);
-    
-    return ()=> window.removeEventListener('resize',resizeHandle);
-  },[])
+
+    window.addEventListener('resize', resizeHandle);
+
+    return () => window.removeEventListener('resize', resizeHandle);
+  }, [])
 
   return (
-    <motion.div 
-    animate = {{  width : collapsed ? '3%' : '18rem' , display : isMobile  ? 'none' : ''}}
-    transition={{duration : 0.9}}
+    <motion.div
+      animate={{ width: collapsed ? '3%' : '18rem', display: isMobile ? 'none' : '' }}
+      transition={{ duration: 0.9 }}
 
-    style={{padding : collapsed ? '0.8rem 0.4rem' : ''}}
-    className="sidebar" ref={sidebarref}>
+      style={{ padding: collapsed ? '0.8rem 0.4rem' : '' }}
+      className="sidebar" ref={sidebarref}>
       {/* Logo */}
-      <div className="logo" style={{justifyContent : collapsed ? 'center' : 'space-between'}}>
-       {!collapsed && ( <Bangbox size="1.7rem" />)} <ViewSidebarIcon onClick={() => setCollapsed(!collapsed)} className="squize-sidebar" sx={{ cursor: 'pointer' }} />
+      <div className="logo" style={{ justifyContent: collapsed ? 'center' : 'space-between' }}>
+        {!collapsed && (<Bangbox size="1.7rem" />)} <ViewSidebarIcon onClick={() => setCollapsed(!collapsed)} className="squize-sidebar" sx={{ cursor: 'pointer' }} />
       </div>
 
       {/* Navigation Links */}
       <nav>
         <ul className={`${collapsed ? 'centerli' : ''} `}>
-          
+
           <li>
             <Link to="/" style={location.pathname === '/' ? { color: 'var(--primary-color)' } : {}}><HouseOutlinedIcon strokeWidth={location.pathname === '/' ? 3 : '2'} size='1.3rem' /> {collapsed ? '' : "Home"}</Link>
           </li>
-          {/* <li>
-            <Link to="/explore" style={location.pathname === '/explore' ? { color: 'var(--primary-color)' } : {}}><CirclePlus strokeWidth={location.pathname === '/explore' ? 3 : '2'} size='1.3rem' /> {collapsed ? '' : "Explore"}</Link>
-          </li> */}
+
           <li>
             <Link to="/room" style={location.pathname === '/room' ? { color: 'var(--primary-color)' } : {}}><Diversity3RoundedIcon strokeWidth={location.pathname === '/room' ? 3 : '2'} size='1.3rem' /> {collapsed ? '' : "Rooms"}</Link>
           </li>
@@ -179,7 +179,7 @@ if (!usertoken || !usertoken.user) return null;
         <hr style={{ borderColor: 'var(--lighttextcolor)', opacity: 0.2 }} />
         {!collapsed && (<h4>Own Rooms</h4>)}
         <ul className="own-rooms-ul">
-          <li style={collapsed ? {justifyContent : 'center'} : { justifyContent : 'flex-start'}}> <Avatar sx={{ background: 'var(--logolinearcolor)', color: 'var(--bothwhitecolor)' }}><AddIcon /></Avatar> {collapsed ? '' : 'Create a new room'}</li>
+          <li style={collapsed ? { justifyContent: 'center' } : { justifyContent: 'flex-start' }}> <Avatar sx={{ background: 'var(--logolinearcolor)', color: 'var(--bothwhitecolor)' }}><AddIcon /></Avatar> {collapsed ? '' : 'Create a new room'}</li>
         </ul>
 
       </nav>
@@ -187,14 +187,16 @@ if (!usertoken || !usertoken.user) return null;
       <div ref={dragHandleRef} className="sidebar-drag"></div>
 
       {/* Logout Button */}
-      <button className="sidebar-p-b" style={{ gap : '0.9rem', flexWrap : collapsed ? 'wrap' : 'nowrap' , flexDirection : collapsed ? 'column' : 'row'}}>
+      <button className="sidebar-p-b" style={{ gap: '0.9rem', flexWrap: collapsed ? 'wrap' : 'nowrap', flexDirection: collapsed ? 'column' : 'row' }}>
         <aside>
           <div className="sidebar-p-b-a">
+            <LiveAvatar>
 
+              <CombineAvatat username={usertoken?.user?.username} profile_pic={usertoken?.user?.profile_pic} visibility={usertoken.user.visibility} size="2.5rem" />
+            </LiveAvatar>
 
-            <ActiveAvatar size="40" username={usertoken?.user?.username} profile_pic={usertoken?.user?.profile_pic} />
           </div>
-         {!collapsed && ( <div className="sidebar-p-b-n">
+          {!collapsed && (<div className="sidebar-p-b-n">
             <span>{usertoken?.user?.fullname}</span>
             <span>@{usertoken?.user?.username}</span>
           </div>)}

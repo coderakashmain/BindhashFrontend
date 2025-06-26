@@ -12,6 +12,8 @@ import ActiveAvatar from "../Avatar/AvatacActive";
 import FlutterDashRoundedIcon from '@mui/icons-material/FlutterDashRounded';
 import { Tooltip } from "@mui/material";
 import ModeSwitcherToast from "../ThemeSwitcher/ModeSwitcherToast ";
+import CombineAvatat from "../Avatar/CombineAvatat";
+import LiveAvatar from "../Avatar/LiveAvatar";
 
 
 
@@ -90,7 +92,10 @@ const Navbar = () => {
   
         <NavLink to={`/profile/o/${usertoken.user.username}`} className="icon-button nav-user-profile-icon">
 
-          <ActiveAvatar username={usertoken?.user.username} profile_pic={usertoken?.user.profile_pic} size="2rem" />
+         <LiveAvatar>
+          <CombineAvatat username={usertoken?.user.username} profile_pic={usertoken?.user.profile_pic} visibility={usertoken.user.visibility} size = "2.5rem"/>
+
+         </LiveAvatar>
         </NavLink>
       </div>
     </nav>

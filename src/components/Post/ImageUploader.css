@@ -8,10 +8,10 @@
     justify-content: center;
     flex-direction: column;
     z-index: 1000;
-    backdrop-filter: blur(4px);
+    /* backdrop-filter: blur(4px); */
     width: 100%;
     height: 100%;
-    z-index: 100 !important;
+    z-index: 10000 !important;
 }
 
 .post-p-u-edit-i {
@@ -26,7 +26,7 @@
     justify-content: center;
     position: relative; /* To contain the cropper properly */
     overflow: hidden;
-    background-color: white;
+    background-color: var(--backwhitecolor);
     
 }
 
@@ -34,7 +34,7 @@
     width: 100%;
     height: 100%;
     position: relative;
-    background-color: #f4f4f4;
+    background: var(--webbackcolor);
 }
 
 .cropper-container  img{
@@ -59,6 +59,8 @@
     cursor: pointer;
     transition: background-color 0.3s;
     margin-top: 10px;
+    z-index: 10;
+    position: relative;
 
 }
 

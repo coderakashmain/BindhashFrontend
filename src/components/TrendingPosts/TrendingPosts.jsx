@@ -5,6 +5,7 @@ import defaultprofilepic from '../../Photo/defaultprofilepic.png'
 import './TrendingPosts.css'
 import PostModel from "../Post/PostModel";
 import Time from "../Time/Time";
+import PostContent from "../Post/PostContent";
 
 
 const TrendingPosts = () => {
@@ -24,11 +25,11 @@ const TrendingPosts = () => {
     fetchTrendingPosts();
   }, []);
  
-
+// console.log(trendingPosts)
   return (
     <div className="trendingcom-trending-posts">
       <h2> <span className="trendingpost-head-spen">Trending Posts </span><span style={{fontWeight : 'bold'}}>Top 10</span></h2>
-      <ul>
+      {/* <ul>
         {trendingPosts.length > 0 ? trendingPosts.map((post) => (
           <li key={post.id} className="trendingcom-trending-post"  >
             <div className="trendingcom-user-info" >
@@ -49,7 +50,8 @@ const TrendingPosts = () => {
           <button className="no-t-p">No Post Yet</button>
 
         )}
-      </ul>
+      </ul> */}
+       <PostContent feed={trendingPosts} moreload={false} />
       {selectedPostId && <PostModel postId={selectedPostId} onClose={() => setSelectedPostId(null)} />}
     </div>
   );

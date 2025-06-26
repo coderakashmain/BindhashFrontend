@@ -9,6 +9,7 @@ import StorySection from '../Story/StorySection';
 import { MobileViewContext } from '../../Context/MobileResizeProvider';
 import { UserAuthCheckContext } from '../../Context/UserAuthCheck';
 import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 const PostFunctionComponent = ({ mpostbtn, setMpostbtn ,widthsize }) => {
@@ -21,30 +22,12 @@ const PostFunctionComponent = ({ mpostbtn, setMpostbtn ,widthsize }) => {
     const [videoselect, setVideoselect] = useState(false);
     const {isMobile} = useContext(MobileViewContext)
     const {usertoken} = useContext(UserAuthCheckContext);
+    const navigate = useNavigate();
+    const location = useLocation();
 
 
 
-    const handlePostSubmit = async (e) => {
-        e.preventDefault();
-        if (!content.trim()) return;
-        setMpostbtn(false)
-    
-        try {
-          await axios.post("/api/posts/text/create", {user_id : usertoken.user.id,content});
-    
-          alert('sucess');
-          setContent('')
-        } catch (err) {
-          console.error("Error creating post:", err);
-          alert('error');
-        }
-      };
-    const handlecontendChange = (e) => {
-        const contentValue = e.target.value;
-        setContent(contentValue);
-
-    }
-
+  
 
     const videobtnclick = () => {
 
@@ -69,10 +52,6 @@ const PostFunctionComponent = ({ mpostbtn, setMpostbtn ,widthsize }) => {
  
    
 
-
-    }
-    const hanldestorymodel = () => {
-        setstorymodeltrue(true)
 
     }
  
@@ -101,16 +80,11 @@ const PostFunctionComponent = ({ mpostbtn, setMpostbtn ,widthsize }) => {
                         onClick={(event) => event.stopPropagation()}
                         className="mobile-upload-s-i">
 
-                        <StorySection storymodeltrue={storymodeltrue} setstorymodeltrue={setstorymodeltrue} />
                         <div className="home-post-box-upload" style={{ display: 'block', padding: '0rem 1rem' }} >
 
-                            <form onSubmit={handlePostSubmit} className="home-post-type-box">
-                                <input type="text" name="post" placeholder="Write a post" value={content} onChange={handlecontendChange} />
-                                <button className="button" type="submit">Post</button>
-                             
-                            </form>
-
                             <div className="home-post-button-box">
+                                {location.pathname !== '/creatpost' && (   <button onClick={()=>navigate('/createpost')}>Failure Post</button>)}
+                             
                                 <ImageUploader setMpostbtn={setMpostbtn}  />
                                 <input type="file"
                                     ref={videouploadRef}
@@ -121,14 +95,13 @@ const PostFunctionComponent = ({ mpostbtn, setMpostbtn ,widthsize }) => {
                                 />
                                 <button onClick={videobtnclick} className="home-post-button-box-video"><Video size={18} className="home-upload-icon" />Video</button>
 
-                                <button onClick={hanldestorymodel} className="home-post-button-box-story"><CircleFadingPlus size={18} className="home-upload-icon" />Story</button>
-                                <button className="home-post-button-box-story" onClick={() => {
+                                {/* <button className="home-post-button-box-story" onClick={() => {
 
-                                    // setMpostbtn(false)
+                                
                                     setPollcreation(true)
                                 }}>
                                     <DiamondPlus size={18} className="home-upload-icon" />Poll</button>
-                                {pollcreation && <PollCreate pollcreation={pollcreation} onClose={() => setPollcreation(false)} />}
+                                {pollcreation && <PollCreate pollcreation={pollcreation} onClose={() => setPollcreation(false)} />} */}
                             </div>
 
                         </div>

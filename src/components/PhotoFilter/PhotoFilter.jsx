@@ -24,10 +24,10 @@ const PhotoFilter = ({ media, type, setFilteredMedia }) => {
     const applyFilter = (filter) => {
         setSelectedFilter(filter); 
         if (type.startsWith("image")) {
-            // Create a canvas to apply the filter
+    
         
             const img = new Image();
-            img.crossOrigin = "anonymous";  // Prevent CORS issues
+            img.crossOrigin = "anonymous";  
             img.src = media;
     
             img.onload = () => {
@@ -37,10 +37,9 @@ const PhotoFilter = ({ media, type, setFilteredMedia }) => {
                 canvas.width = img.width;
                 canvas.height = img.height;
     
-                ctx.filter = filters[filter];  // Apply selected filter
+                ctx.filter = filters[filter]; 
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     
-                // Convert canvas to Blob
                 canvas.toBlob((blob) => {
                     if (blob) {
                         const file = new File([blob], "filtered_image.jpg", { type: "image/jpeg" });
@@ -49,12 +48,12 @@ const PhotoFilter = ({ media, type, setFilteredMedia }) => {
                         setProcessedImage(newImageUrl);
 
 
-                        setFilteredMedia(file); // Pass the processed file
+                        setFilteredMedia(file); 
                     }
                 }, "image/jpeg");
             };
         } else {
-            // If it's a video, just apply the filter name
+          
             setFilteredMedia({ file: media, filter });
         }
     };
@@ -62,10 +61,11 @@ const PhotoFilter = ({ media, type, setFilteredMedia }) => {
     useEffect(()=>{
         setSelectedFilter("none");
         setProcessedImage(media);
-        applyFilter("none")
+        // applyFilter("none")
+       setFilteredMedia(media);
     },[media])
 
-    // Play/Pause functionality
+
     const togglePlayPause = () => {
         if (videoRef.current.paused) {
             videoRef.current.play();
@@ -93,7 +93,7 @@ const PhotoFilter = ({ media, type, setFilteredMedia }) => {
                         src={processedImage}
                         alt="Preview"
                         className="filtered-media"
-                        style={{ filter: selectedFilter === "none" ? "" : filters[selectedFilter] }}
+                        // style={{ filter: selectedFilter === "none" ? "" : filters[selectedFilter] }}
                     />
                 )}
 

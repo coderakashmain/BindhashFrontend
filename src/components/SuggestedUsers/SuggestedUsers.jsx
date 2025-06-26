@@ -31,9 +31,9 @@ const SuggestedUsers = ({ homeuser }) => {
 
 
   return (
-    <div className="suggested-users-container" style={homeuser ? { padding: '0.91rem' } : {}}>
-      {suggestedUsers.length > 0 && (
-        !loading ? (
+    <div className="suggested-users-container" style={homeuser ? { padding:  '0.91rem' } : {}}>
+      {!loading ?  (
+        suggestedUsers.length >  0 &&  (
           <>
 
             <h2>Suggested Users</h2>
@@ -52,12 +52,11 @@ const SuggestedUsers = ({ homeuser }) => {
               </div>
             ))}
           </>
-        ) :
-          (
+        ) 
+      ) :(
 
             <ChatListSkeleton rows={5} />
           )
-      )
       }
 
     </div>

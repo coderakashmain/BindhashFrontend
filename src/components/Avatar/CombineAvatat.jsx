@@ -6,7 +6,7 @@ import {
 
 } from "@mui/icons-material"
 
-const CombineAvatat = ({username,profile_pic,visibility ,size = "1.5rem"}) => {
+const CombineAvatat = ({username,profile_pic,visibility ,size = "2.5rem",iconsize}) => {
 
   return (
 
@@ -15,7 +15,7 @@ const CombineAvatat = ({username,profile_pic,visibility ,size = "1.5rem"}) => {
             loading: "lazy",
         },
     }} sx={{height : size, width : size , background : visibility === 'anonymous' ? 'var(--linearcolor)' : 'var(--linearcolor)'}} >
-        {visibility === 'anonymous' ? <SecurityOutlined/> : null }
+        {visibility === 'anonymous' ? <SecurityOutlined sx={{fontSize : iconsize ? iconsize : '1.5rem'}} /> : null }
     </Avatar>
   
   )
