@@ -178,7 +178,7 @@ const Profile = () => {
             </div>
 
             <div className="profile-page-stats">
-              <div className="stat-box"><strong>{totalUserPost}</strong><span>Posts</span></div>
+              <div className="stat-box"><strong>{usertoken.user.total_post}</strong><span>Posts</span></div>
               <ProfileStats gap='5rem' />
             </div>
 

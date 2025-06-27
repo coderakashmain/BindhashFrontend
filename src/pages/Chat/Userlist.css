@@ -21,10 +21,20 @@
   margin-top: 1rem;
   border-radius: 3rem;
 }
+/* .global-random-chat-leave{
+  background: red !important;
+  color: black;
+} */
 
-@media (max-width: 794px) {
+@media (max-width: 846px) {
   .user-list {
-    width: 35rem;
+    width: 25rem;
+    min-width: 10rem;
+  }
+}
+@media (max-width: 702px) {
+  .user-list {
+    width: 20rem;
   }
 }
 @media (max-width: 640px) {

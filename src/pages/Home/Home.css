@@ -421,16 +421,16 @@
 }
 .post-header-catetory-box{
   display: flex;
-  text-align: center;
-  gap: 1rem;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .post-header-username-box {
   display: flex;
   flex-direction: column;
 }
-.post-header-username-box span {
-  margin: 0;
+.post-header-username-box .post-chip span{
+  color:var(--blue-color);
 }
 .post-header-edit {
   display: flex;

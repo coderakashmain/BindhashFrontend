@@ -196,7 +196,10 @@ const UserList = () => {
     <div className="user-list">
 
       <Newaccount />
-      <button className="global-random-chat-btn">Chat with Random</button>
+      <button  onClick={()=> navigate('globalChat')} className={`global-random-chat-btn ${location.pathname === '/chat/globalChat ' ? 'global-random-chat-leave' : ''}`}>
+       
+        {location.pathname === '/chat/globalChat' ? "Leave Random Chat" : " Chat with Random"}
+        </button>
 
       <h3 style={{ marginTop: '1rem', marginBottom: '0.5rem' }} >Message</h3>
 

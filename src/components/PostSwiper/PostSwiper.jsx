@@ -9,26 +9,27 @@ import { User, Heart, Bookmark } from "lucide-react";
 import "./PostSwiper.css"; // Import CSS
 import { AllPostContextData } from "../../Context/AllPostContext";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
-
+import CombineAvatat from "../Avatar/CombineAvatat";
+import axios from "axios";
+import { UserPostListDataContext } from "../../Context/UserPostListContext";
+import PostContent from "../Post/PostContent";
 const PostSwiper = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const {allpost} = useContext(AllPostContextData);
+  const { allpost } = useContext(AllPostContextData);
   const { usertoken } = useContext(UserAuthCheckContext);
-  const[userpost,setUserpost] = useState([])
-
-  useEffect(() => {
-    if (allpost.length > 0 && usertoken?.user?.id) {
-      const userPosts = allpost.filter((post) => post.post_user_id === usertoken.user.id);
-      setUserpost(userPosts);
-    }
-  }, [allpost, usertoken]);
   
+  const {userpost,setUserpost} = useContext(UserPostListDataContext)
 
 
 
 
 
-  
+
+
+
+
+
+
 
   return (
     <div className="post-swiper-container">
@@ -61,36 +62,23 @@ const PostSwiper = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="post-content"
-          > 
-          
-          { userpost.length > 0 ? userpost.map((post) => (
-        
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="post-content"
-              >
-                <div className="post-header">
-                  <img src={post.post_user_pic} alt={post.post_username} className="profile-pic" />
-                  <h3>{post.post_username}</h3>
-                </div>
-                <p className="post-text">{post.content}</p>
-                <div className="post-stats">
-                  <span>❤️ {post.like_count}</span>
-                  <span>💬 {post.comments?.length || 0}</span>
-                </div>
-              </motion.div>
-         
-          )) : (
-            <>
-            <h2>📢 All Posts</h2>
-            <p>Here are all your posts.</p>
-            </>
-          )}
-    
+          >
 
-            
+            {userpost.length > 0 ? 
+              (
+                // <PostContent allpost={userpost} setAllpost={setUserpost} moreload={false}/>
+                'Update Soon'
+           
+              )
+            : (
+              <>
+                <h2> All Posts</h2>
+                <p>Here are all your posts.</p>
+              </>
+            )}
+
+
+
           </motion.div>
         </SwiperSlide>
 

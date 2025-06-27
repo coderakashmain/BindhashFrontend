@@ -79,6 +79,7 @@ body {
   --border-radius: 10px;
 
   --bothwhitecolor: white;
+  --bothblackcolor:black
 }
 .dark {
   --webbackcolor: #080c16;

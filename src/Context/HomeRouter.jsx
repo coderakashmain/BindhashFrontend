@@ -14,19 +14,19 @@ const HomeRouter = () => {
   const { isMobile } = useContext(MobileViewContext)
   const location = useLocation();
   const [navvisibelity, setNavVisibility] = React.useState(true);
-  const [backvisibility,setBackvisibility] = React.useState(true);
+  const [backvisibility, setBackvisibility] = React.useState(true);
 
   useEffect(() => {
-    if (location.pathname.startsWith('/profile') 
-      || location.pathname==='/' 
-      || location.pathname==='/chat' 
-      || location.pathname==='/trending-post' 
-      || location.pathname==='/setting' 
-    || location.pathname.startsWith('/search')
-  
-  
-  ) {
-    setBackvisibility(false)
+    if (location.pathname.startsWith('/profile')
+      || location.pathname === '/'
+      || location.pathname === '/chat'
+      || location.pathname === '/trending-post'
+      || location.pathname === '/setting'
+      || location.pathname.startsWith('/search')
+
+
+    ) {
+      setBackvisibility(false)
       setNavVisibility(true);
     } else {
       setBackvisibility(true)
@@ -42,9 +42,9 @@ const HomeRouter = () => {
   //     || location.pathname==='/trending-post' 
   //     || location.pathname==='/setting' 
   //   || location.pathname.startsWith('/search')
-    
-  
-  
+
+
+
   // ) {
   //     setNavVisibility(true);
   //   } else {
@@ -55,16 +55,16 @@ const HomeRouter = () => {
 
 
   return (
-    <section style={{ height: '100vh', width: '80%', flexGrow: 1,display : 'flex',flexDirection : 'column'}}>
+    <section style={{ height: '100vh', width: '80%', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
 
       <Navbar />
-      <section className='homerouter' style={{height : '80%', flex: 1, position : "relative" }}>
+      <section className='homerouter' style={{ height: '80%', flex: 1, position: "relative" }}>
         <Outlet />
       </section>
 
-    {isMobile && backvisibility && ( <FloatingBackbtn/>)}
+      {isMobile && backvisibility && (<FloatingBackbtn />)}
 
-      {isMobile && navvisibelity&&  (<MobileNav/>)}
+      {isMobile && navvisibelity && (<MobileNav />)}
     </section>
 
   )

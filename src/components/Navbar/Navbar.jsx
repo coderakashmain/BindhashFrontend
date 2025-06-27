@@ -10,7 +10,7 @@ import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
 import UserSearch from "../UserSearch/UserSearch";
 import ActiveAvatar from "../Avatar/AvatacActive";
 import FlutterDashRoundedIcon from '@mui/icons-material/FlutterDashRounded';
-import { Tooltip } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import ModeSwitcherToast from "../ThemeSwitcher/ModeSwitcherToast ";
 import CombineAvatat from "../Avatar/CombineAvatat";
 import LiveAvatar from "../Avatar/LiveAvatar";
@@ -72,23 +72,26 @@ const Navbar = () => {
         </Tooltip>
         {!isMobile && (<p>Beta Version</p>)}
         <Tooltip title={anonmode === 'anonymous' ? "Switch to Self Mode" : "Switch to Anonymous Mode"}>
-          <button style={{ cursor: 'pointer' }} onClick={() => {
+          <IconButton style={{ cursor: 'pointer' , color : 'var(--blacktextcolor)'}} onClick={() => {
             setLoadingmode(false);
             setAnonmode((prev) => (prev === 'anonymous' ? 'self' : 'anonymous'));
           }}>
             {anonmode === 'anonymous' ? <FlutterDashRoundedIcon /> : <Ghost />}
 
 
-          </button>
+          </IconButton>
         </Tooltip>
             <ModeSwitcherToast mode={anonmode} loadingmode={loadingmode} />
         <Tooltip title="switch theme">
+          
           <span>  <ThemeSwitcher /></span>
         </Tooltip>
+        <IconButton>
 
-        <NavLink to="/notifications" className="icon-button">
-          <Bell size={17} />
+        <NavLink to="#" className="icon-button" >
+          <Bell size={17}  color = 'var(--blacktextcolor)' />
         </NavLink>
+        </IconButton>
   
         <NavLink to={`/profile/o/${usertoken.user.username}`} className="icon-button nav-user-profile-icon">
 

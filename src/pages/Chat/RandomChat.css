@@ -1,0 +1,205 @@
+.global-chat {
+  height: 100%;
+  width: 100%;
+  background: var(--webbackcolor);
+  position: relative;
+  /* z-index: 1; */
+  flex-direction: column;
+  display: flex;
+}
+
+.global-chat-box {
+  flex: 1;
+  width: 100%;
+  border-radius: 0.3px;
+
+  overflow-y: scroll;
+    scrollbar-width: none;
+  margin-bottom: 0.6rem;
+  background: var(--webbackcolor);
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+.global-stranger-info {
+  background: var(--backwhitecolor);
+  position: sticky;
+  top: 0%;
+  left: 0%;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 2px 0px 3px #c1c1c1;
+  z-index: 100;
+
+
+}
+.global-stranger-info-l {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  font-weight: 500;
+}
+
+.global-message {
+  margin: 0.48px 0;
+    padding: 0rem 1rem;
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+  word-break: break-word;
+    margin-top: 3rem;
+    
+}
+
+.global-message-item-box {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem;
+  border-radius: 0.3rem;
+  color: var(--bothwhitecolor);
+  position: relative;
+  max-width: 60%;
+}
+.global-message-item-box-avatar{
+  position: absolute;
+}
+.global-own-message .global-message-item-box-avatar{
+  left: -30px;
+  top: -30px;
+}
+.global-unknown-message .global-message-item-box-avatar{
+  right: -30px;
+  top: -30px;
+}
+.global-own-message small{
+  position: absolute;
+  display: flex;
+  font-size: 0.6rem !important;
+  bottom: -20px;
+  color: var(--lighttextcolor);
+  right: 0%;
+  text-wrap: nowrap;
+}
+.global-unknown-message small{
+  position: absolute;
+  display: flex;
+  font-size: 0.6rem !important;
+  bottom: -20px;
+  left: 0%;
+  color: var(--lighttextcolor);
+    text-wrap: nowrap;
+}
+
+.global-own-message {
+  justify-content: flex-end;
+}
+.global-unknown-message {
+  justify-content: flex-start;
+}
+.global-own-message .global-message-item-box {
+  background: var(--logolinearcolor);
+}
+.global-unknown-message .global-message-item-box {
+  background: #e2e6e9;
+   color: var(--bothblackcolor);
+}
+.global-r-chat-input-box {
+  display: flex;
+  flex-direction: row;
+  padding: 0 01rem 0.5rem;
+  gap: 1rem;
+  width: 100%;
+  align-items: flex-end;
+  position: relative;
+}
+
+.global-chat textarea {
+  flex-grow: 1;
+  min-height: 5rem;
+    max-height: 6rem;
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+  outline: none;
+  resize: none;
+  background: var(--backwhitecolor);
+  scrollbar-width: none;
+  box-shadow: -2px -2px 4px rgba(94, 122, 131, 0.33);
+  resize: none;
+}
+
+.global-chat-s-btn {
+  outline: none;
+  background: var(--linearcolor);
+  color: var(--bothwhitecolor);
+  padding: 0.5rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+}
+.global-typing-status{
+  /* position: absolute;
+  bottom: 1rem ; */
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+  width: 100%;
+    display: flex;
+  justify-content: center;
+  text-align: center ;
+}
+.global-typing-status div{
+
+  background: var(--icon-back-color);
+  color: var( --icon-color);
+  display: flex;
+  gap: 0.2rem;
+  padding: 1rem 1rem;
+  border-radius: 2rem;
+  align-items: center;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+
+}
+.golbal-chat-intro-text{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.global-text-center {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+
+}
+
+.chat-rules-list {
+  list-style: none;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 0;
+  text-align: left;
+  max-width: 400px;
+  margin-inline: auto;
+}
+
+.chat-rules-list li {
+  background-color: var(--light-blue-color);
+  /* color: white; */
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  margin: 0.3rem 0;
+  font-size: 0.85rem;
+}
+
+.global-chat-connect{
+  padding: 0.6rem 0.7rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}

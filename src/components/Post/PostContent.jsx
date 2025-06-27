@@ -23,14 +23,11 @@ import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 
 
-const PostContent = ({ feed, moreload = true }) => {
+const PostContent = ({loading, loaderRef, fetchPosts, hasMore, setAllpost, allpost, moreload = true }) => {
   const [imgloaded, setImgLoaded] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(null);
   const { usertoken } = useContext(UserAuthCheckContext)
-  const { setIsLiked, loading, loaderRef, fetchPosts, hasMore, isLiked, setAllpost, allpost } = useContext(AllPostContextData)
-  const [isExpanded, setIsExpanded] = useState(false);
   const [showSheet, setshowSheet] = useState(false);
-  const [feeddata, setFeedData] = useState([]);
   const { setSnackbar } = useContext(SnackbarContext)
 
   useEffect(() => {
@@ -41,10 +38,15 @@ const PostContent = ({ feed, moreload = true }) => {
   }, [loaderRef.current])
 
 
+
+  
+
+
+
 const handleLike = async (postId) => {
 
 
-  // Optimistic UI update
+
   setAllpost((prevPosts) =>
     prevPosts.map((post) => {
       if (post.post_id === postId) {
@@ -160,7 +162,7 @@ const handleLike = async (postId) => {
 
   return (
     <>
-      {feed.map((allpost) => (
+      {allpost.map((allpost) => (
         allpost.type === "post" ? (
           <motion.div key={`post-${allpost.post_id}`} className="post"
           initial ={{y : 30, opacity : 0}}
@@ -186,8 +188,8 @@ const handleLike = async (postId) => {
                       label={allpost.category}
 
                       size="small"
-                      sx={{ backgroundColor: ' var(--light-blue-color)', color: "var(--blue-color)", padding: '0px 7px', fontSize: '12px', fontWeight: 'bold' }}
-                      className=""
+                      sx={{ backgroundColor: ' var(--light-blue-color)', color: "red", padding: '0px 7px', fontSize: '12px', fontWeight: 'bold' }}
+                      className="post-chip"
                     />)}
 
                     {<Time posttime={allpost.created_at} />}
@@ -213,12 +215,13 @@ const handleLike = async (postId) => {
               <div className={`post-head-img-box ${allpost.image &&'post-media-present'}`}>
 
                 {allpost.image && allpost.media_type === 'image' ? (<>
-                  <img
+                  
+                  {/* <img
                     src={placeholderimg(allpost.image)}
                     loading='lazy'
                     alt="Post"
                     className={`post-image ${imgloaded ? "hidden" : "visible"}`}
-                  />
+                  /> */}
 
 
                   <img

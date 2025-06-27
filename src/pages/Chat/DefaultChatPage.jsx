@@ -31,8 +31,8 @@ const DefaultChatPage = () => {
   };
 
 
+  const shouldAutoClick = sessionStorage.getItem('autoClickFind');
   useEffect(() => {
-    const shouldAutoClick = sessionStorage.getItem('autoClickFind');
 
     if (shouldAutoClick === 'true') {
 
@@ -42,7 +42,7 @@ const DefaultChatPage = () => {
       sessionStorage.removeItem('autoClickFind');
     }
 
-  }, []);
+  }, [shouldAutoClick]);
 
 
 

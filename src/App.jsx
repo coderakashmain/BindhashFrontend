@@ -17,6 +17,7 @@ import SnackbarProvider from './Context/SnackbarContext';
 import { UploadProvider } from './Context/UploadProvider';
 import CircularLoader from './components/Fallback/CircularLoader';
 import PostModel from './components/Post/PostModel';
+import UserPostListContext from './Context/UserPostListContext';
 
 
 
@@ -28,6 +29,8 @@ import PostModel from './components/Post/PostModel';
 
 
 
+
+const RandomChat = lazy(() => import('./pages/Chat/RandomChat'));
 const SharePostRouter = lazy(() => import('./Router/SharePostRouter'));
 const RandomsubroomChat = lazy(() => import('./pages/Room/RandomsubroomChat'));
 const RoomChatbox = lazy(() => import('./pages/Room/RoomChatbox'));
@@ -97,7 +100,7 @@ const App = () => {
     },
     {
       path: '/',
-      element: <><ErrorBoundary><SocketProvider><UserAuthCheck><PollProvider><AllPostContext><MobileResizeProvider><FollowersFollowing><SnackbarProvider><AllUserList><><Snackbar /><UploadProvider><AllpageRouter /></UploadProvider></></AllUserList></SnackbarProvider></FollowersFollowing></MobileResizeProvider></AllPostContext></PollProvider></UserAuthCheck></SocketProvider></ErrorBoundary></>,
+      element: <><ErrorBoundary><SocketProvider><UserAuthCheck><PollProvider><AllPostContext><UserPostListContext><MobileResizeProvider><FollowersFollowing><SnackbarProvider><AllUserList><><Snackbar /><UploadProvider><AllpageRouter /></UploadProvider></></AllUserList></SnackbarProvider></FollowersFollowing></MobileResizeProvider></UserPostListContext></AllPostContext></PollProvider></UserAuthCheck></SocketProvider></ErrorBoundary></>,
       children: [
         {
           path: 'welcome-page',
@@ -211,6 +214,10 @@ const App = () => {
                     {
                       path: "",
                       element: <><ErrorBoundary><DefaultChatPage /></ErrorBoundary></>
+                    },
+                    {
+                      path: "globalChat",
+                      element: <><ErrorBoundary><RandomChat /></ErrorBoundary></>
                     },
                     {
                       path: ":receiverId/:username",

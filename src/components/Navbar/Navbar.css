@@ -11,7 +11,7 @@
   top: 0%;
   width: 100%;
   left: 0%;
-  z-index: 2;
+  /* z-index: 2; */
   background: var(--webbackcolor);
   /* box-shadow: var(--navboxshodow); */
 }
@@ -71,14 +71,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
   border-radius: 50%;
   transition: background 0.2s ease-in-out;
 }
 
-.icon-button:hover {
-  background: var(--buttonhovercolor);
-}
+
 
 /* Dark Mode Support */
 

@@ -42,7 +42,7 @@ import BottomSheet from "../../components/BottomSheet/BottomSheet";
 
 
 const Home = () => {
-  const { allpost, setAllpost } = useContext(AllPostContextData);
+  const { allpost, setAllpost,loading,loaderRef,hasMore ,fetchPosts} = useContext(AllPostContextData);
   const { usertoken } = useContext(UserAuthCheckContext);
 
   const [newComment, setNewComment] = useState("");
@@ -104,7 +104,7 @@ const Home = () => {
       return { ...item, score: engagementScore + timeFactor };
     });
 
-    // Sort by highest score
+
     rankedFeed.sort((a, b) => b.score - a.score);
 
     setFeed(rankedFeed);
@@ -451,7 +451,7 @@ const Home = () => {
 
 
         <UploadPreviewWithProgress />
-        <PostContent feed={feed} />
+        <PostContent loading={loading} loaderRef={loaderRef} fetchPosts={fetchPosts} hasMore={hasMore} setAllpost={setAllpost} allpost={feed}   />
       </div>
       <div ref={homeusggestionRef} className="user-suggestion scrollbar">
 

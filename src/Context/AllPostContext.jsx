@@ -8,13 +8,12 @@ export const AllPostContextData = createContext();
 const AllPostContext = ({ children }) => {
     const [allpost, setAllpost] = useState([]);
     const { usertoken } = useContext(UserAuthCheckContext);
-    const [isLiked, setIsLiked] = useState({});
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const loaderRef = useRef(null); 
     const [hasMore, setHasMore] = useState(true);
     const [totalUserPost, setTotalUserPost] = useState(0);
-    const navigate = useNavigate()
+
 
     
 
@@ -34,7 +33,7 @@ const AllPostContext = ({ children }) => {
 
             if (response.data && Array.isArray(response.data)) {
                 setAllpost((prev) => {
-                    // Merge and remove duplicates based on post_id or poll_id
+                  
                     const combined = [...prev, ...response.data];
                     
                     const uniquePosts = Array.from(new Map(
@@ -48,11 +47,7 @@ const AllPostContext = ({ children }) => {
                   });
 
          
-                const likesState = {};
-                response.data.forEach((post) => {
-                    likesState[post.post_id] = post.is_liked || false;
-                });
-                setIsLiked((prev) => ({ ...prev, ...likesState }));
+                
 
                 setPage((prevPage) => prevPage + 1);  
             }
@@ -66,10 +61,10 @@ const AllPostContext = ({ children }) => {
 
     useEffect(() => {
         if (usertoken && usertoken.user && usertoken.user.id) {
-            setAllpost([]);  // Clear old posts
-            setPage(1);      // Reset page
-            setHasMore(true); // Reset hasMore
-            fetchPosts(true); // Initial load
+            setAllpost([]);  
+            setPage(1);      
+            setHasMore(true); 
+            fetchPosts(true); 
         }
     }, [usertoken]);
 
@@ -112,7 +107,7 @@ const AllPostContext = ({ children }) => {
 
 
     return (
-        <AllPostContextData.Provider value={{ allpost, setAllpost,fetchPosts, isLiked, setIsLiked, loading, loaderRef,hasMore,totalUserPost }}>
+        <AllPostContextData.Provider value={{ allpost, setAllpost,fetchPosts, loading, loaderRef,hasMore,totalUserPost }}>
             {children}
         </AllPostContextData.Provider>
     );
