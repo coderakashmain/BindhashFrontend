@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TextField, Button, CircularProgress } from '@mui/material';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
@@ -8,7 +8,8 @@ import KeyIcon from '@mui/icons-material/VpnKey';
 import './Register.css';
 import '../Login/Login.css';
 import { useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { SnackbarContext } from '../../Context/SnackbarContext';
 
 const ForgotPassword = () => {
     const [step, setStep] = useState(1);
@@ -18,6 +19,8 @@ const ForgotPassword = () => {
     const [loading, setLoading] = useState(false);
     const [msg, setMsg] = useState('');
     const [retryAfter, setRetryAfter] = useState(0);
+    const { setSnackbar } = useContext(SnackbarContext);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -36,7 +39,7 @@ const ForgotPassword = () => {
         }
     }, [retryAfter]);
 
- 
+
     const handleSendOtp = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -50,7 +53,9 @@ const ForgotPassword = () => {
                 setRetryAfter(res.data.retryAfter);
             }
         } catch (err) {
+
             setMsg(err.response?.data?.error || 'Something went wrong.');
+            setSnackbar({ open: true, message: err.response?.data?.error || 'Something went wrong.', type: 'error' })
             setRetryAfter(err.response?.data?.retryAfter || 0);
         } finally {
             setLoading(false);
@@ -68,6 +73,7 @@ const ForgotPassword = () => {
             setStep(3);
         } catch (err) {
             setMsg(err.response?.data?.error || 'Verification failed.');
+            setSnackbar({ open: true, message: err.response?.data?.error || 'Verification failed.', type: 'error' })
         } finally {
             setLoading(false);
         }
@@ -79,16 +85,16 @@ const ForgotPassword = () => {
         setMsg('');
 
 
-           const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/;
 
- 
-    if (!passwordRegex.test(newPassword)) {
-      setMsg(
-        "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character."
-      );
-      setLoading(false)
-      return;
-    }
+
+        if (!passwordRegex.test(newPassword)) {
+            setMsg(
+                "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character."
+            );
+            setLoading(false)
+            return;
+        }
 
         try {
             const res = await axios.post('/api/auth/forgot-password/reset', { email, newPassword });
@@ -97,8 +103,11 @@ const ForgotPassword = () => {
             setEmail('');
             setOtp('');
             setNewPassword('');
+            setSnackbar({ open: true, message: 'Reset Successfully.', type: 'success' })
+            navigate('/login')
         } catch (err) {
             setMsg(err.response?.data?.error || 'Reset failed.');
+            setSnackbar({ open: true, message: err.response?.data?.error || 'Reset failed.', type: 'error' })
         } finally {
             setLoading(false);
         }
@@ -122,7 +131,7 @@ const ForgotPassword = () => {
                         {step === 2 && "Enter OTP Sent to Your Email"}
                         {step === 3 && "Set Your New Password"}
                     </h2>
-                    <p style={{ color: '#555' , textAlign :'start'}}>
+                    <p style={{ color: '#555', textAlign: 'start' }}>
                         {step === 1 && "We'll send you an OTP to reset your password."}
                         {step === 2 && "Verify the OTP to proceed."}
                         {step === 3 && "Secure your account with a new password."}
@@ -181,18 +190,18 @@ const ForgotPassword = () => {
                         color="primary"
                         disabled={loading || (retryAfter > 0 && step === 1)}
                     >
-                        {loading ? <CircularProgress size="1.2rem" style={{color : 'white'}} /> :
+                        {loading ? <CircularProgress size="1.2rem" style={{ color: 'white' }} /> :
                             step === 1 ? "Send OTP" :
                                 step === 2 ? "Verify OTP" :
                                     "Reset Password"}
                     </Button>
 
-                    {step === 2 && (retryAfter > 0 ?(
+                    {step === 2 && (retryAfter > 0 ? (
                         <p style={{ color: '#999', marginTop: '10px' }}>
                             Please wait <strong>{retryAfter}</strong> seconds before requesting a new OTP.
                         </p>) : (
-                            <pre style={{marginTop : '1rem', fontSize : '0.8rem'}}>Didn't Receive OTP? <span style={{cursor : 'pointer',color : 'var(--blue-color)'}} onClick={handleSendOtp}> Resend OTP</span></pre>
-                        )
+                        <pre style={{ marginTop: '1rem', fontSize: '0.8rem' }}>Didn't Receive OTP? <span style={{ cursor: 'pointer', color: 'var(--blue-color)' }} onClick={handleSendOtp}> Resend OTP</span></pre>
+                    )
                     )}
 
                     {msg && (

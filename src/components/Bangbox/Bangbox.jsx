@@ -29,12 +29,12 @@ const Bangbox = ({ size, click }) => {
           Bindhash
 
         </span>
-      </a>) : (<p className='bangbox' style={{ fontSize: size ? size : "1.8rem" }}>
+      </a>) : (<h1 className='bangbox' style={{ fontSize: size ? size : "1.8rem" }}>
         <span>
           <ChatBubbleOutline style={{ fontSize: size ? size : 32, color: '#1976d2' }} />
         </span>
         <span> Bindhash</span>
-      </p>)}
+      </h1>)}
 
 
     </>

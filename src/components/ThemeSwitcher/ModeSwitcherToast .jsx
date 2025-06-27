@@ -6,6 +6,7 @@ import './ModeSwitcherToast .css';
 import { SnackbarContext } from '../../Context/SnackbarContext';
 import { useSocket } from "../../Context/SocketContext";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
+import { useLocation } from "react-router-dom";
 
 const ModeSwitcherToast = ({ mode ,loadingmode}) => {
   const [visible, setVisible] = useState(false);
@@ -13,6 +14,7 @@ const ModeSwitcherToast = ({ mode ,loadingmode}) => {
   const socket = useSocket();
   const { setSnackbar } = useContext(SnackbarContext);
   const { usertoken ,setSocketChangge,socketChange} = useContext(UserAuthCheckContext);
+  const location = useLocation()
 
   useEffect(() => {
     if (!mode || !['anonymous', 'self'].includes(mode) ||loadingmode) return;
@@ -31,6 +33,7 @@ const ModeSwitcherToast = ({ mode ,loadingmode}) => {
 
           setSocketChangge(!socketChange)        
           setSnackbar({ type: 'success', message: `Switched to ${updatedMode} mode` });
+          
         
       } catch (error) {
         console.error("Mode switch error:", error);

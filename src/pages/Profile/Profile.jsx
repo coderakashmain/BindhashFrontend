@@ -40,7 +40,7 @@ const Profile = () => {
   const [profileEditView, setProfileEditView] = useState(false);
   const { isMobile } = useContext(MobileViewContext);
   const { username } = useParams();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
 
 
@@ -55,11 +55,14 @@ const Profile = () => {
   }, [usertoken, navigate]);
 
   useEffect(() => {
-    if (usertoken?.user?.username !== username) {
-      navigate('*');
-    } else {
-      setLoading(false);
-    }
+    navigate(`/profile/o/${usertoken?.user?.username}`)
+
+
+    // if (usertoken?.user?.username !== username) {
+    //   navigate('*');
+    // } else {
+    //   setLoading(false);
+    // }
   }, [usertoken])
 
 
