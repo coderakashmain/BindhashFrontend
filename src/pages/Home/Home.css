@@ -638,7 +638,7 @@
   box-shadow: 0px 6px 15px rgba(0, 136, 255, 0.3);
   transition: all 0.3s ease-in-out;
   display: flex;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 .home-float-u-btn:hover {

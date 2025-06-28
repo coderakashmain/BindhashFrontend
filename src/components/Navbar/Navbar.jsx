@@ -66,7 +66,7 @@ const Navbar = () => {
 
 
       {/* Right Side - Icons */}
-      <div className="nav-right">
+      <div className="nav-right" >
         <Tooltip title="Feedback">
           <button onClick={() => navigate('/feedback')} className="feedback-btn-nav">Feedback</button>
         </Tooltip>

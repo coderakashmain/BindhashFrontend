@@ -83,7 +83,7 @@ const PostFunctionComponent = ({ mpostbtn, setMpostbtn ,widthsize }) => {
                         <div className="home-post-box-upload" style={{ display: 'block', padding: '0rem 1rem' }} >
 
                             <div className="home-post-button-box">
-                                {location.pathname !== '/creatpost' && (   <button onClick={()=>navigate('/createpost')}>Failure Post</button>)}
+                                {location.pathname !== '/createpost' && (   <button onClick={()=>navigate('/createpost')}>Failure Post</button>)}
                              
                                 <ImageUploader setMpostbtn={setMpostbtn}  />
                                 <input type="file"

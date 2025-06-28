@@ -229,6 +229,10 @@ const App = () => {
                 {
                   path: "/chat/mobilechat/:receiverId/:username",
                   element: <><ErrorBoundary><Chat /></ErrorBoundary></>
+                },
+                {
+                  path: "/chat/mobilechat/Random/globalChat",
+                  element: <><ErrorBoundary><RandomChat /></ErrorBoundary></>
                 }
 
 

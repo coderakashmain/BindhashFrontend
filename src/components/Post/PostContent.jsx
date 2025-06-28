@@ -29,6 +29,7 @@ const PostContent = ({loading, loaderRef, fetchPosts, hasMore, setAllpost, allpo
   const { usertoken } = useContext(UserAuthCheckContext)
   const [showSheet, setshowSheet] = useState(false);
   const { setSnackbar } = useContext(SnackbarContext)
+  const [deleting,setDeleting] = useState(false);
 
   useEffect(() => {
     if (loaderRef.current) {
@@ -172,7 +173,7 @@ const handleLike = async (postId) => {
 
 
           >
-
+            
 
             <div className="post-header">
               <div className="post-header-user">
@@ -200,7 +201,7 @@ const handleLike = async (postId) => {
               <div className="post-header-edit">
 
 
-                <PostOptions allpost={allpost} userId={allpost.post_user_id} post_user_id={allpost.post_user_id} postId={allpost.post_id} pollId={allpost.poll_id} />
+                <PostOptions setDeleting={setDeleting} allpost={allpost} userId={allpost.post_user_id} post_user_id={allpost.post_user_id} postId={allpost.post_id} pollId={allpost.poll_id} />
               </div>
 
             </div>
@@ -304,6 +305,7 @@ const handleLike = async (postId) => {
           {loading && hasMore && allpost.length > 0 && (
             <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
               <CircularProgress color="black" />
+              
             </Box>
           )}
 

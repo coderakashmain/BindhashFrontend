@@ -189,14 +189,22 @@ const UserList = () => {
     return `${hours}:${minutes} ${ampm}`;
   };
 
+const handlenavigateGlobal = ()=>{
+ 
+  if(location.pathname === '/chat/globalChat' || location.pathname === '/chat/mobilechat/Random/globalChat'){
+    navigate('/chat');
+  }else{
+      isMobile ? navigate('/chat/mobilechat/Random/globalChat') : navigate('/chat/globalChat')
+  }
 
+}
 
 
   return (
     <div className="user-list">
 
       <Newaccount />
-      <button  onClick={()=> navigate('globalChat')} className={`global-random-chat-btn ${location.pathname === '/chat/globalChat ' ? 'global-random-chat-leave' : ''}`}>
+      <button  onClick={handlenavigateGlobal} className={`global-random-chat-btn ${location.pathname === '/chat/globalChat' ? 'global-random-chat-leave' : ''}`}>
        
         {location.pathname === '/chat/globalChat' ? "Leave Random Chat" : " Chat with Random"}
         </button>

@@ -21,10 +21,10 @@
   margin-top: 1rem;
   border-radius: 3rem;
 }
-/* .global-random-chat-leave{
-  background: red !important;
-  color: black;
-} */
+.global-random-chat-leave{
+  background: var(--lightbackcolor) !important;
+  color:var(--textcolor);
+}
 
 @media (max-width: 846px) {
   .user-list {

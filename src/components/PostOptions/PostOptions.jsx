@@ -17,7 +17,7 @@ import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined';
 
 
 const PostOptions = ({
-    postId, userId, pollId, onPostUpdate, post_user_id, allpost
+    postId, userId, pollId, onPostUpdate, post_user_id, allpost,setDeleting
 }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [snackbar, setSnackbar] = useState({ open: false, message: "", type: "success" });
@@ -43,7 +43,7 @@ const PostOptions = ({
         try {
             await axios.put(`/api/postfuntion/edit/${postId}`, { content: newContent });
             setSnackbar({ open: true, message: "Post updated successfully!", type: "success" });
-            onPostUpdate(); // Refresh post data
+        
         } catch (error) {
             console.error("Error editing post:", error);
             setSnackbar({ open: true, message: "Failed to update post!", type: "error" });
@@ -54,14 +54,19 @@ const PostOptions = ({
 
     const handleDelete = async () => {
         if (!window.confirm("Are you sure you want to delete this post?")) return;
+        setDeleting(true);
 
         try {
             await axios.delete(`/api/posts/delete/${postId}/${usertoken.user.id}`);
+            setAllpost((prevPosts) => prevPosts.filter((post) => post.post_id !== postId));
+
             setSnackbar({ open: true, message: "Post deleted successfully!", type: "success" });
-            onPostUpdate();
+            
         } catch (error) {
             console.error("Error deleting post:", error);
             setSnackbar({ open: true, message: "Failed to delete post!", type: "error" });
+        }finally{
+            setDeleting(false)
         }
         handleClose();
     };

@@ -38,6 +38,7 @@ import UploadPreviewWithProgress from "../../components/UploadPreviewWithProgres
 import Queots from "../../components/Queots/Queots";
 import { EmojiEventsOutlined, SortOutlined, TrendingUpOutlined } from "@mui/icons-material";
 import BottomSheet from "../../components/BottomSheet/BottomSheet";
+import PostCardSkeleton from "../../components/Fallback/PostCardSkeleton";
 
 
 
@@ -452,6 +453,7 @@ const Home = () => {
 
         <UploadPreviewWithProgress />
         <PostContent loading={loading} loaderRef={loaderRef} fetchPosts={fetchPosts} hasMore={hasMore} setAllpost={setAllpost} allpost={feed}   />
+      
       </div>
       <div ref={homeusggestionRef} className="user-suggestion scrollbar">
 

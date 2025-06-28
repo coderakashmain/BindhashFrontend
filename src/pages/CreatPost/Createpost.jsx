@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import "./Createpost.css";
 import { Helmet } from 'react-helmet'
 import VideoCallRoundedIcon from '@mui/icons-material/VideoCallRounded';
@@ -37,7 +37,7 @@ export default function CreatePost() {
     const { usertoken } = useContext(UserAuthCheckContext);
     const [loading, setLoading] = useState(false);
     const { setSnackbar } = useContext(SnackbarContext);
-    const [mpostbtn,setMpostbtn] = useState(false);
+    const [mpostbtn, setMpostbtn] = useState(false);
     const navigate = useNavigate();
 
 
@@ -104,6 +104,8 @@ export default function CreatePost() {
         }
     };
 
+
+
     return (
         <div className="create-post-container">
             <Helmet>
@@ -124,7 +126,7 @@ export default function CreatePost() {
                         <div className="creat-post-header-r">
                             <Tooltip title="Poll post">
 
-                                <AddToPhotosRoundedIcon onClick={()=> setMpostbtn(true)} className="create-post-icon active" />
+                                <AddToPhotosRoundedIcon onClick={() => setMpostbtn(true)} className="create-post-icon active" />
                             </Tooltip>
 
                         </div>
@@ -249,10 +251,26 @@ export default function CreatePost() {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    checked={isAnonymous}
-                                    onChange={() => setIsAnonymous(!isAnonymous)}
+                                    checked={
+                                        usertoken.user.visibility === 'anonymous' ? true : isAnonymous
+                                    }
+                                    onChange={() => {
+                       
+                                        if (usertoken.user.visibility !== 'anonymous') {
+                                            setIsAnonymous(!isAnonymous);
+                                        }
+                                    }}
+                                    onClick={()=>{
+
+                                        console.log('ruuning')
+                                        if(usertoken.user.visibility === 'anonymous'){
+                                             setSnackbar({open : true, message : 'Switch to Self mode to Change Visibility!', type : 'warning'})
+                                        }
+                                    }}
+                                   
                                     name="anonymous"
                                     style={{ color: 'var(--blue-color)' }}
+
                                 />
                             }
                             label="Post Anonymously"

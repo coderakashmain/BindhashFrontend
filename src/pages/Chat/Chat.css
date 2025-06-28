@@ -1,7 +1,5 @@
 .chat-container{
-    /* overflow-y: scroll; */
-    /* margin-bottom: 3rem; */
-    /* background-color: red; */
+
     height: 100%;
     display: flex;
     justify-content:space-between;
@@ -16,12 +14,12 @@
   position: relative;
     height: 100%;
     width: 100%;
-    /* padding: 0rem 1rem; */
     overflow-y: scroll;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
   overflow-y: scroll;
+  z-index: 1;
 }
 .chat-scrollbox::-webkit-scrollbar {
     display: none;

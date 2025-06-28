@@ -12,7 +12,7 @@
     cursor: pointer;
     font-size: 2rem;
     color: var(--bothwhitecolor);
-    z-index: 2;
+    /* z-index: 2; */
 }
 .floating-back-btn:active{
     opacity: 0.9;

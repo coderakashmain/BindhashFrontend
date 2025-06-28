@@ -16,7 +16,7 @@
   
   .default-chat-content {
     text-align: center;
-    background: white;
+    background: var(--backwhitecolor);
     padding: 40px 30px;
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -25,7 +25,7 @@
   }
   
   .chat-icon-wrapper {
-    background: #f0f4f8;
+    background: var(--lightbackcolor);
     border-radius: 50%;
     padding: 20px;
     display: inline-block;
@@ -35,7 +35,7 @@
   .default-chat-content h2 {
     margin-bottom: 10px;
     font-size: 24px;
-    color: #333;
+    color: var(--lighttextcolor);
   }
   
   .default-chat-subtext {
