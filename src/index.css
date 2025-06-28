@@ -38,7 +38,7 @@ body {
   --blacktextcolor: #000;
   --textcolor: black;
   --lighttextcolor: #757575;
-  --icon-color: #2a5b66;
+  --icon-color: #1d3d44;
   --buttoncolor: rgb(59 85 99);
   --buttonhovercolor: rgba(30, 161, 209, 0.251);
   --popupbackcolor: rgba(0, 0, 0, 0.081);
@@ -56,7 +56,7 @@ body {
   --text-color: #333;
   --background-color: #fff;
 
-  --border-color: 1px solid #e4e4e4;
+  --border-color: 1px solid #dde2eb;
   --border-color2: 1px solid rgb(180 212 220 / 13%);
   --post-card-border: 1px solid rgba(25, 118, 210, 0.1);
   --post-box-shadow: #8b8b8bb3;
@@ -103,7 +103,7 @@ body {
   --popupbackcolor: rgba(0, 0, 0, 0.081);
   --mobil-nav-back-color: rgb(0 0 0 / 86%);
 
-  --border-color: 1px solid #494949;
+  --border-color: 1px solid #233045;
   --post-card-border: 1px solid rgba(18, 64, 109, 0.1);
 
   --secondlinearcolor: linear-gradient(45deg, #56565675, #787575);

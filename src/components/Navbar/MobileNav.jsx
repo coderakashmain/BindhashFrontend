@@ -54,7 +54,7 @@ const MobileNav = () => {
             <NavLink to="" className="mobile-nav-a">
                 <Tooltip title="Home">
                     <motion.button whileTap={{ background: 'var(--lightbackcolor)' }}>
-                        <HouseOutlinedIcon className={location.pathname === "/" ? "mobile-nav-active-icon" : ""} />
+                        <HouseOutlinedIcon sx={{fontSize : '2rem'}} className={location.pathname === "/" ? "mobile-nav-active-icon" : ""} />
                     </motion.button>
                 </Tooltip>
             </NavLink>
@@ -62,7 +62,7 @@ const MobileNav = () => {
                 <Tooltip title='Search'>
 
                     <motion.button whileTap={{ background: 'var(--lightbackcolor)' }}>
-                        <TroubleshootOutlinedIcon className={location.pathname === "/search" ? "mobile-nav-active-icon" : ""} />
+                        <TroubleshootOutlinedIcon sx={{fontSize : '2rem'}} className={location.pathname === "/search" ? "mobile-nav-active-icon" : ""} />
                     </motion.button>
                 </Tooltip>
             </NavLink>
@@ -71,7 +71,7 @@ const MobileNav = () => {
             <NavLink to="/room" className="mobile-nav-a">
                 <Tooltip title='Rooms'>
                     <motion.button whileTap={{ background: 'var(--lightbackcolor)' }}>
-                        <Groups3OutlinedIcon className={location.pathname === "/room" ? "mobile-nav-active-icon" : ""} />
+                        <Groups3OutlinedIcon sx={{fontSize : '2rem'}} className={location.pathname === "/room" ? "mobile-nav-active-icon" : ""} />
                     </motion.button>
                 </Tooltip>
 
@@ -81,7 +81,7 @@ const MobileNav = () => {
 
                 <Tooltip title='Chats'>
                     <motion.button whileTap={{ background: 'var(--lightbackcolor)' }} >
-                        <MarkUnreadChatAltOutlinedIcon className={location.pathname === "/chat" ? "mobile-nav-active-icon" : ""} />
+                        <MarkUnreadChatAltOutlinedIcon sx={{fontSize : '2rem'}} className={location.pathname === "/chat" ? "mobile-nav-active-icon" : ""} />
                     </motion.button>
                 </Tooltip>
             </NavLink>
@@ -91,7 +91,7 @@ const MobileNav = () => {
 
                 <Tooltip title='Setting'>
                     <motion.button whileTap={{ background: 'var(--lightbackcolor)' }} >
-                        <AppsOutlinedIcon className={location.pathname === "/setting" ? "mobile-nav-active-icon" : ""} />
+                        <AppsOutlinedIcon sx={{fontSize : '2rem'}} className={location.pathname === "/setting" ? "mobile-nav-active-icon" : ""} />
                     </motion.button>
                 </Tooltip>
 

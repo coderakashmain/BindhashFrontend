@@ -8,6 +8,7 @@ import Followbtn from "../ProfileStats/Followbtn";
 import SuggestedUsers from "../SuggestedUsers/SuggestedUsers";
 import { MobileViewContext } from "../../Context/MobileResizeProvider";
 import CombineAvatat from "../Avatar/CombineAvatat";
+import { useLocation } from "react-router-dom";
 
 const UserSearch = () => {
   const [query, setQuery] = useState("");
@@ -19,6 +20,7 @@ const UserSearch = () => {
   const { isMobile } = useContext(MobileViewContext);
   const debounceRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
 
 
   const handleSearch = (e) => {
@@ -101,7 +103,7 @@ const UserSearch = () => {
 
             <Search size={20} />
           </button>
-          <input type="text" placeholder="Search" value={query} onChange={handleSearch} />
+          <input type="text" style={{padding : location.pathname === '/search' ? '01rem 0.5rem ' : ''}} placeholder="Search" value={query} onChange={handleSearch} />
           {/* <span>Search</span> */}
 
         </div>

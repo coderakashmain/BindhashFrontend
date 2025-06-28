@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Room.css'
 import { AlignEndHorizontal, Ellipsis, MoveRight } from 'lucide-react'
 import { MobileViewContext } from '../../Context/MobileResizeProvider'
@@ -9,6 +9,7 @@ import { useContext } from 'react'
 import CircularLoader from '../../components/Fallback/CircularLoader'
 import { Helmet } from 'react-helmet'
 import '../../App.css'
+import { useSocket } from '../../Context/SocketContext'
 
 
 
@@ -19,6 +20,7 @@ const Room = () => {
   const [rooms, setRooms] = React.useState([])
   const [loading, setLoading] = React.useState(true);
   const [navigateLoading, setNavigateLoading] = React.useState(false);
+  const socket = useSocket();
 
   useEffect(() => {
     const fetchRoom = async () => {
@@ -39,7 +41,48 @@ const Room = () => {
     fetchRoom();
   }, []);
 
-  console.log(rooms)
+  const [liveUserdata, setLiveUserdata] = useState([]);
+
+  useEffect(() => {
+    if (!socket) return;
+    socket.emit("get-all-active-users");
+
+    const handler = ({ roomId, subroomId, count }) => {
+
+
+
+      setLiveUserdata(prev => {
+        const existingIndex = prev.findIndex(
+          item => item.roomId === roomId && item.subroomId === subroomId
+        );
+
+        if (existingIndex !== -1) {
+          const updated = [...prev];
+          updated[existingIndex] = { ...updated[existingIndex], count };
+          return updated;
+        } else {
+          return [...prev, { roomId, subroomId, count }];
+        }
+      });
+    };
+
+    socket.on("global-room-user", handler);
+
+    socket.on("all-subroom-counts", (data) => {
+      setLiveUserdata(data);
+    });
+
+
+    return () => {
+      socket.off("global-room-user", handler);
+      socket.off("all-subroom-counts");
+    };
+  }, [socket]);
+
+
+
+
+
 
   useEffect(() => {
     if (loading) {
@@ -78,7 +121,18 @@ const Room = () => {
 
   }
 
+  const getLiveCount = (roomId, subroomId) => {
+    const match = liveUserdata.find(
+      (item) => parseInt(item.roomId) === roomId && parseInt(item.subroomId) === subroomId
+    );
+    return match?.count || 0;
+  };
 
+  const getTotalRoomLiveCount = (roomId) => {
+    return liveUserdata
+      .filter(item => parseInt(item.roomId) === roomId)
+      .reduce((acc, curr) => acc + curr.count, 0);
+  };
 
   return (
     <section id='room'>
@@ -101,21 +155,29 @@ const Room = () => {
           {rooms.map((room) => (
             <div key={room.room_id} className="room-card">
               <header>
-                    <h3>{room.room_name}
-              </h3>
+                <h3>{room.room_name}
+                </h3>
 
-              <div className="all-r-l-arrow click" onClick={() => {
-                      if (!navigateLoading) {
+                <aside style={{display : 'flex',gap : '0.5rem',alignItems : 'center'}}>
 
-                        navigate(room.room_name, { state: { room } });
-                      }
+                     <div className='live-dot'></div>
+                  <span style={{ fontSize: "0.6rem", color: getTotalRoomLiveCount(room.room_id) > 0 ? "limegreen" : "gray" }}>
+                   Live ·  {getTotalRoomLiveCount(room.room_id)}
+                    
+                  </span>
+                  <div className="all-r-l-arrow click" onClick={() => {
+                    if (!navigateLoading) {
 
-                    }}>
-                        <MoveRight />
-              </div>
+                      navigate(room.room_name, { state: { room } });
+                    }
+
+                  }}>
+                    <MoveRight />
+                  </div>
+                </aside>
 
               </header>
-          
+
               <small style={{ fontSize: '0.8rem', fontWeight: '400', color: 'var(--lighttextcolor)' }}>{room.room_description}</small>
 
 
@@ -134,7 +196,15 @@ const Room = () => {
 
                       <div className="subrooms-b-join-l">
                         <div className='live-dot'></div>
-                        <span >Live</span>
+                        {(() => {
+                          const liveCount = getLiveCount(room.room_id, subroom.subroom_id);
+                          return (
+                            <span style={{ color: liveCount > 0 ? 'limegreen' : 'gray' }}>
+                              Live · {liveCount} user{liveCount !== 1 ? 's' : ''}
+                            </span>
+                          );
+                        })()}
+
                       </div>
 
                       <div className="subroom-list-join active click" onClick={() => {

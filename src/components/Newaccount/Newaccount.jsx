@@ -75,8 +75,8 @@ const Newaccount = ({ setShowsearch, showsearch }) => {
         <strong style={{textWrap : 'nowrap',color : "var(--blacktextcolor)"}}>@ {usertoken.user.username}</strong>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
           {location.pathname.startsWith('/chat')  && (
-            <IconButton style={{ cursor: 'pointer' }} onClick={searchclick}>
-              <Search size={22} />
+            <IconButton style={{ cursor: 'pointer' }}  onClick={searchclick}>
+              <Search size={22} color="var(--textcolor)" />
             </IconButton>
           )}
           <IconButton onClick={handleClickOpen}>

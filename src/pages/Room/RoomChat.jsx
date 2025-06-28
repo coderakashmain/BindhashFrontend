@@ -22,6 +22,8 @@ import { useContext } from 'react';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion'
 import { MobileViewContext } from '../../Context/MobileResizeProvider';
+import CombineAvatat from '../../components/Avatar/CombineAvatat';
+import LiveAvatar from '../../components/Avatar/LiveAvatar';
 
 
 const RoomChat = () => {
@@ -60,10 +62,10 @@ const RoomChat = () => {
 
         if (usertoken?.user?.id && subroomid) {
 
-            socket.emit('new-subroom-user', { userId: usertoken?.user?.id, subroomId: subroomid })
+            socket.emit('new-subroom-user', { userId: usertoken?.user?.id, subroomId: subroomid,roomId : roomid })
         };
 
-        socket.emit("get-subroom-users", subroomid);
+        socket.emit("get-subroom-users", {subroomId : subroomid, roomId : roomid});
 
         socket.on("subroom-active-user", ({ subroomId, users }) => {
 
@@ -79,25 +81,27 @@ const RoomChat = () => {
 
             setActiveuser(sortedUsers);
 
-            // users.forEach((user) => {
-            //     console.log("User:", user.username, user.profile_pic);
-            // });
         });
 
     }, [socket, subroomid, usertoken?.user?.id]);
 
 
 
+
     useEffect(() => {
         const handlePopState = () => {
+            console.log("This is subroom id ",subroomId)
             if (socket && usertoken?.user?.id && subroomid && !slug) {
+
                 socket.emit("leave-subroom",
 
                     { userId: usertoken.user.id, subroomId: subroomid });
 
             }
 
-            socket.emit("get-subroom-users", subroomid);
+               
+
+            socket.emit("get-subroom-users",  {subroomId : subroomid, roomId : roomid});
         };
 
         window.addEventListener("popstate", handlePopState);
@@ -107,7 +111,7 @@ const RoomChat = () => {
         };
     }, [socket, usertoken?.user?.id, subroomid]);
 
-
+    
 
 
 
@@ -324,7 +328,7 @@ const RoomChat = () => {
                     <Tooltip title="Exit">
                         <ArrowBackIcon onClick={() => {
                             socket.emit("leave-subroom", { userId: usertoken.user.id, subroomId: subroomid });
-                            socket.emit("get-subroom-users", subroomid);
+                            socket.emit("get-subroom-users", {subroomId : subroomid, roomId : roomid});
                             navigate("/room");
 
                         }
@@ -337,7 +341,11 @@ const RoomChat = () => {
 
                     {activeUsers.map((user) => (
                         <div key={user.id} className="roomchat-header-user">
-                            <ActiveAvatar username={user.username} profile_pic={user.profile_pic} size="32px" />
+
+                            <LiveAvatar>
+
+                                <CombineAvatat username={user.username} profile_pic={user.profile_pic} visibility={user.user_visibility} size='30px' iconsize='01.1rem'/>
+                            </LiveAvatar>
                         </div>
                     ))}
 
@@ -345,12 +353,12 @@ const RoomChat = () => {
                 <div className="float-see-live-users">
                     <Tooltip title='Active Users'>
                         <Badge badgeContent={activeUsers.length} color="primary" onClick={() => setUserList(!userlist)} >
-                            <PeopleAltIcon sx={{ height: 25, width: 25 }} />
+                            <PeopleAltIcon sx={{ height: 20, width: 20 }} />
                         </Badge>
 
                     </Tooltip>
                     <Tooltip title='Setting' onClick={() => setUserSetting(!userSetting)}>
-                        <ManageAccountsIcon sx={{ height: 26, width: 26 }} />
+                        <ManageAccountsIcon sx={{ height: 20, width: 22 }} />
                     </Tooltip>
 
                     <AnimatePresence>
@@ -482,7 +490,11 @@ const RoomChat = () => {
 
                             {activeUsers.map((user) => (
                                 <div key={user.id} className="roochat-active-user-full-d-list-item">
-                                    <ActiveAvatar username={user.username} profile_pic={user.profile_pic} size={40} /> {user.username}
+                                    <LiveAvatar>
+
+                                        <CombineAvatat username={user.username} profile_pic={user.profile_pic} visibility={user.user_visibility} size='35px' iconsize='01.3rem' />
+                                    </LiveAvatar>
+                                     {user.username}
                                 </div>
                             ))}
                         </div>

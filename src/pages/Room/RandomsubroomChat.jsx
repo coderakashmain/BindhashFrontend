@@ -14,6 +14,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { Avatar } from '@mui/material';
 import Bangbox from '../../components/Bangbox/Bangbox';
 import { Helmet } from 'react-helmet';
+import '../Chat/RandomChat.css';
 
 
 
@@ -57,14 +58,6 @@ const RandomsubroomChat = () => {
 
 
 
-  useEffect(() => {
-    const data = localStorage.getItem('randomchatype');
-
-    if (data) {
-      setChattype(data);
-    }
-
-  }, []);
 
 
 
@@ -96,7 +89,7 @@ const RandomsubroomChat = () => {
     setStrangerjoin(false)
     setSelfLeft(false)
     setTimeout(() => {
-      socket.emit('random_find_partner', { name: chattype === "ownself" ? usertoken?.user.username : 'Stranger', avatar: chattype === 'ownself' ? usertoken?.user.profile_pic : defaultprofilepic, text: message, subroomId: subRoomIdChat, userId: usertoken?.user.id })
+      socket.emit('random_find_partner', { name: usertoken?.user.username , avatar:  usertoken?.user.profile_pic , text: message, subroomId: subRoomIdChat, userId: usertoken?.user.id })
     }, 2000);
 
   };
@@ -218,7 +211,7 @@ const RandomsubroomChat = () => {
     if (!canSendMessage || !roomId) return;
 
     if (message.trim() !== '') {
-      const data = { roomId, name: chattype === "ownself" ? usertoken?.user.username : 'Stranger', avatar: chattype === 'ownself' ? usertoken?.user.profile_pic : defaultprofilepic, message };
+      const data = { roomId, name: usertoken?.user.username , avatar: usertoken?.user.profile_pic, message };
       socket.emit('random_send_message-private', data);
       setMessage('');
 
@@ -265,7 +258,7 @@ const RandomsubroomChat = () => {
         />
       </Helmet>
 
-      {!chattype && (
+      {/* {!chattype && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -297,7 +290,7 @@ const RandomsubroomChat = () => {
 
         </motion.div>
 
-      )}
+      )} */}
       <div className="sbr-r-chat-box scrollbar" ref={chatBoxRef}>
         <AnimatePresence>
           {strangerInfo && strangerJoin && (
@@ -370,7 +363,7 @@ const RandomsubroomChat = () => {
         {(!strangerInfo || !roomId) && (
           <div className="sbr-match-user-box">
             {newUserFind ? (
-              <AnimatePresence>
+ 
                 <motion.div
                   className="sbr-r-typing-status"
                   key="finding"
@@ -379,12 +372,12 @@ const RandomsubroomChat = () => {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  🔍 Finding a stranger...
+                   Finding a stranger...
                 </motion.div>
-              </AnimatePresence>
+           
             ) : (
               !strangerLeft ? (
-                !selfLeft ? (<AnimatePresence>
+                !selfLeft ? (
                   <motion.div
                     className='sbr-r-nutral-chat'
                     initial={{ opacity: 0, y: 10 }}
@@ -392,11 +385,29 @@ const RandomsubroomChat = () => {
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.6 }}
                   >
-                    Let Connect With Similar Mindset People.
+                    <div className="global-text-center">
+                        {/* {strangerLeft && roomId && (
+                        <div className="global-text-center" style={{  color: "var(  --danger-color)"}}>
+                            Disconnected.
+                        </div>
+                    )} */}
+                        <h2>Talk to Strangers, Freely & Anonymously</h2>
+                        <p>Connect with someone new. Share your thoughts. No names, no judgment.</p>
+
+                        <ul className="chat-rules-list">
+                            <li>✅ Be respectful — no hate speech or harassment.</li>
+                            <li>❌ No spamming, nudity, or offensive content.</li>
+                            <li>🔐 Stay anonymous — don’t share personal info.</li>
+                            <li>👋 You can leave or skip anytime.</li>
+                        </ul>
+                    {/* {!strangerJoin && !strangerLeft && (<p>Finding Strangers</p>)} */}
+                       {/* {finding ? ( <p>We’re finding someone for you...</p> ) : (<p>We'll be find someone for you !</p>)} */}
+                    </div>
+                    Let Connect With {subroomname.toLocaleUpperCase()}
 
 
                   </motion.div>
-                </AnimatePresence>) :
+                ) :
                   (<AnimatePresence>
                     <motion.div
                       className='sbr-r-nutral-chat-self-left'
@@ -468,12 +479,10 @@ const RandomsubroomChat = () => {
             {!roomId ? (
               newUserFind ? (
                 <span> Matching...</span>) : (<span onClick={() => {
-                  if (chattype) {
+                 
                     findNewUser();
 
-                  } else {
-                    setChattype('');
-                  }
+                  
                 }}>Connect</span>)
             ) : (
               <span onClick={() => {
@@ -489,7 +498,7 @@ const RandomsubroomChat = () => {
           </button>
           <div className="sbr-r-chat-sub-box">
             <textarea
-              disabled={!chattype}
+              
               placeholder="Type your thoughts..."
               value={message}
               onChange={handlechange}
@@ -506,11 +515,9 @@ const RandomsubroomChat = () => {
             />
           </div>
           <button className='sbr-r-button active' disabled={!strangerJoin} onClick={() => {
-            if (chattype) {
+           
               sendMessage();
-            } else {
-              setChattype('');
-            }
+           
 
 
           }}><SendIcon sx={{ height: 20, width: 20 }} /></button>

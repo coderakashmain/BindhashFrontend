@@ -1,12 +1,62 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import './RoomPlay.css'
 import './Room.css'
+import { useSocket } from '../../Context/SocketContext'
 
 const RoomPlay = () => {
   const location = useLocation();
   const { room } = location.state;
   const navigate = useNavigate();
+  const [liveUserdata, setLiveUserdata] = useState([]);
+  const socket = useSocket();
+
+
+
+
+  useEffect(() => {
+    if (!socket) return;
+    socket.emit("get-all-active-users");
+
+    const handler = ({ roomId, subroomId, count }) => {
+
+
+
+      setLiveUserdata(prev => {
+        const existingIndex = prev.findIndex(
+          item => item.roomId === roomId && item.subroomId === subroomId
+        );
+
+        if (existingIndex !== -1) {
+          const updated = [...prev];
+          updated[existingIndex] = { ...updated[existingIndex], count };
+          return updated;
+        } else {
+          return [...prev, { roomId, subroomId, count }];
+        }
+      });
+    };
+
+    socket.on("global-room-user", handler);
+
+    socket.on("all-subroom-counts", (data) => {
+      setLiveUserdata(data);
+    });
+
+
+    return () => {
+      socket.off("global-room-user", handler);
+      socket.off("all-subroom-counts");
+    };
+  }, [socket]);
+
+  const getLiveCount = (roomId, subroomId) => {
+    const match = liveUserdata.find(
+      (item) => parseInt(item.roomId) === roomId && parseInt(item.subroomId) === subroomId
+    );
+    return match?.count || 0;
+  };
+
 
 
   const generetSlog = (subroom) => {
@@ -54,14 +104,21 @@ const RoomPlay = () => {
 
               <div className="subrooms-b-join-l">
                 <div className='live-dot'></div>
-                <span >Live</span>
+                {(() => {
+                  const liveCount = getLiveCount(room.room_id, subroom.subroom_id);
+                  return (
+                    <span style={{ color: liveCount > 0 ? 'limegreen' : 'gray' }}>
+                      Live · {liveCount} user{liveCount !== 1 ? 's' : ''}
+                    </span>
+                  );
+                })()}
               </div>
 
               <div className="subroom-list-join active click" onClick={() => {
-        
 
-                  joinRoom(subroom, room)
-       
+
+                joinRoom(subroom, room)
+
               }}>
                 Get In
               </div>

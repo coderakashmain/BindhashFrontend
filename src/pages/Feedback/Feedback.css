@@ -12,7 +12,7 @@
 }
 .feedback-container {
     width: 40rem;
-   margin-top: 5rem;
+   /* margin-top: 5rem; */
     background-color: var(--backwhitecolor);
     padding:  2rem;
     border-radius: 0.3rem;
@@ -21,7 +21,7 @@
 @media (max-width : 640px) {
         .feedback-container{
             width: 95%;
-             margin-top: 3rem;
+             /* margin-top: 3rem; */
         }
 }
 .feedback-container h2 {
