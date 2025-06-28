@@ -201,7 +201,7 @@ const handlenavigateGlobal = ()=>{
 
 
   return (
-    <div className="user-list">
+    <div style={{border : isMobile ? 'none' : ''}} className="user-list">
 
       <Newaccount />
       <button  onClick={handlenavigateGlobal} className={`global-random-chat-btn ${location.pathname === '/chat/globalChat' ? 'global-random-chat-leave' : ''}`}>

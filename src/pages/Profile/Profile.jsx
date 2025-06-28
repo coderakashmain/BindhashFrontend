@@ -101,7 +101,7 @@ const Profile = () => {
 
 
 
-      <div className="profile-left-box">
+      <div style={{border : isMobile ? 'none' :''}} className="profile-left-box">
        
 
         <Helmet>
