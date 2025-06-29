@@ -104,6 +104,12 @@ export default function CreatePost() {
         }
     };
 
+    useEffect(() => {
+        if (usertoken.user.visibility === 'anonymous')
+            setIsAnonymous(true);
+
+    }, [usertoken])
+
 
 
     return (
@@ -120,7 +126,7 @@ export default function CreatePost() {
                     <div className="creat-post-header">
                         <div className="creat-post-header-l">
                             <CombineAvatat username={usertoken.user.username} profile_pic={usertoken.user.profile_pic} visibility={usertoken.user.visibility} size="2.5rem" />
-                            <h3>{usertoken.user.username}</h3>
+                            <h3 style={{color : 'var(--blacktextcolor)'}}>{usertoken.user.username}</h3>
 
                         </div>
                         <div className="creat-post-header-r">
@@ -252,29 +258,30 @@ export default function CreatePost() {
                             control={
                                 <Checkbox
                                     checked={
-                                        usertoken.user.visibility === 'anonymous' ? true : isAnonymous
+                                        isAnonymous
                                     }
                                     onChange={() => {
-                       
+
                                         if (usertoken.user.visibility !== 'anonymous') {
                                             setIsAnonymous(!isAnonymous);
                                         }
                                     }}
-                                    onClick={()=>{
+                                    onClick={() => {
 
                                         console.log('ruuning')
-                                        if(usertoken.user.visibility === 'anonymous'){
-                                             setSnackbar({open : true, message : 'Switch to Self mode to Change Visibility!', type : 'warning'})
+                                        if (usertoken.user.visibility === 'anonymous') {
+                                            setSnackbar({ open: true, message: 'Switch to Self mode to Change Visibility!', type: 'warning' })
                                         }
                                     }}
-                                   
+
                                     name="anonymous"
                                     style={{ color: 'var(--blue-color)' }}
-
+                                // disabled={usertoken.user.visibility === 'anonymous'}
                                 />
                             }
                             label="Post Anonymously"
                         />
+
                         <p>( Your photo and name do not show to anyone )</p>
                     </div>
 

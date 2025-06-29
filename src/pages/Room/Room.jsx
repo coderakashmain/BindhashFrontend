@@ -157,7 +157,7 @@ const Room = () => {
               <header>
                 <h3>{room.room_name}
                 </h3>
-
+                    
                 <aside style={{display : 'flex',gap : '0.5rem',alignItems : 'center'}}>
 
                      <div className='live-dot'></div>

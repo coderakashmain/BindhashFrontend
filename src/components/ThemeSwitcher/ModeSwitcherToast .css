@@ -21,7 +21,7 @@
   font-weight: 500;
   transition: all 0.3s ease;
   pointer-events: auto;
-  z-index: 1000;
+  z-index: 100000;
 }
 
 .mode-toast .anon-icon {

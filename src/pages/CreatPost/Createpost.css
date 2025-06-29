@@ -24,6 +24,8 @@
 
 .form-group {
   margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 0;
 }
 .form-group label {
   color: var(--textcolor);

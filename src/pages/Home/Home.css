@@ -264,7 +264,7 @@
   /* border:1px solid   var(--blue-color); */
   flex-basis: 230px;
   font-weight: 600;
-  /* color: var(--blue-color); */
+  color: var(--blacktextcolor);
 }
 
 .home-post-button-box button:hover {
