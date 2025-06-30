@@ -44,6 +44,8 @@ const RoomChat = () => {
     const [userSetting, setUserSetting] = useState(false);
     const { isMobile } = useContext(MobileViewContext);
     const userSettingRef = useRef(null);
+    const [demolist,setDemolist] = useState([]);
+   
 
 
 
@@ -125,159 +127,8 @@ const RoomChat = () => {
     }
 
 
-    const demolist = [
-        {
-            id: 1, name: "It Students and therie atomic power ", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300",
-            users: [
-                { id: 1, name: "John Smith", image: "https://picsum.photos/800/300" },
-                { id: 2, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 3, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 4, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 5, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 6, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 7, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 8, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 9, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 10, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 11, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 12, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 13, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 14, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 15, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-            ]
 
 
-        },
-        {
-            id: 2, name: "Civil Students", description: "  This is room for it student who want to find . Join Room at find a stranger.. This is room for it student who want to find . Join Room at find a stranger. This is room for it student who want to find . Join Room at find a stranger. This is room for it student who want to find . Join Room at find a stranger. This is room for it student who want to find . Join Room at find a stranger.This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300",
-            users: [
-                { id: 1, name: "John Smith", image: "https://picsum.photos/800/300" },
-                { id: 2, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 3, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 4, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 5, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 6, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 7, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 8, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 9, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 10, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 11, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 12, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 13, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 14, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 15, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-            ]
-        },
-        {
-            id: 3, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300",
-            users: [
-                { id: 1, name: "John Smith", image: "https://picsum.photos/800/300" },
-                { id: 2, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 3, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 4, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 5, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 6, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 7, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 8, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 9, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 10, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 11, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 12, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 13, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 14, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 15, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-            ]
-        },
-        {
-            id: 4, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300",
-            users: [
-                { id: 1, name: "John Smith", image: "https://picsum.photos/800/300" },
-                { id: 2, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 3, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 4, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 5, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 6, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 7, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 8, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 9, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 10, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 11, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 12, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 13, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 14, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 15, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-            ]
-        },
-        {
-            id: 5, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300",
-            users: [
-                { id: 1, name: "John Smith", image: "https://picsum.photos/800/300" },
-                { id: 2, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 3, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 4, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 5, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 6, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 7, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 8, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 9, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 10, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 11, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 12, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 13, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 14, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-                { id: 15, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-            ]
-        },
-        { id: 6, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300" },
-        { id: 7, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300" },
-        { id: 8, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300" },
-        { id: 9, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300" },
-        { id: 10, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300" },
-        { id: 11, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300" },
-        { id: 12, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300" },
-        { id: 13, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300" },
-        { id: 14, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300" },
-        { id: 15, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300" },
-        { id: 16, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300" },
-        { id: 17, name: "Civil Students", description: " This is room for it student who want to find . Join Room at find a stranger.", image: "https://picsum.photos/800/300" },
-    ]
-
-
-    // const activeUsers = [
-    //     { id: 1, name: "John Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 2, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 3, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 4, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 5, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 6, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 7, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 8, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 9, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 10, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 11, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 12, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 13, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 14, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 15, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 16, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 17, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 18, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 19, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 20, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 21, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 22, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 23, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-
-
-    //     { id: 24, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 25, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 26, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 27, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 28, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 29, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 30, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    //     { id: 31, name: "Jane Smith", image: "https://picsum.photos/800/300" },
-    // ]
 
     useEffect(() => {
         setNavigatePath(chatroomname);
@@ -403,9 +254,15 @@ const RoomChat = () => {
                     </div>
 
 
-                    <strong style={{ marginTop: "0.5rem" }}>Your Rooms  <span> <Avatar sx={{ backgroundColor: 'var(--icon-back-color)', color: 'var(--icon-color)', height: 20, width: 20, cursor: 'pointer' }}><AddIcon sx={{ height: 15, width: 15 }} onClick={() => navigate('creatroom')} /></Avatar > {demolist.length}</span></strong>
+                    <strong style={{ marginTop: "0.5rem" }}>Your Rooms  <span> <Avatar sx={{ backgroundColor: 'var(--icon-back-color)', color: 'var(--icon-color)', height: 20, width: 20, cursor: 'pointer' }}><AddIcon sx={{ height: 15, width: 15 }} onClick={() => 
+                  { 
+                    return
+                    navigate('creatroom')}} /></Avatar > 
+                    {/* {demolist.length} */}
+                    0
+                    </span></strong>
 
-                    {demolist.slice(0, !expand ? 3 : demolist.length).map((room) => (
+                    {/* {demolist.slice(0, !expand ? 3 : demolist.length).map((room) => (
                         <div key={room.id} className="roomchat-card" style={{
                             backgroundColor:
                                 location.pathname === `/room/${category}/${slug}/${room.name.toLowerCase().replace(/\s+/g, '-')}-${room.id}`
@@ -455,16 +312,18 @@ const RoomChat = () => {
                     ))}
                     {demolist.length > 3 && (
                         <p onClick={() => setExpand(!expand)} className="roomchat-allroom-exand">{!expand ? (<KeyboardArrowRightIcon sx={{ height: 20, width: 20 }} />) : (<KeyboardArrowDownIcon sx={{ height: 20, width: 20 }} />)} {expand ? "" : "Expand"} </p>
-                    )}
+                    )} */}
+                    <div className='roomchat-card'>Update Soon :)</div>
 
-                    <strong>Public Rooms  <span>345</span></strong>
+                    <strong>Public Rooms  <span>0</span></strong>
 
-                    {demolist.map((room) => (
+                    {/* {demolist.map((room) => (
                         <div key={room.id} className="roomchat-card">
                             {room.name}
                         </div>
 
-                    ))}
+                    ))} */}
+                     <div className='roomchat-card'>Update Soon :)</div>
 
                 </aside>
                 <motion.div

@@ -1,0 +1,47 @@
+.subroom-d-page-container {
+  padding: 2rem;
+  text-align: center;
+  border-radius: 16px;
+  margin: 2rem auto;
+  max-width: 700px;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.subroom-d-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 0.8rem;
+}
+
+.subroom-d-page-icon {
+  font-size: 2rem;
+  color: var(--blue-color);
+}
+
+.subroom-d-page-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--textcolor);
+  letter-spacing: 1px;
+}
+
+.subroom-d-page-slogan {
+  font-size: 1rem;
+  color: var(--lighttextcolor);
+  font-style: italic;
+  margin-top: 0.4rem;
+}
+
+/* Optional fade animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
