@@ -23,13 +23,13 @@ import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 
 
-const PostContent = ({loading, loaderRef, fetchPosts, hasMore, setAllpost, allpost, moreload = true }) => {
+const PostContent = ({ loading, loaderRef, fetchPosts, hasMore, setAllpost, allpost, moreload = true }) => {
   const [imgloaded, setImgLoaded] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(null);
   const { usertoken } = useContext(UserAuthCheckContext)
   const [showSheet, setshowSheet] = useState(false);
   const { setSnackbar } = useContext(SnackbarContext)
-  const [deleting,setDeleting] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     if (loaderRef.current) {
@@ -40,43 +40,19 @@ const PostContent = ({loading, loaderRef, fetchPosts, hasMore, setAllpost, allpo
 
 
 
-  
 
 
 
-const handleLike = async (postId) => {
+
+  const handleLike = async (postId) => {
 
 
 
-  setAllpost((prevPosts) =>
-    prevPosts.map((post) => {
-      if (post.post_id === postId) {
-        const wasLiked = post.is_liked;
-    
-        return {
-          ...post,
-          like_count: post.like_count + (wasLiked ? -1 : 1),
-          is_liked: !wasLiked,
-        };
-      }
-      return post;
-    })
-  );
-
-  try {
-    // Actual server request
-    await axios.post("/api/posts/like", {
-      user_id: usertoken.user.id,
-      post_id: postId,
-    });
-  } catch (error) {
-    console.error("Error liking post:", error);
-
-    // Rollback on failure
     setAllpost((prevPosts) =>
       prevPosts.map((post) => {
         if (post.post_id === postId) {
           const wasLiked = post.is_liked;
+
           return {
             ...post,
             like_count: post.like_count + (wasLiked ? -1 : 1),
@@ -86,8 +62,32 @@ const handleLike = async (postId) => {
         return post;
       })
     );
-  }
-};
+
+    try {
+      // Actual server request
+      await axios.post("/api/posts/like", {
+        user_id: usertoken.user.id,
+        post_id: postId,
+      });
+    } catch (error) {
+      console.error("Error liking post:", error);
+
+      // Rollback on failure
+      setAllpost((prevPosts) =>
+        prevPosts.map((post) => {
+          if (post.post_id === postId) {
+            const wasLiked = post.is_liked;
+            return {
+              ...post,
+              like_count: post.like_count + (wasLiked ? -1 : 1),
+              is_liked: !wasLiked,
+            };
+          }
+          return post;
+        })
+      );
+    }
+  };
 
 
 
@@ -166,14 +166,14 @@ const handleLike = async (postId) => {
       {allpost.map((allpost) => (
         allpost.type === "post" ? (
           <motion.div key={`post-${allpost.post_id}`} className="post"
-          initial ={{y : 30, opacity : 0}}
-          animate ={{y : 0, opacity : 1}}
-          exit ={{y : 30, opacity : 0}}
-          transition={{duration : 0.2}}
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 30, opacity: 0 }}
+            transition={{ duration: 0.2 }}
 
 
           >
-            
+
 
             <div className="post-header">
               <div className="post-header-user">
@@ -186,7 +186,9 @@ const handleLike = async (postId) => {
                   <h3>{allpost.post_username}</h3>
                   <div className="post-header-catetory-box">
                     {allpost.category && (<Chip
-                      label={allpost.category}
+                      label={
+                        allpost.category.charAt(0).toUpperCase() + allpost.category.slice(1)
+                      }
 
                       size="small"
                       sx={{ backgroundColor: ' var(--light-blue-color)', color: "red", padding: '0px 7px', fontSize: '12px', fontWeight: 'bold' }}
@@ -213,10 +215,10 @@ const handleLike = async (postId) => {
 
 
             <>
-              <div className={`post-head-img-box ${allpost.image &&'post-media-present'}`}>
+              <div className={`post-head-img-box ${allpost.image && 'post-media-present'}`}>
 
                 {allpost.image && allpost.media_type === 'image' ? (<>
-                  
+
                   {/* <img
                     src={placeholderimg(allpost.image)}
                     loading='lazy'
@@ -259,7 +261,7 @@ const handleLike = async (postId) => {
                 >
 
                   {/* <Heart size={20} color={allpost.is_liked ? "#007BFF" : "var(--textcolor)"} /> {allpost.like_count} Like */}
-                   {allpost.is_liked ? <FavoriteOutlinedIcon sx={{color : "#007BFF"}}  size={16}  />  : <Heart size={20}   />} {allpost.like_count} Like
+                  {allpost.is_liked ? <FavoriteOutlinedIcon sx={{ color: "#007BFF" }} size={16} /> : <Heart size={20} />} {allpost.like_count} Like
                 </button>
                 <button onClick={() => {
                   setshowSheet(true);
@@ -305,7 +307,7 @@ const handleLike = async (postId) => {
           {loading && hasMore && allpost.length > 0 && (
             <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
               <CircularProgress color="black" />
-              
+
             </Box>
           )}
 
