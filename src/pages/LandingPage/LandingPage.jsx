@@ -32,6 +32,7 @@ import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import Bangbox from "../../components/Bangbox/Bangbox";
+import PageMeta from "../../components/PageMeta/PageMeta";
 
 
 export default function LandingPage() {
@@ -45,13 +46,11 @@ export default function LandingPage() {
     <div className="land-p-container">
 
 
-      <Helmet >
-        <title>Bindhash – Where Real Stories Begin</title>
-        <meta
-          name="description"
-          content="Bindhash is a platform where users share anonymous failures, emotions, and personal stories. Join rooms, chat, and connect with similar minds without judgment."
-        />
-      </Helmet>
+      <PageMeta
+      title="Bindhash – Where Real Stories Begin" 
+      description="Bindhash is a platform where users share anonymous failures, emotions, and personal stories. Join rooms, chat, and connect with similar minds without judgment."
+      />
+     
 
 
 

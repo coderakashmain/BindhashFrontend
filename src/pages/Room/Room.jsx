@@ -10,6 +10,7 @@ import CircularLoader from '../../components/Fallback/CircularLoader'
 import { Helmet } from 'react-helmet'
 import '../../App.css'
 import { useSocket } from '../../Context/SocketContext'
+import PageMeta from '../../components/PageMeta/PageMeta'
 
 
 
@@ -142,15 +143,12 @@ const Room = () => {
           <h2>Rooms</h2>
           <button className='create-room'>Create Room</button>
         </div> */}
+    <PageMeta
+    title = "Rooms – Bindhash"
+    discription = "Join the any Room on Bindhash to chat anonymously, share emotions, and connect with others going through similar experiences."
+    />
 
-
-        <Helmet>
-          <title>{` Rooms – Bindhash`}</title>
-          <meta
-            name="description"
-            content={`Join the any Room on Bindhash to chat anonymously, share emotions, and connect with others going through similar experiences.`}
-          />
-        </Helmet>
+  
         <div className="room-list">
           {rooms.map((room) => (
             <div key={room.room_id} className="room-card">

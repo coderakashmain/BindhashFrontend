@@ -39,6 +39,7 @@ import Queots from "../../components/Queots/Queots";
 import { EmojiEventsOutlined, SortOutlined, TrendingUpOutlined } from "@mui/icons-material";
 import BottomSheet from "../../components/BottomSheet/BottomSheet";
 import PostCardSkeleton from "../../components/Fallback/PostCardSkeleton";
+import PageMeta from "../../components/PageMeta/PageMeta";
 
 
 
@@ -299,13 +300,11 @@ const Home = () => {
 
   return (
     <section className="container">
-      <Helmet>
-        <title>Live Feed – Stories & Confessions | Bindhash</title>
-        <meta
-          name="description"
-          content="Scroll through real, raw, and anonymous posts from people just like you. Discover emotional stories, failures, and victories shared from the heart."
-        />
-      </Helmet>
+      <PageMeta 
+      title="Live Feed – Stories & Confessions | Bindhash"
+      description="Scroll through real, raw, and anonymous posts from people just like you. Discover emotional stories, failures, and victories shared from the heart."
+      />
+     
       {videoselect && <PostEditView setVideoselect={setVideoselect} setVideopost={setVideopost} setVideoType={setVideoType} postdata={videopost} type={videotype} />}
       <div ref={homeporfileRef} className="home-profile-out-box scrollbar">
         <div className="home-profile">
