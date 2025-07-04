@@ -7,6 +7,8 @@ import { SnackbarContext } from "../../Context/SnackbarContext";
 import '../Login/Login.css'
 import { motion } from 'framer-motion'
 import { Helmet } from "react-helmet";
+import GoogleAuth from '../../auth/GoogleAuth';
+import CircularLoader from '../../components/Fallback/CircularLoader';
 
 
 
@@ -18,6 +20,7 @@ const Emailenter = () => {
   const [loading, setLoading] = useState(false);
   const { setSnackbar } = useContext(SnackbarContext);
   const [isChecked, setIsChecked] = useState(true)
+    const [googleLogin, SetgoogleLogin] = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -65,6 +68,7 @@ const Emailenter = () => {
 
   return (
     <div className="register-container-box1">
+              {googleLogin&& <CircularLoader/>}
       <Helmet>
         <title>Register – Join Bindhash Today</title>
         <meta
@@ -75,7 +79,7 @@ const Emailenter = () => {
       <div className="register-container-box1-inside login-container-box1-inside">
         <h2 style={{ fontWeight: 'bold', margin: '0 0 0.2rem 0', padding: '0rem' }}>Register</h2>
         {/* {error && <p style={{mart : '0.3rem'}} className="error">{error}</p>} */}
-        <button type=""><b>Sign up with Google</b></button>
+               <GoogleAuth SetgoogleLogin={SetgoogleLogin}/>
         <div className="or-line">
           <div></div>OR  <div></div>
 

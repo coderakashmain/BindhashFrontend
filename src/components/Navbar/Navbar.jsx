@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {lazy,useState, useEffect, useContext } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Bell, Mail, User, Home, LogIn, UserPlus, MessageCircle, Search, Medal, Ghost } from "lucide-react";
 import "./Navbar.css";
@@ -14,6 +14,7 @@ import { IconButton, Tooltip } from "@mui/material";
 import ModeSwitcherToast from "../ThemeSwitcher/ModeSwitcherToast ";
 import CombineAvatat from "../Avatar/CombineAvatat";
 import LiveAvatar from "../Avatar/LiveAvatar";
+const Notification = lazy(() => import('../../pages/Notification/Notification'));
 
 
 
@@ -23,7 +24,8 @@ const Navbar = () => {
   const { usertoken } = useContext(UserAuthCheckContext)
   const navigate = useNavigate();
   const [anonmode, setAnonmode] = useState('')
-  const [loadingmode,setLoadingmode] = useState(true);
+  const [loadingmode, setLoadingmode] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     if (!usertoken) {
       return
@@ -39,17 +41,17 @@ const Navbar = () => {
 
   useEffect(() => {
     if (usertoken?.user.visibility === 'anonymous') {
-      
+
       setAnonmode('anonymous')
     } else {
       setAnonmode('self');
     }
-   
+
 
   }, [usertoken])
 
 
-  
+
   return (
     <nav className="navbar" style={{ padding: isMobile ? '0rem 0.5rem' : '' }}>
       {/* Left Side - Logo */}
@@ -72,7 +74,7 @@ const Navbar = () => {
         </Tooltip>
         {!isMobile && (<p>Beta Version</p>)}
         <Tooltip title={anonmode === 'anonymous' ? "Switch to Self Mode" : "Switch to Anonymous Mode"}>
-          <IconButton style={{ cursor: 'pointer' , color : 'var(--blacktextcolor)'}} onClick={() => {
+          <IconButton style={{ cursor: 'pointer', color: 'var(--blacktextcolor)' }} onClick={() => {
             setLoadingmode(false);
             setAnonmode((prev) => (prev === 'anonymous' ? 'self' : 'anonymous'));
           }}>
@@ -81,24 +83,29 @@ const Navbar = () => {
 
           </IconButton>
         </Tooltip>
-            <ModeSwitcherToast mode={anonmode} loadingmode={loadingmode} />
+        <ModeSwitcherToast mode={anonmode} loadingmode={loadingmode} />
         <Tooltip title="switch theme">
-          
+
           <span>  <ThemeSwitcher /></span>
         </Tooltip>
-        <IconButton>
 
-        <NavLink to="#" className="icon-button" >
-          <Bell size={17}  color = 'var(--blacktextcolor)' />
-        </NavLink>
+
+        {/* <IconButton onClick={() => setIsOpen(!isOpen)}> */}
+        <IconButton >
+          <Tooltip title='Notificatioin'>
+
+            <Bell size={17} color='var(--blacktextcolor)' />
+          </Tooltip>
+
         </IconButton>
-  
+        {/* <Notification isOpen={isOpen}/> */}
+
         <NavLink to={`/profile/o/${usertoken.user.username}`} className="icon-button nav-user-profile-icon">
 
-         <LiveAvatar>
-          <CombineAvatat username={usertoken?.user.username} profile_pic={usertoken?.user.profile_pic} visibility={usertoken.user.visibility} size = "2.5rem"/>
+          <LiveAvatar>
+            <CombineAvatat username={usertoken?.user.username} profile_pic={usertoken?.user.profile_pic} visibility={usertoken.user.visibility} size="2.5rem" />
 
-         </LiveAvatar>
+          </LiveAvatar>
         </NavLink>
       </div>
     </nav>

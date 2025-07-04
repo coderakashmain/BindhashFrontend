@@ -16,6 +16,7 @@
     "@mui/icons-material": "^6.4.10",
     "@mui/material": "^6.4.10",
     "@mui/x-charts": "^7.27.1",
+    "@react-oauth/google": "^0.12.2",
     "@techstark/opencv-js": "^4.10.0-release.1",
     "@tensorflow-models/coco-ssd": "^2.2.3",
     "@tensorflow/tfjs": "^4.22.0",

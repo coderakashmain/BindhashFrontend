@@ -12,6 +12,9 @@ import '../../App.css'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FacebookOutlined, Google, Twitter } from "@mui/icons-material";
 import { Helmet } from "react-helmet";
+import ReCaptcha from "../../auth/ReCaptcha";
+import GoogleAuth from "../../auth/GoogleAuth";
+import CircularLoader from "../../components/Fallback/CircularLoader";
 
 
 const Login = () => {
@@ -25,7 +28,8 @@ const Login = () => {
   const { setSnackbar } = useContext(SnackbarContext);
   const location = useLocation();
   const email = location.state?.email || "";
-
+  const [recaptcha, setRecapthca] = useState(false);
+  const [googleLogin, SetgoogleLogin] = useState(false);
 
   useEffect(() => {
     if (usertoken) {
@@ -40,16 +44,47 @@ const Login = () => {
 
 
 
+
+
   useEffect(() => {
     if (email) {
       setUsername(email)
     }
   }, [email])
 
+  const handleCaptchaPassed = () => {
+    setRecapthca(true);
+    if (loading) {
+      handleLogin();
+    }
+  };
+const hanldeCaptchaFailed = () => {
+
+  if (!loading && recaptcha) {
+      handleLogin();
+    }else{
+      setLoading(true)
+    }
+}
+  
+
+
+
+  
+
   const handleLogin = async (e) => {
-    if(!username || !password) return ;
+    if (!username || !password) return;
+
+  if(!recaptcha){
+    console.warn("Captcha not verified");
+    setLoading(false);
+    return
+  }
+     
+  
     setLoading(true)
-    e.preventDefault();
+
+    console.log("Login attempt with username:", username);
     try {
       const response = await axios.post("/api/auth/login", { username, password }, { withCredentials: true });
       sessionStorage.setItem('logintoken', true);
@@ -61,7 +96,7 @@ const Login = () => {
         setSnackbar({ open: true, message: err.response.data.error, type: "error" });
 
       } else {
-        setError("Something went wrong. Please try again."); 
+        setError("Something went wrong. Please try again.");
       }
 
 
@@ -74,13 +109,20 @@ const Login = () => {
 
   if (webLoading) {
     return
-  }
+  };
+
+
+
+
+
 
 
   return (
     <>
-        
+
       <div className="login-container">
+        {googleLogin&& <CircularLoader/>}
+        <ReCaptcha onSuccess={handleCaptchaPassed} />
         <Helmet>
           <title>Login – Welcome Back | Bindhash</title>
           <meta
@@ -98,21 +140,8 @@ const Login = () => {
               <Chip label="Continue with" size="small" />
             </Divider> */}
             <div className="login-social-buttons">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <IconButton className="login-social-btn login-google">
-                  <Google />
-                </IconButton>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <IconButton className="login-social-btn login-facebook">
-                  <FacebookOutlined />
-                </IconButton>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <IconButton className="login-social-btn login-twitter">
-                  <Twitter />
-                </IconButton>
-              </motion.div>
+              
+              <GoogleAuth SetgoogleLogin={SetgoogleLogin}/>
             </div>
 
             <Divider className="login-divider">
@@ -122,7 +151,10 @@ const Login = () => {
 
 
             {error && <p style={{ color: 'red', margin: '1rem 0 0.3rem 0' }} className="error">{error}</p>}
-            <form onSubmit={handleLogin}>
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              hanldeCaptchaFailed();
+            }}>
 
               <TextField
                 label="Username or Email"

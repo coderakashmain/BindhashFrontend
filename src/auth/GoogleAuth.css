@@ -1,0 +1,42 @@
+.google-auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.6rem;
+  width: 100%;
+  color: var(--textcolor) !important;
+}
+
+.custom-google-btn {
+  border-radius: 4px;
+  padding: 0.3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.078);
+  border: var(--border-color);
+  width: 100%;
+  transition: all 0.2s ease-in-out;
+}
+.custom-google-btn:hover {
+  background-color: var(--lightbackhovercolor);
+}
+
+
+/* Override the default Google button styles */
+.custom-google-btn div {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+    outline: none !important;
+    
+}
+
+.custom-google-btn span {
+  color: var(--textcolor) !important;
+
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}

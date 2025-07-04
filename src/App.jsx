@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useContext, useEffect } from 'react'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import { messaging, getToken } from './firebase';
 
 
 import { PollProvider } from './Context/PollProvider';
@@ -70,28 +70,28 @@ const RoomPlay = lazy(() => import('./pages/Room/RoomPlay'));
 
 
 const App = () => {
-  // const VITE_VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY;
+//   const VITE_VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY;
 
 
 
 
+// const requestPermission = async () => {
+//   const permission = await Notification.requestPermission();
+//   if (permission === 'granted') {
+//     const token = await getToken(messaging, {
+//       vapidKey: VITE_VAPID_PUBLIC_KEY
+//     });
+//     console.log('FCM Token:', token);
 
-  // useEffect(() => {
-  //   if ("serviceWorker" in navigator && "PushManager" in window) {
-  //     navigator.serviceWorker.register("/sw.js").then(registration => {
-  //       return registration.pushManager.subscribe({
-  //         userVisibleOnly: true,
-  //         applicationServerKey: VITE_VAPID_PUBLIC_KEY
-  //       });
-  //     }).then(subscription => {
-  //       fetch("http://localhost:3000/subscribe", {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({ userId: "123", subscription })
-  //       });
-  //     });
-  //   }
-  // }, []);
+    
+//   } else {
+//     console.warn('Notification permission not granted');
+//   }
+// };
+
+useEffect(() => {
+  requestPermission();
+}, []);
 
   const router = createBrowserRouter([
     {
