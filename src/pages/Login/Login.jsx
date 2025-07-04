@@ -52,39 +52,19 @@ const Login = () => {
     }
   }, [email])
 
-  const handleCaptchaPassed = () => {
-    setRecapthca(true);
-    if (loading) {
-      handleLogin();
-    }
-  };
-const hanldeCaptchaFailed = () => {
-
-  if (!loading && recaptcha) {
-      handleLogin();
-    }else{
-      setLoading(true)
-    }
-}
-  
 
 
 
-  
+
+
 
   const handleLogin = async (e) => {
     if (!username || !password) return;
 
-  if(!recaptcha){
-    console.warn("Captcha not verified");
-    setLoading(false);
-    return
-  }
-     
-  
+
     setLoading(true)
 
-    console.log("Login attempt with username:", username);
+    e.preventDefault();
     try {
       const response = await axios.post("/api/auth/login", { username, password }, { withCredentials: true });
       sessionStorage.setItem('logintoken', true);
@@ -111,7 +91,9 @@ const hanldeCaptchaFailed = () => {
     return
   };
 
-
+  const handleCaptchaPassed = () => {
+    setRecapthca(true);
+  }
 
 
 
@@ -121,7 +103,7 @@ const hanldeCaptchaFailed = () => {
     <>
 
       <div className="login-container">
-        {googleLogin&& <CircularLoader/>}
+        {googleLogin && <CircularLoader />}
         <ReCaptcha onSuccess={handleCaptchaPassed} />
         <Helmet>
           <title>Login – Welcome Back | Bindhash</title>
@@ -140,8 +122,8 @@ const hanldeCaptchaFailed = () => {
               <Chip label="Continue with" size="small" />
             </Divider> */}
             <div className="login-social-buttons">
-              
-              <GoogleAuth SetgoogleLogin={SetgoogleLogin}/>
+
+              <GoogleAuth SetgoogleLogin={SetgoogleLogin} />
             </div>
 
             <Divider className="login-divider">
@@ -151,10 +133,7 @@ const hanldeCaptchaFailed = () => {
 
 
             {error && <p style={{ color: 'red', margin: '1rem 0 0.3rem 0' }} className="error">{error}</p>}
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              hanldeCaptchaFailed();
-            }}>
+            <form onSubmit={handleLogin}>
 
               <TextField
                 label="Username or Email"

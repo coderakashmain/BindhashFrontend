@@ -30,7 +30,7 @@
   box-shadow: none !important;
   border: none !important;
     outline: none !important;
-    
+    border: none !important;
 }
 
 .custom-google-btn span {
