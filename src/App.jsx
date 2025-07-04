@@ -89,9 +89,9 @@ const App = () => {
 //   }
 // };
 
-useEffect(() => {
-  requestPermission();
-}, []);
+// useEffect(() => {
+//   requestPermission();
+// }, []);
 
   const router = createBrowserRouter([
     {

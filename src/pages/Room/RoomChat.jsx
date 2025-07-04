@@ -254,10 +254,7 @@ const RoomChat = () => {
                     </div>
 
 
-                    <strong style={{ marginTop: "0.5rem" }}>Your Rooms  <span> <Avatar sx={{ backgroundColor: 'var(--icon-back-color)', color: 'var(--icon-color)', height: 20, width: 20, cursor: 'pointer' }}><AddIcon sx={{ height: 15, width: 15 }} onClick={() => 
-                  { 
-                    return
-                    navigate('creatroom')}} /></Avatar > 
+                    <strong style={{ marginTop: "0.5rem" }}>Your Rooms  <span> <Avatar sx={{ backgroundColor: 'var(--icon-back-color)', color: 'var(--icon-color)', height: 20, width: 20, cursor: 'pointer' }}><AddIcon sx={{ height: 15, width: 15 }}  /></Avatar > 
                     {/* {demolist.length} */}
                     0
                     </span></strong>
