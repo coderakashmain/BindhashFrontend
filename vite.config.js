@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 import { visualizer } from "rollup-plugin-visualizer";
+import { Import } from "lucide-react";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -9,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:3000",
+           target: import.meta.env.VITE_BASE_URL,
         changeOrigin: true,
         secure: process.env.NODE_ENV === "production" ? true : false,
         timeout: 60000,
@@ -21,6 +22,9 @@ export default defineConfig({
       },
     },
   },
+
+
+  
 
   build: {
     rollupOptions: {
