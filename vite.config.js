@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: import.meta.env.VITE_BASE_URL ?? 'http://localhost:3000',
+        target: process.env.NODE_ENV === "production" ? 'https://api.bindhash.xyz' : "http://localhost:3000",
         changeOrigin: true,
         secure: process.env.NODE_ENV === "production" ? true : false,
         timeout: 60000,
