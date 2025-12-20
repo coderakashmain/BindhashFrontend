@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../../Photo/BindhashLogo.png'
+import logo from '../../Photo/logo.png'
 
 const Logo = ({size = '5rem'}) => {
   return (

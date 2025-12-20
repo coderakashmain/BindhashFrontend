@@ -8,8 +8,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 1000000;
   user-select: none;
+  flex-direction: column;
 }
 
 .main-loader picture {
@@ -17,14 +18,14 @@
 }
 
 .main-loader img {
-  height: 5rem;
-  width: 5rem;
+  height: 10rem;
+  width: 10rem;
   animation: redditRotate 2s infinite linear;
   filter: drop-shadow(0 0 12px #2890e1);
 }
 
 
-@keyframes redditBounce {
+/* @keyframes redditBounce {
   0%, 100% {
     transform: scale(1);
   }
@@ -32,13 +33,64 @@
     transform: scale(1.1);
   }
 }
+*/
 
-
-@keyframes redditRotate {
+ /* @keyframes redditRotate {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
+  }
+} */
+
+.main-loader-bar {
+  width: 40vw;
+  position: relative;
+  min-width: 20rem;
+  height: 2px;
+  border-radius: 5px;
+  overflow: hidden;
+  display: block;
+  background-color: rgb(180, 191, 195);
+}
+
+.main-loader-bar::before {
+  content: "";
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: movebefore 1s ease-in-out infinite forwards;
+  background: var(--linearcolor);
+}
+
+/* .main-loader-bar::after {
+  content: "";
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  animation: moveafter 1s ease-in-out infinite alternate-reverse;
+  background: var(--linearcolor);
+} */
+
+@keyframes movebefore {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes moveafter {
+  0% {
+    right: -50%;
+  }
+  100% {
+    right: 50%;
   }
 }

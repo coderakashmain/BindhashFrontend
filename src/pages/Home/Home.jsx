@@ -2,43 +2,26 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import './Home.css'
 import '../../App.css'
-import { Helmet } from "react-helmet";
 import { motion, transform, AnimatePresence } from "framer-motion";
 import { AllPostContextData } from "../../Context/AllPostContext";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Heart, MessageCircle, ScanEye, Plus, DiamondPlus, Search, ThumbsUp, Send, ImagePlus, Video, SquareStack, SmilePlus, EllipsisVertical, CircleFadingPlus, Share2, Album } from 'lucide-react'
 import ProfileStats from "../../components/ProfileStats/ProfileStats";
-import Followbtn from "../../components/ProfileStats/Followbtn";
 import ProfileUpload from "../../components/ProfileUpload/ProfileUpload";
 import defaultprofilephoto from '../../Photo/defaultprofilepic.png'
-import UserSearch from "../../components/UserSearch/UserSearch";
 import SuggestedUsers from "../../components/SuggestedUsers/SuggestedUsers";
 import Leaderboard from "../../components/Leaderboard/Leaderboard";
-import TrendingPosts from "../../components/TrendingPosts/TrendingPosts";
-import PostModel from "../../components/Post/PostModel";
 import ShareProfile from "../../components/ShareProfile/ShareProfile";
-import StorySection from "../../components/Story/StorySection";
-import Time from "../../components/Time/Time";
-import PollCreate from "../../components/Poll/PollCreate";
-import PollList from "../../components/Poll/PollList";
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import { Button, Chip, colors, Menu, MenuItem, Typography } from "@mui/material";
-import PollView from "../../components/Poll/PollView";
-import PostOptions from "../../components/PostOptions/PostOptions";
 import { MobileViewContext } from "../../Context/MobileResizeProvider";
-import ImageUploader from "../../components/Post/ImageUploader";
 import PostEditView from "../../components/Post/PostEditView";
-import VideoPost from "./VideoPost";
 import PostFunctionComponent from "../../components/PostFuctionComponent/PostFunctionComponent";
 import PostContent from "../../components/Post/PostContent";
 import ProfileEdit from "../../components/ProfileEdit/ProfileEdit";
 import UploadPreviewWithProgress from "../../components/UploadPreviewWithProgress/UploadPreviewWithProgress";
 import Queots from "../../components/Queots/Queots";
 import { EmojiEventsOutlined, SortOutlined, TrendingUpOutlined } from "@mui/icons-material";
-import BottomSheet from "../../components/BottomSheet/BottomSheet";
-import PostCardSkeleton from "../../components/Fallback/PostCardSkeleton";
 import PageMeta from "../../components/PageMeta/PageMeta";
 
 
@@ -48,15 +31,12 @@ const Home = () => {
   const { usertoken } = useContext(UserAuthCheckContext);
 
   const [newComment, setNewComment] = useState("");
-  const [selectedPostId, setSelectedPostId] = useState(null);
   const navigate = useNavigate();
   const [profilepicloading, setProfilepicloading] = useState(false);
   const homeporfileRef = useRef();
   const homeusggestionRef = useRef();
   const [resizedisplay, setResizeddisplay] = useState(true);
-  const [imgloaded, setImgLoaded] = useState(false);
   const [content, setContent] = useState("");
-  const [pollcreation, setPollcreation] = useState(false);
   const [feed, setFeed] = useState([]);
   const [storymodeltrue, setstorymodeltrue] = useState(false)
   const storyuplodRef = useRef(null)
@@ -72,8 +52,6 @@ const Home = () => {
   const [videotype, setVideoType] = useState(null);
   const [profileEditView, setProfileEditView] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("all")
-  const [sortBy, setSortBy] = useState("recent")
-  const [anchorEl, setAnchorEl] = useState(null);
 
 
 

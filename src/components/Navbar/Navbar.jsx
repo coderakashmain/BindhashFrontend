@@ -15,32 +15,24 @@ import ModeSwitcherToast from "../ThemeSwitcher/ModeSwitcherToast ";
 import CombineAvatat from "../Avatar/CombineAvatat";
 import LiveAvatar from "../Avatar/LiveAvatar";
 const Notification = lazy(() => import('../../pages/Notification/Notification'));
-
+import { MobileViewContext } from "../../Context/MobileResizeProvider";
 
 
 const Navbar = () => {
   const location = useLocation();
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   const { usertoken } = useContext(UserAuthCheckContext)
   const navigate = useNavigate();
   const [anonmode, setAnonmode] = useState('')
   const [loadingmode, setLoadingmode] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  useEffect(() => {
-    if (!usertoken) {
-      return
-    }
-  }, [usertoken, navigate]);
+   const { isMobile } = useContext(MobileViewContext)
+  
+
+
 
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 640);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (usertoken?.user.visibility === 'anonymous') {
+    if (usertoken?.user?.visibility === 'anonymous') {
 
       setAnonmode('anonymous')
     } else {
@@ -53,7 +45,7 @@ const Navbar = () => {
 
 
   return (
-    <nav className="navbar" style={{ padding: isMobile ? '0rem 0.5rem' : '' }}>
+    <nav className="navbar" style={{ padding: isMobile ? '0rem 0.5rem' : '' ,borderBottom : isMobile ? "none" : ''}}>
       {/* Left Side - Logo */}
       <div className="nav-left">
 
@@ -100,10 +92,10 @@ const Navbar = () => {
         </IconButton>
         {/* <Notification isOpen={isOpen}/> */}
 
-        <NavLink to={`/profile/o/${usertoken.user.username}`} className="icon-button nav-user-profile-icon">
+        <NavLink to={`/profile/o/${usertoken?.user?.username}`} className="icon-button nav-user-profile-icon">
 
           <LiveAvatar>
-            <CombineAvatat username={usertoken?.user.username} profile_pic={usertoken?.user.profile_pic} visibility={usertoken.user.visibility} size="2.5rem" />
+            <CombineAvatat username={usertoken?.user.username} profile_pic={usertoken?.user.profile_pic} visibility={usertoken?.user?.visibility} size="2.5rem" />
 
           </LiveAvatar>
         </NavLink>

@@ -115,9 +115,15 @@ const App = () => {
               path: '',
               element: <><ErrorBoundary><HomeRouter /></ErrorBoundary></>,
               children: [
-
                 {
                   path: '',
+                  // index: true,
+                  element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><Room /></Suspense></ErrorBoundary></>
+
+                },
+
+                {
+                  path: 'feed',
                   element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><Home /></Suspense></ErrorBoundary></>
                 },
                 {
@@ -152,11 +158,7 @@ const App = () => {
                   path: 'feedback',
                   element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><Feedback /></Suspense></ErrorBoundary></>
                 },
-                {
-                  path: 'room',
-                  element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><Room /></Suspense></ErrorBoundary></>
-
-                },
+                
                 {
                   path: 'room/:category/:slug/creatroom',
                   element: <><ErrorBoundary><Suspense fallback={<CircularLoader />}><CreateChatRoom /></Suspense></ErrorBoundary></>
@@ -276,10 +278,6 @@ const App = () => {
             },
           ]
         },
-
-
-
-
 
 
       ]

@@ -180,7 +180,7 @@ const RoomChat = () => {
                         <ArrowBackIcon onClick={() => {
                             socket.emit("leave-subroom", { userId: usertoken.user.id, subroomId: subroomid });
                             socket.emit("get-subroom-users", {subroomId : subroomid, roomId : roomid});
-                            navigate("/room");
+                            navigate("/");
 
                         }
                         } sx={{ cursor: 'pointer' }} />

@@ -116,7 +116,7 @@ const Room = () => {
 
     const slog = generetSlog(subroom);
     const category = roomName(room);
-    navigate(`${category}/${slog}`, { state: { subroom } });
+    navigate(`/room/${category}/${slog}`, { state: { subroom } });
 
 
 

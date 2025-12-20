@@ -4,6 +4,7 @@ export const UserAuthCheckContext = createContext();
 import axios from 'axios';
 import { useSocket } from './SocketContext';
 import MainLoader from '../components/Fallback/MainLoader';
+import CircularLoader from '../components/Fallback/CircularLoader';
 
 
 
@@ -123,18 +124,18 @@ const UserAuthCheck = ({ children }) => {
     }
     
   }, [usertoken, loading, navigate]);
+   
   
-  
 
 
 
 
-  if (loading) {
-    return (
-      <MainLoader />
+  // if (loading) {
+  //   return (
+  //     <CircularLoader />
 
-    );
-  }
+  //   );
+  // }
 
 
 

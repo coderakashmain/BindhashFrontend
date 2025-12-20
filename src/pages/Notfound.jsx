@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Bangbox from '../components/Bangbox/Bangbox';
 import Logo from '../components/Bangbox/Logo'
+import logo from '../Photo/logo.png'
  
 const Notfound = () => {
   const navigate = useNavigate();

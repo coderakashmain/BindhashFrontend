@@ -1,6 +1,6 @@
 .navbar {
   /* background: var(--navbackcolor); */
-  height: 3rem;
+  height: 4rem;
   color: var(--blacktextcolor);
   display: flex;
   justify-content: space-between;

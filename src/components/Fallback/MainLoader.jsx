@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import './MainLoader.css'
-import BindhashLogo from '../../Photo/BindhashLogo.png'
+import BindhashLogo from '../../Photo/logo.png'
 
 const MainLoader = () => {
     useEffect(() => {
@@ -17,6 +17,7 @@ const MainLoader = () => {
       <picture>
         <img src={BindhashLogo} alt="Bindhash" />
       </picture>
+      <div className='main-loader-bar'></div>
     </div>
   )
 }
