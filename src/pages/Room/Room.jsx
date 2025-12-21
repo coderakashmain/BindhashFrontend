@@ -166,7 +166,7 @@ const Room = () => {
                   <div className="all-r-l-arrow click" onClick={() => {
                     if (!navigateLoading) {
 
-                      navigate(room.room_name, { state: { room } });
+                      navigate(`$/room/{room.room_name}`, { state: { room } });
                     }
 
                   }}>
@@ -227,7 +227,7 @@ const Room = () => {
                     <div className="more-r-a" onClick={() => {
                       if (!navigateLoading) {
 
-                        navigate(room.room_name, { state: { room } });
+                        navigate(`/room/${room.room_name}`, { state: { room } });
                       }
 
                     }}>
