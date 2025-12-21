@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SettingsPage.css";
 import { SnackbarContext } from "../../Context/SnackbarContext";
 import axios from "axios";
 import { Helmet } from "react-helmet";
+import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 const SettingsPage = () => {
   const navigate = useNavigate();
   const { setSnackbar } = useContext(SnackbarContext);
-
+  const { usertoken } = useContext(UserAuthCheckContext);
   const handleLogout = async () => {
 
 
@@ -24,7 +25,13 @@ const SettingsPage = () => {
     }
 
   }
+  useEffect(() => {
 
+    if (usertoken === null) {
+      navigate("/login");
+
+    }
+  }, [usertoken])
   return (
     <div className="settings-container">
       <Helmet>

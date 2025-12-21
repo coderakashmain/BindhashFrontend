@@ -25,6 +25,14 @@ const Newaccount = ({ setShowsearch, showsearch }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
+
+    if (!usertoken) {
+      navigate("/login");
+
+    }
+  }, [usertoken])
+ 
 
   const fetchAccounts = async () => {
     try {
@@ -72,7 +80,7 @@ const Newaccount = ({ setShowsearch, showsearch }) => {
   return (
     <div className="new-user-container">
       <h2 className="user-list-user">
-        <strong style={{textWrap : 'nowrap',color : "var(--blacktextcolor)"}}>@ {usertoken.user.username}</strong>
+        <strong style={{textWrap : 'nowrap',color : "var(--blacktextcolor)"}}>@ {usertoken?.user?.username}</strong>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
           {location.pathname.startsWith('/chat')  && (
             <IconButton style={{ cursor: 'pointer' }}  onClick={searchclick}>

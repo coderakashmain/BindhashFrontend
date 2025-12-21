@@ -12,38 +12,20 @@ import TruncatedText from "../../components/TextReducer/TruncatedText";
 import ChatListSkeleton from "../../components/Fallback/ChatListSkeleton";
 import AnonymousAavatar from "../../components/Avatar/AnonymousAavatar";
 import { useSocket } from "../../Context/SocketContext";
+import { useChatUsers } from "../../Context/ChatUsersContext";
 
 const UserList = () => {
   const { usertoken } = useContext(UserAuthCheckContext);
-  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
   const { isMobile } = useContext(MobileViewContext);
-  const [loading, setLoading] = useState(false);
   const socket = useSocket();
+  const {loading,users,setUsers} = useChatUsers();
 
 
 
 
 
-  useEffect(() => {
-    if (!usertoken) return;
-    setLoading(true);
-    axios.get(`/api/messages/users?userId=${usertoken.user.id}`)
-      .then((res) => {
-        const sorted = res.data.sort((a, b) =>
-          new Date(b.last_message_time) - new Date(a.last_message_time)
-        );
-        setUsers(sorted);
-        setLoading(false);
-      }
-      )
-      .catch((err) => {
-        setLoading(false);
-        console.error(err)
-      });
 
-
-  }, [usertoken]);
 
 
 

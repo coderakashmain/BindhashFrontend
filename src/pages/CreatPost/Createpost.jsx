@@ -40,6 +40,14 @@ export default function CreatePost() {
     const [mpostbtn, setMpostbtn] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+
+        if (!usertoken) {
+            navigate("/login");
+
+        }
+    }, [usertoken])
+
 
     const [postData, setPostData] = useState({
         title: "",
@@ -105,7 +113,7 @@ export default function CreatePost() {
     };
 
     useEffect(() => {
-        if (usertoken.user.visibility === 'anonymous')
+        if (usertoken?.user?.visibility === 'anonymous')
             setIsAnonymous(true);
 
     }, [usertoken])
@@ -125,8 +133,8 @@ export default function CreatePost() {
                 <CardContent>
                     <div className="creat-post-header">
                         <div className="creat-post-header-l">
-                            <CombineAvatat username={usertoken.user.username} profile_pic={usertoken.user.profile_pic} visibility={usertoken.user.visibility} size="2.5rem" />
-                            <h3 style={{color : 'var(--blacktextcolor)'}}>{usertoken.user.username}</h3>
+                            <CombineAvatat username={usertoken?.user?.username} profile_pic={usertoken?.user?.profile_pic} visibility={usertoken?.user?.visibility} size="2.5rem" />
+                            <h3 style={{ color: 'var(--blacktextcolor)' }}>{usertoken?.user?.username}</h3>
 
                         </div>
                         <div className="creat-post-header-r">

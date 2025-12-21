@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import './RoomPlay.css'
 import './Room.css'
 import { useSocket } from '../../Context/SocketContext'
+import { UserAuthCheckContext } from '../../Context/UserAuthCheck'
 
 const RoomPlay = () => {
   const location = useLocation();
@@ -10,7 +11,7 @@ const RoomPlay = () => {
   const navigate = useNavigate();
   const [liveUserdata, setLiveUserdata] = useState([]);
   const socket = useSocket();
-
+  const { usertoken } = useContext(UserAuthCheckContext)
 
 
 
@@ -80,15 +81,18 @@ const RoomPlay = () => {
 
     const slog = generetSlog(subroom);
     const category = roomName(room);
-
-    navigate(`/room/${category}/${slog}`, { state: { subroom } });
+    if(!usertoken){
+      navigate('/login');
+    }else{
+      navigate(`/room/${category}/${slog}`, { state: { subroom } });
+    }
 
   }
 
 
   return (
     <section id='roomplay'>
-      <h3>{room.room_name} <p>Live Chat</p></h3>
+      <h3>{room.room_name} <p className='text-sm text-gray-500 cursor-not-allowed select-none'>Live Chat</p></h3>
       <div className="subrooms-list subrooms-list-play">
         {room.subrooms.map((subroom) => (
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState,useContext } from 'react'
 import './MobileNav.css'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { House, Medal, Settings, Store, Megaphone, Search, MessageCircle, User } from 'lucide-react'
@@ -10,6 +10,8 @@ import TroubleshootOutlinedIcon from '@mui/icons-material/TroubleshootOutlined';
 import CoronavirusOutlinedIcon from '@mui/icons-material/CoronavirusOutlined';
 import Groups3OutlinedIcon from '@mui/icons-material/Groups3Outlined';
 import { Tooltip } from '@mui/material'
+import { UserAuthCheckContext } from '../../Context/UserAuthCheck'
+
 
 
 const MobileNav = () => {
@@ -17,6 +19,7 @@ const MobileNav = () => {
     const lastScrollY = useRef(0);
     const scrollContainerRef = useRef(null);
     const location = useLocation();
+    const { usertoken } = useContext(UserAuthCheckContext)
 
 
 
@@ -51,6 +54,7 @@ const MobileNav = () => {
             animate={{ y: visible ? "0%" : "100%" }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
         >
+          {usertoken ?(  <>
             <NavLink to="" className="mobile-nav-a">
                 <Tooltip title="Home">
                     <motion.button whileTap={{ background: 'var(--lightbackcolor)' }}>
@@ -68,7 +72,7 @@ const MobileNav = () => {
             </NavLink>
 
 
-            <NavLink to="/room" className="mobile-nav-a">
+            <NavLink to="/feed" className="mobile-nav-a">
                 <Tooltip title='Rooms'>
                     <motion.button whileTap={{ background: 'var(--lightbackcolor)' }}>
                         <Groups3OutlinedIcon sx={{fontSize : '2rem'}} className={location.pathname === "/room" ? "mobile-nav-active-icon" : ""} />
@@ -96,6 +100,9 @@ const MobileNav = () => {
                 </Tooltip>
 
             </NavLink>
+            </>) : (
+                <NavLink to='/login' className='text-center text-sm bg-primary w-full !py-5 rounded-md  text-white'> Login to continue</NavLink>
+            )}
         </motion.section>
     )
 }

@@ -29,8 +29,8 @@ const Slidebar = () => {
   const dragHandleRef = useRef(null);
   const { usertoken } = useContext(UserAuthCheckContext)
   const { setSnackbar } = useContext(SnackbarContext);
-  const [collapsed, setCollapsed] = useState(false);
-
+  const [collapsed, setCollapsed] = useState(true);
+  const navigate = useNavigate();
 
 
 
@@ -95,7 +95,7 @@ const Slidebar = () => {
     return () => window.removeEventListener('resize', resizeHandle);
   }, []);
 
-  if (!usertoken || !usertoken.user) return null;
+  // if (!usertoken || !usertoken.user) return null;
 
   return (
     <motion.div
@@ -134,23 +134,29 @@ const Slidebar = () => {
         </li>
 
 
-        <li>
+       
+       <> 
+      {usertoken && (<li>
           <Link to="/chat" style={location.pathname === '/chat' ? { color: 'var(--primary-color)' } : {}}><ChatRoundedIcon strokeWidth={location.pathname === '/chat' ? 3 : '2'} size='1.3rem' />{collapsed ? '' : "Chats"} </Link>
-        </li>
+        </li>)}
         <li>
           <Link to="/createpost" style={location.pathname === '/createpost' ? { color: 'var(--primary-color)' } : {}}><DrawIcon strokeWidth={location.pathname === '/createpost' ? 3 : '2'} size='1.3rem' />{collapsed ? '' : "Create Post"} </Link>
         </li>
-        <li>
+        {usertoken &&(<li>
           <Link to={`/profile/o/${usertoken?.user?.username}`} style={location.pathname === `/profile/o/${usertoken?.user?.username}` ? { color: 'var(--primary-color)' } : {}}><Face6Icon strokeWidth={location.pathname === `/Profile/o/${usertoken.user.username}` ? 3 : '2'} size='1.3rem' /> {collapsed ? '' : "Profile"}</Link>
-        </li>
+        </li>)}
         <li>
           <Link to="/setting" style={location.pathname === '/setting' ? { color: 'var(--primary-color)' } : {}}><AppsOutlinedIcon size='1.3rem' strokeWidth={location.pathname === '/setting' ? 3 : '2'} /> {collapsed ? '' : "Settings"}</Link>
-        </li>
+        </li></>
       </ul>
       <hr style={{ borderColor: 'var(--lighttextcolor)', opacity: 0.2 }} />
       {!collapsed && (<h4>Own Rooms</h4>)}
       <ul className="own-rooms-ul">
-        <li style={{ justifyContent: collapsed ? 'center' : 'flex-start', background: 'var(--logolinearcolor)' }}> <Avatar sx={{ background: collapsed ? 'transparent' : 'var(--lightbackcolor2)', color: 'var(--bothwhitecolor)' }}><AddIcon /></Avatar> {collapsed ? '' : 'Create a new room'}</li>
+        <li onClick={() => {
+          if(!usertoken){
+            navigate('/login');
+          }
+        }} style={{ justifyContent: collapsed ? 'center' : 'flex-start', background: 'var(--logolinearcolor)' }}> <Avatar sx={{ background: collapsed ? 'transparent' : 'var(--lightbackcolor2)', color: 'var(--bothwhitecolor)' }}><AddIcon /></Avatar> {collapsed ? '' : 'Create a new room'}</li>
       </ul>
 
 

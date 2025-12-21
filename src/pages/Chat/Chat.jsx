@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { Helmet } from "react-helmet";
 import { io } from "socket.io-client";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./Chat.css";
 import { UserAuthCheckContext } from "../../Context/UserAuthCheck";
 import axios from "axios";
@@ -32,10 +32,16 @@ const Chat = () => {
   const [chatloading, setChatLoading] = useState(true);
   const { receiverId } = useParams();
   const [selectedUserId, setSelectedUserId] = useState(null);
-
+  const navigate = useNavigate();
   const parsedReceiverId = parseInt(receiverId);
 
+  useEffect(() => {
 
+    if (!usertoken) {
+      navigate("/login");
+
+    }
+  }, [usertoken])
 
 
 
@@ -62,7 +68,7 @@ const Chat = () => {
     const messagefetch = async () => {
 
       try {
-        const response = await axios.get(`/api/messages/${parsedReceiverId}?userId=${usertoken.user.id}`);
+        const response = await axios.get(`/api/messages/${parsedReceiverId}?userId=${usertoken?.user?.id}`);
         setMessages(response.data);
 
       } catch (err) {
@@ -76,13 +82,13 @@ const Chat = () => {
     messagefetch();
 
 
-  }, [usertoken, parsedReceiverId]);
+  }, [usertoken?.user?.id, parsedReceiverId]);
 
 
   useEffect(() => {
     if (!socket || !parsedReceiverId) return;
 
-    socket.emit("markAsRead", { sender_id: parsedReceiverId, receiver_id: usertoken.user.id });
+    socket.emit("markAsRead", { sender_id: parsedReceiverId, receiver_id: usertoken?.user?.id });
   }, [socket, parsedReceiverId]);
 
 
@@ -99,14 +105,14 @@ const Chat = () => {
 
         socket.emit("markAsRead", {
           sender_id: parsedReceiverId,
-          receiver_id: usertoken.user.id,
+          receiver_id: usertoken?.user?.id,
         });
       }
 
 
 
       setMessages((prevMessages) => {
-        if (parseInt(msg.sender_id) === usertoken.user.id) {
+        if (parseInt(msg.sender_id) === usertoken?.user?.id) {
 
           return prevMessages.map((m) => {
 
@@ -115,7 +121,7 @@ const Chat = () => {
           );
         } else if (
 
-          parseInt(msg.receiver_id) === usertoken.user.id &&
+          parseInt(msg.receiver_id) === usertoken?.user?.id &&
           parseInt(msg.sender_id) === parsedReceiverId
         ) {
 
@@ -192,7 +198,7 @@ const Chat = () => {
     if (message.trim() === "") return;
 
     const msgData = {
-      sender_id: usertoken.user.id,
+      sender_id: usertoken?.user?.id,
       receiver_id: parsedReceiverId,
 
       message,

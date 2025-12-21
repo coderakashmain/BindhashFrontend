@@ -209,6 +209,8 @@ const RandomChat = () => {
         }
     };
 
+    
+
     return (
         <section className='global-chat'>
             <div className="global-chat-box" ref={chatBoxRef} >

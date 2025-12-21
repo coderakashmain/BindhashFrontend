@@ -61,11 +61,11 @@ const Navbar = () => {
 
       {/* Right Side - Icons */}
       <div className="nav-right" >
-        <Tooltip title="Feedback">
+       {usertoken &&  (<Tooltip title="Feedback">
           <button onClick={() => navigate('/feedback')} className="feedback-btn-nav">Feedback</button>
-        </Tooltip>
+        </Tooltip>)}
         {!isMobile && (<p>Beta Version</p>)}
-        <Tooltip title={anonmode === 'anonymous' ? "Switch to Self Mode" : "Switch to Anonymous Mode"}>
+        {usertoken && (<Tooltip title={anonmode === 'anonymous' ? "Switch to Self Mode" : "Switch to Anonymous Mode"}>
           <IconButton style={{ cursor: 'pointer', color: 'var(--blacktextcolor)' }} onClick={() => {
             setLoadingmode(false);
             setAnonmode((prev) => (prev === 'anonymous' ? 'self' : 'anonymous'));
@@ -74,7 +74,7 @@ const Navbar = () => {
 
 
           </IconButton>
-        </Tooltip>
+        </Tooltip>)}
         <ModeSwitcherToast mode={anonmode} loadingmode={loadingmode} />
         <Tooltip title="switch theme">
 
@@ -83,22 +83,22 @@ const Navbar = () => {
 
 
         {/* <IconButton onClick={() => setIsOpen(!isOpen)}> */}
-        <IconButton >
+        {/* <IconButton >
           <Tooltip title='Notificatioin'>
 
             <Bell size={17} color='var(--blacktextcolor)' />
           </Tooltip>
 
-        </IconButton>
+        </IconButton> */}
         {/* <Notification isOpen={isOpen}/> */}
 
-        <NavLink to={`/profile/o/${usertoken?.user?.username}`} className="icon-button nav-user-profile-icon">
+       {usertoken ? (<NavLink to={`/profile/o/${usertoken?.user?.username}`} className="icon-button nav-user-profile-icon">
 
           <LiveAvatar>
             <CombineAvatat username={usertoken?.user.username} profile_pic={usertoken?.user.profile_pic} visibility={usertoken?.user?.visibility} size="2.5rem" />
 
           </LiveAvatar>
-        </NavLink>
+        </NavLink>) : (<NavLink to={'/login'} className="bg-primary text-white rounded-md !px-3 select-none !py-2 text-sm font-medium ">Login</NavLink>)}
       </div>
     </nav>
   );

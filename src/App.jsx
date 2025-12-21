@@ -18,6 +18,7 @@ import { UploadProvider } from './Context/UploadProvider';
 import CircularLoader from './components/Fallback/CircularLoader';
 import PostModel from './components/Post/PostModel';
 import UserPostListContext from './Context/UserPostListContext';
+import { ChatUsersProvider } from './Context/ChatUsersContext';
 
 
 
@@ -109,7 +110,7 @@ const App = () => {
 
         {
           path: '',
-          element: <><ErrorBoundary><PageRouter /></ErrorBoundary></>,
+          element: <><ErrorBoundary><ChatUsersProvider><PageRouter /></ChatUsersProvider></ErrorBoundary></>,
           children: [
             {
               path: '',

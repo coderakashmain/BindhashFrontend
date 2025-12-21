@@ -4,7 +4,7 @@
   align-items: center;
   margin-top: 0.6rem;
   width: 100%;
-  color: var(--textcolor) !important;
+  color: black !important;
 }
 
 .custom-google-btn {
@@ -34,7 +34,7 @@
 }
 
 .custom-google-btn span {
-  color: var(--textcolor) !important;
+  color: black !important;
 
   font-family: 'Roboto', sans-serif !important;
   font-size: 14px !important;

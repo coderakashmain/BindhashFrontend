@@ -8,6 +8,7 @@
 body {
   background-color: var(--webbackcolor);
   color: var(--textcolor);
+  overscroll-behavior: contain;
 }
 #nprogress .bar {
   background: var(--logolinearcolor); 
@@ -128,6 +129,95 @@ body{
 
 }
 } */
+.webbackcolor {
+  background-color: var(--webbackcolor);
+}
+
+.navbackcolor {
+  background-color: var(--navbackcolor);
+}
+
+.backwhitecolor {
+  background-color: var(--backwhitecolor);
+}
+
+.backblackcolor {
+  background-color: var(--backblackcolor);
+}
+
+.lightbackcolor {
+  background-color: var(--lightbackcolor);
+}
+
+/* Text colors */
+.textcolor {
+  color: var(--textcolor);
+}
+
+.lighttextcolor {
+  color: var(--lighttextcolor);
+}
+
+.textwhitecolor {
+  color: var(--textwhitecolor);
+}
+
+.blacktextcolor {
+  color: var(--blacktextcolor);
+}
+
+/* Gradients */
+.bg-primary {
+  background: var(--linearcolor);
+}
+
+.secondlinearbg {
+  background: var(--secondlinearcolor);
+}
+
+.logolinearbg {
+  background: var(--logolinearcolor);
+}
+
+.titlelinearbg {
+  background: var(--titlelinearcolor);
+}
+
+/* Shadows */
+.webshadow {
+  box-shadow: var(--webbackshahow);
+}
+
+.navshadow {
+  box-shadow: var(--navboxshodow);
+}
+
+.postshadow {
+  box-shadow: var(--post-box-shadow);
+}
+
+.secondaryshadow {
+  box-shadow: var(--secondary-box-shadow);
+}
+
+.createpostshadow {
+  box-shadow: var(--creat-post-shadow);
+}
+
+/* Borders */
+.border-main {
+  border: var(--border-color);
+}
+
+.border-main-2 {
+  border: var(--border-color2);
+}
+
+/* Radius */
+.radius-main {
+  border-radius: var(--border-radius);
+}
+
 
 
 @media (max-width: 1414px) {

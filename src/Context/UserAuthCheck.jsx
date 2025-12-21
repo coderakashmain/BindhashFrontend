@@ -119,26 +119,13 @@ const UserAuthCheck = ({ children }) => {
 
   useEffect(() => {
 
-    if (!loading && !usertoken && !location.pathname.startsWith('/register') &&!location.pathname.startsWith('/login')) {
-      navigate('/welcome-page');
+    if (!loading && usertoken && (location.pathname.startsWith('/register') ||location.pathname.startsWith('/login'))) {
+      navigate('/');
     }
     
   }, [usertoken, loading, navigate]);
    
   
-
-
-
-
-  // if (loading) {
-  //   return (
-  //     <CircularLoader />
-
-  //   );
-  // }
-
-
-
 
 
 

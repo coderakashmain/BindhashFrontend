@@ -11,12 +11,13 @@ import { Helmet } from 'react-helmet'
 import '../../App.css'
 import { useSocket } from '../../Context/SocketContext'
 import PageMeta from '../../components/PageMeta/PageMeta'
+import { UserAuthCheckContext } from '../../Context/UserAuthCheck'
 
 
 
 const Room = () => {
   const { isMobile } = useContext(MobileViewContext)
-
+  const { usertoken } = useContext(UserAuthCheckContext)
   const navigate = useNavigate();
   const [rooms, setRooms] = React.useState([])
   const [loading, setLoading] = React.useState(true);
@@ -73,7 +74,7 @@ const Room = () => {
       setLiveUserdata(data);
     });
 
-
+ 
     return () => {
       socket.off("global-room-user", handler);
       socket.off("all-subroom-counts");
@@ -116,7 +117,11 @@ const Room = () => {
 
     const slog = generetSlog(subroom);
     const category = roomName(room);
+    if(!usertoken){
+      navigate('/login');
+    }else{
     navigate(`/room/${category}/${slog}`, { state: { subroom } });
+    }
 
 
 
@@ -165,8 +170,9 @@ const Room = () => {
                   </span>
                   <div className="all-r-l-arrow click" onClick={() => {
                     if (!navigateLoading) {
-
-                      navigate(`$/room/{room.room_name}`, { state: { room } });
+                     
+                        navigate(`/room/${room.room_name}`, { state: { room } });
+                     
                     }
 
                   }}>
@@ -226,8 +232,9 @@ const Room = () => {
                   <div className='more-rooms click'>
                     <div className="more-r-a" onClick={() => {
                       if (!navigateLoading) {
-
+                      
                         navigate(`/room/${room.room_name}`, { state: { room } });
+                       
                       }
 
                     }}>

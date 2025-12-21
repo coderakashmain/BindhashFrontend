@@ -77,7 +77,7 @@ const Emailenter = () => {
         />
       </Helmet>
       <div className="register-container-box1-inside login-container-box1-inside">
-        <h2 style={{ fontWeight: 'bold', margin: '0 0 0.2rem 0', padding: '0rem' }}>Register</h2>
+        <h2 style={{ fontWeight: 'bold', margin: '0 0 0.2rem 0', padding: '0rem', color : 'black' }}>Register</h2>
         {/* {error && <p style={{mart : '0.3rem'}} className="error">{error}</p>} */}
                <GoogleAuth SetgoogleLogin={SetgoogleLogin}/>
         <div className="or-line">
